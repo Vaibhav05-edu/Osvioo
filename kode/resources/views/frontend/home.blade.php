@@ -9,16 +9,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ time() }}" />
     <style>
-      /* FORCE PREMIUM FONTS INLINE */
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playball&family=Syne:wght@700;800&family=Viaoda+Libre&display=swap');
+      /* LOCAL FONT DEFINITION */
+      @font-face {
+          font-family: 'Bebas Neue';
+          src: url('/fonts/bebas-neue.woff2') format('woff2');
+          font-weight: normal;
+          font-style: normal;
+      }
       
       body { font-family: 'Inter', sans-serif !important; }
       .hero-title { 
-          font-family: 'Viaoda Libre', serif !important; 
-          font-weight: 400 !important;
-          letter-spacing: -0.02em !important;
-          line-height: 1.05 !important;
-          font-size: 6rem !important;
+          font-family: 'Bebas Neue', cursive !important; 
+          font-weight: normal !important;
+          letter-spacing: 0.05em !important;
+          line-height: 1 !important;
+          font-size: 7rem !important;
+          text-transform: uppercase;
       }
       .playball-accent {
           font-family: 'Playball', cursive !important;
@@ -53,6 +59,7 @@
     </style>
   </head>
   <body>
+    <div style="background: #000; color: #fff; text-align: center; font-size: 10px;">Rendered at: 20:07 PM</div>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom sticky-top py-3">
       <div class="container">
