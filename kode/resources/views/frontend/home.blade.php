@@ -1,6 +1,13 @@
 @extends('layouts.master')
 @section('content')
 
+    @php
+        $meta_data = [
+            "title" => translate($settings->headline_1 ?? 'Home'),
+            "description" => translate($settings->description ?? 'Socialyt - Instagram & Facebook DM Automation'),
+        ];
+    @endphp
+
     <!-- Hero Section -->
     <header class="section-hero py-5 overflow-hidden" id="home">
       <div class="container pt-5">
