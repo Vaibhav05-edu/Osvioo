@@ -20,16 +20,12 @@
         }
     }
     
-    $heroTitle = data_get($banner, 'value.title', 'AI that helps you grow <br> Automate Instagram & Facebook');
-    $heroSubTitle = data_get($banner, 'value.sub_title', '');
-    $heroDescription = data_get($banner, 'value.description', '...');
+    $heroTitle = $settings->headline_1 ?? 'Automate your social media';
+    $heroSubTitle = $settings->headline_2 ?? '10x faster';
+    $heroDescription = $settings->description ?? 'Our all-in-one social media management platform unlocks the full potential of social to transform not just your marketing strategy—but every area of your organization.';
     
-    $typingTextsRaw = site_settings('hero_typing_texts');
-    if (!$typingTextsRaw || !is_string($typingTextsRaw)) {
-        $typingTextsRaw = 'AI helps you grow,AI creates media kit,AI auto DM';
-    }
-    $typingTexts = explode(',', $typingTextsRaw);
-    $typingTextsJson = json_encode(array_map('trim', $typingTexts));
+    $typingTexts = $settings->typing_texts ?? ['AI helps you grow', 'AI creates media kit', 'AI auto DM'];
+    $typingTextsJson = json_encode(array_map('trim', (array)$typingTexts));
     
     // Ensure these are collections for the loops
     $features = get_content('element_feature', false);
@@ -138,11 +134,9 @@
                     🚀 {{ $settings->cta_text ?? '#1 Meta Automation Tool' }}
                 </div>
                 <!-- Line 1: Headline -->
-                <h1 class="hero-title display-4 fw-bold mb-2">{!! $heroTitle !!}</h1>
-                <!-- Line 2: Subheadline -->
-                <div class="playball-accent display-6 mb-4" style="color: #FF9500; font-family: 'Playball', cursive;">
-                    {{ $heroSubTitle }}
-                </div>
+                <h1 class="hero-title display-3 fw-bold mb-0" style="font-family: 'Syne', sans-serif !important;">{{ $heroTitle }}</h1>
+                <!-- Line 2: Colored Sub-headline -->
+                <h1 class="hero-title display-3 fw-bold mb-4" style="color: #FF9500; font-family: 'Syne', sans-serif !important;">{{ $heroSubTitle }}</h1>
 
                 <!-- Typing Animation Section -->
                 <div class="mb-4" style="min-height: 50px; display: flex; align-items: center; justify-content: start;">
