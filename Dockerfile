@@ -51,7 +51,8 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 # Expose port (Render will use $PORT)
 EXPOSE 80
 
-# Start Apache with dynamic port binding
-CMD sed -i "s/Listen 80/Listen ${PORT:-80}/g" /etc/apache2/ports.conf && \
+# Start Apache with dynamic port binding and host binding
+CMD echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
+    sed -i "s/Listen 80/Listen 0.0.0.0:${PORT:-80}/g" /etc/apache2/ports.conf && \
     sed -i "s/<VirtualHost \*:80>/<VirtualHost *:${PORT:-80}>/g" /etc/apache2/sites-available/*.conf && \
     apache2-foreground
