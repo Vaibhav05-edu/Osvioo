@@ -1,3 +1,46 @@
+@php
+    // Fetch banner and ensure it's a single object, not a collection
+    $bannerData = get_content('content_banner');
+    if ($bannerData instanceof \Illuminate\Support\Collection) {
+        $banner = $bannerData->first();
+    } else {
+        $banner = $bannerData;
+    }
+    
+    // Use data_get for ultra-safe property access. 'file' is MorphMany so we need first()
+    $bannerFileColl = data_get($banner, 'file');
+    $bannerFile = ($bannerFileColl instanceof \Illuminate\Support\Collection) ? $bannerFileColl->first() : $bannerFileColl;
+    
+    $bannerImage = asset('hero_influencer.png');
+    /*
+    if ($bannerFile) {
+        $bannerImage = imageURL($bannerFile, 'banner', false);
+    }
+    */
+    
+    $heroTitle = data_get($banner, 'value.title', 'AI that helps you grow <br> Automate Instagram & Facebook');
+    $heroSubTitle = data_get($banner, 'value.sub_title', '');
+    $heroDescription = data_get($banner, 'value.description', '...');
+    
+    $typingTextsRaw = site_settings('hero_typing_texts');
+    if (!$typingTextsRaw || !is_string($typingTextsRaw)) {
+        $typingTextsRaw = 'AI helps you grow,AI creates media kit,AI auto DM';
+    }
+    $typingTexts = explode(',', $typingTextsRaw);
+    $typingTextsJson = json_encode(array_map('trim', $typingTexts));
+    
+    // Ensure these are collections for the loops
+    $features = get_content('element_feature', false);
+    if (!($features instanceof \Illuminate\Support\Collection)) {
+        $features = collect($features ? [$features] : []);
+    }
+    $features = $features->take(3);
+    
+    $testimonials = get_content('element_testimonial', false);
+    if (!($testimonials instanceof \Illuminate\Support\Collection)) {
+        $testimonials = collect($testimonials ? [$testimonials] : []);
+    }
+@endphp
 <!doctype html>
 <html lang="en">
   <head>
@@ -93,10 +136,10 @@
                     🚀 {{ $settings->cta_text ?? '#1 Meta Automation Tool' }}
                 </div>
                 <!-- Line 1: Headline -->
-                <h1 class="hero-title display-4 fw-bold mb-2">{{ $settings->headline_1 ?? 'AI that helps you grow' }}</h1>
+                <h1 class="hero-title display-4 fw-bold mb-2">{!! $heroTitle !!}</h1>
                 <!-- Line 2: Subheadline -->
                 <div class="playball-accent display-6 mb-4" style="color: #FF9500; font-family: 'Playball', cursive;">
-                    {{ $settings->headline_2 ?? 'That Grows You Faster' }}
+                    {{ $heroSubTitle }}
                 </div>
 
                 <!-- Typing Animation Section -->
@@ -106,11 +149,7 @@
 
                 <script nonce="{{ csp_nonce() }}">
                     (function() {
-                        const texts = [
-                            "AI that helps you grow", 
-                            "AI that helps you create media kit", 
-                            "AI that automates DMs"
-                        ];
+                        const texts = {!! $typingTextsJson !!};
                         const target = document.getElementById('typing-text-welcome');
                         let tIndex = 0, cIndex = 0, deleting = false;
                         
@@ -146,7 +185,7 @@
 
                 <!-- Dynamic Description -->
                 <p class="lead text-muted mb-5" style="font-size: 1.1rem;">
-                    {{ $settings->description ?? 'Engage your followers automatically. Reply to comments with personalized DMs, save time, and explode your conversion rates.' }}
+                    {{ $heroDescription }}
                 </p>
 
                 <div class="d-flex justify-content-center justify-content-lg-start gap-3 mt-4">
@@ -158,7 +197,7 @@
             <!-- Right Side: Influencer Image -->
             <div class="col-lg-6 mt-5 mt-lg-0">
                 <div class="position-relative">
-                    <img src="{{ $settings->hero_image ?? 'https://static.wixstatic.com/media/cdc6f6_0e9ea9a6ef58481b82bdc6a0442517c2~mv2.webp/v1/fill/w_1000,h_738,al_c,q_85/Group%201680482139.webp' }}" 
+                    <img src="{{ $bannerImage ?? asset('hero_influencer.png') }}" 
                          alt="Influencer" class="img-fluid mx-auto animate__animated animate__zoomIn">
                 </div>
             </div>
@@ -189,7 +228,21 @@
                 <p class="text-muted">Three simple steps to automate your growth.</p>
                 
                 <div class="row mt-5 g-4">
-                    <!-- Step 1 -->
+                    @forelse($features as $feature)
+                    <div class="col-md-4">
+                        <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
+                            <div class="mb-4 d-flex align-items-center justify-content-center">
+                                <!-- Admin can put icon class here, or we use a default based on loop iteration -->
+                                <i class="{{ @$feature->value->icon ?? 'fas fa-bolt' }} fa-3x" style="color: #007AFF !important;"></i>
+                            </div>
+                            <div class="px-2 text-center">
+                                <h3 class="fw-bold fs-4 mb-3">{{ $loop->iteration }}. {{ @$feature->value->title }}</h3>
+                                <p class="text-muted small px-3">{{ @$feature->value->description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    @empty
+                    <!-- Fallback if Admin hasn't added features yet -->
                     <div class="col-md-4">
                         <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
                             <div class="mb-4 d-flex align-items-center justify-content-center">
@@ -201,8 +254,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Step 2 -->
                     <div class="col-md-4">
                         <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
                             <div class="mb-4 d-flex align-items-center justify-content-center">
@@ -214,8 +265,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Step 3 -->
                     <div class="col-md-4">
                         <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
                             <div class="mb-4 d-flex align-items-center justify-content-center">
@@ -227,6 +276,7 @@
                             </div>
                         </div>
                     </div>
+                    @endforelse
                 </div>
             </div>
 
@@ -655,39 +705,67 @@
                 <h2 class="fw-bold fs-1">Loved by Creators Everywhere</h2>
                 <p class="text-muted">Join 50,000+ happy users growing their community.</p>
             </div>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="p-4 rounded-4 bg-white shadow-sm border h-100">
-                        <div class="text-warning mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <p class="fst-italic">"Socialyt changed my life. I went from spending 4 hours a day replying to comments to 0 minutes, while my sales tripled!"</p>
-                        <div class="d-flex align-items-center mt-4">
-                            <div class="fw-bold">Alex Rivers</div>
-                            <div class="text-muted small ms-2">- Tech Creator</div>
+            
+            <div class="row g-4 justify-content-center">
+                @forelse($testimonials as $testimonial)
+                <div class="col-lg-4 col-md-6">
+                    <div class="p-4 rounded-4 bg-white shadow-sm h-100 border-0 testimonial-card transition-all">
+                        <div class="quote-icon mb-3">
+                            <i class="fas fa-quote-left text-primary opacity-25 fa-2x"></i>
+                        </div>
+                        <div class="text-warning mb-3">
+                            @for($i=0; $i<(@$testimonial->value->rating ?? 5); $i++)
+                                <i class="fas fa-star small"></i>
+                            @endfor
+                        </div>
+                        <p class="text-dark mb-4 lh-lg" style="font-size: 0.95rem; min-height: 80px;">
+                            {{ @$testimonial->value->description }}
+                        </p>
+                        <hr class="opacity-10 mb-4">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h6 class="fw-bold mb-0 text-dark">{{ @$testimonial->value->title ?? @$testimonial->value->author }}</h6>
+                                <span class="text-muted small">{{ @$testimonial->value->designation }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="p-4 rounded-4 bg-white shadow-sm border h-100">
-                        <div class="text-warning mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <p class="fst-italic">"The easiest tool I've ever used. Set it up in 5 minutes and it's been running flawlessly for months."</p>
-                        <div class="d-flex align-items-center mt-4">
-                            <div class="fw-bold">Sarah Jenkins</div>
-                            <div class="text-muted small ms-2">- Fashion Blogger</div>
+                @empty
+                <!-- Fallback if Admin hasn't added testimonials yet -->
+                @for($i=0; $i<3; $i++)
+                <div class="col-lg-4 col-md-6">
+                    <div class="p-4 rounded-4 bg-white shadow-sm h-100 border-0 testimonial-card">
+                        <div class="quote-icon mb-3"><i class="fas fa-quote-left text-primary opacity-25 fa-2x"></i></div>
+                        <div class="text-warning mb-3"><i class="fas fa-star small"></i><i class="fas fa-star small"></i><i class="fas fa-star small"></i><i class="fas fa-star small"></i><i class="fas fa-star small"></i></div>
+                        <p class="text-dark mb-4 lh-lg" style="font-size: 0.95rem;">
+                            {{ ["Socialyt changed my life. I went from spending 4 hours a day replying to comments to 0 minutes, while my sales tripled!", "The easiest tool I've ever used. Set it up in 5 minutes and it's been running flawlessly for months.", "Our agency handles 50+ clients and Socialyt is our go-to for automation. The API is rock solid."][$i] }}
+                        </p>
+                        <hr class="opacity-10 mb-4">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h6 class="fw-bold mb-0 text-dark">{{ ["Alex Rivers", "Sarah Jenkins", "Mike Ross"][$i] }}</h6>
+                                <span class="text-muted small">{{ ["Tech Creator", "Fashion Blogger", "Agency Director"][$i] }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="p-4 rounded-4 bg-white shadow-sm border h-100">
-                        <div class="text-warning mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <p class="fst-italic">"Our agency handles 50+ clients and Socialyt is our go-to for automation. The API is rock solid."</p>
-                        <div class="d-flex align-items-center mt-4">
-                            <div class="fw-bold">Marcus Chen</div>
-                            <div class="text-muted small ms-2">- Agency Owner</div>
-                        </div>
-                    </div>
-                </div>
+                @endfor
+                @endforelse
             </div>
         </div>
+
+        <style nonce="{{ csp_nonce() }}">
+            .testimonial-card {
+                border: 1px solid rgba(0,0,0,0.05) !important;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .testimonial-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 30px rgba(0,0,0,0.08) !important;
+                border-color: var(--primary-color) !important;
+            }
+            .transition-all { transition: all 0.3s ease; }
+        </style>
     </section>
 
     <!-- Help Center / Support Section -->
