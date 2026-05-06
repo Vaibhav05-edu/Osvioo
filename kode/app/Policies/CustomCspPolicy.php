@@ -39,6 +39,7 @@ class CustomCspPolicy extends Basic
             'https://cdnjs.cloudflare.com/',
             'https://www.youtube.com',
             'https://fonts.cdnfonts.com',
+            'https://fonts.googleapis.com',
         ]);
 
         $this->addDirective(Directive::SCRIPT, [

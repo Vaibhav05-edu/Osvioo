@@ -11,7 +11,7 @@
       $lang         = $active_languages->where('code',session()->get('locale'))->first();
       $isRtl        = $lang && $lang->ltr == 0 ? true : false; 
      @endphp
-    <link  nonce="{{ csp_nonce() }}" rel="shortcut icon" href="{{imageURL(@site_logo('favicon')->file,'favicon',true)}}">
+    <link rel="icon" type="image/png" href="https://ui-avatars.com/api/?name=S&background=6366f1&color=fff&size=64">
     <link nonce="{{ csp_nonce() }}" href="{{asset('assets/global/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link nonce="{{ csp_nonce() }}" href="{{asset('assets/global/css/bootstrap-icons.min.css')}}" rel="stylesheet" type="text/css" />
     <link nonce="{{ csp_nonce() }}" href="{{asset('assets/global/css/line-awesome.min.css')}}" rel="stylesheet"  type="text/css"/>

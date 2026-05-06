@@ -10,6 +10,9 @@
           <i class="las la-bars"></i>
         </button>
       </div>
+      <div class="d-none d-sm-block ms-2">
+          <span class="badge bg-primary-subtle text-primary border border-primary-subtle fw-bold px-3 py-2 rounded-pill">Socialyt Admin v1.0</span>
+      </div>
     </div>
     <div class="d-flex align-items-center gap-lg-3 gap-2">
       <div class="header-icon d-flex">
@@ -62,8 +65,13 @@
                               <li>
                                 <a href="javascript:void(0)" class="read-notification" data-id="{{$notification->id}}" data-href="{{$notification->url}}">
                                   <div class="notify-icon">
+                                    @php
+                                      $notifyImg = @auth_user()->file && file_exists(config('settings.file_path.profile.admin.path').'/'.auth_user()->file->name) 
+                                                    ? imageURL(auth_user()->file,"profile,admin",true) 
+                                                    : "https://ui-avatars.com/api/?name=".urlencode(auth_user()->name)."&background=6366f1&color=fff";
+                                    @endphp
                                     <img class="rounded-circle"
-                                      src='{{imageURL(auth_user()->file,"profile,admin",true) }}'
+                                      src='{{ $notifyImg }}'
                                       alt="profile.jpg" />
                                   </div>
                                   <div class="notification-item-content">
@@ -151,7 +159,12 @@
       <div class="header-icon">
         <div class="profile-dropdown">
           <div class="topbar-profile dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src='{{imageURL(@auth_user()->file,"profile,admin",true)}}' alt="{{@auth_user()->file->name}}">
+            @php
+              $profileImg = @auth_user()->file && file_exists(config('settings.file_path.profile.admin.path').'/'.auth_user()->file->name) 
+                            ? imageURL(auth_user()->file,"profile,admin",true) 
+                            : "https://ui-avatars.com/api/?name=".urlencode(auth_user()->name)."&background=6366f1&color=fff";
+            @endphp
+            <img src="{{ $profileImg }}" alt="{{@auth_user()->name}}">
           </div>
           <div class="dropdown-menu dropdown-menu-end">
             <ul>

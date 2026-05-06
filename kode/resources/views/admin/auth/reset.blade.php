@@ -8,7 +8,7 @@
             <div class="row mb-25 gy-5">
                 <div class="col-md-12 text-center">
                     <a href="{{route('admin.home')}}" class="site-logo">
-                        <img src="{{imageURL(@site_logo('site_logo')->file,'site_logo',true)}}" class="mx-auto" alt="{{@site_logo('site_logo')->file->name ?? 'site-logo.jpg'}}">
+                        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.2rem; color: #6366f1; letter-spacing: -1px;">Socialyt<span style="color: #f43f5e;">.</span></div>
                    </a>
                 </div>
                 <div class="col-md-12 text-center">

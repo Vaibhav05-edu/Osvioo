@@ -12,11 +12,13 @@
     $bannerFile = ($bannerFileColl instanceof \Illuminate\Support\Collection) ? $bannerFileColl->first() : $bannerFileColl;
     
     $bannerImage = asset('hero_influencer.png');
-    /*
     if ($bannerFile) {
-        $bannerImage = imageURL($bannerFile, 'banner', false);
+        $dynamicUrl = imageURL($bannerFile, 'banner', false);
+        // Only use the dynamic URL if it's NOT a default placeholder
+        if (strpos($dynamicUrl, 'default.jpg') === false && strpos($dynamicUrl, '100x100') === false) {
+            $bannerImage = $dynamicUrl;
+        }
     }
-    */
     
     $heroTitle = data_get($banner, 'value.title', 'AI that helps you grow <br> Automate Instagram & Facebook');
     $heroSubTitle = data_get($banner, 'value.sub_title', '');
@@ -48,7 +50,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Socialyt - Instagram & Facebook DM Automation</title>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Dancing+Script:wght@700&family=Playball&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Dancing+Script:wght@700&family=Playball&family=Syne:wght@700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ time() }}" />
     <style nonce="{{ csp_nonce() }}">
@@ -170,7 +172,7 @@
 
                 <style nonce="{{ csp_nonce() }}">
                     .premium-typing-text {
-                        font-family: 'Syne', sans-serif !important;
+                        font-family: 'Montserrat', sans-serif !important;
                         font-size: 2.2rem !important;
                         font-weight: 800 !important;
                         color: #FF9500 !important;
@@ -210,11 +212,24 @@
         <div class="container text-center">
             <p class="text-muted small text-uppercase fw-bold mb-4" style="letter-spacing: 2px;">Official Meta Business Partner Capabilities</p>
             <div class="d-flex flex-wrap justify-content-center align-items-center gap-5 opacity-50 grayscale">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" height="40" alt="Facebook">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" height="40" alt="Instagram">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" height="30" alt="Meta">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/WhatsApp.svg" height="40" alt="WhatsApp">
-                <div class="fs-4 fw-bold text-dark">Messenger</div>
+                @php
+                    $partners = get_content('element_integration');
+                @endphp
+                @forelse($partners as $partner)
+                    @php
+                        $partnerFile = $partner->file->first();
+                        $partnerImg = $partnerFile ? imageURL($partnerFile, 'integration', false) : null;
+                    @endphp
+                    @if($partnerImg && strpos($partnerImg, 'default.jpg') === false)
+                        <img src="{{ $partnerImg }}" height="40" alt="{{ data_get($partner->value, 'name', 'Partner') }}">
+                    @endif
+                @empty
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" height="40" alt="Facebook">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" height="40" alt="Instagram">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" height="30" alt="Meta">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" height="40" alt="WhatsApp">
+                    <div class="fs-4 fw-bold text-dark">Messenger</div>
+                @endforelse
             </div>
         </div>
     </section>
@@ -719,7 +734,7 @@
                             @endfor
                         </div>
                         <p class="text-dark mb-4 lh-lg" style="font-size: 0.95rem; min-height: 80px;">
-                            {{ @$testimonial->value->description }}
+                            {{ @$testimonial->value->quote ?? @$testimonial->value->description }}
                         </p>
                         <hr class="opacity-10 mb-4">
                         <div class="d-flex align-items-center">
