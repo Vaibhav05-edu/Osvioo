@@ -510,13 +510,13 @@
                 @endphp
                 @foreach($automationVideos as $video)
                     <div class="col-md-4">
-                        <div class="position-relative overflow-hidden rounded-5 shadow-lg animate__animated animate__fadeInUp" style="height: 550px; background: #000;">
+                        <div class="position-relative overflow-hidden rounded-5 shadow-lg animate__animated animate__fadeInUp" style="aspect-ratio: 9/16; width: 100%; max-width: 320px; margin: 0 auto; background: #000;">
                             <iframe class="w-100 h-100" 
-                                    src="https://www.youtube.com/embed/{{ $video['id'] }}?autoplay=0&mute=0&loop=1&playlist={{ $video['id'] }}" 
-                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                    src="https://www.youtube.com/embed/{{ $video['id'] }}?autoplay=1&mute=1&loop=1&playlist={{ $video['id'] }}&controls=0&modestbranding=1" 
+                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="pointer-events: none;"></iframe>
                             <div class="position-absolute bottom-0 start-0 w-100 p-4" style="background: linear-gradient(transparent, rgba(0,0,0,0.9)); pointer-events: none;">
-                                <h4 class="text-white fw-bold mb-0">{{ $video['title'] }}</h4>
-                                <div class="text-primary small fw-bold">Live Demo</div>
+                                <h5 class="text-white fw-bold mb-0" style="font-size: 0.9rem;">{{ $video['title'] }}</h5>
+                                <div class="text-primary fw-bold" style="font-size: 0.7rem;">Socialyt Automation</div>
                             </div>
                         </div>
                     </div>
