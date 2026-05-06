@@ -497,9 +497,54 @@
     </section>
 
     <!-- Videos Grid -->
-    <section class="py-5">
+    <!-- Engagement in Action -->
+    <section class="py-5" id="engagement">
         <div class="container py-5">
             <h2 class="text-center fw-bold mb-5 fs-1">Engagement in Action</h2>
+            
+            <style nonce="{{ csp_nonce() }}">
+                .reels-grid {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 1.5rem;
+                    padding: 0 1rem;
+                }
+                .reel-card {
+                    position: relative;
+                    width: 100%;
+                    max-width: 280px;
+                    aspect-ratio: 9/16;
+                    background: #000;
+                    border-radius: 2rem;
+                    overflow: hidden;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+                    transition: transform 0.3s ease;
+                }
+                .reel-card:hover { transform: translateY(-5px); }
+                .reel-iframe {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border: 0;
+                    object-fit: cover;
+                }
+                .reel-overlay {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    padding: 1.5rem;
+                    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+                    pointer-events: none;
+                }
+                @media (max-width: 768px) {
+                    .reel-card { max-width: 45%; }
+                }
+            </style>
+
             @php
                 $automationVideos = [
                     ['id' => '-Nf5QNtFgkA', 'title' => 'DM Automation'],
@@ -508,16 +553,16 @@
                     ['id' => 'M6W29759k68', 'title' => 'Live Demo']
                 ];
             @endphp
-            <div class="row g-4 justify-content-center px-lg-5">
+
+            <div class="reels-grid">
                 @foreach($automationVideos as $video)
-                    <div class="col-6 col-md-3">
-                        <div class="position-relative overflow-hidden rounded-4 shadow-sm animate__animated animate__fadeInUp" style="aspect-ratio: 9/16; background: #000;">
-                            <iframe class="position-absolute top-0 start-0 w-100 h-100" 
-                                    src="https://www.youtube.com/embed/{{ $video['id'] }}?autoplay=1&mute=1&loop=1&playlist={{ $video['id'] }}&controls=0&modestbranding=1&rel=0" 
-                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="object-fit: cover;"></iframe>
-                            <div class="position-absolute bottom-0 start-0 w-100 p-3" style="background: linear-gradient(transparent, rgba(0,0,0,0.7)); pointer-events: none;">
-                                <div class="text-white fw-bold small">{{ $video['title'] }}</div>
-                            </div>
+                    <div class="reel-card animate__animated animate__fadeInUp">
+                        <iframe class="reel-iframe" 
+                                src="https://www.youtube.com/embed/{{ $video['id'] }}?autoplay=1&mute=1&loop=1&playlist={{ $video['id'] }}&controls=0&modestbranding=1&rel=0" 
+                                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <div class="reel-overlay">
+                            <div class="text-white fw-bold small">{{ $video['title'] }}</div>
+                            <div class="text-primary small fw-bold" style="font-size: 0.6rem;">Socialyt AI</div>
                         </div>
                     </div>
                 @endforeach
