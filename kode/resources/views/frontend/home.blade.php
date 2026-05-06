@@ -500,29 +500,27 @@
     <section class="py-5">
         <div class="container py-5">
             <h2 class="text-center fw-bold mb-5 fs-1">Engagement in Action</h2>
-            <div class="row g-4">
-                @php
-                    $automationVideos = [
-                        ['id' => '-Nf5QNtFgkA', 'title' => 'DM Automation'],
-                        ['id' => 'iYLkM9rNQUo', 'title' => 'Growth Strategy'],
-                        ['id' => 'U-SvBBIr9Zc', 'title' => 'Comment Bot'],
-                        ['id' => 'M6W29759k68', 'title' => 'Live Demo']
-                    ];
-                @endphp
-                <div class="row g-3 justify-content-center px-lg-5">
-                    @foreach($automationVideos as $video)
-                        <div class="col-6 col-md-3">
-                            <div class="position-relative overflow-hidden rounded-4 shadow-sm animate__animated animate__fadeInUp" style="aspect-ratio: 9/16; background: #000;">
-                                <iframe class="position-absolute top-0 start-0 w-100 h-100" 
-                                        src="https://www.youtube.com/embed/{{ $video['id'] }}?autoplay=1&mute=1&loop=1&playlist={{ $video['id'] }}&controls=0&modestbranding=1&rel=0" 
-                                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="object-fit: cover; transform: scale(1.3);"></iframe>
-                                <div class="position-absolute bottom-0 start-0 w-100 p-3" style="background: linear-gradient(transparent, rgba(0,0,0,0.7)); pointer-events: none;">
-                                    <div class="text-white fw-bold small">{{ $video['title'] }}</div>
-                                </div>
+            @php
+                $automationVideos = [
+                    ['id' => '-Nf5QNtFgkA', 'title' => 'DM Automation'],
+                    ['id' => 'iYLkM9rNQUo', 'title' => 'Growth Strategy'],
+                    ['id' => 'U-SvBBIr9Zc', 'title' => 'Comment Bot'],
+                    ['id' => 'M6W29759k68', 'title' => 'Live Demo']
+                ];
+            @endphp
+            <div class="row g-4 justify-content-center px-lg-5">
+                @foreach($automationVideos as $video)
+                    <div class="col-6 col-md-3">
+                        <div class="position-relative overflow-hidden rounded-4 shadow-sm animate__animated animate__fadeInUp" style="aspect-ratio: 9/16; background: #000;">
+                            <iframe class="position-absolute top-0 start-0 w-100 h-100" 
+                                    src="https://www.youtube.com/embed/{{ $video['id'] }}?autoplay=1&mute=1&loop=1&playlist={{ $video['id'] }}&controls=0&modestbranding=1&rel=0" 
+                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="object-fit: cover;"></iframe>
+                            <div class="position-absolute bottom-0 start-0 w-100 p-3" style="background: linear-gradient(transparent, rgba(0,0,0,0.7)); pointer-events: none;">
+                                <div class="text-white fw-bold small">{{ $video['title'] }}</div>
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
