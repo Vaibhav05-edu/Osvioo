@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Socialyt - Instagram & Facebook DM Automation</title>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Playball&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
-    <link href="https://fonts.cdnfonts.com/css/scarlet" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Dancing+Script:wght@700&family=Playball&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ time() }}" />
     <style nonce="{{ csp_nonce() }}">
@@ -102,7 +101,7 @@
 
                 <!-- Typing Animation Section -->
                 <div class="mb-4" style="min-height: 50px; display: flex; align-items: center; justify-content: start;">
-                    <span id="typing-text-welcome" class="premium-typing-text" style="color: #FF2400; font-family: 'Scarlet', sans-serif; font-size: 2.5rem; font-weight: 400;"></span>
+                    <span id="typing-text-welcome" class="premium-typing-text" style="color: #FF2400; font-family: 'Dancing Script', cursive; font-size: 3rem; font-weight: 700;"></span>
                 </div>
 
                 <script nonce="{{ csp_nonce() }}">
