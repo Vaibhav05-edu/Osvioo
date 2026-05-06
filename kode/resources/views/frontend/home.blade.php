@@ -372,31 +372,85 @@
         </div>
     </section>
 
-    <!-- Creator Trust -->
-    <section class="py-5 bg-light" id="creators">
-        <div class="container py-5 text-center">
-            <h2 class="fw-bold mb-4 fs-1">Trusted by the World's Best Creators</h2>
-            <p class="text-muted mb-5 mx-auto" style="max-width: 800px">
-                From micro-influencers to global icons, Socialyt is the secret weapon behind viral engagement.
-            </p>
-            
-            <div class="row row-cols-2 row-cols-md-4 g-4 mb-5 justify-content-center">
-                @foreach($creators as $creator)
-                    <div class="col">
-                        <div class="creator-badge-pro d-flex align-items-center">
-                            <img src="{{ asset('storage/' . $creator->profile_pic) }}" 
-                                 class="rounded-circle me-3" alt="{{ $creator->username }}" 
-                                 style="width: 45px; height: 45px; object-fit: cover;">
-                            <div class="text-start">
-                                <div class="fw-bold text-truncate" style="max-width: 120px;">{{ $creator->username }}</div>
-                                <div class="text-muted small">{{ $creator->followers }}</div>
-                            </div>
-                        </div>
+    <!-- Master Clone: Who's Using Socialyt? -->
+    <section class="py-5 bg-white" id="creators">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold display-5 mb-2">Who's Using Socialyt?</h2>
+                <div class="text-primary fw-bold small letter-spacing-2 mb-5">CREATORS</div>
+                
+                <!-- Creators Grid -->
+                <div class="d-flex flex-wrap justify-content-center gap-3 mb-5 px-lg-5">
+                    @php
+                        $fakeCreators = [
+                            ['name' => 'beautyxdanaplum', 'img' => 'https://i.pravatar.cc/100?u=1'],
+                            ['name' => 'rachaelsgoodeats', 'img' => 'https://i.pravatar.cc/100?u=2'],
+                            ['name' => 'sunsetsandstilettos', 'img' => 'https://i.pravatar.cc/100?u=3'],
+                            ['name' => 'getschooledinfashion', 'img' => 'https://i.pravatar.cc/100?u=4'],
+                            ['name' => 'mytexashouse', 'img' => 'https://i.pravatar.cc/100?u=5'],
+                            ['name' => 'madeline_devaux', 'img' => 'https://i.pravatar.cc/100?u=6'],
+                            ['name' => 'zee_styledit', 'img' => 'https://i.pravatar.cc/100?u=7'],
+                            ['name' => 'eatingbirdfood', 'img' => 'https://i.pravatar.cc/100?u=8'],
+                            ['name' => 'just.ingredients', 'img' => 'https://i.pravatar.cc/100?u=9'],
+                            ['name' => 'snipestwins', 'img' => 'https://i.pravatar.cc/100?u=10'],
+                            ['name' => 'danielle.donohue', 'img' => 'https://i.pravatar.cc/100?u=11'],
+                            ['name' => 'bromabakery', 'img' => 'https://i.pravatar.cc/100?u=12'],
+                            ['name' => 'everyday.holly', 'img' => 'https://i.pravatar.cc/100?u=13']
+                        ];
+                    @endphp
+                    @foreach($fakeCreators as $creator)
+                    <div class="creator-pill d-flex align-items-center bg-white border rounded-pill px-2 py-1 shadow-sm">
+                        <img src="{{ $creator['img'] }}" class="rounded-circle me-2" style="width: 28px; height: 28px; object-fit: cover;">
+                        <span class="small fw-bold text-dark me-1">&#64;{{ $creator['name'] }}</span>
+                        <i class="fas fa-check-circle text-primary" style="font-size: 0.7rem;"></i>
                     </div>
-                @endforeach
+                    @endforeach
+                </div>
+
+                <div class="text-primary fw-bold small letter-spacing-2 mb-5">BRANDS</div>
+
+                <!-- Brands Grid -->
+                <div class="d-flex flex-wrap justify-content-center gap-3 mb-5 px-lg-5">
+                    @php
+                        $fakeBrands = [
+                            ['name' => 'enews', 'color' => '#001a34'],
+                            ['name' => 'chatbooks', 'color' => '#f06292'],
+                            ['name' => 'hauste', 'color' => '#e65100'],
+                            ['name' => 'patpat_clothing', 'color' => '#ff5252'],
+                            ['name' => 'shoptoday', 'color' => '#d32f2f'],
+                            ['name' => 'nbcselect', 'color' => '#1976d2'],
+                            ['name' => 'homebeautiful', 'color' => '#303f9f']
+                        ];
+                    @endphp
+                    @foreach($fakeBrands as $brand)
+                    <div class="creator-pill d-flex align-items-center bg-white border rounded-pill px-2 py-1 shadow-sm">
+                        <div class="rounded-circle me-2 d-flex align-items-center justify-content-center text-white fw-bold" style="width: 28px; height: 28px; background: {{ $brand['color'] }}; font-size: 0.6rem;">{{ strtoupper(substr($brand['name'], 0, 1)) }}</div>
+                        <span class="small fw-bold text-dark me-1">&#64;{{ $brand['name'] }}</span>
+                        <i class="fas fa-check-circle text-primary" style="font-size: 0.7rem;"></i>
+                    </div>
+                    @endforeach
+                </div>
+
+                <div class="text-primary fw-bold small letter-spacing-2 mb-4">NICHES</div>
+                
+                <!-- Niches Grid -->
+                <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+                    @php
+                        $niches = ['Mavely Creators', 'Fashion Creators', 'Amazon Creators', 'LTK Creators', 'Food Creators', 'Beauty Creators', 'Travel Creators', 'DIY Home Creators', 'Designers', 'Musicians', 'Podcasters'];
+                    @endphp
+                    @foreach($niches as $niche)
+                    <span class="badge border text-dark rounded-pill px-3 py-2 fw-normal bg-white" style="font-size: 0.8rem; border-color: #dee2e6 !important;">{{ $niche }}</span>
+                    @endforeach
+                </div>
             </div>
-            <a href="#" class="btn btn-premium btn-lg">Join These Creators</a>
         </div>
+
+        <style nonce="{{ csp_nonce() }}">
+            .letter-spacing-2 { letter-spacing: 2px; }
+            .creator-pill { transition: all 0.3s ease; cursor: default; }
+            .creator-pill:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important; border-color: var(--primary) !important; }
+            .badge.border:hover { border-color: var(--primary) !important; color: var(--primary) !important; }
+        </style>
     </section>
 
     <!-- Videos Grid -->
