@@ -38,7 +38,7 @@
             <div class="auth-right">
               <div class="auth-content">
                     <a href="{{route('home')}}" class="site-log text-center mb-5 d-inline-block">
-                      <img src="{{imageURL(@site_logo('user_site_logo')->file,'user_site_logo',true)}}" alt="{{@site_logo('user_site_logo')->file->name}}">
+                      <img src="{{ asset('assets/images/custom/logo.png') }}" alt="Socialyt Logo" style="height: 50px; width: auto; max-width: 150px; object-fit: contain;">
                     </a>
                     <h2>
                        {{trans("default.login_page_title")}}

@@ -12,17 +12,13 @@
                             <div class="swiper-slide">
                                 <div class="auth-slider-item">
                                     <div class="mb-5">
-                                        @foreach (@get_appearance()->authentication_section->element->images as  $key => $val)
-                                                @php
-                                                    $file =  $element->file->where("type",$key)->first();
-                                                @endphp
-                                                <div class="platform-content-img">
-                                                <img
-                                                    src="{{imageURL(@$file,'frontend',true,$val->size)}}"
-                                                    alt="{{@$file->name}}"
-                                                    loading="lazy"/>
-                                                </div>
-                                         @endforeach
+                                        <div class="platform-content-img" style="display: flex; justify-content: center;">
+                                            <img
+                                                src="{{ asset('assets/images/custom/dashboard_hero.png') }}"
+                                                alt="Socialyt Dashboard"
+                                                loading="lazy"
+                                                style="border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); width: 100%; max-width: 550px; height: auto;" />
+                                        </div>
                                     </div>
 
                                     <h4>
