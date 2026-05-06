@@ -30,21 +30,21 @@ class LandingPageSeeder extends Seeder
             [
                 'title' => 'Instagram Automation', 
                 'description' => 'Automatically reply to comments on your posts and reels.', 
-                'image' => 'stats/fashion_influencer_ecommerce_red_1777912440009.png',
+                'image' => 'assets/images/custom/fashion_influencer_ecommerce_red_1777912440009.png',
                 'order' => 1, 
                 'status' => true
             ],
             [
                 'title' => 'Inbox Starters', 
                 'description' => 'Set up automated welcome messages for your new followers.', 
-                'image' => 'stats/fashion_influencer_partnership_gold_1777912536159.png',
+                'image' => 'assets/images/custom/fashion_influencer_partnership_gold_1777912536159.png',
                 'order' => 2, 
                 'status' => true
             ],
             [
                 'title' => 'Smart Keywords', 
                 'description' => 'Trigger specific DMs based on keywords in comments.', 
-                'image' => 'stats/fashion_influencer_reels_black_1777912474216.png',
+                'image' => 'assets/images/custom/fashion_influencer_reels_black_1777912474216.png',
                 'order' => 3, 
                 'status' => true
             ],
@@ -56,8 +56,8 @@ class LandingPageSeeder extends Seeder
 
         // 3. Stories
         $stories = [
-            ['title' => 'E-Commerce Success', 'description' => 'How Sarah grew her shop by 300%.', 'image' => 'stats/fashion_influencer_story_chic_1777912506296.png', 'order' => 1, 'status' => true],
-            ['title' => 'Partnership Growth', 'description' => 'Automating collab inquiries.', 'image' => 'stats/fashion_influencer_reels_black_1777912474216.png', 'order' => 2, 'status' => true],
+            ['title' => 'E-Commerce Success', 'description' => 'How Sarah grew her shop by 300%.', 'image' => 'assets/images/custom/fashion_influencer_story_chic_1777912506296.png', 'order' => 1, 'status' => true],
+            ['title' => 'Partnership Growth', 'description' => 'Automating collab inquiries.', 'image' => 'assets/images/custom/fashion_influencer_reels_black_1777912474216.png', 'order' => 2, 'status' => true],
         ];
         Story::truncate();
         foreach ($stories as $s) {

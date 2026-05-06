@@ -11,7 +11,7 @@
     $bannerFileColl = data_get($banner, 'file');
     $bannerFile = ($bannerFileColl instanceof \Illuminate\Support\Collection) ? $bannerFileColl->first() : $bannerFileColl;
     
-    $bannerImage = asset('hero_influencer.png');
+    $bannerImage = asset('assets/images/custom/hero_influencer.png');
     if ($bannerFile) {
         $dynamicUrl = imageURL($bannerFile, 'banner', false);
         // Only use the dynamic URL if it's NOT a default placeholder
@@ -199,7 +199,7 @@
             <!-- Right Side: Influencer Image -->
             <div class="col-lg-6 mt-5 mt-lg-0">
                 <div class="position-relative">
-                    <img src="{{ $bannerImage ?? asset('hero_influencer.png') }}" 
+                    <img src="{{ $bannerImage ?? asset('assets/images/custom/hero_influencer.png') }}" 
                          alt="Influencer" class="img-fluid mx-auto animate__animated animate__zoomIn">
                 </div>
             </div>
@@ -307,7 +307,7 @@
                 <div class="col-md-6">
                     <div class="premium-3d-card-wrapper animate__animated animate__fadeInLeft">
                         <div class="premium-3d-card">
-                            <img src="{{ asset('fashion_influencer_ecommerce_red_1777912440009.png') }}" alt="Ecommerce Influencer Pro">
+                            <img src="{{ asset('assets/images/custom/fashion_influencer_ecommerce_red_1777912440009.png') }}" alt="Ecommerce Influencer Pro">
                         </div>
                     </div>
                 </div>
@@ -331,7 +331,7 @@
                 <div class="col-md-6">
                     <div class="premium-3d-card-wrapper animate__animated animate__fadeInRight">
                         <div class="premium-3d-card">
-                            <img src="{{ asset('fashion_influencer_partnership_gold_1777912536159.png') }}" alt="Partnership Influencer Pro">
+                            <img src="{{ asset('assets/images/custom/fashion_influencer_partnership_gold_1777912536159.png') }}" alt="Partnership Influencer Pro">
                         </div>
                     </div>
                 </div>
