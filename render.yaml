@@ -30,7 +30,3 @@ services:
     # Specify the port Apache is listening on
     healthCheckPath: /
     numInstances: 1
-    disk:
-      name: storage
-      mountPath: /var/www/html/kode/storage
-      sizeGB: 1

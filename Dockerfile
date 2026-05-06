@@ -37,6 +37,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader
 
 # Set permissions for Laravel
+RUN mkdir -p /var/www/html/kode/storage/framework/cache/data \
+             /var/www/html/kode/storage/framework/sessions \
+             /var/www/html/kode/storage/framework/views \
+             /var/www/html/kode/storage/logs
 RUN chown -R www-data:www-data /var/www/html/kode/storage /var/www/html/kode/bootstrap/cache
 RUN chmod -R 775 /var/www/html/kode/storage /var/www/html/kode/bootstrap/cache
 
