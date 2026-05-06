@@ -1,0 +1,567 @@
+:root {
+    --primary: #007AFF;
+    --primary-dark: #0056b3;
+    --secondary: #FF9500;
+    --background: #ffffff;
+    --text-main: #1d1d1f;
+    --text-muted: #86868b;
+    --glass: rgba(255, 255, 255, 0.7);
+    --card-bg: #f5f5f7;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-main);
+    background-color: var(--background);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Glassmorphism Navbar */
+.navbar-custom {
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: var(--text-main) !important;
+    padding: 0.5rem 1.2rem !important;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary) !important;
+}
+
+/* Typography Refinement */
+h1, h2, h3, h4 {
+    letter-spacing: -0.02em;
+}
+
+.hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 4.8rem;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.playball-accent {
+    font-family: 'Playball', cursive;
+    color: var(--secondary);
+    font-size: 3rem;
+    margin-top: -10px;
+    display: block;
+}
+
+/* Alternating Sections */
+.section-feature {
+    padding: 100px 0;
+}
+
+.feature-image-wrapper {
+    position: relative;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.feature-image-wrapper:hover {
+    transform: scale(1.02);
+}
+
+.feature-text {
+    padding: 40px;
+}
+
+/* Custom Buttons */
+.btn-premium {
+    background-color: var(--primary);
+    color: white;
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+}
+
+.btn-premium:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
+    color: white;
+}
+
+.btn-outline-premium {
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-premium:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* Creator Badges */
+.creator-badge-pro {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.05);
+    padding: 12px 20px;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.creator-badge-pro:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    border-color: var(--primary);
+}
+
+/* FAQ Refinement */
+.faq-item-modern {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.faq-item-modern:hover {
+    background: white;
+    border-color: var(--primary);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* Stats Cards */
+.stat-card-premium {
+    background: white;
+    border-radius: 24px;
+    padding: 30px;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.stat-card-premium:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+/* Micro-animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.8s ease forwards;
+}
+
+.hero-mockup {
+    max-width: 600px;
+    width: 100%;
+    filter: drop-shadow(0 30px 60px rgba(0,0,0,0.15));
+}
+
+/* Premium 3D Card Style */
+.premium-3d-card-wrapper {
+    perspective: 1200px;
+    padding: 1rem;
+}
+
+.premium-3d-card {
+    background: #ffffff;
+    border-radius: 40px;
+    padding: 2.5rem;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: rotateY(-8deg) rotateX(4deg);
+    border: 1px solid rgba(0,0,0,0.03);
+    position: relative;
+    overflow: visible;
+}
+
+.premium-3d-card:hover {
+    transform: rotateY(0deg) rotateX(0deg) scale(1.03);
+    box-shadow: 0 40px 80px rgba(0,0,0,0.12);
+}
+
+.premium-3d-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.1));
+}
+
+/* Social Proof Notification */
+.social-proof-pop {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: white;
+    padding: 12px 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeInUp 0.5s ease-out;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* LinkDM Master Clone - Halo & Phone */
+.linkdm-clone-wrapper {
+    position: relative;
+    padding: 80px 0;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.textured-halo {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0, 132, 255, 0.15) 0%, rgba(0, 132, 255, 0) 70%);
+    filter: blur(60px);
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.halo-red { background: radial-gradient(circle, rgba(255, 59, 48, 0.15) 0%, rgba(255, 59, 48, 0) 70%); }
+.halo-gold { background: radial-gradient(circle, rgba(255, 184, 0, 0.15) 0%, rgba(255, 184, 0, 0) 70%); }
+
+.linkdm-phone-3d-card {
+    width: 280px;
+    height: 560px;
+    background: #000;
+    border-radius: 40px;
+    box-shadow: 0 50px 100px rgba(0,0,0,0.2);
+    border: 10px solid #1a1a1a;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.linkdm-phone-3d-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.linkdm-floating-card {
+    position: absolute;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    padding: 0; /* Content will fill */
+    z-index: 3;
+    border: 1px solid rgba(255,255,255,0.2);
+    width: 220px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.linkdm-floating-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.notification-badge-red {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #FF3B30;
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12px;
+    box-shadow: 0 5px 10px rgba(255, 59, 48, 0.3);
+    z-index: 10;
+}
+
+.dashed-line-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.linkdm-feature-heading {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #000000;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.linkdm-feature-text {
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+.instagram-profile-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Minimalist Grey Footer */
+.footer-banner-grey {
+    background-color: #f5f5f7;
+    padding: 80px 0 40px 0;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-brand-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.footer-brand-tagline {
+    font-family: 'Playball', cursive;
+    font-size: 1.5rem;
+    color: #1d1d1f;
+    margin-bottom: 1.5rem;
+}
+
+.footer-link-col h5 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.footer-link-col ul li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-link-col ul li a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.footer-link-col ul li a:hover {
+    color: var(--primary);
+}
+
+.social-icon-circle {
+    width: 45px;
+    height: 45px;
+    background: #000;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    transition: transform 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.social-icon-circle:hover {
+    transform: scale(1.1);
+    color: #fff;
+}
+
+.footer-watermark {
+    font-size: 15vw;
+    font-weight: 900;
+    color: rgba(0,0,0,0.03);
+    text-align: center;
+    line-height: 1;
+    margin-top: 40px;
+    letter-spacing: -0.05em;
+    user-select: none;
+    text-transform: uppercase;
+}
+
+/* Exact LinkDM Style Clone Layout */
+.linkdm-section {
+    padding: 100px 0;
+    background-color: #ffffff;
+}
+
+.linkdm-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0084FF;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.linkdm-title-main {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: #000000;
+    margin-bottom: 1.5rem;
+}
+
+.linkdm-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto 80px auto;
+}
+
+/* Card Positions */
+.profile-card { top: 5%; right: -80px; }
+.comment-card { bottom: 15%; right: -60px; }
+.inbox-card { top: 30%; right: -90px; }
+.ad-card { bottom: 20%; left: -90px; }
+
+/* Sleek Stats Cards */
+.stats-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.stats-glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 25px 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
+}
+
+.stats-glass-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+}
+
+.stats-glass-card.primary-card {
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(13, 110, 253, 0.2);
+}
+
+.stats-glass-card .stat-number {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+}
+
+.stats-glass-card .stat-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Mobile Optimizations (Android & iOS) */
+@media (max-width: 768px) {
+    /* Prevent horizontal scroll issues from floating absolute elements */
+    body {
+        overflow-x: hidden;
+    }
+
+    /* LinkDM Feature Section Mobile */
+    .linkdm-clone-wrapper {
+        padding: 40px 0;
+        margin-bottom: 2rem;
+    }
+    
+    .linkdm-phone-3d-card {
+        width: 220px;
+        height: 440px;
+    }
+
+    /* Pull floating cards inward and scale them down */
+    .linkdm-floating-card {
+        width: 180px;
+    }
+    .profile-card { right: -10px; top: -5%; }
+    .comment-card { right: -5px; bottom: 5%; }
+    .inbox-card { right: -10px; top: 10%; }
+    .ad-card { left: -10px; bottom: 5%; }
+
+    /* Center text on mobile */
+    .linkdm-feature-heading {
+        font-size: 2rem;
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+    .linkdm-feature-text {
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    /* Premium 3D Card wrappers */
+    .premium-3d-card-wrapper {
+        margin: 0 auto 2rem auto;
+    }
+
+    /* Dynamic Social Proof Mobile */
+    .social-proof {
+        left: 5% !important;
+        right: 5% !important;
+        width: 90% !important;
+        min-width: auto !important;
+        bottom: 10px !important;
+    }
+
+    /* Stats Section */
+    .stats-container {
+        padding: 0 15px;
+    }
+    .stats-glass-card .stat-number {
+        font-size: 1.8rem;
+    }
+
+    /* Footer */
+    .footer-banner-grey {
+        padding: 50px 0 20px 0;
+        text-align: center;
+    }
+    .footer-brand-title {
+        font-size: 2rem;
+    }
+    .footer-link-col {
+        margin-top: 2rem;
+    }
+    .social-icon-circle {
+        margin: 0 auto;
+    }
+    .d-flex.gap-3 {
+        justify-content: center;
+    }
+}
+

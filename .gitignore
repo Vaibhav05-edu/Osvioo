@@ -1,0 +1,6 @@
+/vendor
+/node_modules
+.env
+.DS_Store
+Project_Adarsh 2
+beepost-installer-v2.6.zip

@@ -1,0 +1,10 @@
+/vendor
+/node_modules
+/storage/*.key
+.env
+.DS_Store
+/public/storage
+/public/hot
+/public/mix-manifest.json
+/public/css/app.css
+/public/js/app.js
