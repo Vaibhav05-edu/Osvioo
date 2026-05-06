@@ -76,7 +76,7 @@
 
                 <!-- Typing Animation Section -->
                 <div class="mb-4" style="min-height: 50px; display: flex; align-items: center; justify-content: start;">
-                    <span id="typing-text-welcome" style="font-family: 'Courier New', Courier, monospace !important; font-size: 1.8rem; font-weight: 800; color: #007AFF !important; border-right: 3px solid #007AFF; padding-right: 5px; min-width: 10px; display: inline-block;"></span>
+                    <span id="typing-text-welcome" style="font-family: 'Syne', sans-serif !important; font-size: 1.8rem; font-weight: 800; color: #FF9500 !important; border-right: 3px solid #FF9500; padding-right: 5px; min-width: 10px; display: inline-block;"></span>
                 </div>
 
                 <script nonce="{{ csp_nonce() }}">
