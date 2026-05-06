@@ -792,13 +792,44 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
+    <style nonce="{{ csp_nonce() }}">
+        .premium-social-proof {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: #fff !important;
+            padding: 8px 15px !important;
+            border-radius: 50px !important;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12) !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 12px !important;
+            z-index: 99999 !important;
+            border: 1px solid rgba(0,0,0,0.05) !important;
+            width: auto !important;
+            max-width: 500px !important;
+        }
+        .premium-social-proof span {
+            white-space: nowrap !important;
+            display: inline-block !important;
+        }
+        .sp-img-box {
+            width: 32px !important;
+            height: 32px !important;
+            border-radius: 50% !important;
+            object-fit: cover !important;
+            flex-shrink: 0 !important;
+        }
+    </style>
+
     <!-- Dynamic Social Proof Popup -->
-    <div id="dynamic-social-proof" class="social-proof d-none animate__animated" style="position: fixed; bottom: 20px; left: 20px; background: #fff; padding: 10px 20px; border-radius: 50px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 12px; z-index: 9999; border: 1px solid rgba(0,0,0,0.05); width: auto; max-width: 90vw; white-space: nowrap;">
-        <img id="sp-img" src="https://i.pravatar.cc/150?u=1" alt="User" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; flex-shrink: 0;">
-        <div class="d-flex align-items-center gap-2" style="overflow: hidden;">
-            <span id="sp-name" class="fw-bold text-dark" style="font-size: 0.85rem;">Manas 🇺🇸</span>
-            <span id="sp-action" class="text-muted" style="font-size: 0.85rem;">Just signed up to Socialyt</span>
-            <span id="sp-time" class="text-muted" style="font-size: 0.75rem; opacity: 0.7;">• Just now</span>
+    <div id="dynamic-social-proof" class="premium-social-proof d-none animate__animated">
+        <img id="sp-img" src="https://i.pravatar.cc/150?u=1" alt="User" class="sp-img-box">
+        <div class="d-flex align-items-center gap-2">
+            <span id="sp-name" class="fw-bold text-dark" style="font-size: 0.8rem;">Manas 🇺🇸</span>
+            <span id="sp-action" class="text-muted" style="font-size: 0.8rem;">Just signed up to Socialyt</span>
+            <span id="sp-time" class="text-muted" style="font-size: 0.7rem; opacity: 0.7;">• Just now</span>
         </div>
         <button onclick="document.getElementById('dynamic-social-proof').classList.add('d-none')" class="btn-close ms-2" style="font-size: 0.5rem; opacity: 0.4; flex-shrink: 0;" aria-label="Close"></button>
     </div>
