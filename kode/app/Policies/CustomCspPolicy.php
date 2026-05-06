@@ -37,6 +37,7 @@ class CustomCspPolicy extends Basic
             'https://www.gstatic.com/',
             'https://www.gstatic.com/charts/49/css/util/util.css',
             'https://cdnjs.cloudflare.com/',
+            'https://www.youtube.com',
         ]);
 
         $this->addDirective(Directive::SCRIPT, [
@@ -44,8 +45,9 @@ class CustomCspPolicy extends Basic
             "'nonce-{$nonce}'",
             'https://www.google.com',
             'https://www.gstatic.com/' ,
-            'https://www.gstatic.com/charts/geochart/10/info/mapList.js'
-
+            'https://www.gstatic.com/charts/geochart/10/info/mapList.js',
+            'https://www.youtube.com',
+            'https://s.ytimg.com',
         ]);
 
 
@@ -71,7 +73,9 @@ class CustomCspPolicy extends Basic
         $this->addDirective(Directive::FRAME, [
             "'self'",
             'https://checkout.paystack.com',
-            'https://*.paypal.com'
+            'https://*.paypal.com',
+            'https://www.youtube.com',
+            'https://*.youtube-nocookie.com',
         ]);
 
         $this->addDirective(Directive::CONNECT, [
