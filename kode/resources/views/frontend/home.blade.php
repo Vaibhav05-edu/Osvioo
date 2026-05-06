@@ -101,12 +101,16 @@
 
                 <!-- Typing Animation Section -->
                 <div class="mb-4" style="min-height: 50px; display: flex; align-items: center; justify-content: start;">
-                    <span id="typing-text-welcome" class="premium-typing-text"></span>
+                    <span id="typing-text-welcome" class="premium-typing-text" style="color: #FF2400; font-family: var(--font-heading); font-size: 2rem; font-weight: 800;"></span>
                 </div>
 
                 <script nonce="{{ csp_nonce() }}">
                     (function() {
-                        const texts = ["AI helps you grow", "AI creates media kit", "AI auto DM"];
+                        const texts = [
+                            "AI that helps you grow", 
+                            "AI that helps you create media kit", 
+                            "AI that automates DMs"
+                        ];
                         const target = document.getElementById('typing-text-welcome');
                         let tIndex = 0, cIndex = 0, deleting = false;
                         
