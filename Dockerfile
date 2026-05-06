@@ -43,8 +43,8 @@ RUN chmod -R 775 /var/www/html/kode/storage /var/www/html/kode/bootstrap/cache
 # Go back to root
 WORKDIR /var/www/html
 
-# Set Apache Document Root to current directory (since index.php is here)
-ENV APACHE_DOCUMENT_ROOT /var/www/html
+# Set Apache Document Root to Laravel public directory
+ENV APACHE_DOCUMENT_ROOT /var/www/html/kode/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
