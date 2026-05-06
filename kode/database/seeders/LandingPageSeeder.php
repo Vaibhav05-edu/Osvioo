@@ -16,8 +16,8 @@ class LandingPageSeeder extends Seeder
     {
         // 1. Landing Page Settings
         LandingPageSetting::updateOrCreate(['id' => 1], [
-            'headline_1' => 'Social Media Post',
-            'headline_2' => '10x Faster With AI',
+            'headline_1' => 'Automate your social media',
+            'headline_2' => '10x faster',
             'typing_texts' => ['AI helps you grow', 'AI creates media kit', 'AI auto DM system'],
             'description' => 'Our all-in-one social media management platform unlocks the full potential of social to transform not just your marketing strategy—but every area of your organization.',
             'hero_image' => null,
