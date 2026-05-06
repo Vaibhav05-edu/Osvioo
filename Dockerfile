@@ -53,11 +53,11 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # Allow .htaccess overrides
-RUN echo "<Directory ${APACHE_DOCUMENT_ROOT}>\n\
+RUN printf "<Directory ${APACHE_DOCUMENT_ROOT}>\n\
     Options Indexes FollowSymLinks\n\
     AllowOverride All\n\
     Require all granted\n\
-</Directory>" >> /etc/apache2/apache2.conf
+</Directory>\n" >> /etc/apache2/apache2.conf
 
 # Expose port (Render will use $PORT)
 EXPOSE 80
