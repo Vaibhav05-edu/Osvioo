@@ -89,7 +89,7 @@
                 <div class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill mb-4 animate__animated animate__fadeInDown">
                     🚀 {{ $settings->cta_text ?? '#1 Meta Automation Tool' }}
                 </div>
-                <h1 class="hero-title display-4 fw-bold mb-2">{{ $settings->headline_1 ?? 'AI that helps you grow' }}</h1>
+                <h1 class="hero-title mb-2">{{ $settings->headline_1 ?? 'AI that helps you grow' }}</h1>
                 <!-- Line 2: Subheadline with artistic font - Forced for preview -->
                 <div class="playball-accent mb-4" style="font-size: 3.2rem; color: #FF9500; font-family: 'Playball', cursive; line-height: 1.1; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
                     {{ $settings->headline_2 ?? 'Automate Instagram & Facebook' }}
