@@ -5,6 +5,7 @@
         $meta_data = [
             "title" => translate($settings->headline_1 ?? 'Home'),
             "description" => translate($settings->description ?? 'Socialyt - Instagram & Facebook DM Automation'),
+            "meta_keywords" => [],
         ];
     @endphp
 
