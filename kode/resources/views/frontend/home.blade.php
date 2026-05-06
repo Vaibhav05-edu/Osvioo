@@ -76,7 +76,7 @@
 
                 <!-- Typing Animation Section -->
                 <div class="mb-4" style="min-height: 50px; display: flex; align-items: center; justify-content: start;">
-                    <span id="typing-text-welcome" style="font-family: 'Syne', sans-serif !important; font-size: 1.8rem; font-weight: 800; color: #FF9500 !important; border-right: 3px solid #FF9500; padding-right: 5px; min-width: 10px; display: inline-block;"></span>
+                    <span id="typing-text-welcome" class="premium-typing-text"></span>
                 </div>
 
                 <script nonce="{{ csp_nonce() }}">
@@ -101,7 +101,17 @@
                 </script>
 
                 <style nonce="{{ csp_nonce() }}">
-                    #typing-text-welcome { animation: blink-cursor 0.7s infinite; }
+                    .premium-typing-text {
+                        font-family: 'Syne', sans-serif !important;
+                        font-size: 2.2rem !important;
+                        font-weight: 800 !important;
+                        color: #FF9500 !important;
+                        border-right: 3px solid #FF9500;
+                        padding-right: 8px;
+                        display: inline-block;
+                        animation: blink-cursor 0.7s infinite;
+                        line-height: 1.2;
+                    }
                     @keyframes blink-cursor { 50% { border-color: transparent; } }
                 </style>
 
