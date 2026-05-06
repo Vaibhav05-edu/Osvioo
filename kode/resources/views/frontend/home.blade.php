@@ -75,9 +75,13 @@
                 </div>
 
                 <!-- Typing Animation Section -->
-                <div class="mb-4" style="min-height: 45px;">
-                    <span class="text-primary fw-bold fs-2" id="typing-text-welcome" style="font-family: 'Courier New', Courier, monospace;"></span>
+                <div class="mb-4" style="min-height: 50px; display: flex; align-items: center; justify-content: center; justify-content: lg-start;">
+                    <span id="typing-text-welcome" style="font-family: 'Courier New', Courier, monospace; font-size: 1.8rem; font-weight: 800; color: #007AFF; border-right: 3px solid #007AFF; padding-right: 5px; animation: blink 0.7s infinite;"></span>
                 </div>
+
+                <style>
+                    @keyframes blink { 50% { border-color: transparent; } }
+                </style>
 
                 <!-- Dynamic Description -->
                 <p class="lead text-muted mb-5" style="font-size: 1.1rem;">
