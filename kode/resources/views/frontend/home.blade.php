@@ -10,15 +10,15 @@
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ time() }}" />
     <style>
       /* FORCE PREMIUM FONTS INLINE */
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playball&family=Syne:wght@700;800&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playball&family=Syne:wght@700;800&family=Viaoda+Libre&display=swap');
       
       body { font-family: 'Inter', sans-serif !important; }
       .hero-title { 
-          font-family: 'Syne', sans-serif !important; 
-          font-weight: 800 !important;
-          letter-spacing: -0.06em !important;
-          line-height: 0.95 !important;
-          font-size: 5.8rem !important;
+          font-family: 'Viaoda Libre', serif !important; 
+          font-weight: 400 !important;
+          letter-spacing: -0.02em !important;
+          line-height: 1.05 !important;
+          font-size: 6rem !important;
       }
       .playball-accent {
           font-family: 'Playball', cursive !important;
