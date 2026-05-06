@@ -96,6 +96,42 @@
           from { transform: translateY(100px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
       }
+
+      /* Mobile Optimizations */
+      @media (max-width: 767.98px) {
+          .display-3 { font-size: 2.2rem !important; line-height: 1.1 !important; }
+          .display-4 { font-size: 1.8rem !important; }
+          .display-6 { font-size: 1.3rem !important; }
+          .hero-title { font-size: 2.2rem !important; margin-bottom: 1rem !important; }
+          .premium-typing-text { font-size: 1.5rem !important; }
+          .btn-premium, .btn-outline-premium { 
+              padding: 12px 20px !important; 
+              font-size: 0.9rem !important; 
+              width: 100%; 
+              margin-bottom: 10px;
+          }
+          .creator-card {
+              padding: 10px 15px !important;
+              border-radius: 50px !important;
+          }
+          .creator-card img {
+              width: 60px !important;
+              height: 60px !important;
+          }
+          .creator-card .fw-bold {
+              font-size: 0.9rem !important;
+          }
+          .section-hero {
+              padding-top: 2rem !important;
+              padding-bottom: 2rem !important;
+          }
+          .social-proof {
+              bottom: 10px;
+              left: 10px;
+              right: 10px;
+              max-width: calc(100% - 20px);
+          }
+      }
     </style>
   </head>
   <body>
