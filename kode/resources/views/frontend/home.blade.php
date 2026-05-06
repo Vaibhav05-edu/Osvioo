@@ -12,7 +12,7 @@
       /* LOCAL FONT DEFINITION */
       @font-face {
           font-family: 'Bebas Neue';
-          src: url('/fonts/bebas-neue.woff2') format('woff2');
+          src: url('{{ asset('fonts/bebas-neue.woff2') }}') format('woff2');
           font-weight: normal;
           font-style: normal;
       }
