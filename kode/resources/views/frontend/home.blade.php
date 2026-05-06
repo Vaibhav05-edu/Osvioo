@@ -131,6 +131,22 @@
               right: 10px;
               max-width: calc(100% - 20px);
           }
+          
+          /* Global Section Tweaks */
+          h2 { font-size: 1.8rem !important; }
+          h3 { font-size: 1.5rem !important; }
+          .section-feature, .py-5 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+          .container { padding-left: 20px !important; padding-right: 20px !important; }
+          
+          /* Feature Cards */
+          .transition-transform { transform: none !important; }
+          .shadow-sm { box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important; }
+          
+          /* Pricing Cards */
+          .pricing-card { margin-bottom: 20px; }
+          
+          /* Images */
+          img { max-width: 100%; height: auto; }
       }
     </style>
   </head>
