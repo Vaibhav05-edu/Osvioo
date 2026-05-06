@@ -375,14 +375,21 @@
     <style nonce="{{ csp_nonce() }}">
         .premium-stats-banner {
             background: linear-gradient(90deg, #E91E63 0%, #9C27B0 50%, #673AB7 100%) !important;
-            padding: 60px 0 !important;
+            padding: 35px 0 !important;
             color: #fff !important;
             text-align: center !important;
+            width: 100vw !important;
+            position: relative !important;
+            left: 50% !important;
+            right: 50% !important;
+            margin-left: -50vw !important;
+            margin-right: -50vw !important;
+            overflow: hidden !important;
         }
-        .stat-val { font-size: 3.5rem !important; font-weight: 800 !important; margin-bottom: 5px !important; }
-        .stat-val span { font-size: 1.5rem !important; vertical-align: top !important; }
-        .stat-desc { font-weight: 700 !important; font-size: 1.1rem !important; opacity: 0.95 !important; }
-        .stat-meta { font-size: 0.8rem !important; opacity: 0.75 !important; font-style: italic !important; margin-top: 5px !important; }
+        .stat-val { font-size: 2.8rem !important; font-weight: 800 !important; margin-bottom: 0px !important; line-height: 1 !important; }
+        .stat-val span { font-size: 1.2rem !important; vertical-align: top !important; }
+        .stat-desc { font-weight: 700 !important; font-size: 0.95rem !important; opacity: 0.95 !important; }
+        .stat-meta { font-size: 0.7rem !important; opacity: 0.7 !important; font-style: italic !important; margin-top: 2px !important; }
     </style>
 
     <!-- Premium Gradient Stats Banner -->
