@@ -376,13 +376,13 @@
                         
                         <!-- 3D Phone Card -->
                         <div class="linkdm-phone-3d-card animate__animated animate__fadeInLeft">
-                            <img src="{{ asset('hot_influencer_reel.jpg') }}" alt="Vibrant Content">
+                            <img src="{{ asset('assets/images/custom/hot_influencer_reel.jpg') }}" alt="Vibrant Content">
                         </div>
                         
                         <!-- Floating Zoom Card -->
                         <div class="linkdm-floating-card profile-card animate__animated animate__fadeInRight">
                             <div class="notification-badge-red">1</div>
-                            <img src="{{ asset('hot_influencer_reel.jpg') }}" style="height: 180px; object-fit: cover;" alt="Zoom">
+                            <img src="{{ asset('assets/images/custom/hot_influencer_reel.jpg') }}" style="height: 180px; object-fit: cover;" alt="Zoom">
                             <div class="p-3 bg-white">
                                 <div class="fw-bold small">DM Sent! 🚀</div>
                                 <div class="x-small text-muted">Reply SHOP to get link</div>
@@ -406,7 +406,7 @@
                         <div class="textured-halo halo-gold"></div>
                         
                         <div class="linkdm-phone-3d-card animate__animated animate__fadeInLeft">
-                            <img src="{{ asset('hot_influencer_inbox.jpg') }}" alt="Inbox Content">
+                            <img src="{{ asset('assets/images/custom/hot_influencer_inbox.jpg') }}" alt="Inbox Content">
                         </div>
                         
                         <!-- Floating Inbox Thread -->
@@ -438,7 +438,7 @@
                         <div class="textured-halo halo-red"></div>
                         
                         <div class="linkdm-phone-3d-card animate__animated animate__fadeInRight">
-                            <img src="{{ asset('hot_influencer_ad.jpg') }}" style="filter: brightness(0.9) contrast(1.1);" alt="Ad Content">
+                            <img src="{{ asset('assets/images/custom/hot_influencer_ad.jpg') }}" style="filter: brightness(0.9) contrast(1.1);" alt="Ad Content">
                         </div>
                         
                         <!-- Floating Ad Card -->

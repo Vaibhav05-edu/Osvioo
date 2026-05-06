@@ -1,0 +1,8 @@
+kode/vendor
+kode/node_modules
+kode/.env
+.git
+.gitignore
+Project_Adarsh 2
+Dockerfile
+render.yaml
