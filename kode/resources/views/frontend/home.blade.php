@@ -508,19 +508,21 @@
                         ['id' => 'U-SvBBIr9Zc', 'title' => 'Comment to DM']
                     ];
                 @endphp
-                @foreach($automationVideos as $video)
-                    <div class="col-md-4">
-                        <div class="position-relative overflow-hidden rounded-5 shadow-lg animate__animated animate__fadeInUp" style="aspect-ratio: 9/16; width: 100%; max-width: 320px; margin: 0 auto; background: #000;">
-                            <iframe class="w-100 h-100" 
-                                    src="https://www.youtube.com/embed/{{ $video['id'] }}?autoplay=1&mute=1&loop=1&playlist={{ $video['id'] }}&controls=0&modestbranding=1" 
-                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="pointer-events: none;"></iframe>
-                            <div class="position-absolute bottom-0 start-0 w-100 p-4" style="background: linear-gradient(transparent, rgba(0,0,0,0.9)); pointer-events: none;">
-                                <h5 class="text-white fw-bold mb-0" style="font-size: 0.9rem;">{{ $video['title'] }}</h5>
-                                <div class="text-primary fw-bold" style="font-size: 0.7rem;">Socialyt Automation</div>
+                <div class="row g-4 justify-content-center">
+                    @foreach($automationVideos as $video)
+                        <div class="col-md-4 d-flex justify-content-center">
+                            <div class="position-relative overflow-hidden rounded-5 shadow-lg animate__animated animate__fadeInUp" style="width: 300px; height: 533px; background: #000; border: 1px solid rgba(255,255,255,0.1);">
+                                <iframe class="w-100 h-100" 
+                                        src="https://www.youtube.com/embed/{{ $video['id'] }}?autoplay=1&mute=1&loop=1&playlist={{ $video['id'] }}&controls=0&modestbranding=1&rel=0&iv_load_policy=3" 
+                                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="object-fit: cover;"></iframe>
+                                <div class="position-absolute bottom-0 start-0 w-100 p-4" style="background: linear-gradient(transparent, rgba(0,0,0,0.9)); pointer-events: none;">
+                                    <h5 class="text-white fw-bold mb-0" style="font-size: 1rem;">{{ $video['title'] }}</h5>
+                                    <div class="text-primary fw-bold" style="font-size: 0.75rem;">Socialyt Automation</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
         </div>
     </section>
