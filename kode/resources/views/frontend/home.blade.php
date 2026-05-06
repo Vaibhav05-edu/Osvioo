@@ -550,7 +550,7 @@
                     ['id' => '-Nf5QNtFgkA', 'title' => 'DM Automation'],
                     ['id' => 'iYLkM9rNQUo', 'title' => 'Growth Strategy'],
                     ['id' => 'U-SvBBIr9Zc', 'title' => 'Comment Bot'],
-                    ['id' => 'M6W29759k68', 'title' => 'Live Demo']
+                    ['id' => '-ND8SlMFYuA', 'title' => 'Automation Pro']
                 ];
             @endphp
 
