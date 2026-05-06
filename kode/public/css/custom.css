@@ -46,13 +46,11 @@ h1, h2, h3, h4 {
 
 .hero-title {
     font-family: 'Syne', sans-serif !important;
-    font-size: 5.8rem;
+    font-size: 5.5rem;
     font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.06em;
-    background: linear-gradient(135deg, #000000 0%, #333333 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    color: #111111;
     margin-bottom: 5px !important;
 }
 

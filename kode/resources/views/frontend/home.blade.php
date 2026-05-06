@@ -9,29 +9,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ time() }}" />
     <style>
-      /* LOCAL FONT DEFINITION */
-      @font-face {
-          font-family: 'Bebas Neue';
-          src: url('{{ asset('fonts/bebas-neue.woff2') }}') format('woff2');
-          font-weight: normal;
-          font-style: normal;
-      }
-      
       body { font-family: 'Inter', sans-serif !important; }
       .hero-title { 
-          font-family: 'Bebas Neue', cursive !important; 
-          font-weight: normal !important;
-          letter-spacing: 0.05em !important;
-          line-height: 1 !important;
-          font-size: 7rem !important;
-          text-transform: uppercase;
+          font-family: 'Syne', sans-serif !important; 
+          font-weight: 800 !important;
+          letter-spacing: -0.04em !important;
+          line-height: 1.1 !important;
+          font-size: 5.5rem !important;
+          color: #111111 !important;
+          background: none !important;
+          -webkit-text-fill-color: initial !important;
       }
       .playball-accent {
           font-family: 'Playball', cursive !important;
-          font-size: 3.5rem !important;
+          font-size: 3.2rem !important;
           color: #FF9500 !important;
-          margin-top: -15px !important;
+          margin-top: -10px !important;
           display: block !important;
+          line-height: 1 !important;
       }
       
       /* Temporary overrides for transitions */
