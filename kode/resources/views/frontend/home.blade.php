@@ -372,24 +372,37 @@
         </div>
     </section>
 
+    <style nonce="{{ csp_nonce() }}">
+        .premium-stats-banner {
+            background: linear-gradient(90deg, #E91E63 0%, #9C27B0 50%, #673AB7 100%) !important;
+            padding: 60px 0 !important;
+            color: #fff !important;
+            text-align: center !important;
+        }
+        .stat-val { font-size: 3.5rem !important; font-weight: 800 !important; margin-bottom: 5px !important; }
+        .stat-val span { font-size: 1.5rem !important; vertical-align: top !important; }
+        .stat-desc { font-weight: 700 !important; font-size: 1.1rem !important; opacity: 0.95 !important; }
+        .stat-meta { font-size: 0.8rem !important; opacity: 0.75 !important; font-style: italic !important; margin-top: 5px !important; }
+    </style>
+
     <!-- Premium Gradient Stats Banner -->
-    <section class="py-5" style="background: linear-gradient(90deg, #E91E63 0%, #9C27B0 50%, #673AB7 100%);">
-        <div class="container py-4">
-            <div class="row text-center text-white g-4">
+    <section class="premium-stats-banner">
+        <div class="container">
+            <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="display-4 fw-bold mb-1">92<span style="font-size: 1.5rem; vertical-align: top; margin-left: 2px;">%</span></div>
-                    <div class="fw-bold opacity-90" style="font-size: 1.1rem;">Average Open Rates*</div>
-                    <div class="small opacity-75 mt-1"><i>*As of December 2025</i></div>
+                    <div class="stat-val">92<span>%</span></div>
+                    <div class="stat-desc">Average Open Rates*</div>
+                    <div class="stat-meta">*As of December 2025</div>
                 </div>
                 <div class="col-md-4">
-                    <div class="display-4 fw-bold mb-1">74<span style="font-size: 1.5rem; vertical-align: top; margin-left: 2px;">%</span></div>
-                    <div class="fw-bold opacity-90" style="font-size: 1.1rem;">Average CTR*</div>
-                    <div class="small opacity-75 mt-1"><i>*As of December 2025</i></div>
+                    <div class="stat-val">74<span>%</span></div>
+                    <div class="stat-desc">Average CTR*</div>
+                    <div class="stat-meta">*As of December 2025</div>
                 </div>
                 <div class="col-md-4">
-                    <div class="display-4 fw-bold mb-1">65<span style="font-size: 1.5rem; vertical-align: top; margin-left: 2px;">%</span></div>
-                    <div class="fw-bold opacity-90" style="font-size: 1.1rem;">Increase Engagement*</div>
-                    <div class="small opacity-75 mt-1"><i>*As of December 2025</i></div>
+                    <div class="stat-val">65<span>%</span></div>
+                    <div class="stat-desc">Increase Engagement*</div>
+                    <div class="stat-meta">*As of December 2025</div>
                 </div>
             </div>
         </div>
