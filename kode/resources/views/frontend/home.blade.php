@@ -372,6 +372,29 @@
         </div>
     </section>
 
+    <!-- Premium Gradient Stats Banner -->
+    <section class="py-5" style="background: linear-gradient(90deg, #E91E63 0%, #9C27B0 50%, #673AB7 100%);">
+        <div class="container py-4">
+            <div class="row text-center text-white g-4">
+                <div class="col-md-4">
+                    <div class="display-4 fw-bold mb-1">92<span style="font-size: 1.5rem; vertical-align: top; margin-left: 2px;">%</span></div>
+                    <div class="fw-bold opacity-90" style="font-size: 1.1rem;">Average Open Rates*</div>
+                    <div class="small opacity-75 mt-1"><i>*As of December 2025</i></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="display-4 fw-bold mb-1">74<span style="font-size: 1.5rem; vertical-align: top; margin-left: 2px;">%</span></div>
+                    <div class="fw-bold opacity-90" style="font-size: 1.1rem;">Average CTR*</div>
+                    <div class="small opacity-75 mt-1"><i>*As of December 2025</i></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="display-4 fw-bold mb-1">65<span style="font-size: 1.5rem; vertical-align: top; margin-left: 2px;">%</span></div>
+                    <div class="fw-bold opacity-90" style="font-size: 1.1rem;">Increase Engagement*</div>
+                    <div class="small opacity-75 mt-1"><i>*As of December 2025</i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Master Clone: Who's Using Socialyt? -->
     <section class="py-5 bg-white" id="creators">
         <div class="container py-5">
