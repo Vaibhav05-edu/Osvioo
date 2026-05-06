@@ -166,39 +166,39 @@
                 <div class="row mt-5 g-4">
                     <!-- Step 1 -->
                     <div class="col-md-4">
-                        <div class="p-2 rounded-5 bg-white border h-100 shadow-sm transition-transform hover-scale">
-                            <div class="rounded-5 overflow-hidden mb-4 d-flex align-items-center justify-content-center" style="background: #f8f9fa; height: 200px;">
-                                <i class="fas fa-link fa-4x text-primary opacity-50"></i>
+                        <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
+                            <div class="mb-4 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-link fa-3x" style="color: var(--primary);"></i>
                             </div>
-                            <div class="px-3 pb-4 text-center">
-                                <h3 class="fw-bold fs-4 mb-2">1. Connect Account</h3>
-                                <p class="text-muted small">Link your Instagram or Facebook account with one click using official Meta APIs.</p>
+                            <div class="px-2 text-center">
+                                <h3 class="fw-bold fs-4 mb-3">1. Connect Account</h3>
+                                <p class="text-muted small px-3">Link your Instagram or Facebook account with one click using official Meta APIs.</p>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Step 2 -->
                     <div class="col-md-4">
-                        <div class="p-2 rounded-5 bg-white border h-100 shadow-sm transition-transform hover-scale">
-                            <div class="rounded-5 overflow-hidden mb-4 d-flex align-items-center justify-content-center" style="background: #f8f9fa; height: 200px;">
-                                <i class="fas fa-bolt fa-4x text-warning opacity-50"></i>
+                        <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
+                            <div class="mb-4 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-bolt fa-3x" style="color: var(--primary);"></i>
                             </div>
-                            <div class="px-3 pb-4 text-center">
-                                <h3 class="fw-bold fs-4 mb-2">2. Set Triggers</h3>
-                                <p class="text-muted small">Choose keyword triggers or auto-reply to every comment with personalized DMs.</p>
+                            <div class="px-2 text-center">
+                                <h3 class="fw-bold fs-4 mb-3">2. Set Triggers</h3>
+                                <p class="text-muted small px-3">Choose keyword triggers or auto-reply to every comment with personalized DMs.</p>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Step 3 -->
                     <div class="col-md-4">
-                        <div class="p-2 rounded-5 bg-white border h-100 shadow-sm transition-transform hover-scale">
-                            <div class="rounded-5 overflow-hidden mb-4 d-flex align-items-center justify-content-center" style="background: #f8f9fa; height: 200px;">
-                                <i class="fas fa-rocket fa-4x text-success opacity-50"></i>
+                        <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
+                            <div class="mb-4 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-chart-line fa-3x" style="color: var(--primary);"></i>
                             </div>
-                            <div class="px-3 pb-4 text-center">
-                                <h3 class="fw-bold fs-4 mb-2">3. Watch Growth</h3>
-                                <p class="text-muted small">Sit back as Socialyt turns every interaction into a potential sale or follower.</p>
+                            <div class="px-2 text-center">
+                                <h3 class="fw-bold fs-4 mb-3">3. Watch Growth</h3>
+                                <p class="text-muted small px-3">Sit back as Socialyt turns every interaction into a potential sale or follower.</p>
                             </div>
                         </div>
                     </div>
