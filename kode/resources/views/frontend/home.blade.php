@@ -9,6 +9,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ time() }}" />
     <style>
+      /* FORCE PREMIUM FONTS INLINE */
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playball&family=Syne:wght@700;800&display=swap');
+      
+      body { font-family: 'Inter', sans-serif !important; }
+      .hero-title { 
+          font-family: 'Syne', sans-serif !important; 
+          font-weight: 800 !important;
+          letter-spacing: -0.06em !important;
+          line-height: 0.95 !important;
+          font-size: 5.8rem !important;
+      }
+      .playball-accent {
+          font-family: 'Playball', cursive !important;
+          font-size: 3.5rem !important;
+          color: #FF9500 !important;
+          margin-top: -15px !important;
+          display: block !important;
+      }
+      
       /* Temporary overrides for transitions */
       .navbar-custom.sticky-top { top: 0; z-index: 1020; }
       
