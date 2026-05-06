@@ -503,21 +503,21 @@
             <div class="row g-4">
                 @php
                     $automationVideos = [
-                        ['id' => '-Nf5QNtFgkA', 'title' => 'Automated DM Flow'],
-                        ['id' => 'iYLkM9rNQUo', 'title' => 'Automation Strategy'],
-                        ['id' => 'U-SvBBIr9Zc', 'title' => 'Comment to DM']
+                        ['id' => '-Nf5QNtFgkA', 'title' => 'DM Automation'],
+                        ['id' => 'iYLkM9rNQUo', 'title' => 'Growth Strategy'],
+                        ['id' => 'U-SvBBIr9Zc', 'title' => 'Comment Bot'],
+                        ['id' => 'M6W29759k68', 'title' => 'Live Demo']
                     ];
                 @endphp
-                <div class="row g-4 justify-content-center">
+                <div class="row g-3 justify-content-center px-lg-5">
                     @foreach($automationVideos as $video)
-                        <div class="col-md-4 d-flex justify-content-center">
-                            <div class="position-relative overflow-hidden rounded-5 shadow-lg animate__animated animate__fadeInUp" style="width: 300px; height: 533px; background: #000; border: 1px solid rgba(255,255,255,0.1);">
-                                <iframe class="w-100 h-100" 
-                                        src="https://www.youtube.com/embed/{{ $video['id'] }}?autoplay=1&mute=1&loop=1&playlist={{ $video['id'] }}&controls=0&modestbranding=1&rel=0&iv_load_policy=3" 
-                                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="object-fit: cover;"></iframe>
-                                <div class="position-absolute bottom-0 start-0 w-100 p-4" style="background: linear-gradient(transparent, rgba(0,0,0,0.9)); pointer-events: none;">
-                                    <h5 class="text-white fw-bold mb-0" style="font-size: 1rem;">{{ $video['title'] }}</h5>
-                                    <div class="text-primary fw-bold" style="font-size: 0.75rem;">Socialyt Automation</div>
+                        <div class="col-6 col-md-3">
+                            <div class="position-relative overflow-hidden rounded-4 shadow-sm animate__animated animate__fadeInUp" style="aspect-ratio: 9/16; background: #000;">
+                                <iframe class="position-absolute top-0 start-0 w-100 h-100" 
+                                        src="https://www.youtube.com/embed/{{ $video['id'] }}?autoplay=1&mute=1&loop=1&playlist={{ $video['id'] }}&controls=0&modestbranding=1&rel=0" 
+                                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="object-fit: cover; transform: scale(1.3);"></iframe>
+                                <div class="position-absolute bottom-0 start-0 w-100 p-3" style="background: linear-gradient(transparent, rgba(0,0,0,0.7)); pointer-events: none;">
+                                    <div class="text-white fw-bold small">{{ $video['title'] }}</div>
                                 </div>
                             </div>
                         </div>
