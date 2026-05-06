@@ -6,8 +6,8 @@
     <title>Socialyt - Instagram & Facebook DM Automation</title>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playball&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ time() }}" />
     <style>
       /* Temporary overrides for transitions */
       .navbar-custom.sticky-top { top: 0; z-index: 1020; }
@@ -68,11 +68,10 @@
                 <div class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill mb-4 animate__animated animate__fadeInDown">
                     🚀 {{ $settings->cta_text ?? '#1 Meta Automation Tool' }}
                 </div>
-                <!-- Line 1: Headline -->
                 <h1 class="hero-title display-4 fw-bold mb-2">{{ $settings->headline_1 ?? 'AI that helps you grow' }}</h1>
-                <!-- Line 2: Subheadline -->
-                <div class="playball-accent display-6 mb-4" style="color: #FF9500; font-family: 'Playball', cursive;">
-                    {{ $settings->headline_2 ?? 'That Grows You Faster' }}
+                <!-- Line 2: Subheadline with artistic font - Forced for preview -->
+                <div class="playball-accent mb-4" style="font-size: 3.2rem; color: #FF9500; font-family: 'Playball', cursive; line-height: 1.1; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+                    {{ $settings->headline_2 ?? 'Automate Instagram & Facebook' }}
                 </div>
 
                 <!-- Typing Animation Section -->
@@ -729,7 +728,7 @@
         </div>
     </footer>
 
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Dynamic Social Proof Popup -->
     <div id="dynamic-social-proof" class="social-proof d-none" style="position: fixed; bottom: 20px; left: 20px; background: #fff; padding: 15px 20px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 15px; z-index: 9999; border: 1px solid rgba(0,0,0,0.05); min-width: 300px;">
