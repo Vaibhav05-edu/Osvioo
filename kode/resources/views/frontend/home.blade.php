@@ -501,38 +501,22 @@
         <div class="container py-5">
             <h2 class="text-center fw-bold mb-5 fs-1">Engagement in Action</h2>
             <div class="row g-4">
-                @foreach($videos as $video)
+                @php
+                    $automationVideos = [
+                        ['id' => '-Nf5QNtFgkA', 'title' => 'Automated DM Flow'],
+                        ['id' => 'iYLkM9rNQUo', 'title' => 'Automation Strategy'],
+                        ['id' => 'U-SvBBIr9Zc', 'title' => 'Comment to DM']
+                    ];
+                @endphp
+                @foreach($automationVideos as $video)
                     <div class="col-md-4">
-                        <div class="position-relative overflow-hidden rounded-5 shadow-lg" style="height: 500px;">
-                            @if(Str::contains($video->video_url, ['youtube.com', 'youtu.be']))
-                                @php
-                                    if (Str::contains($video->video_url, 'shorts/')) {
-                                        $videoId = explode('shorts/', $video->video_url)[1];
-                                    } elseif (Str::contains($video->video_url, 'youtu.be/')) {
-                                        $videoId = explode('youtu.be/', $video->video_url)[1];
-                                    } else {
-                                        parse_str(parse_url($video->video_url, PHP_URL_QUERY), $params);
-                                        $videoId = $params['v'] ?? '';
-                                    }
-                                @endphp
-                                <iframe class="w-100 h-100" 
-                                        src="https://www.youtube.com/embed/{{ $videoId }}?autoplay=1&mute=1&loop=1&playlist={{ $videoId }}" 
-                                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                            @else
-                                <video class="w-100 h-100" style="object-fit: cover;" autoplay muted loop playsinline>
-                                    <source src="{{ asset('storage/' . $video->video_url) }}" type="video/mp4">
-                                </video>
-                            @endif
-                            <div class="position-absolute bottom-0 start-0 w-100 p-4" style="background: linear-gradient(transparent, rgba(0,0,0,0.8));">
-                                <h4 class="text-white fw-bold mb-0">
-                                    @if(strtolower($video->title) == 'test')
-                                        Creator Spotlight: Scaled 10x
-                                    @elseif(strtolower($video->title) == 'er')
-                                        Automation in Action
-                                    @else
-                                        {{ $video->title }}
-                                    @endif
-                                </h4>
+                        <div class="position-relative overflow-hidden rounded-5 shadow-lg animate__animated animate__fadeInUp" style="height: 550px; background: #000;">
+                            <iframe class="w-100 h-100" 
+                                    src="https://www.youtube.com/embed/{{ $video['id'] }}?autoplay=0&mute=0&loop=1&playlist={{ $video['id'] }}" 
+                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                            <div class="position-absolute bottom-0 start-0 w-100 p-4" style="background: linear-gradient(transparent, rgba(0,0,0,0.9)); pointer-events: none;">
+                                <h4 class="text-white fw-bold mb-0">{{ $video['title'] }}</h4>
+                                <div class="text-primary small fw-bold">Live Demo</div>
                             </div>
                         </div>
                     </div>
