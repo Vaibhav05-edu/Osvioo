@@ -146,33 +146,55 @@
         <div class="container">
             <!-- How It Works Steps -->
             <div class="text-center mb-5 pb-5">
-                <h2 class="fw-bold fs-1">How It Works</h2>
+                <h2 class="fw-bold fs-1 mb-2">How It Works</h2>
                 <p class="text-muted">Three simple steps to automate your growth.</p>
+                
                 <div class="row mt-5 g-4">
+                    <!-- Step 1 -->
                     <div class="col-md-4">
-                        <div class="p-4 rounded-4 bg-white border h-100">
-                            <div class="fs-1 text-primary mb-3"><i class="fas fa-link"></i></div>
-                            <h4 class="fw-bold">1. Connect Account</h4>
-                            <p class="text-muted">Link your Instagram or Facebook account with one click using official Meta APIs.</p>
+                        <div class="p-2 rounded-5 bg-white border h-100 shadow-sm transition-transform hover-scale">
+                            <div class="rounded-5 overflow-hidden mb-4" style="background: #f8f9fa;">
+                                <img src="https://static.wixstatic.com/media/cdc6f6_4d8a57e3f43b4e60803c4f74d4a46a81~mv2.png/v1/fill/w_500,h_500,al_c,q_85/connection.png" alt="Connect" class="img-fluid">
+                            </div>
+                            <div class="px-3 pb-4 text-center">
+                                <h3 class="fw-bold fs-4 mb-2">1. Connect Account</h3>
+                                <p class="text-muted small">Link your Instagram or Facebook account with one click using official Meta APIs.</p>
+                            </div>
                         </div>
                     </div>
+                    
+                    <!-- Step 2 -->
                     <div class="col-md-4">
-                        <div class="p-4 rounded-4 bg-white border h-100">
-                            <div class="fs-1 text-primary mb-3"><i class="fas fa-bolt"></i></div>
-                            <h4 class="fw-bold">2. Set Triggers</h4>
-                            <p class="text-muted">Choose keyword triggers or auto-reply to every comment with personalized DMs.</p>
+                        <div class="p-2 rounded-5 bg-white border h-100 shadow-sm transition-transform hover-scale">
+                            <div class="rounded-5 overflow-hidden mb-4" style="background: #f8f9fa;">
+                                <img src="https://static.wixstatic.com/media/cdc6f6_1777912440009.png/v1/fill/w_500,h_500,al_c,q_85/triggers.png" alt="Triggers" class="img-fluid">
+                            </div>
+                            <div class="px-3 pb-4 text-center">
+                                <h3 class="fw-bold fs-4 mb-2">2. Set Triggers</h3>
+                                <p class="text-muted small">Choose keyword triggers or auto-reply to every comment with personalized DMs.</p>
+                            </div>
                         </div>
                     </div>
+                    
+                    <!-- Step 3 -->
                     <div class="col-md-4">
-                        <div class="p-4 rounded-4 bg-white border h-100">
-                            <div class="fs-1 text-primary mb-3"><i class="fas fa-chart-line"></i></div>
-                            <h4 class="fw-bold">3. Watch Growth</h4>
-                            <p class="text-muted">Sit back as Socialyt turns every interaction into a potential sale or follower.</p>
+                        <div class="p-2 rounded-5 bg-white border h-100 shadow-sm transition-transform hover-scale">
+                            <div class="rounded-5 overflow-hidden mb-4" style="background: #f8f9fa;">
+                                <img src="https://static.wixstatic.com/media/cdc6f6_1777912536159.png/v1/fill/w_500,h_500,al_c,q_85/growth.png" alt="Growth" class="img-fluid">
+                            </div>
+                            <div class="px-3 pb-4 text-center">
+                                <h3 class="fw-bold fs-4 mb-2">3. Watch Growth</h3>
+                                <p class="text-muted small">Sit back as Socialyt turns every interaction into a potential sale or follower.</p>
+                            </div>
                         </div>
                     </div>
+                </div>
             </div>
-        </div>
-    </section>
+
+            <style>
+                .hover-scale { transition: all 0.3s ease; }
+                .hover-scale:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important; }
+            </style>
 
     <!-- Detailed Solutions with Mockups (Restored Influencers) -->
     <section class="py-5 bg-white">
