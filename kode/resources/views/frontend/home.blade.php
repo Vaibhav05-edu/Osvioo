@@ -168,7 +168,7 @@
                     <div class="col-md-4">
                         <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
                             <div class="mb-4 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-link fa-3x" style="color: var(--primary);"></i>
+                                <i class="fas fa-link fa-3x" style="color: #007AFF !important;"></i>
                             </div>
                             <div class="px-2 text-center">
                                 <h3 class="fw-bold fs-4 mb-3">1. Connect Account</h3>
@@ -181,7 +181,7 @@
                     <div class="col-md-4">
                         <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
                             <div class="mb-4 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-bolt fa-3x" style="color: var(--primary);"></i>
+                                <i class="fas fa-bolt fa-3x" style="color: #007AFF !important;"></i>
                             </div>
                             <div class="px-2 text-center">
                                 <h3 class="fw-bold fs-4 mb-3">2. Set Triggers</h3>
@@ -194,7 +194,7 @@
                     <div class="col-md-4">
                         <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
                             <div class="mb-4 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-chart-line fa-3x" style="color: var(--primary);"></i>
+                                <i class="fas fa-chart-line fa-3x" style="color: #007AFF !important;"></i>
                             </div>
                             <div class="px-2 text-center">
                                 <h3 class="fw-bold fs-4 mb-3">3. Watch Growth</h3>

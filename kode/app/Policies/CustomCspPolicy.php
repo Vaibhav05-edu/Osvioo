@@ -36,9 +36,7 @@ class CustomCspPolicy extends Basic
             "'unsafe-inline'",
             'https://www.gstatic.com/',
             'https://www.gstatic.com/charts/49/css/util/util.css',
-
-
-
+            'https://cdnjs.cloudflare.com/',
         ]);
 
         $this->addDirective(Directive::SCRIPT, [
@@ -63,6 +61,7 @@ class CustomCspPolicy extends Basic
             "'self'",
             'https://fonts.gstatic.com',
             'https://fonts.googleapis.com',
+            'https://cdnjs.cloudflare.com/',
         ]);
 
 
