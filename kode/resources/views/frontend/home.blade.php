@@ -16,15 +16,19 @@
           bottom: 20px;
           left: 20px;
           background: white;
-          padding: 12px 20px;
-          border-radius: 12px;
+          padding: 8px 12px;
+          border-radius: 10px;
           box-shadow: 0 10px 30px rgba(0,0,0,0.1);
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 10px;
           z-index: 9999;
+          max-width: 250px;
           animation: slideUp 0.5s ease-out;
       }
+      .social-proof img { width: 40px !important; height: 40px !important; border-radius: 8px; }
+      .social-proof .text-content { font-size: 0.75rem; line-height: 1.2; }
+      .social-proof .fw-bold { font-size: 0.8rem; }
       
       @keyframes slideUp {
           from { transform: translateY(100px); opacity: 0; }
@@ -163,8 +167,8 @@
                     <!-- Step 1 -->
                     <div class="col-md-4">
                         <div class="p-2 rounded-5 bg-white border h-100 shadow-sm transition-transform hover-scale">
-                            <div class="rounded-5 overflow-hidden mb-4" style="background: #f8f9fa;">
-                                <img src="https://static.wixstatic.com/media/cdc6f6_4d8a57e3f43b4e60803c4f74d4a46a81~mv2.png/v1/fill/w_500,h_500,al_c,q_85/connection.png" alt="Connect" class="img-fluid">
+                            <div class="rounded-5 overflow-hidden mb-4 d-flex align-items-center justify-content-center" style="background: #f8f9fa; height: 200px;">
+                                <i class="fas fa-link fa-4x text-primary opacity-50"></i>
                             </div>
                             <div class="px-3 pb-4 text-center">
                                 <h3 class="fw-bold fs-4 mb-2">1. Connect Account</h3>
@@ -176,8 +180,8 @@
                     <!-- Step 2 -->
                     <div class="col-md-4">
                         <div class="p-2 rounded-5 bg-white border h-100 shadow-sm transition-transform hover-scale">
-                            <div class="rounded-5 overflow-hidden mb-4" style="background: #f8f9fa;">
-                                <img src="https://static.wixstatic.com/media/cdc6f6_1777912440009.png/v1/fill/w_500,h_500,al_c,q_85/triggers.png" alt="Triggers" class="img-fluid">
+                            <div class="rounded-5 overflow-hidden mb-4 d-flex align-items-center justify-content-center" style="background: #f8f9fa; height: 200px;">
+                                <i class="fas fa-bolt fa-4x text-warning opacity-50"></i>
                             </div>
                             <div class="px-3 pb-4 text-center">
                                 <h3 class="fw-bold fs-4 mb-2">2. Set Triggers</h3>
@@ -189,8 +193,8 @@
                     <!-- Step 3 -->
                     <div class="col-md-4">
                         <div class="p-2 rounded-5 bg-white border h-100 shadow-sm transition-transform hover-scale">
-                            <div class="rounded-5 overflow-hidden mb-4" style="background: #f8f9fa;">
-                                <img src="https://static.wixstatic.com/media/cdc6f6_1777912536159.png/v1/fill/w_500,h_500,al_c,q_85/growth.png" alt="Growth" class="img-fluid">
+                            <div class="rounded-5 overflow-hidden mb-4 d-flex align-items-center justify-content-center" style="background: #f8f9fa; height: 200px;">
+                                <i class="fas fa-rocket fa-4x text-success opacity-50"></i>
                             </div>
                             <div class="px-3 pb-4 text-center">
                                 <h3 class="fw-bold fs-4 mb-2">3. Watch Growth</h3>
