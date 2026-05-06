@@ -742,7 +742,7 @@
     </div>
 
     <script>
-        const typingTexts = {!! json_encode($settings->typing_texts ?? ['AI helps you grow', 'AI creates media kit', 'AI auto DM system']) !!};
+        const typingTexts = @json($settings->typing_texts ?? ['AI helps you grow', 'AI creates media kit', 'AI auto DM system']);
         const typingTarget = document.getElementById('typing-text-welcome');
         let textIndex = 0;
         let charIndex = 0;
