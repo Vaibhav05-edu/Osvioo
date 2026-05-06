@@ -75,12 +75,34 @@
                 </div>
 
                 <!-- Typing Animation Section -->
-                <div class="mb-4" style="min-height: 50px; display: flex; align-items: center; justify-content: center; justify-content: lg-start;">
-                    <span id="typing-text-welcome" style="font-family: 'Courier New', Courier, monospace; font-size: 1.8rem; font-weight: 800; color: #007AFF; border-right: 3px solid #007AFF; padding-right: 5px; animation: blink 0.7s infinite;"></span>
+                <div class="mb-4" style="min-height: 50px; display: flex; align-items: center; justify-content: start;">
+                    <span id="typing-text-welcome" style="font-family: 'Courier New', Courier, monospace !important; font-size: 1.8rem; font-weight: 800; color: #007AFF !important; border-right: 3px solid #007AFF; padding-right: 5px; min-width: 10px; display: inline-block;"></span>
                 </div>
 
+                <script>
+                    (function() {
+                        const texts = ["AI helps you grow", "AI creates media kit", "AI auto DM"];
+                        const target = document.getElementById('typing-text-welcome');
+                        let tIndex = 0, cIndex = 0, deleting = false;
+                        
+                        function doType() {
+                            if(!target) return;
+                            const fullText = texts[tIndex];
+                            target.textContent = deleting ? fullText.substring(0, cIndex - 1) : fullText.substring(0, cIndex + 1);
+                            cIndex = deleting ? cIndex - 1 : cIndex + 1;
+                            
+                            let speed = deleting ? 50 : 100;
+                            if (!deleting && cIndex === fullText.length) { deleting = true; speed = 2000; }
+                            else if (deleting && cIndex === 0) { deleting = false; tIndex = (tIndex + 1) % texts.length; speed = 500; }
+                            setTimeout(doType, speed);
+                        }
+                        setTimeout(doType, 1000);
+                    })();
+                </script>
+
                 <style>
-                    @keyframes blink { 50% { border-color: transparent; } }
+                    #typing-text-welcome { animation: blink-cursor 0.7s infinite; }
+                    @keyframes blink-cursor { 50% { border-color: transparent; } }
                 </style>
 
                 <!-- Dynamic Description -->
@@ -746,39 +768,6 @@
     </div>
 
     <script>
-        const typingTexts = ["AI helps you grow", "AI creates media kit", "AI auto DM"];
-        const typingTarget = document.getElementById('typing-text-welcome');
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let typeSpeed = 100;
-
-        function type() {
-            if (!typingTexts || typingTexts.length === 0) return;
-            const currentText = typingTexts[textIndex];
-            
-            if (isDeleting) {
-                typingTarget.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-                typeSpeed = 50;
-            } else {
-                typingTarget.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-                typeSpeed = 100;
-            }
-
-            if (!isDeleting && charIndex === currentText.length) {
-                isDeleting = true;
-                typeSpeed = 2000;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % typingTexts.length;
-                typeSpeed = 500;
-            }
-
-            setTimeout(type, typeSpeed);
-        }
-
         const notifications = [
             { name: 'Manas 🇺🇸', action: 'Just signed up to Socialyt', time: 'Just now', img: 'https://i.pravatar.cc/150?u=1' },
             { name: 'Sarah 🇬🇧', action: 'Upgraded to Pro', time: '2 mins ago', img: 'https://i.pravatar.cc/150?u=2' },
@@ -805,7 +794,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            type();
             setTimeout(() => {
                 showNotification();
                 setInterval(showNotification, 6000);
