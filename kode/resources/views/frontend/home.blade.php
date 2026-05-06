@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ time() }}" />
     <style>
-      /* Temporary overrides for transitions */
       .navbar-custom.sticky-top { top: 0; z-index: 1020; }
-      
+
       .social-proof {
           position: fixed;
           bottom: 20px;
@@ -76,8 +75,8 @@
                 </div>
 
                 <!-- Typing Animation Section -->
-                <div class="h-10 mb-4">
-                    <span class="text-primary fw-bold fs-3" id="typing-text-welcome"></span>
+                <div class="mb-4" style="min-height: 45px;">
+                    <span class="text-primary fw-bold fs-2" id="typing-text-welcome" style="font-family: 'Courier New', Courier, monospace;"></span>
                 </div>
 
                 <!-- Dynamic Description -->
@@ -743,7 +742,7 @@
     </div>
 
     <script>
-        const typingTexts = {!! json_encode($settings->typing_texts ?? ['AI helps you grow', 'AI creates media kit', 'AI auto DM system']) !!};
+        const typingTexts = ["AI helps you grow", "AI creates media kit", "AI auto DM"];
         const typingTarget = document.getElementById('typing-text-welcome');
         let textIndex = 0;
         let charIndex = 0;
