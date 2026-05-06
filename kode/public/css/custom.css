@@ -48,6 +48,7 @@ h1, h2, h3, h4 {
     font-weight: 800;
     line-height: 1.05;
     letter-spacing: -0.05em;
+    font-style: italic;
     background: linear-gradient(135deg, #000000 0%, #333333 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
