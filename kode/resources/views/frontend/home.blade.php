@@ -793,14 +793,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Dynamic Social Proof Popup -->
-    <div id="dynamic-social-proof" class="social-proof d-none animate__animated" style="position: fixed; bottom: 20px; left: 20px; background: #fff; padding: 10px 18px; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 15px; z-index: 9999; border: 1px solid rgba(0,0,0,0.05); width: auto; min-width: 380px; max-width: 450px;">
-        <img id="sp-img" src="https://i.pravatar.cc/150?u=1" alt="User" style="width: 45px; height: 45px; border-radius: 8px; object-fit: cover; flex-shrink: 0;">
-        <div style="flex-grow: 1; white-space: nowrap; overflow: hidden;">
-            <div id="sp-name" class="fw-bold text-dark" style="font-size: 0.9rem; line-height: 1.1;">Manas 🇺🇸</div>
-            <div id="sp-action" class="text-muted" style="font-size: 0.8rem; line-height: 1.1;">Just signed up to Socialyt</div>
-            <div id="sp-time" class="text-muted" style="font-size: 0.7rem; line-height: 1.1;">Just now</div>
+    <div id="dynamic-social-proof" class="social-proof d-none animate__animated" style="position: fixed; bottom: 20px; left: 20px; background: #fff; padding: 10px 20px; border-radius: 50px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 12px; z-index: 9999; border: 1px solid rgba(0,0,0,0.05); width: auto; max-width: 90vw; white-space: nowrap;">
+        <img id="sp-img" src="https://i.pravatar.cc/150?u=1" alt="User" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; flex-shrink: 0;">
+        <div class="d-flex align-items-center gap-2" style="overflow: hidden;">
+            <span id="sp-name" class="fw-bold text-dark" style="font-size: 0.85rem;">Manas 🇺🇸</span>
+            <span id="sp-action" class="text-muted" style="font-size: 0.85rem;">Just signed up to Socialyt</span>
+            <span id="sp-time" class="text-muted" style="font-size: 0.75rem; opacity: 0.7;">• Just now</span>
         </div>
-        <button onclick="document.getElementById('dynamic-social-proof').classList.add('d-none')" class="btn-close ms-3" style="font-size: 0.6rem; opacity: 0.5; flex-shrink: 0;" aria-label="Close"></button>
+        <button onclick="document.getElementById('dynamic-social-proof').classList.add('d-none')" class="btn-close ms-2" style="font-size: 0.5rem; opacity: 0.4; flex-shrink: 0;" aria-label="Close"></button>
     </div>
 
     <script nonce="{{ csp_nonce() }}">
