@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playball&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ time() }}" />
-    <style>
+    <style nonce="{{ csp_nonce() }}">
       .navbar-custom.sticky-top { top: 0; z-index: 1020; }
 
       .social-proof {
@@ -79,7 +79,7 @@
                     <span id="typing-text-welcome" style="font-family: 'Courier New', Courier, monospace !important; font-size: 1.8rem; font-weight: 800; color: #007AFF !important; border-right: 3px solid #007AFF; padding-right: 5px; min-width: 10px; display: inline-block;"></span>
                 </div>
 
-                <script>
+                <script nonce="{{ csp_nonce() }}">
                     (function() {
                         const texts = ["AI helps you grow", "AI creates media kit", "AI auto DM"];
                         const target = document.getElementById('typing-text-welcome');
@@ -100,7 +100,7 @@
                     })();
                 </script>
 
-                <style>
+                <style nonce="{{ csp_nonce() }}">
                     #typing-text-welcome { animation: blink-cursor 0.7s infinite; }
                     @keyframes blink-cursor { 50% { border-color: transparent; } }
                 </style>
@@ -191,7 +191,7 @@
                 </div>
             </div>
 
-            <style>
+            <style nonce="{{ csp_nonce() }}">
                 .hover-scale { transition: all 0.3s ease; }
                 .hover-scale:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important; }
             </style>
@@ -789,7 +789,7 @@
         <button onclick="document.getElementById('dynamic-social-proof').style.display='none'" class="btn-close ms-auto" style="font-size: 0.7rem;" aria-label="Close"></button>
     </div>
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         const notifications = [
             { name: 'Manas 🇺🇸', action: 'Just signed up to Socialyt', time: 'Just now', img: 'https://i.pravatar.cc/150?u=1' },
             { name: 'Sarah 🇬🇧', action: 'Upgraded to Pro', time: '2 mins ago', img: 'https://i.pravatar.cc/150?u=2' },
