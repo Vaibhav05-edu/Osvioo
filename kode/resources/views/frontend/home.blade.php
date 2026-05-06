@@ -5,12 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Socialyt - Instagram & Facebook DM Automation</title>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playball&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Playball&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ time() }}" />
     <style nonce="{{ csp_nonce() }}">
-      .navbar-custom.sticky-top { top: 0; z-index: 1020; }
+      :root {
+          --font-heading: 'Syne', sans-serif;
+          --font-body: 'Inter', sans-serif;
+          --font-nav: 'Outfit', sans-serif;
+      }
 
+      body {
+          font-family: var(--font-body);
+          -webkit-font-smoothing: antialiased;
+      }
+
+      h1, h2, h3, .hero-title {
+          font-family: var(--font-heading);
+          letter-spacing: -0.02em;
+      }
+
+      h4, h5, h6, .nav-link, .btn, .navbar-brand {
+          font-family: var(--font-nav);
+          font-weight: 600;
+      }
+
+      .navbar-custom.sticky-top { top: 0; z-index: 1020; }
+      
       .social-proof {
           position: fixed;
           bottom: 20px;
