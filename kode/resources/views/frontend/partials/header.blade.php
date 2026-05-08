@@ -1,281 +1,156 @@
 @php
     $currencies = site_currencies()->where("code",'!=',session()->get('currency')->code);
     $lastSegment = collect(request()->segments())->last();
-
     $lang         = $active_languages->where('code',session()->get('locale'));
     $code         = count(value: $lang)!=0 ? $lang->first()->code:"en";
     $languages    = $active_languages->where('status',App\Enums\StatusEnum::true->status())
                               ->where('code','!=', $code);
 @endphp
-<header class="header">
 
-    <div class="header-container">
-        <div class="d-flex align-items-center gap-3">
-            <div class="header-logo d-md-block d-none">
-                <a href="{{route('home')}}">
-                    <img src="{{imageUrl(@site_logo('user_site_logo')->file,'user_site_logo',true)}}"
-                        alt="{{@site_logo('user_site_logo')->file->name ?? 'site-logo.jpg'}}">
-                </a>
-            </div>
-        </div>
-
-        <div class="sidebar">
-            <div class="sidebar-body">
-                <div class="mobile-logo-area d-lg-none mb-4">
-                    <div class="mobile-logo-wrap">
-                        <a href="{{route('home')}}">
-
-                            <img src="{{imageUrl(@site_logo('user_site_logo')->file,'user_site_logo',true)}}"
-                                alt="{{@site_logo('user_site_logo')->file->name}}">
-
-                        </a>
-                    </div>
-
-                    <div class="closer-sidebar">
-                        <i class="bi bi-x-lg "></i>
-                    </div>
-                </div>
-
-                <div class="sidebar-wrapper">
-                    <nav>
-                        <ul class="menu-list">
-                            @foreach ($menus as $menu)
-                                <li class="menu-item">
-                                    <a href="{{url($menu->url)}}"
-                                        class="menu-link @if(!request()->routeIs('home') && URL::current() == url($menu->url)) active @endif ">
-                                        {{translate($menu->name)}}
-                                    </a>
-                                </li>
-                            @endforeach
-
-                            @php
-                                    $megaMenu              = get_content("content_mega_menu")->first();
-                                    $intregrationsContent  = get_content("content_integration")->first();
-                                    $intregrationsElements = get_content("element_integration");
-                                    $hoverImageSize        = get_appearance_img_size('integration','element','hover_image');
-                                    $featureImageSize      = get_appearance_img_size('integration','element','feature_image');
-
-
-                            @endphp
-
-                            @if($megaMenu->value->select_input->status == App\Enums\StatusEnum::true->status() )
-                                <li class="menu-item">
-                                    <a href="javascript:void(0)" class="menu-link mega-menu-click">
-                                        {{translate(@$megaMenu->value->title)}}
-                                        <div class="menu-link-icon">
-                                            <i class="bi bi-chevron-down"></i>
-                                        </div>
-                                    </a>
-
-                                    <div class="mega-menu container-lg px-0">
-                                        <div class="mega-menu-wrapper">
-                                            <div class="row g-4 h-100">
-                                                <div class="col-lg-12">
-                                                    <div class="mega-menu-right">
-                                                        <div class="row g-0 h-100 align-items-center">
-                                                            <div class="col-lg-8">
-                                                                <div class="social-integra">
-                                                                    <h5>
-                                                                        {{translate(@$intregrationsContent->value->title)}}
-                                                                    </h5>
-
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12">
-                                                                            @if($intregrationsElements->count() > 0)
-                                                                                <div class="mega-menu-integra">
-                                                                                    <ul class="nav nav-tabs gap-xxl-3 gap-2 border-0" id="customTab" role="tablist">
-
-                                                                                        @forelse ($intregrationsElements as $element)
-
-                                                                                            @php $file = $element->file->where('type',"feature_image")->first(); @endphp
-
-                                                                                            <li class="nav-item" role="presentation">
-                                                                                                <a href="{{route('integration',['slug' =>  make_slug($element->value->title) , 'uid' => $element->uid])}}" class="nav-link mega-menu-tab {{$loop->index == 0 ? 'active' :''}} menu-social-item"
-                                                                                                    id="tab-{{$loop->index}}-tab"
-                                                                                                    data-bs-toggle="tab"
-                                                                                                    data-bs-target="#tab-{{$loop->index}}"
-                                                                                                    role="tab"
-                                                                                                    aria-controls="tab-{{$loop->index}}"
-                                                                                                    aria-selected="true">
-                                                                                                    <div class="social-item-img">
-                                                                                                        <img src="{{imageURL($file,'frontend',true,$featureImageSize)}}"
-                                                                                                            alt="{{@$file->name ?? @$element->value->title.'jpg' }}"
-                                                                                                            loading="lazy">
-                                                                                                    </div>
-
-                                                                                                    <div class="content">
-                                                                                                        <h6 class="mb-1">
-                                                                                                            {{translate($element->value->title)}}
-                                                                                                        </h6>
-                                                                                                        <p>
-                                                                                                            {!!translate($element->value->short_description)!!}
-                                                                                                        </p>
-                                                                                                    </div>
-                                                                                                </a>
-                                                                                            </li>
-
-                                                                                        @empty
-                                                                                            <li class="nav-item" role="presentation">
-                                                                                                @include("frontend.partials.not_found")
-                                                                                            </li>
-                                                                                        @endforelse
-                                                                                    </ul>
-                                                                                </div>
-                                                                            @else
-                                                                               @include("frontend.partials.not_found")
-                                                                            @endif
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-4 p-3">
-                                                                @if($intregrationsElements->count() > 0)
-                                                                    <div class="tab-content" id="customTabContent">
-                                                                        @foreach ($intregrationsElements as $element)
-                                                                            @php
-                                                                                $file = $element->file->where('type',"hover_image")->first();
-                                                                            @endphp
-                                                                            <div class="tab-pane fade {{$loop->index == 0 ?
-                                                                                'show active' :''}}  " id="tab-{{$loop->index}}"
-                                                                                role="tabpanel" aria-labelledby="tab-{{$loop->index}}-tab">
-                                                                                <img src="{{imageURL($file,'frontend',true,$hoverImageSize)}}"
-                                                                                alt="{{@$file->name?? 'preview.jpg'}}" class="rounded-3">
-                                                                            </div>
-                                                                        @endforeach
-                                                                    </div>
-                                                                @else
-                                                                    @include("frontend.partials.not_found")
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            @endif
-
-                            @foreach ($pages as $page)
-                                <li class="menu-item">
-                                    <a href="{{route('page',$page->slug)}}"
-                                        class="menu-link @if($lastSegment == $page->slug) active @endif ">
-                                        {{translate($page->title)}}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </nav>
-
-                    <div class="sidebar-action d-lg-none">
-                        <div class="d-flex align-items-center justify-content-between gap-3">
-                            <a href='{{route("plan")}}' class="i-btn btn--primary-outline btn--lg capsuled">
-                                {{translate("Get Started")}}
-                            </a>
-
-                            @if(!auth_user('web'))
-                                <a href='{{route("auth.login")}}' class="i-btn btn--secondary btn--lg capsuled">
-                                    {{translate('Login')}}
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="sidebar-overlay"></div>
-        </div>
-
-        <div class="nav-right d-flex jsutify-content-end align-items-center gap-3">
-            <div class="d-lg-none">
-                <div class="mobile-menu-btn sidebar-trigger">
-                    <i class="bi bi-list"></i>
-                </div>
-            </div>
-
-            <button class="mobile-menu-btn" id="theme-toggle">
-            <i class="bi bi-moon"></i>
-            </button>
-
-            <div class="language">
-                <button class="dropdown-toggle lang--toggle" type="button"  @if($languages->count() > 0) data-bs-toggle="dropdown" aria-expanded="false" @endif>
-                    <img src="{{asset('assets/images/global/flags/'.strtoupper($code ).'.png') }}" alt="{{$code.'.jpg'}}">
-                </button>
-
-                @if($languages->count() > 0)
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        @foreach($languages as $language)
-                            <li>
-                                <a class="dropdown-item" href="{{route('language.change',$language->code)}}">
-                                    <img src="{{asset('assets/images/global/flags/'.strtoupper($language->code ).'.png') }}" alt="{{$language->code.'jpg'}}"> {{$language->code}}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
-
-
-            </div>
-
-            <div class="currency">
-                <button class=" {{$currencies->count() > 0 ? 'dropdown-toggle' : '' }}  custom--toggle" type="button" @if($currencies->count() > 0)  data-bs-toggle="dropdown" aria-expanded="false" @endif>
-                    {{session()->get('currency')?->code}}
-                </button>
-
-                @if($currencies->count() > 0)
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        @foreach($currencies as $currency)
-                                <li>
-                                    <a class="dropdown-item" href="{{route('currency.change',$currency->code)}}">
-                                        {{$currency->code}}</a>
-                                </li>
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
-
-            @if(auth_user('web'))
-                <div class="dropdown profile-dropdown">
-                    <div class="profile-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true" role="button">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </div>
-
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <ul>
-
-                            <li class="dropdown-menu-title">
-                                <h6>
-                                    {{translate('Welcome')}},
-                                    <span class="user-name">
-                                        {{auth_user('web')->name}}
-                                    </span>
-                                </h6>
-                            </li>
-
-                            <li>
-                                <a href="{{route('user.home')}}" class="dropdown-item">
-                                    <i class="bi bi-house"></i> {{translate('Dashboard')}}
-                                </a>
-                            </li>
-
-                            <li class="dropdown-menu-footer p-0">
-                                <a href="{{route('user.logout')}}">
-                                    <i class="bi bi-box-arrow-left"></i> {{translate('Logout')}}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            @endif
-
-            @if(!auth_user('web'))
-                <div class="d-lg-block d-none">
-                    <a href="{{route('auth.login')}}" class="i-btn btn--dark btn--md capsuled">
-                        {{translate("Login")}}
-                    </a>
-                </div>
-            @endif
-        </div>
+<!-- PREMIUM ANNOUNCEMENT BAR -->
+<div class="announcement-bar-wishlink">
+    <div class="container-fluid text-center p-2">
+        <p class="mb-0 fs-14 fw-semibold text-white d-flex align-items-center justify-content-center gap-2">
+            <span class="announcement-badge">NEW</span>
+            🔥 Join 10,000+ Top Creators & 10x your sales with AI-Automation. 
+            <a href="{{route('auth.register')}}" class="text-white text-decoration-underline ms-2">Get Started Free →</a>
+        </p>
     </div>
+</div>
 
+<header class="header-wishlink animate__animated animate__fadeInDown">
+    <div class="container-fluid px-lg-5">
+        <nav class="navbar navbar-expand-lg border-0 bg-transparent">
+            <div class="container-fluid px-0">
+                <!-- Logo -->
+                <a class="navbar-brand me-5" href="{{route('home')}}">
+                    <span class="socialyt-logo-script">Socialyt</span>
+                </a>
+
+                <!-- Mobile Toggle -->
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#wishlinkNav">
+                    <span class="bi bi-list fs-1"></span>
+                </button>
+
+                <!-- Nav Items -->
+                <div class="collapse navbar-collapse" id="wishlinkNav">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4 align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link-wishlink active-pill" href="#">Creators</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-wishlink" href="#">Brands</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-wishlink" href="#">Partnerships</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-wishlink d-lg-none" href="{{route('auth.login')}}">Login</a>
+                        </li>
+                    </ul>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex align-items-center gap-3">
+                        @if(!auth_user('web'))
+                            <a href="{{route('auth.login')}}" class="nav-link-wishlink d-none d-lg-block me-3">Login</a>
+                            <a href="{{route('plan')}}" class="get-started-btn-wishlink">
+                                Get Started Free
+                            </a>
+                        @else
+                             <a href="{{route('user.home')}}" class="get-started-btn-wishlink">
+                                Dashboard
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
 </header>
+
+<style nonce="{{ csp_nonce() }}">
+    .header-wishlink {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: transparent !important;
+        border: none !important;
+        padding: 20px 0;
+    }
+
+    .nav-link-wishlink {
+        font-family: 'Outfit', sans-serif !important;
+        font-weight: 600;
+        font-size: 1.05rem;
+        color: #1A1A1A !important;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        padding: 8px 15px;
+    }
+
+    .nav-link-wishlink:hover {
+        color: var(--wishlink-orange) !important;
+        transform: translateY(-1px);
+    }
+
+    /* THE YELLOW ACTIVE PILL */
+    .active-pill {
+        background: #FFD200 !important;
+        border-radius: 12px;
+        padding: 10px 25px !important;
+        color: #000 !important;
+        box-shadow: 0 4px 10px rgba(255, 210, 0, 0.2);
+    }
+
+    /* THE WHITE GET STARTED BUTTON */
+    .get-started-btn-wishlink {
+        background: #fff !important;
+        color: #0066FF !important; /* Premium Blue or Orange as per user preference */
+        padding: 12px 28px;
+        border-radius: 50px;
+        font-weight: 800;
+        text-decoration: none;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: none;
+        display: inline-block;
+    }
+
+    .get-started-btn-wishlink:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        color: #0052CC !important;
+    }
+
+    /* Sticky behavior override */
+    .header.sticky {
+        background: var(--wishlink-cream) !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        padding: 10px 0;
+    }
+
+    @media (max-width: 991px) {
+        .header-wishlink {
+            position: relative;
+            background: var(--wishlink-cream) !important;
+        }
+        .navbar-collapse {
+            background: var(--wishlink-cream);
+            padding: 20px;
+            border-radius: 20px;
+            margin-top: 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .nav-link-wishlink {
+            padding: 15px 0;
+            display: block;
+            text-align: center;
+        }
+        .active-pill {
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+    }
+</style>

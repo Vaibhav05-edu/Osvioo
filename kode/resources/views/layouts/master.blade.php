@@ -13,6 +13,11 @@
     <title>{{@site_settings("user_site_name",site_settings('site_name'))}} {{site_settings('title_separator')}} {{Arr::get($meta_data,"title",trans("default.home"))}}</title>
      @include('partials.meta_content')
 
+     <!-- Google Fonts: Outfit & Caveat -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+
      @php
       $lang         = $active_languages->where('code',session()->get('locale'))->first();
       $isRtl        = $lang && $lang->ltr == 0 ? true : false; 

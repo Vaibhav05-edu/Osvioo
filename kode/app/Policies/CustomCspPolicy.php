@@ -37,6 +37,7 @@ class CustomCspPolicy extends Basic
             'https://www.gstatic.com/',
             'https://www.gstatic.com/charts/49/css/util/util.css',
             'https://cdnjs.cloudflare.com/',
+            'https://cdn.jsdelivr.net/',
             'https://www.youtube.com',
             'https://fonts.cdnfonts.com',
             'https://fonts.googleapis.com',
@@ -50,6 +51,8 @@ class CustomCspPolicy extends Basic
             'https://www.gstatic.com/charts/geochart/10/info/mapList.js',
             'https://www.youtube.com',
             'https://s.ytimg.com',
+            'https://cdn.jsdelivr.net/',
+            'https://cdnjs.cloudflare.com/',
         ]);
 
 
@@ -85,6 +88,8 @@ class CustomCspPolicy extends Basic
             "'self'",
             'https://www.gstatic.com/',
             'https://*.paypal.com',
+            'https://cdn.jsdelivr.net/',
+            'https://cdnjs.cloudflare.com/',
         ]);
 
         $this->addDirective(Directive::OBJECT, "'none'");

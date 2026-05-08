@@ -46,8 +46,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Socialyt - Instagram & Facebook DM Automation</title>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Dancing+Script:wght@700&family=Playball&family=Syne:wght@700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Dancing+Script:wght@700&family=Playball&family=Syne:wght@700;800&family=Montserrat:wght@700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ time() }}" />
     <style nonce="{{ csp_nonce() }}">
       :root {
@@ -151,492 +152,34 @@
     </style>
   </head>
   <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-custom sticky-top py-3">
-      <div class="container">
-        <a class="navbar-brand fw-bold fs-3" href="#" style="color: var(--primary);">Socialyt</a>
-        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-          <ul class="navbar-nav gap-2">
-            <li class="nav-item"><a class="nav-link" href="#creators">Creators</a></li>
-            <li class="nav-item"><a class="nav-link" href="#ecommerce">Ecommerce</a></li>
-            <li class="nav-item"><a class="nav-link" href="#partnership">Partnership</a></li>
-            <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
-            <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
-            <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
-            <li class="nav-item"><a class="nav-link" href="#support">Support</a></li>
-          </ul>
-        </div>
-        <div class="d-flex align-items-center gap-3">
-            <a href="{{ route('auth.login') }}" class="text-dark text-decoration-none fw-semibold d-none d-md-block">Log in</a>
-            <a href="#" class="btn btn-premium">Get Started Free</a>
-        </div>
-      </div>
-    </nav>
+    @include('frontend.partials.header')
 
     <!-- Hero Section -->
-    <header class="section-hero py-5 overflow-hidden" id="home">
-      <div class="container pt-5">
-        <div class="row align-items-center">
-            <!-- Left Side: Text Content -->
-            <div class="col-lg-6 text-center text-lg-start">
-                <div class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill mb-4 animate__animated animate__fadeInDown">
-                    🚀 {{ $settings->cta_text ?? '#1 Meta Automation Tool' }}
-                </div>
-                <!-- Line 1: Headline -->
-                <h1 class="hero-title display-3 fw-bold mb-0" style="font-family: 'Syne', sans-serif !important;">{{ $heroTitle }}</h1>
-                <!-- Line 2: Colored Sub-headline -->
-                <h1 class="hero-title display-3 fw-bold mb-4" style="color: #FF9500; font-family: 'Syne', sans-serif !important;">{{ $heroSubTitle }}</h1>
+    @include('frontend.sections.banner')
 
-                <!-- Typing Animation Section -->
-                <div class="mb-4" style="min-height: 50px; display: flex; align-items: center; justify-content: start;">
-                    <span id="typing-text-welcome" class="premium-typing-text" style="color: #FF2400; font-family: 'Dancing Script', cursive; font-size: 3rem; font-weight: 700;"></span>
-                </div>
+    <!-- Brand Marquee Section -->
+    @include('frontend.sections.brand_marquee')
 
-                <script nonce="{{ csp_nonce() }}">
-                    (function() {
-                        const texts = {!! $typingTextsJson !!};
-                        const target = document.getElementById('typing-text-welcome');
-                        let tIndex = 0, cIndex = 0, deleting = false;
-                        
-                        function doType() {
-                            if(!target) return;
-                            const fullText = texts[tIndex];
-                            target.textContent = deleting ? fullText.substring(0, cIndex - 1) : fullText.substring(0, cIndex + 1);
-                            cIndex = deleting ? cIndex - 1 : cIndex + 1;
-                            
-                            let speed = deleting ? 50 : 100;
-                            if (!deleting && cIndex === fullText.length) { deleting = true; speed = 2000; }
-                            else if (deleting && cIndex === 0) { deleting = false; tIndex = (tIndex + 1) % texts.length; speed = 500; }
-                            setTimeout(doType, speed);
-                        }
-                        setTimeout(doType, 1000);
-                    })();
-                </script>
-
-                <style nonce="{{ csp_nonce() }}">
-                    .premium-typing-text {
-                        font-family: 'Montserrat', sans-serif !important;
-                        font-size: 2.2rem !important;
-                        font-weight: 800 !important;
-                        color: #FF9500 !important;
-                        border-right: 3px solid #FF9500;
-                        padding-right: 8px;
-                        display: inline-block;
-                        animation: blink-cursor 0.7s infinite;
-                        line-height: 1.2;
-                    }
-                    @keyframes blink-cursor { 50% { border-color: transparent; } }
-                </style>
-
-                <!-- Dynamic Description -->
-                <p class="lead text-muted mb-5" style="font-size: 1.1rem;">
-                    {{ $heroDescription }}
-                </p>
-
-                <div class="d-flex justify-content-center justify-content-lg-start gap-3 mt-4">
-                    <a href="{{ $settings->cta_url ?? '#' }}" class="btn btn-premium btn-lg px-5 py-3 rounded-pill shadow-lg">{{ $settings->cta_text ?? 'Start Automating Now' }}</a>
-                    <a href="#features" class="btn btn-outline-premium btn-lg px-5 py-3 rounded-pill">See How it Works</a>
-                </div>
-            </div>
-
-            <!-- Right Side: Influencer Image -->
-            <div class="col-lg-6 mt-5 mt-lg-0">
-                <div class="position-relative">
-                    <img src="{{ $bannerImage ?? asset('assets/images/custom/hero_influencer.png') }}" 
-                         alt="Influencer" class="img-fluid mx-auto animate__animated animate__zoomIn">
-                </div>
-            </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- Trusted By Section -->
-    <section class="py-5 bg-white border-bottom">
-        <div class="container text-center">
-            <p class="text-muted small text-uppercase fw-bold mb-4" style="letter-spacing: 2px;">Official Meta Business Partner Capabilities</p>
-            <div class="d-flex flex-wrap justify-content-center align-items-center gap-5 opacity-50 grayscale">
-                @php
-                    $partners = get_content('element_integration');
-                @endphp
-                @forelse($partners as $partner)
-                    @php
-                        $partnerFile = $partner->file->first();
-                        $partnerImg = $partnerFile ? imageURL($partnerFile, 'integration', false) : null;
-                    @endphp
-                    @if($partnerImg && strpos($partnerImg, 'default.jpg') === false)
-                        <img src="{{ $partnerImg }}" height="40" alt="{{ data_get($partner->value, 'name', 'Partner') }}">
-                    @endif
-                @empty
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" height="40" alt="Facebook">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" height="40" alt="Instagram">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" height="30" alt="Meta">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" height="40" alt="WhatsApp">
-                    <div class="fs-4 fw-bold text-dark">Messenger</div>
-                @endforelse
-            </div>
-        </div>
-    </section>
+    <!-- Feature Slider Section -->
+    @include('frontend.sections.feature_slider')
 
     <!-- Alternating Features (Stats & Stories) -->
-    <section class="section-feature" id="features">
-        <div class="container">
-            <!-- How It Works Steps -->
-            <div class="text-center mb-5 pb-5">
-                <h2 class="fw-bold fs-1 mb-2">How It Works</h2>
-                <p class="text-muted">Three simple steps to automate your growth.</p>
-                
-                <div class="row mt-5 g-4">
-                    @forelse($features as $feature)
-                    <div class="col-md-4">
-                        <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
-                            <div class="mb-4 d-flex align-items-center justify-content-center">
-                                <!-- Admin can put icon class here, or we use a default based on loop iteration -->
-                                <i class="{{ @$feature->value->icon ?? 'fas fa-bolt' }} fa-3x" style="color: #007AFF !important;"></i>
-                            </div>
-                            <div class="px-2 text-center">
-                                <h3 class="fw-bold fs-4 mb-3">{{ $loop->iteration }}. {{ @$feature->value->title }}</h3>
-                                <p class="text-muted small px-3">{{ @$feature->value->description }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    @empty
-                    <!-- Fallback if Admin hasn't added features yet -->
-                    <div class="col-md-4">
-                        <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
-                            <div class="mb-4 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-link fa-3x" style="color: #007AFF !important;"></i>
-                            </div>
-                            <div class="px-2 text-center">
-                                <h3 class="fw-bold fs-4 mb-3">1. Connect Account</h3>
-                                <p class="text-muted small px-3">Link your Instagram or Facebook account with one click using official Meta APIs.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
-                            <div class="mb-4 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-bolt fa-3x" style="color: #007AFF !important;"></i>
-                            </div>
-                            <div class="px-2 text-center">
-                                <h3 class="fw-bold fs-4 mb-3">2. Set Triggers</h3>
-                                <p class="text-muted small px-3">Choose keyword triggers or auto-reply to every comment with personalized DMs.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="p-4 rounded-4 bg-white border-0 shadow-sm h-100 transition-transform hover-scale">
-                            <div class="mb-4 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-chart-line fa-3x" style="color: #007AFF !important;"></i>
-                            </div>
-                            <div class="px-2 text-center">
-                                <h3 class="fw-bold fs-4 mb-3">3. Watch Growth</h3>
-                                <p class="text-muted small px-3">Sit back as Socialyt turns every interaction into a potential sale or follower.</p>
-                            </div>
-                        </div>
-                    </div>
-                    @endforelse
-                </div>
-            </div>
+    <!-- Why Socialyt Section (Vertical Carousel) -->
+    @include('frontend.sections.why_us')
 
-            <style nonce="{{ csp_nonce() }}">
-                .hover-scale { transition: all 0.3s ease; }
-                .hover-scale:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important; }
-            </style>
+    <!-- The Love We Get from Our Creators Section -->
+    @include('frontend.sections.creator_love')
 
-    <!-- Detailed Solutions with Mockups (Restored Influencers) -->
-    <section class="py-5 bg-white">
-        <div class="container py-5">
-            <div class="row align-items-center mb-5 pb-5" id="ecommerce">
-                <div class="col-md-6">
-                    <div class="premium-3d-card-wrapper animate__animated animate__fadeInLeft">
-                        <div class="premium-3d-card">
-                            <img src="{{ asset('assets/images/custom/fashion_influencer_ecommerce_red_1777912440009.png') }}" alt="Ecommerce Influencer Pro">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5 ms-auto">
-                    <div class="feature-text">
-                        <div class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill mb-3">E-Commerce</div>
-                        <h2 class="fw-bold mb-3 fs-1">Turn Comments into Customers</h2>
-                        <p class="text-muted fs-5">
-                            Automatically send product links or discount codes to anyone who comments on your posts. Our 3D automation handles the scale while you handle the growth.
-                        </p>
-                        <ul class="list-unstyled mt-4 d-grid gap-2">
-                            <li><i class="fas fa-check-circle text-primary me-2"></i> Instant product link delivery</li>
-                            <li><i class="fas fa-check-circle text-primary me-2"></i> Automated discount code sharing</li>
-                            <li><i class="fas fa-check-circle text-primary me-2"></i> 24/7 lead capture</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+    <!-- Are you one of them? (Categories) Section -->
+    @include('frontend.sections.creator_categories')
 
-            <div class="row align-items-center mb-5 pb-5 flex-row-reverse" id="partnership">
-                <div class="col-md-6">
-                    <div class="premium-3d-card-wrapper animate__animated animate__fadeInRight">
-                        <div class="premium-3d-card">
-                            <img src="{{ asset('assets/images/custom/fashion_influencer_partnership_gold_1777912536159.png') }}" alt="Partnership Influencer Pro">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5 me-auto">
-                    <div class="feature-text">
-                        <div class="badge bg-warning-subtle text-warning px-3 py-2 rounded-pill mb-3">Partnerships</div>
-                        <h2 class="fw-bold mb-3 fs-1">Collab Success Guaranteed</h2>
-                        <p class="text-muted fs-5">
-                            Display up to 4 conversation starters when a user navigates to your Instagram Inbox. Designed for elite creators managing high-volume collab inquiries.
-                        </p>
-                        <ul class="list-unstyled mt-4 d-grid gap-2">
-                            <li><i class="fas fa-check-circle text-primary me-2"></i> Dynamic FAQ starters</li>
-                            <li><i class="fas fa-check-circle text-primary me-2"></i> Partnership inquiry routing</li>
-                            <li><i class="fas fa-check-circle text-primary me-2"></i> Higher inbox response rates</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Feature Breakdown (LinkDM Exact Master Clone) -->
-    <section class="linkdm-section">
-        <div class="container">
-            <div class="text-center mb-5 pb-5">
-                <div class="linkdm-eyebrow">FEATURE FOCUS</div>
-                <h2 class="linkdm-title-main">Feature Breakdown</h2>
-                <p class="linkdm-subtitle">Dive into the specifics of each feature, understanding its functionality and how it can elevate your Instagram strategy.</p>
-            </div>
-
-            <!-- Auto-Reply to Instagram Reel Comments -->
-            <div class="row align-items-center mb-5 pb-5">
-                <div class="col-md-6">
-                    <div class="linkdm-clone-wrapper">
-                        <!-- Textured Halo -->
-                        <div class="textured-halo"></div>
-                        
-                        <!-- Dashed Line -->
-                        <svg class="dashed-line-svg" viewBox="0 0 400 400" style="opacity: 0.5;">
-                            <path d="M280 200 Q380 200 380 300" stroke="#0084FF" stroke-width="2" stroke-dasharray="10 10" fill="transparent" />
-                        </svg>
-                        
-                        <!-- 3D Phone Card -->
-                        <div class="linkdm-phone-3d-card animate__animated animate__fadeInLeft">
-                            <img src="{{ asset('assets/images/custom/hot_influencer_reel.jpg') }}" alt="Vibrant Content">
-                        </div>
-                        
-                        <!-- Floating Zoom Card -->
-                        <div class="linkdm-floating-card profile-card animate__animated animate__fadeInRight">
-                            <div class="notification-badge-red">1</div>
-                            <img src="{{ asset('assets/images/custom/hot_influencer_reel.jpg') }}" style="height: 180px; object-fit: cover;" alt="Zoom">
-                            <div class="p-3 bg-white">
-                                <div class="fw-bold small">DM Sent! 🚀</div>
-                                <div class="x-small text-muted">Reply SHOP to get link</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5 ms-auto">
-                    <h2 class="linkdm-feature-heading">Auto-Reply to Instagram Reel Comments</h2>
-                    <p class="linkdm-feature-text">
-                        Reply to Instagram reel comments automatically with a DM sent straight to the users inbox. Add trigger keywords or respond to all comments.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Inbox Starters -->
-            <div class="row align-items-center mb-5 pb-5">
-                <div class="col-md-6">
-                    <div class="linkdm-clone-wrapper">
-                        <!-- Textured Halo (Gold) -->
-                        <div class="textured-halo halo-gold"></div>
-                        
-                        <div class="linkdm-phone-3d-card animate__animated animate__fadeInLeft">
-                            <img src="{{ asset('assets/images/custom/hot_influencer_inbox.jpg') }}" alt="Inbox Content">
-                        </div>
-                        
-                        <!-- Floating Inbox Thread -->
-                        <div class="linkdm-floating-card inbox-card animate__animated animate__fadeInRight">
-                            <div class="notification-badge-red">1</div>
-                            <div class="p-3 bg-white">
-                                <div class="fw-bold small mb-2 border-bottom pb-2">Inbox Starters</div>
-                                <div class="d-grid gap-2">
-                                    <div class="bg-light p-2 rounded small fw-bold text-primary">Visit website</div>
-                                    <div class="bg-light p-2 rounded small fw-bold text-primary">View releases</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5 ms-auto">
-                    <h2 class="linkdm-feature-heading">Inbox Starters</h2>
-                    <p class="linkdm-feature-text">
-                        Display up to 4 conversation starters when a user navigates to your Instagram Inbox.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Auto-Reply to Sponsored Ad Comments -->
-            <div class="row align-items-center mb-5 pb-5 flex-row-reverse">
-                <div class="col-md-6">
-                    <div class="linkdm-clone-wrapper">
-                        <!-- Textured Halo (Red) -->
-                        <div class="textured-halo halo-red"></div>
-                        
-                        <div class="linkdm-phone-3d-card animate__animated animate__fadeInRight">
-                            <img src="{{ asset('assets/images/custom/hot_influencer_ad.jpg') }}" style="filter: brightness(0.9) contrast(1.1);" alt="Ad Content">
-                        </div>
-                        
-                        <!-- Floating Ad Card -->
-                        <div class="linkdm-floating-card ad-card animate__animated animate__fadeInLeft">
-                            <div class="notification-badge-red">1</div>
-                            <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=600&auto=format&fit=crop" style="height: 150px; object-fit: cover;" alt="Product">
-                            <div class="p-3 bg-white text-center">
-                                <div class="fw-bold small mb-2">Designer Sunglasses</div>
-                                <button class="btn btn-dark btn-sm w-100 rounded-pill">Shop Now</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5 me-auto text-end">
-                    <h2 class="linkdm-feature-heading">Auto-Reply to Sponsored Ad Comments</h2>
-                    <p class="linkdm-feature-text">
-                        Auto-reply to post comments on your sponsored content with a DM sent directly to the users inbox. Respond to keywords or all comments.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <style nonce="{{ csp_nonce() }}">
-        .premium-stats-banner {
-            background: linear-gradient(90deg, #E91E63 0%, #9C27B0 50%, #673AB7 100%) !important;
-            padding: 35px 0 !important;
-            color: #fff !important;
-            text-align: center !important;
-            width: 100vw !important;
-            position: relative !important;
-            left: 50% !important;
-            right: 50% !important;
-            margin-left: -50vw !important;
-            margin-right: -50vw !important;
-            overflow: hidden !important;
-        }
-        .stat-val { font-size: 2.8rem !important; font-weight: 800 !important; margin-bottom: 0px !important; line-height: 1 !important; }
-        .stat-val span { font-size: 1.2rem !important; vertical-align: top !important; }
-        .stat-desc { font-weight: 700 !important; font-size: 0.95rem !important; opacity: 0.95 !important; }
-        .stat-meta { font-size: 0.7rem !important; opacity: 0.7 !important; font-style: italic !important; margin-top: 2px !important; }
-    </style>
-
-    <!-- Premium Gradient Stats Banner -->
-    <section class="premium-stats-banner">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="stat-val">92<span>%</span></div>
-                    <div class="stat-desc">Average Open Rates*</div>
-                    <div class="stat-meta">*As of December 2025</div>
-                </div>
-                <div class="col-md-4">
-                    <div class="stat-val">74<span>%</span></div>
-                    <div class="stat-desc">Average CTR*</div>
-                    <div class="stat-meta">*As of December 2025</div>
-                </div>
-                <div class="col-md-4">
-                    <div class="stat-val">65<span>%</span></div>
-                    <div class="stat-desc">Increase Engagement*</div>
-                    <div class="stat-meta">*As of December 2025</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Master Clone: Who's Using Socialyt? -->
-    <section class="py-5 bg-white" id="creators">
-        <div class="container py-5">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold display-5 mb-2">Who's Using Socialyt?</h2>
-                <div class="text-primary fw-bold small letter-spacing-2 mb-5">CREATORS</div>
-                
-                <!-- Creators Grid -->
-                <div class="d-flex flex-wrap justify-content-center gap-3 mb-5 px-lg-5">
-                    @php
-                        $fakeCreators = [
-                            ['name' => 'beautyxdanaplum', 'img' => 'https://i.pravatar.cc/100?u=1'],
-                            ['name' => 'rachaelsgoodeats', 'img' => 'https://i.pravatar.cc/100?u=2'],
-                            ['name' => 'sunsetsandstilettos', 'img' => 'https://i.pravatar.cc/100?u=3'],
-                            ['name' => 'getschooledinfashion', 'img' => 'https://i.pravatar.cc/100?u=4'],
-                            ['name' => 'mytexashouse', 'img' => 'https://i.pravatar.cc/100?u=5'],
-                            ['name' => 'madeline_devaux', 'img' => 'https://i.pravatar.cc/100?u=6'],
-                            ['name' => 'zee_styledit', 'img' => 'https://i.pravatar.cc/100?u=7'],
-                            ['name' => 'eatingbirdfood', 'img' => 'https://i.pravatar.cc/100?u=8'],
-                            ['name' => 'just.ingredients', 'img' => 'https://i.pravatar.cc/100?u=9'],
-                            ['name' => 'snipestwins', 'img' => 'https://i.pravatar.cc/100?u=10'],
-                            ['name' => 'danielle.donohue', 'img' => 'https://i.pravatar.cc/100?u=11'],
-                            ['name' => 'bromabakery', 'img' => 'https://i.pravatar.cc/100?u=12'],
-                            ['name' => 'everyday.holly', 'img' => 'https://i.pravatar.cc/100?u=13']
-                        ];
-                    @endphp
-                    @foreach($fakeCreators as $creator)
-                    <div class="creator-pill d-flex align-items-center bg-white border rounded-pill px-2 py-1 shadow-sm">
-                        <img src="{{ $creator['img'] }}" class="rounded-circle me-2" style="width: 28px; height: 28px; object-fit: cover;">
-                        <span class="small fw-bold text-dark me-1">&#64;{{ $creator['name'] }}</span>
-                        <i class="fas fa-check-circle text-primary" style="font-size: 0.7rem;"></i>
-                    </div>
-                    @endforeach
-                </div>
-
-                <div class="text-primary fw-bold small letter-spacing-2 mb-5">BRANDS</div>
-
-                <!-- Brands Grid -->
-                <div class="d-flex flex-wrap justify-content-center gap-3 mb-5 px-lg-5">
-                    @php
-                        $fakeBrands = [
-                            ['name' => 'enews', 'color' => '#001a34'],
-                            ['name' => 'chatbooks', 'color' => '#f06292'],
-                            ['name' => 'hauste', 'color' => '#e65100'],
-                            ['name' => 'patpat_clothing', 'color' => '#ff5252'],
-                            ['name' => 'shoptoday', 'color' => '#d32f2f'],
-                            ['name' => 'nbcselect', 'color' => '#1976d2'],
-                            ['name' => 'homebeautiful', 'color' => '#303f9f']
-                        ];
-                    @endphp
-                    @foreach($fakeBrands as $brand)
-                    <div class="creator-pill d-flex align-items-center bg-white border rounded-pill px-2 py-1 shadow-sm">
-                        <div class="rounded-circle me-2 d-flex align-items-center justify-content-center text-white fw-bold" style="width: 28px; height: 28px; background: {{ $brand['color'] }}; font-size: 0.6rem;">{{ strtoupper(substr($brand['name'], 0, 1)) }}</div>
-                        <span class="small fw-bold text-dark me-1">&#64;{{ $brand['name'] }}</span>
-                        <i class="fas fa-check-circle text-primary" style="font-size: 0.7rem;"></i>
-                    </div>
-                    @endforeach
-                </div>
-
-                <div class="text-primary fw-bold small letter-spacing-2 mb-4">NICHES</div>
-                
-                <!-- Niches Grid -->
-                <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
-                    @php
-                        $niches = ['Mavely Creators', 'Fashion Creators', 'Amazon Creators', 'LTK Creators', 'Food Creators', 'Beauty Creators', 'Travel Creators', 'DIY Home Creators', 'Designers', 'Musicians', 'Podcasters'];
-                    @endphp
-                    @foreach($niches as $niche)
-                    <span class="badge border text-dark rounded-pill px-3 py-2 fw-normal bg-white" style="font-size: 0.8rem; border-color: #dee2e6 !important;">{{ $niche }}</span>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-
-        <style nonce="{{ csp_nonce() }}">
-            .letter-spacing-2 { letter-spacing: 2px; }
-            .creator-pill { transition: all 0.3s ease; cursor: default; }
-            .creator-pill:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important; border-color: var(--primary) !important; }
-            .badge.border:hover { border-color: var(--primary) !important; color: var(--primary) !important; }
-        </style>
-    </section>
 
     <!-- Videos Grid -->
     <!-- Engagement in Action -->
-    <section class="py-5" id="engagement">
+    <section class="py-5 section-engagement-action" id="engagement">
         <div class="container py-5">
-            <h2 class="text-center fw-bold mb-5 fs-1">Engagement in Action</h2>
+            <h2 class="text-center fw-bold mb-5 fs-1" style="font-family: 'Outfit', sans-serif !important;">Engagement in Action</h2>
             
             <style nonce="{{ csp_nonce() }}">
                 .reels-grid {
@@ -679,6 +222,9 @@
                 @media (max-width: 768px) {
                     .reel-card { max-width: 45%; }
                 }
+                .section-engagement-action {
+                    background-color: #FFB300 !important; /* Bright Yellow Ochre */
+                }
             </style>
 
             @php
@@ -706,196 +252,326 @@
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="py-5 bg-white" id="pricing">
+    <!-- Redesigned Pricing Section (Premium Aesthetic) -->
+    <section class="py-5 section-pricing" id="pricing">
         <div class="container py-5">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold fs-1">Simple, Transparent Pricing</h2>
-                <p class="text-muted">Choose the plan that fits your growth stage.</p>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="p-5 rounded-5 border h-100 text-center">
-                        <h4 class="fw-bold">Free</h4>
-                        <div class="display-4 fw-bold my-3">$0</div>
-                        <p class="text-muted">For small creators starting out.</p>
-                        <ul class="list-unstyled d-grid gap-3 my-4">
-                            <li>100 Automated DMs/mo</li>
-                            <li>Basic Comment Reply</li>
-                            <li>Standard Support</li>
-                        </ul>
-                        <a href="#" class="btn btn-outline-premium w-100">Get Started</a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-5 rounded-5 border h-100 text-center bg-primary text-white shadow-lg">
-                        <h4 class="fw-bold">Pro</h4>
-                        <div class="display-4 fw-bold my-3">$29</div>
-                        <p class="text-white-50">For serious creators & brands.</p>
-                        <ul class="list-unstyled d-grid gap-3 my-4">
-                            <li>5,000 Automated DMs/mo</li>
-                            <li>Advanced Keyword Triggers</li>
-                            <li>Priority Support</li>
-                            <li>Custom Inbox Starters</li>
-                        </ul>
-                        <a href="#" class="btn btn-light w-100 fw-bold rounded-pill py-3">Try Pro Free</a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-5 rounded-5 border h-100 text-center">
-                        <h4 class="fw-bold">Agency</h4>
-                        <div class="display-4 fw-bold my-3">$99</div>
-                        <p class="text-muted">For multiple accounts & teams.</p>
-                        <ul class="list-unstyled d-grid gap-3 my-4">
-                            <li>Unlimited DMs</li>
-                            <li>10 Account Slots</li>
-                            <li>Dedicated Account Manager</li>
-                            <li>White Label Reporting</li>
-                        </ul>
-                        <a href="#" class="btn btn-outline-premium w-100">Contact Us</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="py-5 bg-light" id="testimonials">
-        <div class="container py-5">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold fs-1">Loved by Creators Everywhere</h2>
-                <p class="text-muted">Join 50,000+ happy users growing their community.</p>
+            <div class="text-center mb-5 pb-4">
+                <h2 class="display-3 fw-bold mb-3" style="font-family: 'Outfit', sans-serif !important;">Simple, Transparent Pricing</h2>
+                <p class="fs-4 text-muted mx-auto" style="max-width: 600px; font-family: 'Outfit', sans-serif !important;">Choose the plan that fits your growth stage.</p>
             </div>
             
-            <div class="row g-4 justify-content-center">
-                @forelse($testimonials as $testimonial)
-                <div class="col-lg-4 col-md-6">
-                    <div class="p-4 rounded-4 bg-white shadow-sm h-100 border-0 testimonial-card transition-all">
-                        <div class="quote-icon mb-3">
-                            <i class="fas fa-quote-left text-primary opacity-25 fa-2x"></i>
-                        </div>
-                        <div class="text-warning mb-3">
-                            @for($i=0; $i<(@$testimonial->value->rating ?? 5); $i++)
-                                <i class="fas fa-star small"></i>
-                            @endfor
-                        </div>
-                        <p class="text-dark mb-4 lh-lg" style="font-size: 0.95rem; min-height: 80px;">
-                            {{ @$testimonial->value->quote ?? @$testimonial->value->description }}
-                        </p>
-                        <hr class="opacity-10 mb-4">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-grow-1">
-                                <h6 class="fw-bold mb-0 text-dark">{{ @$testimonial->value->title ?? @$testimonial->value->author }}</h6>
-                                <span class="text-muted small">{{ @$testimonial->value->designation }}</span>
+            <div class="row g-4 align-items-stretch justify-content-center">
+                <!-- Free Plan -->
+                <div class="col-lg-4">
+                    <div class="pricing-card-premium">
+                        <div class="plan-header">
+                            <span class="plan-badge">STARTER</span>
+                            <h4 class="plan-title">Free</h4>
+                            <div class="plan-price">
+                                <span class="currency">$</span>0
                             </div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> 100 Automated DMs/mo</li>
+                                <li><i class="fas fa-check-circle"></i> Basic Comment Reply</li>
+                                <li><i class="fas fa-check-circle"></i> Standard Support</li>
+                                <li class="disabled"><i class="fas fa-times-circle"></i> Custom Inbox Starters</li>
+                            </ul>
+                        </div>
+                        <div class="plan-footer">
+                            <a href="#" class="btn-pricing-outline">Get Started Free</a>
                         </div>
                     </div>
                 </div>
-                @empty
-                <!-- Fallback if Admin hasn't added testimonials yet -->
-                @for($i=0; $i<3; $i++)
-                <div class="col-lg-4 col-md-6">
-                    <div class="p-4 rounded-4 bg-white shadow-sm h-100 border-0 testimonial-card">
-                        <div class="quote-icon mb-3"><i class="fas fa-quote-left text-primary opacity-25 fa-2x"></i></div>
-                        <div class="text-warning mb-3"><i class="fas fa-star small"></i><i class="fas fa-star small"></i><i class="fas fa-star small"></i><i class="fas fa-star small"></i><i class="fas fa-star small"></i></div>
-                        <p class="text-dark mb-4 lh-lg" style="font-size: 0.95rem;">
-                            {{ ["Socialyt changed my life. I went from spending 4 hours a day replying to comments to 0 minutes, while my sales tripled!", "The easiest tool I've ever used. Set it up in 5 minutes and it's been running flawlessly for months.", "Our agency handles 50+ clients and Socialyt is our go-to for automation. The API is rock solid."][$i] }}
-                        </p>
-                        <hr class="opacity-10 mb-4">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-grow-1">
-                                <h6 class="fw-bold mb-0 text-dark">{{ ["Alex Rivers", "Sarah Jenkins", "Mike Ross"][$i] }}</h6>
-                                <span class="text-muted small">{{ ["Tech Creator", "Fashion Blogger", "Agency Director"][$i] }}</span>
+
+                <!-- Pro Plan (Most Popular) -->
+                <div class="col-lg-4">
+                    <div class="pricing-card-premium featured">
+                        <div class="popular-tag">MOST POPULAR</div>
+                        <div class="plan-header text-white">
+                            <span class="plan-badge bg-white text-primary">GROWTH</span>
+                            <h4 class="plan-title">Pro</h4>
+                            <div class="plan-price">
+                                <span class="currency">$</span>29
                             </div>
+                        </div>
+                        <div class="plan-features text-white">
+                            <ul>
+                                <li><i class="fas fa-check-circle text-white"></i> 5,000 Automated DMs/mo</li>
+                                <li><i class="fas fa-check-circle text-white"></i> Advanced Keyword Triggers</li>
+                                <li><i class="fas fa-check-circle text-white"></i> Priority Support</li>
+                                <li><i class="fas fa-check-circle text-white"></i> Custom Inbox Starters</li>
+                            </ul>
+                        </div>
+                        <div class="plan-footer">
+                            <a href="#" class="btn-pricing-white">Try Pro Free</a>
                         </div>
                     </div>
                 </div>
-                @endfor
-                @endforelse
+
+                <!-- Agency Plan -->
+                <div class="col-lg-4">
+                    <div class="pricing-card-premium">
+                        <div class="plan-header">
+                            <span class="plan-badge">ENTERPRISE</span>
+                            <h4 class="plan-title">Agency</h4>
+                            <div class="plan-price">
+                                <span class="currency">$</span>99
+                            </div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Unlimited DMs</li>
+                                <li><i class="fas fa-check-circle"></i> 10 Account Slots</li>
+                                <li><i class="fas fa-check-circle"></i> Dedicated Manager</li>
+                                <li><i class="fas fa-check-circle"></i> White Label Reporting</li>
+                            </ul>
+                        </div>
+                        <div class="plan-footer">
+                            <a href="#" class="btn-pricing-outline">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <style nonce="{{ csp_nonce() }}">
-            .testimonial-card {
-                border: 1px solid rgba(0,0,0,0.05) !important;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            .section-pricing {
+                background: #fff;
             }
-            .testimonial-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 15px 30px rgba(0,0,0,0.08) !important;
-                border-color: var(--primary-color) !important;
+            .pricing-card-premium {
+                background: #fff;
+                border-radius: 50px;
+                padding: 50px 40px;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                border: 2px solid #f0f0f0;
+                position: relative;
             }
-            .transition-all { transition: all 0.3s ease; }
+            .pricing-card-premium.featured {
+                background: linear-gradient(135deg, #FF8A00 0%, #FF5C00 100%);
+                border: none;
+                transform: scale(1.05);
+                box-shadow: 0 30px 60px rgba(255, 92, 0, 0.2);
+                z-index: 2;
+            }
+            .pricing-card-premium:not(.featured):hover {
+                transform: translateY(-10px);
+                border-color: #FF8A00;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            }
+
+            .plan-badge {
+                font-size: 0.75rem;
+                font-weight: 800;
+                padding: 6px 15px;
+                background: #FFF3E0;
+                color: #FF5C00;
+                border-radius: 50px;
+                letter-spacing: 1px;
+                display: inline-block;
+                margin-bottom: 20px;
+            }
+            .plan-title {
+                font-family: 'Outfit', sans-serif !important;
+                font-weight: 800;
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+            .plan-price {
+                font-family: 'Outfit', sans-serif !important;
+                font-size: 4rem;
+                font-weight: 800;
+                margin-bottom: 30px;
+            }
+            .plan-price .currency {
+                font-size: 1.5rem;
+                vertical-align: super;
+                margin-right: 5px;
+            }
+
+            .plan-features ul {
+                list-style: none;
+                padding: 0;
+                margin-bottom: 40px;
+                flex-grow: 1;
+            }
+            .plan-features li {
+                margin-bottom: 15px;
+                font-family: 'Outfit', sans-serif !important;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            .plan-features i {
+                color: #FF8A00;
+                font-size: 1.1rem;
+            }
+            .plan-features .disabled {
+                opacity: 0.4;
+                text-decoration: line-through;
+            }
+
+            .btn-pricing-outline {
+                display: block;
+                width: 100%;
+                padding: 18px;
+                border: 2px solid #FF8A00;
+                color: #FF8A00 !important;
+                text-align: center;
+                border-radius: 50px;
+                text-decoration: none !important;
+                font-weight: 800;
+                font-family: 'Outfit', sans-serif !important;
+                transition: all 0.3s ease;
+            }
+            .btn-pricing-outline:hover {
+                background: #FF8A00;
+                color: white !important;
+            }
+
+            .btn-pricing-white {
+                display: block;
+                width: 100%;
+                padding: 18px;
+                background: white;
+                color: #FF5C00 !important;
+                text-align: center;
+                border-radius: 50px;
+                text-decoration: none !important;
+                font-weight: 800;
+                font-family: 'Outfit', sans-serif !important;
+                transition: all 0.3s ease;
+            }
+            .btn-pricing-white:hover {
+                transform: scale(1.05);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            .popular-tag {
+                position: absolute;
+                top: -15px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #000;
+                color: #fff;
+                padding: 6px 20px;
+                border-radius: 50px;
+                font-size: 0.75rem;
+                font-weight: 800;
+                letter-spacing: 1px;
+            }
+
+            @media (max-width: 991px) {
+                .pricing-card-premium.featured {
+                    transform: scale(1);
+                    margin: 30px 0;
+                }
+            }
         </style>
     </section>
 
-    <!-- Help Center / Support Section -->
-    <section class="py-5 bg-white border-top" id="support">
+    <!-- Combined Support & FAQ Section (Wishlink Style) -->
+    <section class="py-5 section-support-faq" id="support">
         <div class="container py-5">
-            <div class="text-center mb-5">
-                <div class="text-primary fw-bold text-uppercase mb-2" style="letter-spacing: 2px;">Help Center</div>
-                <h2 class="fw-bold fs-1">Support Topics</h2>
-                <p class="text-muted mx-auto" style="max-width: 700px;">
-                    Navigate through our extensive support resources, find answers to common questions, and reach out to our dedicated team for any assistance.
+            <!-- Launchpad Header -->
+            <div class="text-center mb-5 pb-4">
+                <h2 class="display-3 fw-bold mb-4" style="font-family: 'Outfit', sans-serif !important;">Your launchpad to success!!</h2>
+                <p class="fs-4 text-muted mx-auto lh-base" style="max-width: 900px; font-family: 'Outfit', sans-serif !important;">
+                    Help your followers shop smarter with great product recommendations and 
+                    <span class="text-dark fw-bold px-2" style="background-color: #FFD200 !important; display: inline-block !important; border-radius: 4px;">earn when they shop from your content.</span> 
+                    With Socialyt, you can expand your reach, engage a wider audience, and effortlessly manage everything from a single app.
                 </p>
-                <div class="mt-4 mx-auto" style="max-width: 500px;">
-                    <div class="input-group input-group-lg border rounded-pill overflow-hidden">
-                        <span class="input-group-text bg-white border-0"><i class="fas fa-search text-muted"></i></span>
-                        <input type="text" class="form-control border-0 shadow-none" placeholder="Search for a help topic or issue">
-                    </div>
-                </div>
             </div>
 
-            <div class="row g-4 mt-5">
-                @php
-                    $topics = [
-                        ['icon' => 'fas fa-rocket', 'title' => 'Get Started with Socialyt', 'desc' => 'Understand the fundamentals and core components of Socialyt.'],
-                        ['icon' => 'fas fa-star', 'title' => 'Socialyt Pro', 'desc' => 'Get help with Socialyt Pro features and advanced functionality.'],
-                        ['icon' => 'fas fa-tools', 'title' => 'Troubleshooting', 'desc' => 'Common Meta permission issues and Instagram page access.'],
-                        ['icon' => 'fab fa-meta', 'title' => 'Meta Permissions', 'desc' => 'Get assistance with Meta permission and account linking issues.'],
-                        ['icon' => 'fas fa-film', 'title' => 'Post & Reel Automation', 'desc' => 'Get help with post and reel automation setup and common issues.'],
-                        ['icon' => 'fas fa-circle-notch', 'title' => 'Story Automation', 'desc' => 'Having issues using automation on Instagram stories?'],
-                        ['icon' => 'fas fa-random', 'title' => 'Flow Automation', 'desc' => 'Get support setting up and using Flow Automations on your accounts.'],
-                        ['icon' => 'fas fa-clipboard-list', 'title' => 'Lead Generation', 'desc' => 'Get support setting up and using Lead Generation forms.'],
-                    ];
-                @endphp
+            <!-- FAQ Header -->
+            <div class="mt-5 pt-5">
+                <h3 class="display-3 fw-bold mb-2" style="font-family: 'Outfit', sans-serif !important;">FAQs</h3>
+                <p class="fs-4 mb-5" style="font-family: 'Outfit', sans-serif !important;">Got questions? We've got answers!</p>
 
-                @foreach($topics as $topic)
-                    <div class="col-md-3">
-                        <div class="p-4 rounded-4 border h-100 hover-shadow transition">
-                            <div class="fs-2 text-primary mb-3"><i class="{{ $topic['icon'] }}"></i></div>
-                            <h5 class="fw-bold">{{ $topic['title'] }}</h5>
-                            <p class="text-muted small mb-0">{{ $topic['desc'] }}</p>
+                <div class="accordion accordion-flush d-grid gap-3" id="faqAccordion">
+                    @php
+                        $faqs_list = [
+                            ['q' => 'How does the Socialyt Creator payout process work?', 'a' => 'Payouts are processed automatically every month. Once you hit the minimum threshold, your earnings are transferred directly to your linked bank account or PayPal.'],
+                            ['q' => 'How does Socialyt help Creators grow?', 'a' => 'Socialyt automates your engagement, allowing you to respond to 100% of comments and DMs instantly. This boosts your ranking in the algorithm and keeps your audience active.'],
+                            ['q' => 'Will Brands control my content?', 'a' => 'Absolutely not. You maintain 100% creative control over your content. Socialyt just provides the tools to manage your audience and monetization.'],
+                            ['q' => 'Is my account safe with Socialyt?', 'a' => 'Yes, Socialyt is an official Meta Business Partner. We use only official APIs and never ask for your password. Your account remains 100% secure.'],
+                            ['q' => 'Can I use Socialyt for multiple accounts?', 'a' => 'Yes! Depending on your plan, you can manage multiple Instagram and Facebook pages from a single unified dashboard.'],
+                        ];
+                    @endphp
+
+                    @foreach($faqs_list as $index => $item)
+                        <div class="accordion-item border-0 bg-transparent">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed faq-btn-premium" type="button" data-bs-toggle="collapse" data-bs-target="#faq-{{ $index }}">
+                                    {{ $item['q'] }}
+                                    <i class="fas fa-arrow-down ms-auto faq-icon-custom"></i>
+                                </button>
+                            </h2>
+                            <div id="faq-{{ $index }}" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body faq-body-premium">
+                                    {{ $item['a'] }}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-
-    <!-- FAQ Section -->
-    <section class="py-5 bg-light" id="faq">
-        <div class="container py-5">
-            <div class="row">
-                <div class="col-md-4">
-                    <h2 class="fw-bold fs-1 mb-4">Questions? <br><span class="text-primary">We have answers.</span></h2>
-                    <p class="text-muted">Can't find what you're looking for? Reach out to our 24/7 support team.</p>
-                    <a href="#" class="btn btn-outline-premium mt-3">Contact Support</a>
-                </div>
-                <div class="col-md-7 ms-auto">
-                    @forelse($faqs as $faq)
-                        <div class="faq-item-modern">
-                            <h4 class="fw-bold h5 mb-3">{{ $faq->question }}</h4>
-                            <p class="text-muted mb-0">{{ $faq->answer }}</p>
-                        </div>
-                    @empty
-                        <p class="text-muted">No FAQs available.</p>
-                    @endforelse
+                    @endforeach
                 </div>
             </div>
         </div>
-    </section>
+
+        <style nonce="{{ csp_nonce() }}">
+            .section-support-faq {
+                background: #fdfaf5;
+            }
+            .faq-btn-premium {
+                background: linear-gradient(90deg, #FF8A00 0%, #FF5C00 100%) !important;
+                color: white !important;
+                border-radius: 15px !important;
+                padding: 25px 30px !important;
+                font-family: 'Outfit', sans-serif !important;
+                font-weight: 700 !important;
+                font-size: 1.3rem !important;
+                box-shadow: 0 10px 25px rgba(255, 92, 0, 0.2) !important;
+                position: relative;
+                border: none !important;
+                display: flex;
+                align-items: center;
+                width: 100%;
+            }
+            .faq-btn-premium::after { display: none !important; }
+            
+            .faq-icon-custom {
+                transition: transform 0.3s ease;
+                font-size: 1.2rem;
+            }
+            .faq-btn-premium:not(.collapsed) .faq-icon-custom {
+                transform: rotate(180deg);
+            }
+
+            .faq-body-premium {
+                background: white !important;
+                margin-top: 5px;
+                border-radius: 15px !important;
+                padding: 30px !important;
+                font-family: 'Outfit', sans-serif !important;
+                font-size: 1.1rem;
+                line-height: 1.6;
+                color: #555;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            }
+
+            @media (max-width: 768px) {
+                .faq-btn-premium {
+                    font-size: 1.1rem !important;
+                    padding: 20px !important;
+                }
+            }
+        </style>
+    </section>n>
 
     <!-- Meta Partner -->
     <section class="py-5">
@@ -1014,6 +690,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <style nonce="{{ csp_nonce() }}">
         .premium-social-proof {
@@ -1084,6 +761,73 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('Initializing Swiper sliders...');
+            
+            // Feature Slider
+            const featureSwiper = new Swiper('.feature-swiper', {
+                loop: true,
+                slidesPerView: 1,
+                autoplay: {
+                    delay: 2000,
+                    disableOnInteraction: false,
+                },
+                speed: 800,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.feature-next',
+                    prevEl: '.feature-prev',
+                }
+            });
+
+            // Why Socialyt (Orange Section)
+            const whySwiper = new Swiper('.why-socialyt-swiper-container', {
+                direction: 'vertical',
+                loop: true,
+                autoplay: {
+                    delay: 2000,
+                    disableOnInteraction: false,
+                },
+                speed: 800,
+                pagination: {
+                    el: '.why-socialyt-pagination',
+                    clickable: true,
+                },
+                height: 600
+            });
+
+            // Creator Love (Stacked Cards)
+            const creatorSwiper = new Swiper('.creator-swiper', {
+                effect: 'cards',
+                grabCursor: true,
+                loop: true,
+                cardsEffect: {
+                    slideShadows: false, // Clean look
+                    perSlideOffset: 12,  // Controlled stack depth
+                    perSlideRotate: 0,   // No rotation for a "neat" look
+                },
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                }
+            });
+
+            // Force start as a fail-safe
+            if (featureSwiper && featureSwiper.autoplay) {
+                featureSwiper.autoplay.start();
+                console.log('Feature Slider autoplay started');
+            }
+            if (whySwiper && whySwiper.autoplay) {
+                whySwiper.autoplay.start();
+                console.log('Why Socialyt autoplay started');
+            }
+
             setTimeout(() => {
                 showNotification();
                 setInterval(showNotification, 6000);

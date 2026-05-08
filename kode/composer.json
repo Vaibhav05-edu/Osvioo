@@ -12,6 +12,7 @@
         "btcpayserver/btcpayserver-greenfield-php": "^2.0",
         "coderjerk/bird-elephant": "^0.7.0",
         "coingate/coingate-php": "^3.0",
+        "doctrine/dbal": "^3.10",
         "ezyang/htmlpurifier": "^4.18",
         "gregwar/captcha": "1.*",
         "guzzlehttp/guzzle": "^7.2",
