@@ -230,4 +230,5 @@ class FrontendController extends Controller
             'banner' => (object) ['title' => @$service->value->title, 'description' => limit_words(strip_tags(@$service->value->description), 100)]
         ]);
     }
+
 }

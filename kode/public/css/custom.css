@@ -572,24 +572,24 @@ h1, h2, h3, h4 {
 }
 
 
-/* Wishlink Revamp Styles */
+/* Royal Blue & Yellow Theme */
 :root {
-    --wishlink-orange: #FF8A00;
-    --wishlink-black: #1A1A1A;
-    --wishlink-cream: #FFF4E6; /* Milder, soft Peach-Cream */
-    --wishlink-yellow: #FFD200;
-    --wishlink-pink: #FF87B3;
-    --wishlink-peach: #FFEBD6; /* Subtle secondary tint */
+    --royal-blue: #0052FF;
+    --royal-blue-dark: #003EB3;
+    --royal-black: #1A1A1A;
+    --royal-white: #FFFFFF;
+    --royal-yellow: #FFD200;
+    --royal-blue-accent: #EBF2FF;
 }
 
 body, html {
-    background-color: var(--wishlink-cream) !important;
-    color: var(--wishlink-black);
+    background-color: var(--royal-white) !important;
+    color: var(--royal-black);
     font-family: 'Outfit', sans-serif !important;
     position: relative;
 }
 
-/* Milder Atmospheric Glow */
+/* Milder Atmospheric Glow (Bluish) */
 body::after {
     content: '';
     position: fixed;
@@ -597,7 +597,7 @@ body::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 50% 50%, rgba(255, 138, 0, 0.03), rgba(255, 135, 179, 0.01));
+    background: radial-gradient(circle at 50% 50%, rgba(0, 82, 255, 0.02), rgba(0, 132, 255, 0.01));
     pointer-events: none;
     z-index: 1000;
 }
@@ -615,12 +615,12 @@ footer,
 .modal-content,
 .dropdown-menu,
 .footer-wishlink-card {
-    background-color: var(--wishlink-cream) !important;
-    border-color: rgba(255, 138, 0, 0.1) !important;
+    background-color: var(--royal-white) !important;
+    border-color: rgba(0, 82, 255, 0.08) !important;
 }
 
 .section-wishlink-hero {
-    background-color: var(--wishlink-cream) !important;
+    background-color: var(--royal-white) !important;
     padding: 100px 0 60px;
     position: relative;
     overflow: hidden;
@@ -628,11 +628,11 @@ footer,
 
 /* --- PREMIUM ANNOUNCEMENT BAR --- */
 .announcement-bar-wishlink {
-    background: #FF8A00 !important; /* Solid Fallback */
-    background: linear-gradient(90deg, #FF8A00 0%, #FF87B3 100%) !important;
+    background: var(--royal-yellow) !important; 
+    background: linear-gradient(90deg, var(--royal-yellow) 0%, #FFB800 100%) !important;
     position: relative !important;
     z-index: 1001 !important;
-    box-shadow: 0 4px 20px rgba(255, 138, 0, 0.3) !important;
+    box-shadow: 0 4px 20px rgba(255, 210, 0, 0.2) !important;
     min-height: 45px !important;
     display: flex !important;
     align-items: center !important;
@@ -642,7 +642,7 @@ footer,
 .announcement-bar-wishlink p {
     font-size: 0.95rem !important;
     letter-spacing: 0.5px !important;
-    color: #1A1A1A !important; /* Bold High-Contrast Black */
+    color: #000000 !important; /* Black text for yellow bar */
     text-shadow: none !important;
     width: 100%;
 }
@@ -661,7 +661,7 @@ footer,
 .socialyt-logo-script {
     font-family: 'Caveat', cursive !important;
     font-size: 2.4rem !important; /* Larger for navbar */
-    color: #FF8A00 !important; /* Bold Brand Orange */
+    color: var(--royal-blue) !important; /* Bold Brand Blue */
     font-weight: 700 !important;
     text-shadow: 1px 1px 0px rgba(0,0,0,0.02) !important;
     display: inline-block !important;
@@ -701,22 +701,22 @@ footer,
 }
 
 .nav-link-wishlink:hover {
-    color: var(--wishlink-orange) !important;
+    color: var(--royal-blue) !important;
     transform: translateY(-1px);
 }
 
 .active-pill {
-    background: #FFD200 !important;
+    background: var(--royal-yellow) !important;
     border-radius: 14px !important;
     padding: 12px 28px !important;
     color: #000 !important;
-    box-shadow: 0 6px 15px rgba(255, 210, 0, 0.25) !important;
+    box-shadow: 0 6px 15px rgba(255, 210, 0, 0.2) !important;
     font-weight: 700 !important;
 }
 
 .get-started-btn-wishlink {
-    background: #fff !important;
-    color: #FF4D4D !important;
+    background: var(--royal-blue) !important;
+    color: #FFFFFF !important;
     padding: 14px 32px !important;
     border-radius: 50px !important;
     font-weight: 800 !important;
@@ -734,7 +734,7 @@ footer,
 
 /* Sticky Navbar Override */
 .header.sticky, .header-wishlink.sticky {
-    background: var(--wishlink-cream) !important;
+    background: var(--royal-white) !important;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
     padding: 15px 0 !important;
     border: none !important;
@@ -798,7 +798,7 @@ footer,
 .floating-bar-text {
     font-family: 'Outfit', sans-serif !important;
     font-size: 1.2rem;
-    color: #CC4B00;
+    color: var(--royal-blue);
     font-weight: 700;
 }
 
@@ -809,7 +809,7 @@ footer,
 }
 
 .btn-signup-wishlink {
-    background: linear-gradient(90deg, #F97316 0%, #EA580C 100%);
+    background: linear-gradient(90deg, var(--royal-blue) 0%, var(--royal-blue-dark) 100%);
     color: white;
     padding: 14px 40px;
     border-radius: 100px;
@@ -827,13 +827,13 @@ footer,
 
 .btn-signup-wishlink:hover {
     transform: scale(1.03) translateY(-2px);
-    box-shadow: 0 10px 20px rgba(234, 88, 12, 0.3);
+    box-shadow: 0 10px 20px rgba(0, 82, 255, 0.3);
     color: white;
 }
 
 /* Marquee Section */
 .section-brand-marquee {
-    background-color: var(--wishlink-cream);
+    background-color: var(--royal-white);
     padding: 100px 0;
     overflow: hidden;
 }
@@ -953,7 +953,7 @@ footer,
 
 /* Feature Slider Section */
 .section-feature-slider {
-    background-color: var(--wishlink-cream);
+    background-color: var(--royal-white);
     padding: 120px 0;
     position: relative;
 }
@@ -972,7 +972,7 @@ footer,
 }
 
 .paint-highlight {
-    background-color: #FFD200;
+    background-color: var(--royal-yellow);
     padding: 0 5px;
     display: inline-block;
     line-height: 1;
@@ -993,7 +993,7 @@ footer,
 }
 
 .paint-highlight {
-    background-color: #FFD200 !important;
+    background-color: var(--royal-yellow) !important;
     padding: 0 5px;
     display: inline-block;
     line-height: 1;
@@ -1126,7 +1126,7 @@ footer,
 .feature-swiper .swiper-pagination-bullet-active {
     width: 35px;
     border-radius: 10px;
-    background: #EA580C;
+    background: var(--royal-blue);
 }
 
 .feature-slide-text p {
@@ -1162,9 +1162,9 @@ footer,
 }
 
 .slider-nav-btn:hover {
-    background: var(--wishlink-orange);
+    background: var(--royal-blue);
     color: white;
-    border-color: var(--wishlink-orange);
+    border-color: var(--royal-blue);
 }
 
 @media (max-width: 991px) {
@@ -1186,7 +1186,7 @@ footer,
 
 /* Why Socialyt Section (Vertical Carousel) */
 .section-why-socialyt {
-    background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+    background: linear-gradient(135deg, var(--royal-blue) 0%, var(--royal-blue-dark) 100%);
     padding: 120px 0;
     color: #ffffff;
     overflow: hidden;

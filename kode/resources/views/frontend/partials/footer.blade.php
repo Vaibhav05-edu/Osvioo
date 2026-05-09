@@ -102,13 +102,13 @@
     }
 
     .footer-wishlink-card {
-        background-color: var(--wishlink-cream) !important;
+        background-color: var(--royal-white) !important;
         border-radius: 80px; /* Big rounded card */
         padding: 100px 80px;
         position: relative;
         overflow: hidden;
         box-shadow: 0 40px 100px rgba(0,0,0,0.06);
-        border: 1px solid rgba(255, 138, 0, 0.1);
+        border: 1px solid rgba(0, 82, 255, 0.08);
     }
 
     /* REFINED HALO GLOW EFFECT - MISTY & SPREAD OUT */
@@ -119,9 +119,9 @@
         width: 120%;
         height: 800px;
         background: 
-            radial-gradient(circle at 15% 75%, rgba(255, 210, 0, 0.35) 0%, transparent 55%),
-            radial-gradient(circle at 45% 85%, rgba(255, 138, 0, 0.3) 0%, transparent 60%),
-            radial-gradient(circle at 75% 70%, rgba(255, 135, 179, 0.25) 0%, transparent 55%);
+            radial-gradient(circle at 15% 75%, rgba(0, 82, 255, 0.15) 0%, transparent 55%),
+            radial-gradient(circle at 45% 85%, rgba(0, 132, 255, 0.12) 0%, transparent 60%),
+            radial-gradient(circle at 75% 70%, rgba(255, 210, 0, 0.08) 0%, transparent 55%);
         filter: blur(120px);
         pointer-events: none;
         z-index: 1;
@@ -155,7 +155,7 @@
 
     .footer-links-grid a:hover {
         opacity: 1;
-        color: var(--wishlink-orange);
+        color: var(--royal-blue);
         padding-left: 5px;
     }
 
@@ -173,7 +173,7 @@
     }
 
     .footer-social-circle:hover {
-        background: var(--wishlink-orange);
+        background: var(--royal-blue);
         transform: translateY(-5px) scale(1.1);
     }
 

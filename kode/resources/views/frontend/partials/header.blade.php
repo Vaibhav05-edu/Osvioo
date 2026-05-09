@@ -10,10 +10,10 @@
 <!-- PREMIUM ANNOUNCEMENT BAR -->
 <div class="announcement-bar-wishlink">
     <div class="container-fluid text-center p-2">
-        <p class="mb-0 fs-14 fw-semibold text-white d-flex align-items-center justify-content-center gap-2">
+        <p class="mb-0 fs-14 fw-semibold text-dark d-flex align-items-center justify-content-center gap-2">
             <span class="announcement-badge">NEW</span>
             🔥 Join 10,000+ Top Creators & 10x your sales with AI-Automation. 
-            <a href="{{route('auth.register')}}" class="text-white text-decoration-underline ms-2">Get Started Free →</a>
+            <a href="{{route('auth.register')}}" class="text-dark text-decoration-underline ms-2">Get Started Free →</a>
         </p>
     </div>
 </div>
@@ -37,12 +37,6 @@
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4 align-items-center">
                         <li class="nav-item">
                             <a class="nav-link-wishlink active-pill" href="#">Creators</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link-wishlink" href="#">Brands</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link-wishlink" href="#">Partnerships</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link-wishlink d-lg-none" href="{{route('auth.login')}}">Login</a>
@@ -91,23 +85,23 @@
     }
 
     .nav-link-wishlink:hover {
-        color: var(--wishlink-orange) !important;
+        color: var(--royal-blue) !important;
         transform: translateY(-1px);
     }
 
     /* THE YELLOW ACTIVE PILL */
     .active-pill {
-        background: #FFD200 !important;
+        background: var(--royal-yellow) !important;
         border-radius: 12px;
         padding: 10px 25px !important;
         color: #000 !important;
-        box-shadow: 0 4px 10px rgba(255, 210, 0, 0.2);
+        box-shadow: 0 4px 10px rgba(255, 210, 0, 0.15);
     }
 
     /* THE WHITE GET STARTED BUTTON */
     .get-started-btn-wishlink {
-        background: #fff !important;
-        color: #0066FF !important; /* Premium Blue or Orange as per user preference */
+        background: var(--royal-blue) !important;
+        color: #FFFFFF !important; 
         padding: 12px 28px;
         border-radius: 50px;
         font-weight: 800;
@@ -126,7 +120,7 @@
 
     /* Sticky behavior override */
     .header.sticky {
-        background: var(--wishlink-cream) !important;
+        background: var(--royal-white) !important;
         box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         padding: 10px 0;
     }
@@ -134,14 +128,14 @@
     @media (max-width: 991px) {
         .header-wishlink {
             position: relative;
-            background: var(--wishlink-cream) !important;
+            background: var(--royal-white) !important;
         }
         .navbar-collapse {
-            background: var(--wishlink-cream);
+            background: var(--royal-white);
             padding: 20px;
             border-radius: 20px;
             margin-top: 15px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
         }
         .nav-link-wishlink {
             padding: 15px 0;

@@ -1,6 +1,6 @@
 @php
     $cardsRow1 = [
-        ['type' => 'creator', 'img' => 'https://images.pexels.com/photos/1587009/pexels-photo-1587009.jpeg?auto=compress&cs=tinysrgb&w=500', 'bg' => '#FF8A00'],
+        ['type' => 'creator', 'img' => 'https://images.pexels.com/photos/1587009/pexels-photo-1587009.jpeg?auto=compress&cs=tinysrgb&w=500', 'bg' => '#0052FF'],
         ['type' => 'logo', 'img' => asset('assets/frontend/images/logos/hm.png'), 'bg' => '#FFFFFF'],
         ['type' => 'creator', 'img' => 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=500', 'bg' => '#FFD200'],
         ['type' => 'logo', 'img' => asset('assets/frontend/images/logos/flipkart.png'), 'bg' => '#FFFFFF'],
@@ -18,7 +18,7 @@
     ];
 
     $cardsRow3 = [
-        ['type' => 'creator', 'img' => 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=500', 'bg' => '#FB923C'],
+        ['type' => 'creator', 'img' => 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=500', 'bg' => '#E5EFFF'],
         ['type' => 'logo', 'img' => asset('assets/frontend/images/logos/ajio.png'), 'bg' => '#FFFFFF'],
         ['type' => 'creator', 'img' => 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=500', 'bg' => '#FFD200'],
         ['type' => 'logo', 'img' => asset('assets/frontend/images/logos/puma.png'), 'bg' => '#000000'],

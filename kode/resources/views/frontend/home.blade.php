@@ -167,9 +167,6 @@
     <!-- Why Socialyt Section (Vertical Carousel) -->
     @include('frontend.sections.why_us')
 
-    <!-- The Love We Get from Our Creators Section -->
-    @include('frontend.sections.creator_love')
-
     <!-- Are you one of them? (Categories) Section -->
     @include('frontend.sections.creator_categories')
 
@@ -223,7 +220,7 @@
                     .reel-card { max-width: 45%; }
                 }
                 .section-engagement-action {
-                    background-color: #FFB300 !important; /* Bright Yellow Ochre */
+                    background-color: var(--royal-yellow) !important; 
                 }
             </style>
 
@@ -352,15 +349,15 @@
                 position: relative;
             }
             .pricing-card-premium.featured {
-                background: linear-gradient(135deg, #FF8A00 0%, #FF5C00 100%);
+                background: linear-gradient(135deg, var(--royal-blue) 0%, var(--royal-blue-dark) 100%);
                 border: none;
                 transform: scale(1.05);
-                box-shadow: 0 30px 60px rgba(255, 92, 0, 0.2);
+                box-shadow: 0 30px 60px rgba(0, 82, 255, 0.2);
                 z-index: 2;
             }
             .pricing-card-premium:not(.featured):hover {
                 transform: translateY(-10px);
-                border-color: #FF8A00;
+                border-color: var(--royal-blue);
                 box-shadow: 0 20px 40px rgba(0,0,0,0.05);
             }
 
@@ -368,8 +365,8 @@
                 font-size: 0.75rem;
                 font-weight: 800;
                 padding: 6px 15px;
-                background: #FFF3E0;
-                color: #FF5C00;
+                background: var(--royal-blue-accent);
+                color: var(--royal-blue);
                 border-radius: 50px;
                 letter-spacing: 1px;
                 display: inline-block;
@@ -408,7 +405,7 @@
                 gap: 12px;
             }
             .plan-features i {
-                color: #FF8A00;
+                color: var(--royal-blue);
                 font-size: 1.1rem;
             }
             .plan-features .disabled {
@@ -420,8 +417,8 @@
                 display: block;
                 width: 100%;
                 padding: 18px;
-                border: 2px solid #FF8A00;
-                color: #FF8A00 !important;
+                border: 2px solid var(--royal-blue);
+                color: var(--royal-blue) !important;
                 text-align: center;
                 border-radius: 50px;
                 text-decoration: none !important;
@@ -430,7 +427,7 @@
                 transition: all 0.3s ease;
             }
             .btn-pricing-outline:hover {
-                background: #FF8A00;
+                background: var(--royal-blue);
                 color: white !important;
             }
 
@@ -439,7 +436,7 @@
                 width: 100%;
                 padding: 18px;
                 background: white;
-                color: #FF5C00 !important;
+                color: var(--royal-blue) !important;
                 text-align: center;
                 border-radius: 50px;
                 text-decoration: none !important;
@@ -483,7 +480,7 @@
                 <h2 class="display-3 fw-bold mb-4" style="font-family: 'Outfit', sans-serif !important;">Your launchpad to success!!</h2>
                 <p class="fs-4 text-muted mx-auto lh-base" style="max-width: 900px; font-family: 'Outfit', sans-serif !important;">
                     Help your followers shop smarter with great product recommendations and 
-                    <span class="text-dark fw-bold px-2" style="background-color: #FFD200 !important; display: inline-block !important; border-radius: 4px;">earn when they shop from your content.</span> 
+                    <span class="text-dark fw-bold px-2" style="background-color: var(--royal-yellow) !important; display: inline-block !important; border-radius: 4px;">earn when they shop from your content.</span> 
                     With Socialyt, you can expand your reach, engage a wider audience, and effortlessly manage everything from a single app.
                 </p>
             </div>
@@ -525,17 +522,17 @@
 
         <style nonce="{{ csp_nonce() }}">
             .section-support-faq {
-                background: #fdfaf5;
+                background: var(--royal-white);
             }
             .faq-btn-premium {
-                background: linear-gradient(90deg, #FF8A00 0%, #FF5C00 100%) !important;
+                background: linear-gradient(90deg, var(--royal-blue) 0%, var(--royal-blue-dark) 100%) !important;
                 color: white !important;
                 border-radius: 15px !important;
                 padding: 25px 30px !important;
                 font-family: 'Outfit', sans-serif !important;
                 font-weight: 700 !important;
                 font-size: 1.3rem !important;
-                box-shadow: 0 10px 25px rgba(255, 92, 0, 0.2) !important;
+                box-shadow: 0 10px 25px rgba(0, 82, 255, 0.2) !important;
                 position: relative;
                 border: none !important;
                 display: flex;
