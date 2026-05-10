@@ -1,202 +1,181 @@
 @php
-   $footer        = get_content("content_footer")->first();
-   $footerbg      = $footer->file->where("type",'footer_background')->first();
-   $footerbgSize  = get_appearance_img_size('footer','content','footer_background');
-   $paymentImg      = $footer->file->where("type",'payment_image')->first();
-   $paymentImgSize  = get_appearance_img_size('footer','content','payment_image');
-   $icons         = get_content("element_social_icon");
-   $buttons       = get_content("element_footer");
-   $blogs        =get_feature_blogs()->take(2);
-   $services = get_content("element_service")->take(4);
+    $icons = get_content("element_social_icon");
 @endphp
 
-<footer class="footer-wishlink">
-    <div class="container footer-card-container">
-        <div class="footer-wishlink-card animate__animated animate__fadeInUp">
-            <!-- THE MULTI-COLORED HALO GLOW -->
-            <div class="footer-halo-glow"></div>
+<footer class="footer-master-clone">
+    <div class="container-fluid px-lg-5">
+        <div class="wishlink-footer-card">
+            <!-- PREMIUM GLOW -->
+            <div class="wishlink-glow"></div>
 
-            <div class="row g-5 position-relative" style="z-index: 2;">
-                <!-- Left Side: Branding -->
-                <div class="col-lg-4">
-                    <div class="footer-brand">
-                        <img src="{{imageUrl(@site_logo('user_site_logo')->file,'user_site_logo',true)}}" alt="Logo" class="footer-logo mb-4">
-                        <div class="company-info mt-4">
-                            <h5 class="fw-bold mb-2">Socialyt</h5>
-                            <p class="fs-5 opacity-80 mb-4">Turn DMs into Sales</p>
-                            
-                            <div class="social-links d-flex gap-3 mt-4">
-                                @foreach ($icons as $icon)
-                                    <a target="_blank" href="{{$icon->value->button_url}}" class="footer-social-circle">
-                                        <i class="{{ $icon->value->icon }}"></i>
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div>
+            <div class="footer-grid-master">
+                <!-- Column 1: Branding -->
+                <div class="footer-col branding-col">
+                    <span class="socialyt-logo-script" style="font-size: 2.8rem !important;">Socialyt</span>
+                    <p class="copyright-text mt-3">Copyright © 2026, All Right Reserved</p>
+                    
+                    <div class="legal-info-box mt-4">
+                        <h6 class="fw-bold mb-1">Socialyt Private Limited</h6>
+                        <p class="small-grey mb-3">CIN - U74994HR2022PTC100843</p>
+                        <p class="address-text">
+                            4th Floor, Plot No 48, AIHP Executive Centre,<br>
+                            Sector 32, Gurugram, Haryana, 122001
+                        </p>
                     </div>
                 </div>
 
-                <!-- Right Side: Links Grid -->
-                <div class="col-lg-8">
-                    <div class="row row-cols-2 row-cols-md-3 g-4">
-                        <div class="col">
-                            <h5 class="footer-section-title mb-4">Breakdown</h5>
-                            <ul class="list-unstyled footer-links-grid">
-                                <li><a href="#">Vs. Manychat</a></li>
-                                <li><a href="#">Vs. InstaChamp</a></li>
-                                <li><a href="#">Vs. Mobile Monkey</a></li>
-                                <li><a href="#">Vs. Stan AutoDM</a></li>
-                                <li><a href="#">Vs. LTK DM</a></li>
-                                <li><a href="#">Vs. Inro.Social</a></li>
-                            </ul>
+                <!-- Company -->
+                <div class="footer-section">
+                    <h5 class="master-col-title">Company</h5>
+                    <ul class="master-links">
+                        <li><a href="#">For Creators</a></li>
+                        <li><a href="#">For Brands</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+
+                    <div class="query-box mt-5">
+                        <h5 class="master-col-title compact">For Brand<br>Related Queries</h5>
+                        <a href="mailto:info@socialyt.com" class="master-email">info@socialyt.com</a>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="footer-section">
+                    <h5 class="master-col-title">Resources</h5>
+                    <ul class="master-links">
+                        <li><a href="#" class="pink-link">Blogs</a></li>
+                        <li><a href="#">Tech Blogs</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Career</a></li>
+                    </ul>
+
+                    <div class="query-box mt-5">
+                        <h5 class="master-col-title compact">For Creator<br>Related Queries</h5>
+                        <a href="mailto:support@socialyt.com" class="master-email">support@socialyt.com</a>
+                    </div>
+                </div>
+
+                <!-- Meta & Social -->
+                <div class="footer-section text-end">
+                    <div class="meta-badge-container-master">
+                        <div class="meta-row-master">
+                            <!-- Meta Loop Icon -->
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.5 7C15.8 7 14.3 7.8 13.3 9.1C12.3 10.4 11.7 12 11.7 13.7C11.7 15.4 12.3 17 13.3 18.3C14.3 19.6 15.8 20.4 17.5 20.4C20.8 20.4 23.5 17.7 23.5 14.4C23.5 11.1 20.8 8.4 17.5 8.4V7ZM6.5 7C3.2 7 0.5 9.7 0.5 13C0.5 16.3 3.2 19 6.5 19C8.2 19 9.7 18.2 10.7 16.9C11.7 15.6 12.3 14 12.3 12.3C12.3 10.6 11.7 9 10.7 7.7C9.7 6.4 8.2 5.6 6.5 5.6V7ZM17.5 18.4C16.3 18.4 15.3 17.8 14.6 16.9C13.9 16 13.5 14.9 13.5 13.7C13.5 12.5 13.9 11.4 14.6 10.5C15.3 9.6 16.3 9 17.5 9C19.9 9 21.8 10.9 21.8 13.3C21.8 15.7 19.9 17.6 17.5 17.6V18.4ZM6.5 17.4C4.1 17.4 2.2 15.5 2.2 13.1C2.2 10.7 4.1 8.8 6.5 8.8C7.7 8.8 8.7 9.4 9.4 10.3C10.1 11.2 10.5 12.3 10.5 13.5C10.5 14.7 10.1 15.8 9.4 16.7C8.7 17.6 7.7 18.2 6.5 18.2V17.4Z" fill="#0668E1"/>
+                            </svg>
+                            <span class="meta-label-master">Meta</span>
                         </div>
-                        <div class="col">
-                            <h5 class="footer-section-title mb-4" style="visibility: hidden;">More Vs.</h5>
-                            <ul class="list-unstyled footer-links-grid">
-                                <li><a href="#">Vs. InstantDM</a></li>
-                                <li><a href="#">Vs. SuperProfile.Bio</a></li>
-                                <li><a href="#">Vs. Wishlink</a></li>
-                                <li><a href="#">Vs. LinktoDM</a></li>
-                                <li><a href="#">Vs. SendPulse</a></li>
-                                <li><a href="#">Vs. DelightChat</a></li>
-                            </ul>
-                        </div>
-                        <div class="col">
-                            <h5 class="footer-section-title mb-4">Support & Legal</h5>
-                            <ul class="list-unstyled footer-links-grid">
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Help Center</a></li>
-                                <li><a href="#">Terms & Conditions</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                            </ul>
-                            
-                            <h5 class="footer-section-title mt-5 mb-4">Follow us</h5>
-                            <div class="meta-partner-footer">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" alt="Meta Partner" style="height: 25px; opacity: 0.8;">
-                                <p class="x-small mt-2 opacity-60">Business Partner</p>
-                            </div>
+                        <p class="meta-partner-label">Business Partner</p>
+                    </div>
+
+                    <div class="social-box-master mt-5">
+                        <h5 class="master-col-title mb-3">Follow us</h5>
+                        <div class="social-icons-row">
+                            @foreach ($icons as $icon)
+                                <a target="_blank" href="{{$icon->value->button_url}}" class="master-social-btn">
+                                    <i class="{{ $icon->value->icon }}"></i>
+                                </a>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Bottom Copyright -->
-            <div class="footer-bottom-line mt-5 pt-5 border-top border-dark border-opacity-10 d-flex justify-content-between align-items-center flex-wrap gap-3">
-                <p class="mb-0 small opacity-60">{{site_settings("copy_right_text")}}</p>
-                <div class="d-flex gap-4">
-                    <a href="#" class="small opacity-60 text-decoration-none">Privacy Policy</a>
-                    <a href="#" class="small opacity-60 text-decoration-none">Terms Of Service</a>
-                </div>
+            <!-- Footer Bottom -->
+            <div class="footer-bottom-master">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Cookie Policy</a>
+                <a href="#">Terms Of Service</a>
             </div>
         </div>
     </div>
 </footer>
 
 <style nonce="{{ csp_nonce() }}">
-    .footer-wishlink {
-        padding: 80px 0 50px;
+    .footer-master-clone {
+        background-color: #f8f2e9;
+        padding: 60px 0;
+        font-family: 'Outfit', sans-serif !important;
     }
 
-    .footer-card-container {
-        max-width: 1350px !important;
-    }
-
-    .footer-wishlink-card {
-        background-color: var(--royal-white) !important;
-        border-radius: 80px; /* Big rounded card */
-        padding: 100px 80px;
+    .wishlink-footer-card {
+        background: #fff;
+        border-radius: 80px;
+        padding: 80px 100px 40px;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 40px 100px rgba(0,0,0,0.06);
-        border: 1px solid rgba(0, 82, 255, 0.08);
+        box-shadow: 0 40px 100px rgba(0,0,0,0.02);
     }
 
-    /* REFINED HALO GLOW EFFECT - MISTY & SPREAD OUT */
-    .footer-halo-glow {
+    .wishlink-glow {
         position: absolute;
-        bottom: -300px;
-        left: -10%;
-        width: 120%;
-        height: 800px;
-        background: 
-            radial-gradient(circle at 15% 75%, rgba(0, 82, 255, 0.15) 0%, transparent 55%),
-            radial-gradient(circle at 45% 85%, rgba(0, 132, 255, 0.12) 0%, transparent 60%),
-            radial-gradient(circle at 75% 70%, rgba(255, 210, 0, 0.08) 0%, transparent 55%);
-        filter: blur(120px);
-        pointer-events: none;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.18) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 70%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 50% 50%, rgba(255, 210, 0, 0.08) 0%, transparent 60%);
+        filter: blur(80px);
         z-index: 1;
-        opacity: 0.9;
     }
 
-    .footer-logo {
-        height: 45px;
+    .footer-grid-master {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 40px;
+        position: relative;
+        z-index: 5;
     }
 
-    .footer-section-title {
+    .signature-logo {
         font-family: 'Outfit', sans-serif !important;
         font-weight: 800;
-        font-size: 1.3rem;
-        color: #1A1A1A;
-        letter-spacing: -0.5px;
+        font-size: 2.8rem;
+        letter-spacing: -2px;
+        color: #111;
+        line-height: 1;
     }
 
-    .footer-links-grid li {
-        margin-bottom: 14px;
-    }
+    .copyright-text { font-size: 0.9rem; font-weight: 700; color: #111; }
+    .small-grey { font-size: 0.75rem; color: #777; font-weight: 500; }
+    .address-text { font-size: 0.85rem; color: #444; line-height: 1.6; font-weight: 500; }
 
-    .footer-links-grid a {
-        color: #1A1A1A;
-        text-decoration: none;
-        opacity: 0.6;
-        font-weight: 500;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-    }
+    .master-col-title { font-size: 1.2rem; font-weight: 800; color: #111; margin-bottom: 25px; line-height: 1.2; }
+    .master-col-title.compact { font-size: 1.1rem; margin-bottom: 10px; }
 
-    .footer-links-grid a:hover {
-        opacity: 1;
-        color: var(--royal-blue);
-        padding-left: 5px;
-    }
+    .master-links { list-style: none; padding: 0; margin: 0; }
+    .master-links li { margin-bottom: 12px; }
+    .master-links a { text-decoration: none; color: #111; font-weight: 600; font-size: 0.95rem; opacity: 0.8; transition: opacity 0.3s; }
+    .master-links a:hover { opacity: 0.5; }
+    .pink-link { color: #FF4D6D !important; }
 
-    .footer-social-circle {
-        width: 45px;
-        height: 45px;
-        background: #000;
-        border-radius: 50%;
+    .master-email { text-decoration: none; color: #111; font-weight: 700; font-size: 1rem; }
+
+    .meta-badge-container-master { display: inline-block; text-align: left; }
+    .meta-row-master { display: flex; align-items: center; gap: 8px; }
+    .meta-label-master { font-weight: 800; font-size: 1.6rem; color: #0668E1; letter-spacing: -0.5px; line-height: 1; }
+    .meta-partner-label { font-size: 0.7rem; font-weight: 700; color: #333; margin-top: -3px; margin-left: 2px; }
+
+    .social-icons-row { display: flex; gap: 15px; justify-content: flex-end; }
+    .master-social-btn { width: 40px; height: 40px; background: #000; color: #fff !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; text-decoration: none; transition: transform 0.3s; }
+    .master-social-btn:hover { transform: translateY(-5px); }
+
+    .footer-bottom-master {
+        margin-top: 80px;
+        padding-top: 35px;
+        border-top: 1px solid rgba(0,0,0,0.05);
         display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff !important;
-        text-decoration: none;
-        transition: all 0.3s ease;
+        justify-content: space-around;
+        position: relative;
+        z-index: 5;
     }
 
-    .footer-social-circle:hover {
-        background: var(--royal-blue);
-        transform: translateY(-5px) scale(1.1);
-    }
+    .footer-bottom-master a { text-decoration: none; color: #111; font-weight: 800; font-size: 0.95rem; opacity: 0.9; }
 
     @media (max-width: 991px) {
-        .footer-wishlink-card {
-            padding: 60px 30px;
-            border-radius: 50px;
-            text-align: center;
-        }
-        .footer-brand {
-            margin-bottom: 50px;
-        }
-        .social-links {
-            justify-content: center;
-        }
-        .footer-halo-glow {
-            width: 400px;
-            height: 400px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        .footer-links-grid {
-            text-align: center;
-        }
+        .footer-grid-master { grid-template-columns: 1fr; text-align: center; }
+        .social-icons-row { justify-content: center; }
+        .meta-badge-container-master { text-align: center; }
+        .meta-row-master { justify-content: center; }
+        .footer-bottom-master { flex-direction: column; gap: 20px; }
+        .wishlink-footer-card { border-radius: 40px; padding: 60px 20px; }
     }
 </style>

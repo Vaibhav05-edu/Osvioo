@@ -1,5 +1,5 @@
 * {
-    font-family: 'Outfit', sans-serif !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
 :root {
@@ -14,11 +14,42 @@
 }
 
 body {
-    font-family: 'Outfit', sans-serif !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
     color: var(--text-main);
-    background-color: var(--background);
+    background-color: #F8F5F0 !important; /* Subtle cream/beige background like Wishlink */
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    position: relative;
+}
+
+/* Global Texture Overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Global Background Halos */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(255, 210, 0, 0.03) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: -1;
 }
 
 /* Glassmorphism Navbar */
@@ -620,11 +651,182 @@ footer,
 }
 
 .section-wishlink-hero {
-    background-color: var(--royal-white) !important;
-    padding: 100px 0 60px;
+    background-color: #FFF5F7 !important; /* Soft pinkish background */
+    background-image: url('../assets/frontend/images/hero_confetti_bg.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    padding: 120px 0 80px;
     position: relative;
     overflow: hidden;
+    text-align: center;
 }
+
+.text-gradient-pink {
+    color: #FF4D6D !important;
+}
+
+.text-gradient-blue {
+    background: linear-gradient(90deg, #4D96FF 0%, #0052FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.hero-content-wishlink h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: #1A1A1A;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
+}
+
+.hero-content-wishlink h1 .sub-heading {
+    display: block;
+    font-size: 4rem;
+    margin-top: 10px;
+}
+
+.hero-content-wishlink p {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 1.25rem;
+    color: #444;
+    max-width: 700px;
+    margin: 0 auto 3rem auto;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.hero-content-wishlink p span.underline {
+    border-bottom: 3px solid rgba(0, 82, 255, 0.2);
+    padding-bottom: 2px;
+}
+
+/* Premium Glowing Buttons */
+.hero-btn-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+
+.btn-glowing-dark {
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    padding: 18px 40px !important;
+    border-radius: 100px !important;
+    font-weight: 700 !important;
+    font-size: 1.2rem !important;
+    text-decoration: none !important;
+    position: relative;
+    z-index: 1;
+    border: 3px solid transparent !important;
+    transition: all 0.3s ease !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.3) !important;
+}
+
+.btn-glowing-dark::before {
+    content: '';
+    position: absolute;
+    top: -3px; left: -3px; right: -3px; bottom: -3px;
+    background: linear-gradient(45deg, #FF4D6D, #4D96FF);
+    border-radius: 100px;
+    z-index: -1;
+    opacity: 0.8;
+}
+
+.btn-glowing-dark:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(15, 23, 42, 0.4) !important;
+}
+
+.btn-glowing-outline {
+    background: #FFFFFF !important;
+    color: #1A1A1A !important;
+    padding: 18px 40px !important;
+    border-radius: 100px !important;
+    font-weight: 700 !important;
+    font-size: 1.2rem !important;
+    text-decoration: none !important;
+    position: relative;
+    z-index: 1;
+    border: 3px solid transparent !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+.btn-glowing-outline::before {
+    content: '';
+    position: absolute;
+    top: -3px; left: -3px; right: -3px; bottom: -3px;
+    background: linear-gradient(45deg, #4D96FF, #FF4D6D);
+    border-radius: 100px;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+.btn-glowing-outline:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Social Proof List */
+.social-proof-hero {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.proof-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #1A1A1A;
+}
+
+.proof-item i {
+    color: #000;
+    font-size: 1.2rem;
+}
+
+.rating-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #F8F9FA;
+    padding: 5px 12px;
+    border-radius: 8px;
+}
+
+.stars-container {
+    display: flex;
+    gap: 2px;
+}
+
+.star-box {
+    width: 20px;
+    height: 20px;
+    background: #4CC17E;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    border-radius: 2px;
+}
+
+.star-box.half {
+    background: linear-gradient(90deg, #4CC17E 70%, #D1D5DB 70%);
+}
+
 
 /* --- PREMIUM ANNOUNCEMENT BAR --- */
 .announcement-bar-wishlink {
@@ -632,30 +834,31 @@ footer,
     background: linear-gradient(90deg, var(--royal-yellow) 0%, #FFB800 100%) !important;
     position: relative !important;
     z-index: 1001 !important;
-    box-shadow: 0 4px 20px rgba(255, 210, 0, 0.2) !important;
-    min-height: 45px !important;
+    box-shadow: 0 4px 25px rgba(255, 210, 0, 0.25) !important;
+    min-height: 55px !important; /* Slightly taller */
     display: flex !important;
     align-items: center !important;
-    border: none !important;
+    border-bottom: 1px solid rgba(0,0,0,0.05) !important;
 }
 
 .announcement-bar-wishlink p {
-    font-size: 0.95rem !important;
-    letter-spacing: 0.5px !important;
-    color: #000000 !important; /* Black text for yellow bar */
+    font-size: 1.05rem !important; /* Larger text */
+    letter-spacing: 0.3px !important;
+    color: #000000 !important; 
     text-shadow: none !important;
     width: 100%;
+    font-weight: 700 !important; /* Bolder */
 }
 
 .announcement-badge {
     background: #ffffff !important;
     color: #000000 !important;
-    padding: 3px 10px !important;
-    border-radius: 6px !important;
-    font-size: 0.7rem !important;
+    padding: 4px 12px !important; /* Slightly larger padding */
+    border-radius: 8px !important;
+    font-size: 0.75rem !important;
     font-weight: 900 !important;
     border: 1px solid rgba(0,0,0,0.1) !important;
-    margin-right: 8px !important;
+    margin-right: 12px !important;
 }
 
 .socialyt-logo-script {
@@ -741,40 +944,7 @@ footer,
 }
 
 
-.hero-content-wishlink h1 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 3.5rem; /* Reduced from 3.8rem to fit 2 lines */
-    font-weight: 800;
-    line-height: 1.1;
-    color: var(--wishlink-dark);
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.03em;
-    width: 120%; /* Allow it to span slightly into the gutter to prevent 3rd line wrap */
-}
-
-.hero-content-wishlink p {
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 1.15rem; /* Reduced from 1.35rem */
-    color: var(--wishlink-text);
-    max-width: 480px;
-    margin-bottom: 2.5rem;
-    line-height: 1.6;
-    opacity: 0.85;
-}
-
-.hero-image-wishlink {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.influencer-main-img {
-    width: 100%;
-    z-index: 2;
-    mix-blend-mode: multiply; /* Kills the white background */
-}
+/* Removed old hero styles */
 
 /* Floating Action Bar */
 .floating-signup-bar {
@@ -927,12 +1097,25 @@ footer,
 
 @media (max-width: 768px) {
     .hero-content-wishlink h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
         text-align: center;
+    }
+    .hero-content-wishlink h1 .sub-heading {
+        font-size: 2rem;
     }
     .hero-content-wishlink p {
         text-align: center;
+        font-size: 1.1rem;
         margin: 0 auto 2rem auto;
+    }
+    .hero-btn-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .btn-glowing-dark, .btn-glowing-outline {
+        width: 100%;
+        padding: 15px 20px !important;
+        font-size: 1.1rem !important;
     }
     .floating-signup-bar {
         padding: 10px 20px;
@@ -1186,7 +1369,7 @@ footer,
 
 /* Why Socialyt Section (Vertical Carousel) */
 .section-why-socialyt {
-    background: linear-gradient(135deg, var(--royal-blue) 0%, var(--royal-blue-dark) 100%);
+    background: linear-gradient(135deg, #8B5CF6 0%, #4338CA 100%); /* Purple-Blue Gradient */
     padding: 120px 0;
     color: #ffffff;
     overflow: hidden;

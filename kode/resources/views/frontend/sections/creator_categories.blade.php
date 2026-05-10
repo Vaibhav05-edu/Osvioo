@@ -1,84 +1,96 @@
-@php
-    // No specific categories needed for this new section
-@endphp
-
-<section class="section-transform" id="transform">
-    <div class="container-fluid px-0">
-        <!-- Title Section -->
-        <div class="text-center pt-5 pb-0 transform-header animate__animated animate__fadeIn">
-            <h2 class="display-3 fw-bold mb-3" style="font-family: 'Outfit', sans-serif !important; line-height: 1.2;">
-                Stop working overtime.<br>
-                <span class="highlight-strip">Start replying in real time.</span>
+<section class="section-plixi-features py-5" id="features">
+    <div class="container py-5">
+        <div class="text-center mb-5 pb-4">
+            <h2 class="display-3 fw-bold mb-3" style="font-family: 'Outfit', sans-serif !important; letter-spacing: -2px; color: #111;">
+                The #1 Rated Instagram Growth Service
             </h2>
-            <p class="fs-4 text-muted mx-auto" style="max-width: 800px; font-family: 'Outfit', sans-serif !important;">
-                Keep collecting W's even while catching Z's.
+            <p class="fs-5 text-muted mx-auto" style="max-width: 700px; font-family: 'Outfit', sans-serif !important; opacity: 0.8;">
+                Socialyt helps you get more Instagram followers, likes and comments (and a bunch of other stuff) 10x faster.
             </p>
         </div>
 
-        <!-- Sticky Animation Wrapper -->
-        <div class="transform-sticky-container">
-            <div class="transform-cards-wrapper">
-                <!-- BEFORE CARD -->
-                <div class="transform-card before-card">
-                    <div class="card-tag">Before Socialyt:</div>
-                    <h3 class="card-title">You're doing IG<br>the hard way</h3>
-                    
-                    <ul class="benefit-list">
-                        <li>
-                            <span class="text">Wasting time replying the same tired reply to every DM.</span>
-                            <span class="check-icon"><i class="fas fa-check-square"></i></span>
-                        </li>
-                        <li>
-                            <span class="text">Missing leads because you can't respond fast enough.</span>
-                            <span class="check-icon"><i class="fas fa-check-square"></i></span>
-                        </li>
-                        <li>
-                            <span class="text">Letting comments pile up while you're busy doing everything else.</span>
-                            <span class="check-icon"><i class="fas fa-check-square"></i></span>
-                        </li>
-                        <li>
-                            <span class="text">Losing hours in your inbox when you should be growing your business.</span>
-                            <span class="check-icon"><i class="fas fa-check-square"></i></span>
-                        </li>
+        <div class="row g-4 justify-content-center">
+            <!-- Card 1: Auto-Grow -->
+            <div class="col-lg-3 col-md-6">
+                <div class="plixi-card">
+                    <div class="card-icon-box blue-icon">
+                        <i class="bi bi-compass"></i>
+                    </div>
+                    <h3 class="plixi-card-title">Auto-Grow</h3>
+                    <p class="plixi-card-desc">
+                        Just 5 minutes of setup gets you 730 hours of growth each month. All automatic. All organic results.
+                    </p>
+                    <ul class="plixi-list">
+                        <li><i class="bi bi-check-lg check-green"></i> 24/7 Growth Engine</li>
+                        <li><i class="bi bi-check-lg check-green"></i> On-Demand Experts</li>
+                        <li><i class="bi bi-check-lg check-green"></i> 10x Better than Ads</li>
                     </ul>
-
-                    <div class="card-footer">
-                        <a href="{{route('auth.register')}}" class="btn-transform-dark">GET STARTED</a>
+                    <div class="plixi-footer mt-auto">
+                        <a href="{{ route('auth.register') }}" class="btn-plixi-glow">Get started <i class="bi bi-chevron-right ms-1"></i></a>
                     </div>
                 </div>
+            </div>
 
-                <!-- AFTER CARD -->
-                <div class="transform-card after-card">
-                    <div class="card-tag">After Socialyt:</div>
-                    <h3 class="card-title">K.I.S.S. Keep it<br>simple... silly</h3>
-                    
-                    <div class="blob-accent">
-                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <path fill="var(--royal-yellow)" d="M44.7,-76.4C58.1,-69.2,69.2,-58.1,76.4,-44.7C83.6,-31.3,86.9,-15.7,85.2,-0.9C83.6,13.8,77.1,27.7,68.2,39.4C59.3,51.1,48.1,60.7,35.4,68.2C22.7,75.7,8.6,81.1,-5.6,81.1C-19.8,81.1,-34.1,75.7,-46.8,68.2C-59.5,60.7,-70.7,51.1,-78.3,39.4C-85.9,27.7,-89.9,13.8,-88.3,-0.9C-86.7,-15.7,-79.5,-31.3,-69.2,-44.7C-58.9,-58.1,-45.6,-69.2,-31.1,-76.4C-16.7,-83.6,-8.3,-86.9,4.2,-86.9C16.7,-86.9,31.3,-83.6,44.7,-76.4Z" transform="translate(100 100)" />
-                        </svg>
+            <!-- Card 2: Auto-Target -->
+            <div class="col-lg-3 col-md-6">
+                <div class="plixi-card">
+                    <div class="card-icon-box orange-icon">
+                        <i class="bi bi-magic"></i>
                     </div>
-
-                    <ul class="benefit-list">
-                        <li>
-                            <span class="text">Every question gets answered. Fast.</span>
-                            <span class="check-icon"><i class="fas fa-check-square"></i></span>
-                        </li>
-                        <li>
-                            <span class="text">Leads? Saved, tagged, tracked — basically gift-wrapped for you.</span>
-                            <span class="check-icon"><i class="fas fa-check-square"></i></span>
-                        </li>
-                        <li>
-                            <span class="text">Every DM or comment becomes a chance to sell (even when you're offline).</span>
-                            <span class="check-icon"><i class="fas fa-check-square"></i></span>
-                        </li>
-                        <li>
-                            <span class="text">And you? Finally, free to kick back and sip your coffee while it's still hot.</span>
-                            <span class="check-icon"><i class="fas fa-check-square"></i></span>
-                        </li>
+                    <h3 class="plixi-card-title">Auto-Target</h3>
+                    <p class="plixi-card-desc">
+                        Our AI-Powered targeting analyzes millions of users and interacts only with the ones relevant to your account.
+                    </p>
+                    <ul class="plixi-list">
+                        <li><i class="bi bi-check-lg check-green"></i> AI Optimized Audience</li>
+                        <li><i class="bi bi-check-lg check-green"></i> Fast Organic Growth</li>
+                        <li><i class="bi bi-check-lg check-green"></i> Integrated Safety</li>
                     </ul>
+                    <div class="plixi-footer mt-auto">
+                        <a href="{{ route('auth.register') }}" class="btn-plixi-glow">Get started <i class="bi bi-chevron-right ms-1"></i></a>
+                    </div>
+                </div>
+            </div>
 
-                    <div class="card-footer">
-                        <a href="{{route('auth.register')}}" class="btn-transform-light">GET STARTED</a>
+            <!-- Card 3: Live Reports -->
+            <div class="col-lg-3 col-md-6">
+                <div class="plixi-card">
+                    <div class="card-icon-box purple-icon">
+                        <i class="bi bi-file-earmark-bar-graph"></i>
+                    </div>
+                    <h3 class="plixi-card-title">Live Reports</h3>
+                    <p class="plixi-card-desc">
+                        Track your Instagram growth in real-time with beautiful reports and rich dashboard analytics.
+                    </p>
+                    <ul class="plixi-list">
+                        <li><i class="bi bi-check-lg check-green"></i> Track Growth Results</li>
+                        <li><i class="bi bi-check-lg check-green"></i> Audience Analytics</li>
+                        <li><i class="bi bi-check-lg check-green"></i> AI Strategy Optimization</li>
+                    </ul>
+                    <div class="plixi-footer mt-auto">
+                        <a href="{{ route('auth.register') }}" class="btn-plixi-glow">Get started <i class="bi bi-chevron-right ms-1"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: AI-Match -->
+            <div class="col-lg-3 col-md-6">
+                <div class="plixi-card featured-plixi">
+                    <span class="plixi-new-badge">NEW!</span>
+                    <div class="card-icon-box pink-icon">
+                        <i class="bi bi-heart-pulse"></i>
+                    </div>
+                    <h3 class="plixi-card-title plixi-gradient-text">AI-Match™</h3>
+                    <p class="plixi-card-desc">
+                        Train your Socialyt AI model to better identify your ideal target followers by swiping accounts just like on Tinder.
+                    </p>
+                    <ul class="plixi-list">
+                        <li><i class="bi bi-check-lg check-green"></i> Growth Auto-Optimization</li>
+                        <li><i class="bi bi-check-lg check-green"></i> Location Targeting Filter</li>
+                        <li><i class="bi bi-check-lg check-green"></i> Smart Followers Magnet</li>
+                    </ul>
+                    <div class="plixi-footer mt-auto">
+                        <a href="{{ route('auth.register') }}" class="btn-plixi-glow featured-btn">Try AI-Match <i class="bi bi-chevron-right ms-1"></i></a>
                     </div>
                 </div>
             </div>
@@ -87,211 +99,161 @@
 </section>
 
 <style nonce="{{ csp_nonce() }}">
-    .section-transform {
-        background-color: var(--royal-white);
-        overflow: visible;
-        margin-bottom: -40vh !important; /* Pull up next section precisely */
-        position: relative;
-        z-index: 10;
-        padding: 0 !important;
+    .section-plixi-features {
+        background-color: #fff;
+        font-family: 'Outfit', sans-serif !important;
     }
 
-    /* Force remove space from next section */
-    .section-engagement-action {
-        padding-top: 0 !important;
-        margin-top: 0 !important;
-        position: relative;
-        z-index: 20;
-    }
-
-    .highlight-strip {
-        position: relative;
-        white-space: nowrap;
-        display: inline-block;
-        z-index: 1;
-        padding: 0 10px;
-    }
-
-    .highlight-strip::after {
-        content: "";
-        position: absolute;
-        bottom: 5px;
-        left: 0;
-        width: 100%;
-        height: 45%;
-        background-color: var(--royal-yellow);
-        z-index: -1;
-        transform: rotate(-1deg);
-        border-radius: 4px;
-    }
-
-    .transform-sticky-container {
-        position: relative;
-        height: 140vh; 
-    }
-
-    .transform-cards-wrapper {
-        position: sticky;
-        top: 8vh;
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        width: 100%;
-        perspective: 2000px;
-        padding: 0;
-    }
-
-    .transform-card {
-        flex: 1;
-        max-width: 550px;
-        min-height: 600px;
-        border-radius: 60px;
-        padding: 50px 60px;
+    .plixi-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 40px 30px;
+        height: 100%;
         display: flex;
         flex-direction: column;
+        border: 1px solid #f0f0f0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         position: relative;
-        box-shadow: 0 30px 70px rgba(0,0,0,0.05);
-        z-index: 2;
-        background-color: #fff;
     }
 
-    .before-card {
-        background-color: #F8F9FA;
-        color: #1A1A1A;
-        border: 1px solid rgba(0,0,0,0.03);
+    .plixi-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.08);
     }
 
-    .after-card {
-        background-color: var(--royal-blue);
-        color: #FFFFFF;
-        box-shadow: 0 50px 100px rgba(0, 82, 255, 0.2);
-        z-index: 3;
+    /* Featured Card Styling */
+    .featured-plixi {
+        border: 2px solid transparent !important;
+        position: relative;
+        background: #fff;
     }
 
-    .card-tag {
-        font-family: 'Outfit', sans-serif !important;
-        font-weight: 700;
-        font-size: 1.1rem;
-        margin-bottom: 20px;
-        opacity: 0.8;
+    .featured-plixi::before {
+        content: '';
+        position: absolute;
+        top: -2px; left: -2px; right: -2px; bottom: -2px;
+        background: linear-gradient(135deg, #FF4D6D 0%, #4D96FF 100%);
+        border-radius: 24px;
+        z-index: -1;
     }
 
-    .card-title {
-        font-family: 'Outfit', sans-serif !important;
-        font-weight: 900;
-        font-size: 3rem;
-        line-height: 1.1;
-        margin-bottom: 40px;
-        letter-spacing: -1.5px;
+    .plixi-new-badge {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        background: #FF4D6D;
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 800;
+        padding: 5px 12px;
+        border-radius: 6px;
+        box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
     }
 
-    .benefit-list {
+    .card-icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        margin-bottom: 30px;
+    }
+
+    .blue-icon { background: #EBF2FF; color: #4D96FF; }
+    .orange-icon { background: #FFF5EB; color: #FF8A00; }
+    .purple-icon { background: #F3EBFF; color: #7C3AED; }
+    .pink-icon { background: #FFEBEE; color: #FF4D6D; }
+
+    .plixi-card-title {
+        font-weight: 800;
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        color: #111;
+        letter-spacing: -0.5px;
+    }
+
+    .plixi-gradient-text {
+        background: linear-gradient(90deg, #FF4D6D, #4D96FF);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+    }
+
+    .plixi-card-desc {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 30px;
+        font-weight: 400;
+    }
+
+    .plixi-list {
         list-style: none;
         padding: 0;
-        margin: 0;
-        flex-grow: 1;
+        margin: 0 0 40px 0;
     }
 
-    .benefit-list li {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px 0;
-        border-bottom: 1px solid rgba(0,0,0,0.08);
-        font-family: 'Outfit', sans-serif !important;
+    .plixi-list li {
         font-weight: 600;
-        font-size: 1rem;
-        gap: 20px;
+        font-size: 0.95rem;
+        color: #111;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
 
-    .after-card .benefit-list li {
-        border-bottom-color: rgba(255,255,255,0.15);
+    .check-green {
+        color: #34D399;
+        font-size: 1.2rem;
+        font-weight: 900;
     }
 
-    .card-footer {
-        margin-top: 35px;
-    }
-
-    .btn-transform-dark, .btn-transform-light {
-        display: block;
+    /* Glowing Dark Buttons */
+    .btn-plixi-glow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
-        text-align: center;
-        padding: 20px;
+        background: #0F172A;
+        color: white !important;
+        padding: 16px;
         border-radius: 100px;
         text-decoration: none !important;
         font-weight: 800;
         font-size: 1.1rem;
-        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.4);
+        border: 2px solid transparent;
     }
 
-    .btn-transform-dark { background: #000; color: #fff !important; }
-    .btn-transform-light { background: #fff; color: var(--royal-blue) !important; }
-
-    .blob-accent {
+    .btn-plixi-glow::before {
+        content: '';
         position: absolute;
-        top: 20px;
-        right: 40px;
-        width: 150px;
-        height: 150px;
+        top: -2px; left: -2px; right: -2px; bottom: -2px;
+        background: linear-gradient(45deg, #FF4D6D, #4D96FF);
+        border-radius: 100px;
         z-index: -1;
-        opacity: 0.9;
-        transform: rotate(-15deg);
+        opacity: 0.6;
+    }
+
+    .btn-plixi-glow:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 15px 35px rgba(15, 23, 42, 0.5);
+    }
+
+    .featured-btn {
+        background: #0F172A;
+        box-shadow: 0 15px 40px rgba(255, 77, 109, 0.3);
     }
 
     @media (max-width: 991px) {
-        .section-transform { margin-bottom: 0 !important; }
-        .transform-sticky-container { height: auto; }
-        .transform-cards-wrapper { position: relative; flex-direction: column; top: 0 !important; padding: 20px 15px; }
-        .transform-card { max-width: 100%; padding: 40px 30px; min-height: auto; border-radius: 40px; }
+        .display-3 { font-size: 2.5rem !important; }
+        .plixi-card { padding: 30px 20px; }
     }
 </style>
-
-<script nonce="{{ csp_nonce() }}">
-    document.addEventListener('DOMContentLoaded', function() {
-        const container = document.querySelector('.transform-sticky-container');
-        const beforeCard = document.querySelector('.before-card');
-        const afterCard = document.querySelector('.after-card');
-        
-        if (!container || window.innerWidth < 992) return;
-
-        function updateAnimation() {
-            const containerRect = container.getBoundingClientRect();
-            const containerHeight = container.offsetHeight;
-            const windowHeight = window.innerHeight;
-            
-            let progress = -containerRect.top / (containerHeight - windowHeight);
-            progress = Math.min(Math.max(progress, 0), 1);
-            
-            // Animation is done at 95% progress
-            const mergeProgress = Math.min(progress / 0.95, 1);
-            
-            if (mergeProgress > 0) {
-                const moveAmount = mergeProgress * 52; 
-                const opacity = 1 - (mergeProgress * 3); 
-                const scale = 1 - (mergeProgress * 0.15);
-                
-                // Rotation goes to 0 at the end
-                const rotationAmount = 3;
-                const currentRotation = mergeProgress < 0.7 
-                    ? mergeProgress * (rotationAmount / 0.7) 
-                    : Math.max(rotationAmount - ((mergeProgress - 0.7) * (rotationAmount / 0.3)), 0);
-                
-                beforeCard.style.transform = `translateX(${moveAmount}%) scale(${scale}) rotate(-${currentRotation}deg)`;
-                beforeCard.style.opacity = Math.max(opacity, 0);
-                
-                afterCard.style.transform = `translateX(-${moveAmount}%) rotate(${currentRotation}deg)`;
-                
-                const extraWidth = mergeProgress * 150;
-                afterCard.style.maxWidth = `${550 + extraWidth}px`;
-            } else {
-                beforeCard.style.transform = '';
-                beforeCard.style.opacity = '1';
-                afterCard.style.transform = '';
-                afterCard.style.maxWidth = '550px';
-            }
-        }
-
-        window.addEventListener('scroll', updateAnimation);
-        updateAnimation();
-    });
-</script>
