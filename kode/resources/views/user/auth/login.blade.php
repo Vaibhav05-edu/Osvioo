@@ -38,7 +38,7 @@
 
                 <!-- Google Button (Always Visible for UI fidelity) -->
                 <a href="{{route('auth.social.login', 'google')}}" class="plixi-google-btn mb-4">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="G">
+                    <i class="bi bi-google fs-5" style="color: #EA4335;"></i>
                     <span>Sign in with Google</span>
                 </a>
 
@@ -66,7 +66,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="plixi-btn-primary">Log In</button>
+                    <button type="submit" class="plixi-submit-btn">Log In</button>
                 </form>
 
                 <p class="plixi-auth-footer mt-5 text-center">
@@ -110,14 +110,7 @@
                     </div>
                 </div>
 
-                <div class="plixi-promo-footer">
-                    <p class="plixi-trusted-label">TRUSTED BY 35,000+ INSTAGRAMMERS & BUSINESSES</p>
-                    <div class="plixi-logo-grid">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Ikea_logo.svg" height="22" alt="IKEA">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Revolut_Logo.svg" height="22" alt="Revolut">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg" height="35" alt="NASA">
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -241,11 +234,12 @@
     }
 
     .plixi-promo-h1 {
-        font-weight: 900;
-        font-size: 4.2rem; /* Exact massive scale */
-        line-height: 1.05;
-        letter-spacing: -3px;
-        margin-bottom: 45px;
+        font-family: 'Outfit', sans-serif !important;
+        font-weight: 500;
+        font-size: 3.4rem;
+        line-height: 1.2;
+        letter-spacing: -1px;
+        margin-bottom: 35px;
         color: #ffffff !important;
     }
 
