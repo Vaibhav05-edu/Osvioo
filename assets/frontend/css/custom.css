@@ -562,3 +562,95 @@
     border: solid  var(--text-secondary) !important;
     border-width: 0 2px 2px 0 !important;
 }
+
+/* Pricing Hero Styles */
+.pricing-hero-section {
+    background-color: #fff !important;
+    font-family: 'Outfit', sans-serif !important;
+}
+.pricing-hero-title {
+    font-size: 4.5rem !important;
+    font-weight: 700 !important;
+    color: #0F172A !important;
+    letter-spacing: -3px !important;
+    line-height: 1 !important;
+}
+.pricing-hero-subtitle {
+    font-size: 1.25rem !important;
+    color: #64748B !important;
+    max-width: 700px !important;
+    margin: 0 auto !important;
+}
+.trusted-by-badge {
+    background: #F8FAFC !important;
+    padding: 10px 25px !important;
+    border-radius: 100px !important;
+    display: inline-block !important;
+    font-weight: 600 !important;
+    color: #64748B !important;
+    border: 1px solid #E2E8F0 !important;
+}
+.plixi-gradient-text {
+    background: linear-gradient(90deg, #FF4D6D, #4D96FF) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+@media (max-width: 768px) {
+    .pricing-hero-title { font-size: 2.5rem !important; }
+}
+
+/* Pricing Card Styles (Predis.ai style) */
+.pricing-container {
+    font-family: 'Outfit', sans-serif !important;
+}
+.pricing-card-predis {
+    background: #FFFFFF !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 20px !important;
+    padding: 30px !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+    text-align: left !important;
+}
+.pricing-card-predis.featured {
+    border: 2px solid #3B82F6 !important;
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1) !important;
+}
+.price-box {
+    display: flex !important;
+    align-items: baseline !important;
+    color: #2563EB !important;
+}
+.price-amount {
+    font-size: 3.5rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -2px !important;
+}
+.btn-split-predis {
+    display: flex !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    text-decoration: none !important;
+    border: none !important;
+}
+.btn-split-left {
+    background: #EFF6FF !important;
+    color: #2563EB !important;
+    flex-grow: 1 !important;
+    padding: 12px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+}
+.btn-split-right {
+    background: #2563EB !important;
+    color: white !important;
+    padding: 12px 20px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+}
+.check-icon-predis {
+    color: #10B981 !important;
+    font-size: 1.2rem !important;
+}

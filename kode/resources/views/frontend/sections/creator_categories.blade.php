@@ -21,9 +21,9 @@
                         Just 5 minutes of setup gets you 730 hours of growth each month. All automatic. All organic results.
                     </p>
                     <ul class="plixi-list">
-                        <li><i class="bi bi-check-lg check-green"></i> 24/7 Growth Engine</li>
-                        <li><i class="bi bi-check-lg check-green"></i> On-Demand Experts</li>
-                        <li><i class="bi bi-check-lg check-green"></i> 10x Better than Ads</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> 24/7 Growth Engine</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> On-Demand Experts</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> 10x Better than Ads</li>
                     </ul>
                     <div class="plixi-footer mt-auto">
                         <a href="{{ route('auth.register') }}" class="btn-plixi-glow">Get started <i class="bi bi-chevron-right ms-1"></i></a>
@@ -42,9 +42,9 @@
                         Our AI-Powered targeting analyzes millions of users and interacts only with the ones relevant to your account.
                     </p>
                     <ul class="plixi-list">
-                        <li><i class="bi bi-check-lg check-green"></i> AI Optimized Audience</li>
-                        <li><i class="bi bi-check-lg check-green"></i> Fast Organic Growth</li>
-                        <li><i class="bi bi-check-lg check-green"></i> Integrated Safety</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> AI Optimized Audience</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> Fast Organic Growth</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> Integrated Safety</li>
                     </ul>
                     <div class="plixi-footer mt-auto">
                         <a href="{{ route('auth.register') }}" class="btn-plixi-glow">Get started <i class="bi bi-chevron-right ms-1"></i></a>
@@ -63,9 +63,9 @@
                         Track your Instagram growth in real-time with beautiful reports and rich dashboard analytics.
                     </p>
                     <ul class="plixi-list">
-                        <li><i class="bi bi-check-lg check-green"></i> Track Growth Results</li>
-                        <li><i class="bi bi-check-lg check-green"></i> Audience Analytics</li>
-                        <li><i class="bi bi-check-lg check-green"></i> AI Strategy Optimization</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> Track Growth Results</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> Audience Analytics</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> AI Strategy Optimization</li>
                     </ul>
                     <div class="plixi-footer mt-auto">
                         <a href="{{ route('auth.register') }}" class="btn-plixi-glow">Get started <i class="bi bi-chevron-right ms-1"></i></a>
@@ -85,9 +85,9 @@
                         Train your Socialyt AI model to better identify your ideal target followers by swiping accounts just like on Tinder.
                     </p>
                     <ul class="plixi-list">
-                        <li><i class="bi bi-check-lg check-green"></i> Growth Auto-Optimization</li>
-                        <li><i class="bi bi-check-lg check-green"></i> Location Targeting Filter</li>
-                        <li><i class="bi bi-check-lg check-green"></i> Smart Followers Magnet</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> Growth Auto-Optimization</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> Location Targeting Filter</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> Smart Followers Magnet</li>
                     </ul>
                     <div class="plixi-footer mt-auto">
                         <a href="{{ route('auth.register') }}" class="btn-plixi-glow featured-btn">Try AI-Match <i class="bi bi-chevron-right ms-1"></i></a>
@@ -168,11 +168,11 @@
     .pink-icon { background: #FFEBEE; color: #FF4D6D; }
 
     .plixi-card-title {
-        font-weight: 800;
+        font-weight: 700;
         font-size: 1.8rem;
         margin-bottom: 15px;
         color: #111;
-        letter-spacing: -0.5px;
+        letter-spacing: -1px;
     }
 
     .plixi-gradient-text {

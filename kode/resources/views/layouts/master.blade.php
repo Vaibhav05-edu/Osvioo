@@ -193,7 +193,7 @@
 
    </style>
   </head>
-  <body>
+  <body class="body-master">
 
 
 

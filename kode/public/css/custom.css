@@ -79,7 +79,7 @@ h1, h2, h3, h4 {
 
 .hero-title {
     font-family: 'Outfit', sans-serif !important;
-    font-size: 5.5rem;
+    font-size: 3.5rem;
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.04em;
@@ -92,7 +92,7 @@ h1, h2, h3, h4 {
 .playball-accent {
     font-family: 'Outfit', sans-serif !important;
     color: var(--secondary);
-    font-size: 3rem;
+    font-size: 2.2rem;
     margin-top: -10px;
     font-weight: 700;
     display: block;
@@ -353,7 +353,7 @@ h1, h2, h3, h4 {
 }
 
 .linkdm-feature-heading {
-    font-size: 2.8rem;
+    font-size: 2rem;
     font-weight: 800;
     color: #000000;
     line-height: 1.1;
@@ -361,7 +361,7 @@ h1, h2, h3, h4 {
 }
 
 .linkdm-feature-text {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: #444;
     line-height: 1.6;
 }
@@ -384,14 +384,14 @@ h1, h2, h3, h4 {
 }
 
 .footer-brand-title {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
 }
 
 .footer-brand-tagline {
     font-family: 'Playball', cursive;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: #1d1d1f;
     margin-bottom: 1.5rem;
 }
@@ -464,14 +464,14 @@ h1, h2, h3, h4 {
 }
 
 .linkdm-title-main {
-    font-size: 3.2rem;
+    font-size: 2.5rem;
     font-weight: 800;
     color: #000000;
     margin-bottom: 1.5rem;
 }
 
 .linkdm-subtitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #666;
     max-width: 600px;
     margin: 0 auto 80px auto;
@@ -674,7 +674,7 @@ footer,
 
 .hero-content-wishlink h1 {
     font-family: 'Outfit', sans-serif;
-    font-size: 4.5rem;
+    font-size: 3.2rem;
     font-weight: 800;
     line-height: 1.1;
     color: #1A1A1A;
@@ -684,13 +684,13 @@ footer,
 
 .hero-content-wishlink h1 .sub-heading {
     display: block;
-    font-size: 4rem;
+    font-size: 2.8rem;
     margin-top: 10px;
 }
 
 .hero-content-wishlink p {
     font-family: 'Outfit', sans-serif !important;
-    font-size: 1.25rem;
+    font-size: 1rem;
     color: #444;
     max-width: 700px;
     margin: 0 auto 3rem auto;
@@ -714,10 +714,10 @@ footer,
 .btn-glowing-dark {
     background: #0F172A !important;
     color: #FFFFFF !important;
-    padding: 18px 40px !important;
+    padding: 14px 32px !important;
     border-radius: 100px !important;
     font-weight: 700 !important;
-    font-size: 1.2rem !important;
+    font-size: 1rem !important;
     text-decoration: none !important;
     position: relative;
     z-index: 1;
@@ -747,10 +747,10 @@ footer,
 .btn-glowing-outline {
     background: #FFFFFF !important;
     color: #1A1A1A !important;
-    padding: 18px 40px !important;
+    padding: 14px 32px !important;
     border-radius: 100px !important;
     font-weight: 700 !important;
-    font-size: 1.2rem !important;
+    font-size: 1rem !important;
     text-decoration: none !important;
     position: relative;
     z-index: 1;
@@ -1143,11 +1143,11 @@ footer,
 
 .feature-slider-heading {
     font-family: 'Outfit', sans-serif;
-    font-size: 3.5rem;
+    font-size: 2.2rem;
     font-weight: 800;
     text-align: center;
-    margin-bottom: 80px;
-    max-width: 900px;
+    margin-bottom: 60px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
     line-height: 1.1;
@@ -1240,7 +1240,7 @@ footer,
 
 .feature-slide-text h3 {
     font-family: 'Outfit', sans-serif;
-    font-size: 2.8rem;
+    font-size: 1.8rem;
     font-weight: 800;
     margin-bottom: 20px;
     line-height: 1.1;
@@ -1249,7 +1249,7 @@ footer,
 
 .feature-slide-text p {
     font-family: 'Outfit', sans-serif !important;
-    font-size: 1.25rem;
+    font-size: 0.95rem;
     line-height: 1.6;
     color: #4A4A4A;
     max-width: 450px;
@@ -1398,9 +1398,9 @@ footer,
 
 .why-socialyt-text h2 {
     font-family: 'Outfit', sans-serif;
-    font-size: 4.5rem;
+    font-size: 2.5rem;
     font-weight: 800;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     line-height: 1;
 }
 
@@ -1429,14 +1429,14 @@ footer,
 
 .step-box h3 {
     font-family: 'Outfit', sans-serif;
-    font-size: 2.8rem;
+    font-size: 1.8rem;
     font-weight: 800;
     margin: 0;
 }
 
 .step-box p {
     font-family: 'Outfit', sans-serif !important;
-    font-size: 1.25rem;
+    font-size: 0.95rem;
     line-height: 1.5;
     opacity: 0.9;
     max-width: 450px;

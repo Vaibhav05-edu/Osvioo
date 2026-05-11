@@ -335,6 +335,7 @@ use Illuminate\Support\Facades\Http;
             Route::get('/', 'home')->name('home');
             Route::get('/plans', 'plan')->name('plan');
             Route::get('/about', 'about')->name('about');
+            Route::get('/affiliate', 'affiliate')->name('affiliate');
             Route::get('/blogs', 'blog')->name('blog');
             Route::get('/blogs/{slug}', 'blogDetails')->name('blog.details');
             Route::get('/pages/{slug}', 'page')->name('page');

@@ -5,10 +5,20 @@
 @section('content')
 <style>
     :root {
-        --rr-primary: #000000; /* Socialyt Theme Color */
-        --rr-secondary: #6366f1; /* Accent Color */
+        --rr-primary: #000000;
+        --rr-secondary: #6366f1;
         --rr-bg: #ffffff;
         --rr-muted: #64748b;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+
+    .socialyt-logo-script {
+        font-family: 'Caveat', cursive !important;
+        color: #0052FF !important;
+        font-size: 2.5rem !important;
+        vertical-align: middle !important;
+        text-decoration: none !important;
     }
 
     .split-container {
@@ -64,9 +74,6 @@
     }
 
     .brand-logo {
-        font-size: 28px;
-        font-weight: 800;
-        letter-spacing: -1px;
         margin-bottom: 30px;
         display: flex;
         align-items: center;
@@ -219,7 +226,7 @@
     <div class="form-side">
         <div class="login-card">
             <div class="brand-logo">
-                Socialyt <span class="brand-dot"></span>
+                <span class="socialyt-logo-script">Socialyt</span>
             </div>
 
             <div style="margin-bottom: 30px;">

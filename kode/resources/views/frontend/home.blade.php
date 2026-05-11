@@ -46,7 +46,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Socialyt - Instagram & Facebook DM Automation</title>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Dancing+Script:wght@700&family=Playball&family=Syne:wght@700;800&family=Montserrat:wght@700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Caveat:wght@400..700&family=Dancing+Script:wght@700&family=Playball&family=Syne:wght@700;800&family=Montserrat:wght@700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ time() }}" />
@@ -134,9 +134,9 @@
           }
           
           /* Global Section Tweaks */
-          h2 { font-size: 1.8rem !important; }
-          h3 { font-size: 1.5rem !important; }
-          .section-feature, .py-5 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+          h2 { font-size: 1.5rem !important; }
+          h3 { font-size: 1.3rem !important; }
+          .section-feature, .py-5 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
           .container { padding-left: 20px !important; padding-right: 20px !important; }
           
           /* Feature Cards */
@@ -149,6 +149,7 @@
           /* Images */
           img { max-width: 100%; height: auto; }
       }
+
     </style>
   </head>
   <body>
@@ -182,8 +183,8 @@
         <div class="container py-5">
             <!-- Launchpad Header -->
             <div class="text-center mb-5 pb-4">
-                <h2 class="display-3 fw-bold mb-4" style="font-family: 'Outfit', sans-serif !important;">Your launchpad to success!!</h2>
-                <p class="fs-4 text-muted mx-auto lh-base" style="max-width: 900px; font-family: 'Outfit', sans-serif !important;">
+                <h2 class="display-4 fw-bold mb-3" style="font-family: 'Outfit', sans-serif !important;">Your launchpad to success!!</h2>
+                <p class="fs-6 text-muted mx-auto lh-base" style="max-width: 800px; font-family: 'Outfit', sans-serif !important;">
                     Help your followers shop smarter with great product recommendations and 
                     <span class="text-dark fw-bold px-2" style="background-color: var(--royal-yellow) !important; display: inline-block !important; border-radius: 4px;">earn when they shop from your content.</span> 
                     With Socialyt, you can expand your reach, engage a wider audience, and effortlessly manage everything from a single app.
@@ -192,17 +193,17 @@
 
             <!-- FAQ Header -->
             <div class="mt-5 pt-5">
-                <h3 class="display-3 fw-bold mb-2" style="font-family: 'Outfit', sans-serif !important;">FAQs</h3>
-                <p class="fs-4 mb-5" style="font-family: 'Outfit', sans-serif !important;">Got questions? We've got answers!</p>
+                <h3 class="display-5 fw-bold mb-2" style="font-family: 'Outfit', sans-serif !important;">FAQs</h3>
+                <p class="fs-6 mb-5" style="font-family: 'Outfit', sans-serif !important;">Got questions? We've got answers!</p>
 
                 <div class="accordion accordion-flush d-grid gap-3" id="faqAccordion">
                     @php
                         $faqs_list = [
-                            ['q' => 'How does the Socialyt Creator payout process work?', 'a' => 'Payouts are processed automatically every month. Once you hit the minimum threshold, your earnings are transferred directly to your linked bank account or PayPal.'],
-                            ['q' => 'How does Socialyt help Creators grow?', 'a' => 'Socialyt automates your engagement, allowing you to respond to 100% of comments and DMs instantly. This boosts your ranking in the algorithm and keeps your audience active.'],
+                            ['q' => 'How does the <span class="socialyt-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Socialyt</span> Creator payout process work?', 'a' => 'Payouts are processed automatically every month. Once you hit the minimum threshold, your earnings are transferred directly to your linked bank account or PayPal.'],
+                            ['q' => 'How does <span class="socialyt-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Socialyt</span> help Creators grow?', 'a' => 'Socialyt automates your engagement, allowing you to respond to 100% of comments and DMs instantly. This boosts your ranking in the algorithm and keeps your audience active.'],
                             ['q' => 'Will Brands control my content?', 'a' => 'Absolutely not. You maintain 100% creative control over your content. Socialyt just provides the tools to manage your audience and monetization.'],
-                            ['q' => 'Is my account safe with Socialyt?', 'a' => 'Yes, Socialyt is an official Meta Business Partner. We use only official APIs and never ask for your password. Your account remains 100% secure.'],
-                            ['q' => 'Can I use Socialyt for multiple accounts?', 'a' => 'Yes! Depending on your plan, you can manage multiple Instagram and Facebook pages from a single unified dashboard.'],
+                            ['q' => 'Is my account safe with <span class="socialyt-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Socialyt</span>?', 'a' => 'Yes, Socialyt is an official Meta Business Partner. We use only official APIs and never ask for your password. Your account remains 100% secure.'],
+                            ['q' => 'Can I use <span class="socialyt-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Socialyt</span> for multiple accounts?', 'a' => 'Yes! Depending on your plan, you can manage multiple Instagram and Facebook pages from a single unified dashboard.'],
                         ];
                     @endphp
 
@@ -210,7 +211,7 @@
                         <div class="accordion-item border-0 bg-transparent">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed faq-btn-premium" type="button" data-bs-toggle="collapse" data-bs-target="#faq-{{ $index }}">
-                                    {{ $item['q'] }}
+                                    {!! $item['q'] !!}
                                     <i class="fas fa-arrow-down ms-auto faq-icon-custom"></i>
                                 </button>
                             </h2>
@@ -236,7 +237,7 @@
                 padding: 25px 30px !important;
                 font-family: 'Outfit', sans-serif !important;
                 font-weight: 700 !important;
-                font-size: 1.3rem !important;
+                font-size: 1.1rem !important;
                 box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2) !important;
                 position: relative;
                 border: none !important;
@@ -260,7 +261,7 @@
                 border-radius: 15px !important;
                 padding: 30px !important;
                 font-family: 'Outfit', sans-serif !important;
-                font-size: 1.1rem;
+                font-size: 0.95rem;
                 line-height: 1.6;
                 color: #555;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -272,8 +273,7 @@
                     padding: 20px !important;
                 }
             }
-        </style>
-    </section>n>
+    </section>
 
 
     <!-- Meta Partner & Footer Integrated in Partial -->
@@ -318,18 +318,19 @@
         <img id="sp-img" src="https://i.pravatar.cc/150?u=1" alt="User" class="sp-img-box">
         <div class="d-flex align-items-center gap-2">
             <span id="sp-name" class="fw-bold text-dark" style="font-size: 0.8rem;">Manas 🇺🇸</span>
-            <span id="sp-action" class="text-muted" style="font-size: 0.8rem;">Just signed up to Socialyt</span>
+            <span id="sp-action" class="text-muted" style="font-size: 0.8rem;">Just signed up to <span class="socialyt-logo-script" style="font-size: 1rem !important;">Socialyt</span></span>
             <span id="sp-time" class="text-muted" style="font-size: 0.7rem; opacity: 0.7;">• Just now</span>
         </div>
         <button onclick="document.getElementById('dynamic-social-proof').classList.add('d-none')" class="btn-close ms-2" style="font-size: 0.5rem; opacity: 0.4; flex-shrink: 0;" aria-label="Close"></button>
     </div>
 
+    @include('frontend.partials.footer')
     <script nonce="{{ csp_nonce() }}">
         const notifications = [
-            { name: 'Manas 🇺🇸', action: 'Just signed up to Socialyt', time: 'Just now', img: 'https://i.pravatar.cc/150?u=1' },
+            { name: 'Manas 🇺🇸', action: 'Just signed up to <span class="socialyt-logo-script" style="font-size: 1rem !important;">Socialyt</span>', time: 'Just now', img: 'https://i.pravatar.cc/150?u=1' },
             { name: 'Sarah 🇬🇧', action: 'Upgraded to Pro', time: '2 mins ago', img: 'https://i.pravatar.cc/150?u=2' },
             { name: 'Alex 🇨🇦', action: 'Started automating comments', time: '5 mins ago', img: 'https://i.pravatar.cc/150?u=3' },
-            { name: 'Priya 🇮🇳', action: 'Just signed up to Socialyt', time: '12 mins ago', img: 'https://i.pravatar.cc/150?u=4' },
+            { name: 'Priya 🇮🇳', action: 'Just signed up to <span class="socialyt-logo-script" style="font-size: 1rem !important;">Socialyt</span>', time: '12 mins ago', img: 'https://i.pravatar.cc/150?u=4' },
             { name: 'Mike 🇦🇺', action: 'Upgraded to Agency', time: '1 hour ago', img: 'https://i.pravatar.cc/150?u=5' },
             { name: 'Elena 🇪🇸', action: 'Hit 10k DMs sent!', time: '3 hours ago', img: 'https://i.pravatar.cc/150?u=6' }
         ];
@@ -340,7 +341,7 @@
             const data = notifications[Math.floor(Math.random() * notifications.length)];
             document.getElementById('sp-img').src = data.img;
             document.getElementById('sp-name').textContent = data.name;
-            document.getElementById('sp-action').textContent = data.action;
+            document.getElementById('sp-action').innerHTML = data.action;
             document.getElementById('sp-time').textContent = data.time;
             popup.classList.remove('d-none', 'animate__fadeOutDown');
             popup.classList.add('animate__animated', 'animate__fadeInUp');
@@ -422,6 +423,21 @@
                 showNotification();
                 setInterval(showNotification, 6000);
             }, 2000);
+
+            // Synchronize Nav states with reference screenshot
+            const navLinks = document.querySelectorAll('.nav-link-wishlink');
+            navLinks.forEach(link => {
+                const text = link.innerText.trim();
+                if (text === 'Creators') {
+                    link.classList.add('active-pill');
+                } else if (text === 'Pricing') {
+                    link.classList.remove('active-pill');
+                    link.classList.add('blue-text');
+                } else {
+                    link.classList.remove('active-pill');
+                    link.classList.remove('blue-text');
+                }
+            });
         });
     </script>
   </body>

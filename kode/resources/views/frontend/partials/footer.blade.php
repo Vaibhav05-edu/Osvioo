@@ -12,7 +12,7 @@
                 <!-- Column 1: Branding -->
                 <div class="footer-col branding-col">
                     <span class="socialyt-logo-script" style="font-size: 2.8rem !important;">Socialyt</span>
-                    <p class="copyright-text mt-3">Copyright © 2026, All Right Reserved</p>
+                    <p class="copyright-text mt-3">Copyright © 2026, All Rights Reserved</p>
                     
                     <div class="legal-info-box mt-4">
                         <h6 class="fw-bold mb-1">Socialyt Private Limited</h6>
@@ -34,7 +34,7 @@
                     </ul>
 
                     <div class="query-box mt-5">
-                        <h5 class="master-col-title compact">For Brand<br>Related Queries</h5>
+                        <h5 class="master-col-title compact">For Brands<br>Related Queries</h5>
                         <a href="mailto:info@socialyt.com" class="master-email">info@socialyt.com</a>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     </ul>
 
                     <div class="query-box mt-5">
-                        <h5 class="master-col-title compact">For Creator<br>Related Queries</h5>
+                        <h5 class="master-col-title compact">For Creators<br>Related Queries</h5>
                         <a href="mailto:support@socialyt.com" class="master-email">support@socialyt.com</a>
                     </div>
                 </div>

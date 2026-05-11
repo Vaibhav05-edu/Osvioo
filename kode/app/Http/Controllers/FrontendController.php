@@ -171,6 +171,25 @@ class FrontendController extends Controller
         ]);
     }
 
+    public function affiliate(): View
+    {
+        $menu = Menu::where('url', 'affiliate')->active()->first() ?? (object)[
+            'meta_title' => 'Affiliate Program',
+            'meta_description' => 'Join our affiliate program and earn commission.',
+            'meta_keywords' => []
+        ];
+
+        return view('frontend.affiliate', [
+            'meta_data' => $this->metaData([
+                "title" => $menu->meta_title,
+                "meta_description" => $menu->meta_description,
+                "meta_keywords" => (array) $menu->meta_keywords,
+            ]),
+            'menu' => $menu,
+            'breadcrumbs' => ['Home' => 'home', "Affiliate" => null],
+        ]);
+    }
+
 
     /**
      * @param string $slug
