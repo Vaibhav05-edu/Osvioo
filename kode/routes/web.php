@@ -164,6 +164,9 @@ use Illuminate\Support\Facades\Http;
                 Route::post('/webhook/update', 'webhookUpdate')->name('webhook.update');
                 Route::get('/notifications','notification')->name('notifications');
                 Route::post('/read-notification','readNotification')->name('read.notification');
+                Route::get('/plans/active', 'activePlan')->name('plan.active');
+                Route::get('/plans/history', 'planHistory')->name('plan.history');
+                Route::get('/plans/upcoming-billing', 'upcomingBilling')->name('plan.billing.upcoming');
             });
 
             #payment route

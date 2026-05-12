@@ -29,13 +29,9 @@
 
 
 
-<div id="overlay" class="overlay"></div>
-<button id="right-sidebar-btn" class="right-sidebar-btn fs-20">
-    <i class="bi bi-activity"></i>
-</button>
 
 <div class="row g-4 mb-4">
-    <div class="col">
+    <div class="col-12">
         <div class="row g-4">
             <div class="col-xl-6">
                 <div class="i-card h-550">
@@ -110,28 +106,70 @@
             </div>
 
             <div class="col-xl-6">
-                <div class="i-card h-100">
-                    <ul class="social-account-list-2 mb-2">
+                <div class="i-card h-100 p-0 overflow-hidden" style="border-radius: 16px; border: 1px solid #eef0f2;">
+                    <div class="p-4 bg--primary-soft" style="border-bottom: 1px solid #eef0f2;">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="icon-box" style="width: 40px; height: 40px; background: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                                    <i class="bi bi-gem text--primary fs-20"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0" style="font-weight: 700;">{{$subscription ? $subscription->package->title : 'No Active Plan'}}</h5>
+                                    <p class="text-muted fs-12 mb-0">{{translate('Current Subscription')}}</p>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <p class="text-muted fs-12 mb-0">{{translate('Next Billing Date')}}</p>
+                                <h6 class="mb-0" style="font-weight: 700;">
+                                    {{$subscription && $subscription->expired_at ? get_date_time($subscription->expired_at, 'd M, Y') : '--'}}
+                                </h6>
+                            </div>
+                        </div>
 
-                        <li>
-                            <a href="{{route('user.home')}}" class="{{!request()->input('platform') ? 'active' :''}}">
-                                 {{translate('ALL')}}
-                            </a>
-                        </li>
+                        <div class="progress mb-3" style="height: 8px; background: #fff; border-radius: 10px;">
+                            @php
+                                $percent = 0;
+                                if($subscription && $subscription->package->social_access) {
+                                    $total = $subscription->total_profile;
+                                    $used = $subscription->total_profile - $remainingProfile;
+                                    $percent = $total > 0 ? ($used / $total) * 100 : 0;
+                                }
+                            @endphp
+                            <div class="progress-bar" role="progressbar" style="width: {{$percent}}%; background: #5D5AF1; border-radius: 10px;" aria-valuenow="{{$percent}}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="d-flex justify-content-between fs-12 text-muted">
+                            <span>{{$remainingProfile}} {{translate('Profiles remaining')}}</span>
+                            <span>{{translate('Plan usage')}}: {{round($percent)}}%</span>
+                        </div>
+                    </div>
 
-                        @forelse ($platforms as $platform )
-                            <li>
-                                <a class="{{$platform->slug == request()->input('platform') ? 'active' :''}}" href="{{route('user.home',['platform' => $platform->slug])}}">
-                                    {{$platform->name}}
+                    <div class="p-4">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <a href="{{route('user.plan')}}" class="i-btn btn--primary w-100 d-flex align-items-center justify-content-center gap-2" style="padding: 10px; border-radius: 12px;">
+                                    <i class="bi bi-arrow-up-circle"></i>
+                                    {{translate('Upgrade Plan')}}
                                 </a>
-                            </li>
-                         @empty
-
-                         @endforelse
-                    </ul>
-
-                    <div id="postReport"></div>
-
+                            </div>
+                            <div class="col-6">
+                                <a href="{{route('user.plan')}}" class="i-btn btn--outline w-100 d-flex align-items-center justify-content-center gap-2" style="padding: 10px; border-radius: 12px; border-color: #eef0f2; color: #444;">
+                                    <i class="bi bi-plus-square"></i>
+                                    {{translate('Add-ons')}}
+                                </a>
+                            </div>
+                            <div class="col-12">
+                                <a href="{{route('user.transaction.report.list')}}" class="d-flex align-items-center justify-content-between p-3 border" style="border-radius: 12px; text-decoration: none; transition: all 0.2s;">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div style="width: 32px; height: 32px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="bi bi-receipt text-muted"></i>
+                                        </div>
+                                        <span class="text-dark fw-bold fs-14">{{translate('Billing History & Invoices')}}</span>
+                                    </div>
+                                    <i class="bi bi-chevron-right text-muted fs-12"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -140,176 +178,245 @@
                     <div class="row align-items-center g-2 mb-4">
                         <div class="col-md-9">
                             <h4 class="card--title">
-                               {{translate('Overview')}}
+                               {{translate('Main Performance')}}
                             </h4>
                         </div>
                     </div>
-                    <div class="row g-3">
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-sm-6">
-                            <div class="i-card border overview-card p-0">
-                                <div class="p-3">
-                                    <div class="icon graident-icon mb-3">
-                                        <i class="bi bi-graph-up fs-30"></i>
+                    <div class="row g-4">
+                        {{-- TOTAL ACCOUNTS --}}
+                        <div class="col-xl-4 col-md-6">
+                            <div class="i-card border shadow-sm p-0 overflow-hidden" style="border-radius: 16px; background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);">
+                                <div class="p-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-3">
+                                        <div class="icon-box" style="width: 48px; height: 48px; background: #5D5AF115; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="bi bi-people-fill fs-24 text--primary"></i>
+                                        </div>
+                                        <span class="badge bg--success-soft text--success capsuled">+4 this week</span>
                                     </div>
-                                    <div class="content">
-                                        <p class="card--title-sm mb-1">
-                                            {{translate("Total Post")}}
-                                        </p>
-                                        <h6>
-                                            {{Arr::get($data,'total_post',0)}}
-                                        </h6>
-                                    </div>
+                                    <h2 class="mb-1" style="font-weight: 800; font-family: 'Outfit', sans-serif;">{{Arr::get($data['account_report'],'total_account',0)}}</h2>
+                                    <p class="text-muted mb-0" style="font-size: 14px; font-weight: 500;">{{translate('Total Accounts Connected')}}</p>
                                 </div>
-                                <div class="footer border-top d-flex justify-content-between">
-
-                                     <a class="text--success" href="{{route('user.social.post.list')}}">
-                                          {{translate('View All')}}
-                                     </a>
-
-                                    <p class="mb-0 fs-14"> {{translate('This year')}}</p>
+                                <div class="footer px-4 py-2 border-top bg--light d-flex justify-content-between">
+                                     <a class="text--primary fw-bold fs-13" href="{{route('user.social.account.list')}}">{{translate('View All')}}</a>
+                                     <i class="bi bi-chevron-right fs-12"></i>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-sm-6">
-                            <div class="i-card border p-0">
-                                <div class="p-3">
-                                    <div class="icon graident-icon mb-3">
-                                        <i class="bi bi-calendar-event fs-30"></i>
+                        {{-- TOTAL POSTS --}}
+                        <div class="col-xl-4 col-md-6">
+                            <div class="i-card border shadow-sm p-0 overflow-hidden" style="border-radius: 16px; background: linear-gradient(135deg, #fffcf5 0%, #ffffff 100%);">
+                                <div class="p-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-3">
+                                        <div class="icon-box" style="width: 48px; height: 48px; background: #FF950015; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="bi bi-send-check-fill fs-24" style="color: #FF9500;"></i>
+                                        </div>
+                                        <span class="badge bg--info-soft text--info capsuled">{{Arr::get($data,'schedule_post',0)}} Scheduled</span>
                                     </div>
-
-                                    <div class="content">
-                                        <p class="card--title-sm mb-1">{{translate("Pending Post")}}</p>
-                                        <h6>{{Arr::get($data,'pending_post',0)}}</h6>
-                                    </div>
+                                    <h2 class="mb-1" style="font-weight: 800; font-family: 'Outfit', sans-serif;">{{Arr::get($data,'total_post',0)}}</h2>
+                                    <p class="text-muted mb-0" style="font-size: 14px; font-weight: 500;">{{translate('Total Posts Published')}}</p>
                                 </div>
-                                <div class="footer border-top d-flex justify-content-between">
-                                    <a class="text--success" href="{{route('user.social.post.list',['status' =>App\Enums\PostStatus::PENDING->value ])}}">
-                                        {{translate('View All')}}
-                                   </a>
-                                    <p class="mb-0 fs-14">{{translate('This year')}}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-sm-6">
-                            <div class="i-card border p-0">
-                                <div class="p-3">
-                                    <div class="icon graident-icon mb-3">
-                                        <i class="bi bi-clock fs-30"></i>
-                                    </div>
-                                    <div class="content">
-                                        <p class="card--title-sm mb-1">{{translate("Schedule Post")}}</p>
-                                        <h6>{{Arr::get($data,'schedule_post',0)}}</h6>
-                                    </div>
-                                </div>
-                                <div class="footer border-top d-flex justify-content-between flex-wrap">
-                                    <a class="text--success" href="{{route('user.social.post.list',['status' =>App\Enums\PostStatus::SCHEDULE->value ])}}">
-                                        {{translate('View All')}}
-                                   </a>
-                                    <p class="mb-0 fs-14">{{translate('This year')}}</p>
+                                <div class="footer px-4 py-2 border-top bg--light d-flex justify-content-between">
+                                     <a class="text--primary fw-bold fs-13" href="{{route('user.social.post.list')}}">{{translate('Post History')}}</a>
+                                     <i class="bi bi-chevron-right fs-12"></i>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-sm-6">
-                            <div class="i-card border p-0">
-                                <div class="p-3">
-                                    <div class="icon graident-icon mb-3">
-                                        <i class="bi bi-check-circle fs-30"></i>
+                        {{-- TOTAL MEDIA KITS --}}
+                        <div class="col-xl-4 col-md-6">
+                            <div class="i-card border shadow-sm p-0 overflow-hidden" style="border-radius: 16px; background: linear-gradient(135deg, #f5fff8 0%, #ffffff 100%);">
+                                <div class="p-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-3">
+                                        <div class="icon-box" style="width: 48px; height: 48px; background: #22c55e15; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="bi bi-person-badge-fill fs-24 text--success"></i>
+                                        </div>
+                                        <span class="badge bg--success-soft text--success capsuled">AI Optimized</span>
                                     </div>
-                                    <div class="content">
-                                        <p class="card--title-sm mb-1">{{translate("Success Post")}}</p>
-                                        <h6>{{Arr::get($data,'success_post',0)}}</h6>
+                                    <h2 class="mb-1" style="font-weight: 800; font-family: 'Outfit', sans-serif;">12</h2>
+                                    <p class="text-muted mb-0" style="font-size: 14px; font-weight: 500;">{{translate('Total Media Kits')}}</p>
+                                </div>
+                                <div class="footer px-4 py-2 border-top bg--light d-flex justify-content-between">
+                                     <a class="text--primary fw-bold fs-13" href="#">{{translate('Manage Kits')}}</a>
+                                     <i class="bi bi-chevron-right fs-12"></i>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    {{-- INSIGHTS SECTION --}}
+    <div class="col-12 mt-2">
+        <div class="row g-4">
+                    {{-- INSTAGRAM INSIGHTS --}}
+                    <div class="col-xl-6">
+                        <div class="i-card h-100 p-4 shadow-sm" style="border-radius: 24px; border: 1px solid #eef0f2; background: #fff; transition: all 0.3s ease;">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="icon-box" style="background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); color: white; width: 45px; height: 45px; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(228, 64, 95, 0.3);">
+                                        <i class="bi bi-instagram fs-20"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0 fw-bold fs-18 text-dark">{{translate('Instagram Insights')}}</h5>
+                                        <p class="text-muted fs-11 mb-0">{{translate('Real-time performance')}}</p>
                                     </div>
                                 </div>
-                                <div class="footer border-top d-flex justify-content-between flex-wrap">
-                                    <a class="text--success" href="{{route('user.social.post.list',['status' =>App\Enums\PostStatus::SUCCESS->value ])}}">
-                                        {{translate('View All')}}
-                                    </a>
-                                    <p class="mb-0 fs-14"> {{translate('This year')}}</p>
+                                <span class="badge bg-danger text-white fs-10 capsuled px-3 py-1" style="letter-spacing: 1px;">● LIVE</span>
+                            </div>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-6">
+                                    <div class="p-4 border-0 rounded-4 text-center" style="background: #f8f9fa;">
+                                        <p class="text-muted fs-12 mb-2 text-uppercase fw-bold" style="letter-spacing: 0.5px;">{{translate('Followers')}}</p>
+                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;">12.5K</h2>
+                                        <div class="mt-2">
+                                            <span class="badge bg--success-soft text--success fs-12 fw-bold"><i class="bi bi-arrow-up-short"></i> 12.4%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="p-4 border-0 rounded-4 text-center" style="background: #f8f9fa;">
+                                        <p class="text-muted fs-12 mb-2 text-uppercase fw-bold" style="letter-spacing: 0.5px;">{{translate('Engagement')}}</p>
+                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;">4.82%</h2>
+                                        <div class="mt-2">
+                                            <span class="badge bg--success-soft text--success fs-12 fw-bold"><i class="bi bi-arrow-up-short"></i> 5.2%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h6 class="fs-12 fw-bold mb-3 text-muted text-uppercase d-flex align-items-center gap-2">
+                                <i class="bi bi-lightning-fill text-warning"></i>
+                                {{translate('Top Keywords')}}
+                            </h6>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-white text-dark border-0 shadow-sm capsuled px-3 py-2 fs-12">#vlog</span>
+                                <span class="badge bg-white text-dark border-0 shadow-sm capsuled px-3 py-2 fs-12">#lifestyle</span>
+                                <span class="badge bg-white text-dark border-0 shadow-sm capsuled px-3 py-2 fs-12">#influencerOS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- AI PROFILE ANALYSIS --}}
+                    <div class="col-xl-6">
+                        <div class="i-card h-100 p-4 shadow-sm overflow-hidden position-relative" style="border-radius: 24px; border: 1px solid rgba(93, 90, 241, 0.2); background: linear-gradient(145deg, #ffffff 0%, #f8faff 100%); transition: all 0.3s ease;">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="icon-box bg--primary text-white" style="width: 45px; height: 45px; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(93, 90, 241, 0.3);">
+                                        <i class="bi bi-robot fs-20"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0 fw-bold fs-18 text-dark">{{translate('AI Creator Analysis')}}</h5>
+                                        <p class="text-muted fs-11 mb-0">{{translate('Deep learning insights')}}</p>
+                                    </div>
+                                </div>
+                                <span class="badge bg--primary text-white capsuled fs-10 px-3 py-1 shadow-sm">{{translate('PREMIUM AI')}}</span>
+                            </div>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-5">
+                                    <div class="p-3 border-0 rounded-4 bg-white shadow-sm h-100 d-flex flex-column align-items-center justify-content-center">
+                                        <p class="text-muted fs-11 mb-2 text-uppercase fw-bold text-center">{{translate('Profile Health')}}</p>
+                                        <div class="position-relative d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                            <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(-90deg);">
+                                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="3" />
+                                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#5D5AF1" stroke-width="3" stroke-dasharray="85, 100" stroke-linecap="round" />
+                                            </svg>
+                                            <div class="position-absolute fs-18 fw-bold" style="color: #5D5AF1;">85%</div>
+                                        </div>
+                                        <span class="text--success fs-11 fw-bold mt-2">{{translate('Strong Growth')}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="p-3 border-0 rounded-4 text-white shadow-lg h-100 d-flex flex-column justify-content-center" style="background: linear-gradient(135deg, #5D5AF1 0%, #3f3cbd 100%);">
+                                        <p class="opacity-75 fs-11 mb-2 text-uppercase fw-bold">{{translate('Suggested Rate')}}</p>
+                                        <div class="mb-1">
+                                            <h3 class="mb-0 fw-bold" style="font-size: 26px;">$250 - $400</h3>
+                                            <h5 class="mb-0 opacity-90 fw-bold" style="font-size: 18px;">₹20,500 - ₹33,000</h5>
+                                        </div>
+                                        <p class="mb-0 fs-10 opacity-75 mt-2">* {{translate('Based on current reach')}}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-3 rounded-4" style="background: rgba(93, 90, 241, 0.05); border: 1px dashed rgba(93, 90, 241, 0.3);">
+                                <h6 class="fs-12 fw-bold mb-2 text-dark d-flex align-items-center gap-2">
+                                    <i class="bi bi-stars text-warning"></i>
+                                    {{translate('Next Strategy')}}
+                                </h6>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="icon-sm bg-white shadow-sm rounded-circle text--primary d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0;"><i class="bi bi-camera-reels fs-14"></i></div>
+                                    <p class="mb-0 fs-12 text-dark fw-bold">{{translate('Post a "BTS" Reel today at 7:30 PM')}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- AI OPTIMIZATION ROADMAP --}}
+            <div class="col-12 mt-4 mb-2">
+                <div class="i-card p-4 shadow-sm border-0 position-relative overflow-hidden" style="border-radius: 24px; background: #fff;">
+                    <div class="position-absolute top-0 end-0 p-4 opacity-10">
+                        <i class="bi bi-rocket-takeoff" style="font-size: 80px; color: #5D5AF1;"></i>
+                    </div>
+                    
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div class="icon-box bg--success-soft text--success" style="width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-check2-circle fs-20"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0 fw-bold fs-18 text-dark">{{translate('AI Profile Optimization Roadmap')}}</h5>
+                            <p class="text-muted fs-12 mb-0">{{translate('Actionable tasks to skyrocket your reach')}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-xl-4">
+                            <div class="p-3 rounded-4 h-100 d-flex flex-column" style="background: rgba(220, 53, 69, 0.03); border: 1px solid rgba(220, 53, 69, 0.1);">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <span class="badge bg-danger text-white capsuled fs-10 px-3 py-1">{{translate('High Priority')}}</span>
+                                    <i class="bi bi-exclamation-triangle text-danger"></i>
+                                </div>
+                                <h6 class="fw-bold mb-2 fs-14">{{translate('Optimize Bio Keywords')}}</h6>
+                                <p class="text-muted fs-12 mb-3">{{translate('Your bio lacks niche keywords. Add "Influencer" and "Lifestyle" to improve visibility.')}}</p>
+                                <div class="d-flex align-items-center justify-content-between mt-auto pt-2 border-top border-danger-subtle">
+                                    <span class="text-danger fw-bold fs-11"><i class="bi bi-clock-history me-1"></i> {{translate('Fix Today')}}</span>
+                                    <a href="#" class="btn btn-sm text-danger fw-bold fs-11 p-0">{{translate('Fix Now')}} <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-sm-6">
-                            <div class="i-card border p-0">
-                                <div class="p-3">
-                                    <div class="icon graident-icon mb-3">
-                                        <i class="bi bi-x-circle fs-30"></i>
-                                    </div>
-                                    <div class="content">
-                                        <p class="card--title-sm mb-1">{{translate("Failed Post")}}</p>
-                                        <h6>{{Arr::get($data,'failed_post',0)}}</h6>
-                                    </div>
+                        <div class="col-xl-4">
+                            <div class="p-3 rounded-4 h-100 d-flex flex-column" style="background: rgba(93, 90, 241, 0.03); border: 1px solid rgba(93, 90, 241, 0.1);">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <span class="badge bg--primary text-white capsuled fs-10 px-3 py-1">{{translate('Medium Priority')}}</span>
+                                    <i class="bi bi-chat-dots text--primary"></i>
                                 </div>
-                                <div class="footer border-top d-flex justify-content-between flex-wrap">
-                                    <a class="text--success" href="{{route('user.social.post.list',['status' =>App\Enums\PostStatus::FAILED->value ])}}">
-                                        {{translate('View All')}}
-                                   </a>
-                                    <p class="mb-0 fs-14"> {{translate('This year')}}</p>
+                                <h6 class="fw-bold mb-2 fs-14">{{translate('Engagement Window')}}</h6>
+                                <p class="text-muted fs-12 mb-3">{{translate('Reply to top 5 comments within 60 mins of posting for a 15% reach boost.')}}</p>
+                                <div class="d-flex align-items-center justify-content-between mt-auto pt-2 border-top border-primary-subtle">
+                                    <span class="text--primary fw-bold fs-11"><i class="bi bi-graph-up-arrow me-1"></i> {{translate('+15% Potential')}}</span>
+                                    <a href="#" class="btn btn-sm text--primary fw-bold fs-11 p-0">{{translate('View Guide')}} <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-sm-6">
-                            <div class="i-card border p-0">
-                                <div class="p-3">
-                                    <div class="icon graident-icon mb-3">
-                                        <i class="bi bi-person-circle fs-30"></i>
-                                    </div>
-                                    <div class="content">
-                                        <p class="card--title-sm mb-1">{{translate("Total Account")}}</p>
-                                        <h6>{{Arr::get($data['account_report'],'total_account',0)}}</h6>
-                                    </div>
+                        <div class="col-xl-4">
+                            <div class="p-3 rounded-4 h-100 d-flex flex-column" style="background: rgba(25, 135, 84, 0.03); border: 1px solid rgba(25, 135, 84, 0.1);">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <span class="badge bg-success text-white capsuled fs-10 px-3 py-1">{{translate('Growth Hack')}}</span>
+                                    <i class="bi bi-palette text-success"></i>
                                 </div>
-                                <div class="footer border-top d-flex justify-content-between flex-wrap">
-                                    <a class="text--success" href="{{route('user.social.account.list')}}">
-                                        {{translate('View All')}}
-                                   </a>
-                                    <p class="mb-0 fs-14"> {{translate('This year')}}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-sm-6">
-                            <div class="i-card border p-0">
-                                <div class="p-3">
-                                    <div class="icon graident-icon mb-3">
-                                        <i class="bi bi-person-check fs-30"></i>
-                                    </div>
-                                    <div class="content">
-                                        <p class="card--title-sm mb-1">{{translate("Active Account")}}</p>
-                                        <h6>{{Arr::get($data['account_report'],'active_account',0)}}</h6>
-                                    </div>
-                                </div>
-                                <div class="footer border-top d-flex justify-content-between flex-wrap">
-                                    <a class="text--success" href="{{route('user.social.account.list',['status' =>  App\Enums\StatusEnum::true->status()])}}">
-                                        {{translate('View All')}}
-                                   </a>
-                                    <p class="mb-0 fs-14"> {{translate('This year')}}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-sm-6">
-                            <div class="i-card border p-0">
-                                <div class="p-3">
-                                    <div class="icon graident-icon mb-3">
-                                        <i class="bi bi-person-x fs-30"></i>
-                                    </div>
-                                    <div class="content">
-                                        <p class="card--title-sm mb-1">{{translate("Inactive Account")}}</p>
-                                        <h6>{{Arr::get($data['account_report'],'inactive_account',0)}}</h6>
-                                    </div>
-                                </div>
-                                <div class="footer border-top d-flex justify-content-between flex-wrap">
-                                    <a class="text--success" href="{{route('user.social.account.list',['status' =>  App\Enums\StatusEnum::false->status()])}}">
-                                        {{translate('View All')}}
-                                   </a>
-                                    <p class="mb-0 fs-14">
-                                         {{translate('This year')}}
-                                    </p>
+                                <h6 class="fw-bold mb-2 fs-14">{{translate('Consistent Branding')}}</h6>
+                                <p class="text-muted fs-12 mb-3">{{translate('Use a consistent font style for your Reel thumbnails to build better brand recognition.')}}</p>
+                                <div class="d-flex align-items-center justify-content-between mt-auto pt-2 border-top border-success-subtle">
+                                    <span class="text-success fw-bold fs-11"><i class="bi bi-check-circle-fill me-1"></i> {{translate('Branding')}}</span>
+                                    <a href="#" class="btn btn-sm text-success fw-bold fs-11 p-0">{{translate('See Examples')}} <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -577,146 +684,6 @@
             </div>
         </div>
     </div>
-
-    <div class="col-auto right-side-col" >
-        <div class="i-card mb-4 sidebar-post">
-            <h4 class="card--title mb-20">{{translate('Latest Post')}}</h4>
-            @php
-                $latestPost = Arr::get($data,'latest_post',collect([]));
-            @endphp
-
-            @if( $latestPost->count() > 0)
-
-                <div class="swiper latest-post-slider">
-
-                    <div class="swiper-wrapper">
-                        @foreach ($latestPost as $post )
-                            <div class="swiper-slide">
-                                <div>
-
-                                    @if($post->file->count() > 0)
-                                        <div class="latest-post-banner mb-3">
-
-                                                @php
-                                                    $fileURL = $post->file->count() > 0
-                                                                    ? imageURL($post->file->first(),"post",true)
-                                                                    : get_default_img();
-                                                @endphp
-
-                                                @if(!isValidVideoUrl($fileURL))
-                                                    <img src="{{ $fileURL}}" class="radius-8 mb-3" alt="post.jpg">
-                                                @else
-                                                    <video  width="150" controls>
-                                                        <source src="{{$fileURL}}">
-                                                    </video>
-                                                @endif
-
-                                        </div>
-                                    @endif
-
-                                    @if($post->content)
-                                        <h6 class="latest-post-title mb-1">
-                                            {{$post->content}}
-                                        </h6>
-                                    @endif
-                                    @if($post->link)
-                                        <a target="_blank" href="{{$post->link}}">
-                                            {{translate('Link')}}
-                                        </a>
-                                    @endif
-                                    <div class="d-flex mb-1">
-                                        @if(@$post->account->account_information->link)
-                                            <a  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{translate('Account name')}}"  target="_blank" href="{{@$post->account->account_information->link}}">
-                                                #{{ @$post->account->account_information->name}}
-                                            </a>
-                                        @else
-                                            {{ @$post->account->account_information->name}}
-                                        @endif
-
-                                        @if(@$post->account->platform)
-                                        <a href="{{route('user.social.account.list',['platform' => $platform->slug])}}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{translate('Platform')}}">
-                                                #{{@$post->account->platform->name}}
-                                        </a>
-                                        @endif
-                                    </div>
-                                    <div class="date mb-3">
-                                        <span class="fs-14 text--light">{{get_date_time($post->created_at,"F j, Y")}}</span> <span class="fs-12 text--light">{{get_date_time($post->created_at,"g a")}}</span>
-                                    </div>
-                                    <a href="{{route('user.social.post.show',['uid' => $post->uid])}}" class="i-btn btn--primary btn--lg capsuled w-100">
-                                        {{translate('View Post')}}
-                                    </a>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="latest-post-pagination"></div>
-            @else
-                <div>
-                    @include('admin.partials.not_found')
-                </div>
-            @endif
-        </div>
-
-        <div class="i-card upgrade-card mb-4">
-            @if($subscription &&   $subscription->package)
-                <h4 class="card--title text-white">
-                     {{$subscription->package->title}}
-                </h4>
-                <p>
-                    {!!$subscription->package->description!!}
-                </p>
-            @endif
-            <a href="{{route('user.plan')}}" class="i-btn btn--md btn--white capsuled mx-auto">
-                @if($subscription)
-                    {{translate('Upgrade Now')}}
-                @else
-                   {{translate('Subscribe Now')}}
-                @endif
-            </a>
-        </div>
-
-        <div class="i-card mb-4">
-            <div class="card-header mb-20">
-                <h4 class="card--title">
-                    {{ translate("Latest Activity ") }}
-                </h4>
-            </div>
-
-            @php
-                $activities =  Arr::get($data,'latest_activities',collect([]));
-            @endphp
-
-            <div class="card-body">
-                <ul class="share-card" data-simplebar>
-                    @forelse ($activities as $activitiy)
-                        <li class="mb-3 fs-15"><span class="me-1 text--primary"><i class="bi bi-card-text"></i></span>
-                            {{ $activitiy->details}}
-                        </li>
-                    @empty
-                        <li class="mb-3 fs-15">
-                            {{ translate('No activities found!!') }}
-                        </li>
-                    @endforelse
-                </ul>
-            </div>
-        </div>
-
-        <div class="i-card">
-            <div class="card-header mb-20">
-                <h4 class="card--title ">
-                    {{translate("Subscription Specification")}}
-                </h4>
-            </div>
-
-            <div class="card-body">
-                <div id="subscriptionChart" class="subscription-chart">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 @endsection
 
 

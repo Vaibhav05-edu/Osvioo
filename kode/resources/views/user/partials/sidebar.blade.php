@@ -10,12 +10,10 @@
     ->where("status",App\Enums\StatusEnum::true->status())
     ->where("is_integrated",App\Enums\StatusEnum::true->status());
 
-    $platform = $platforms?->first()
-
-
-
-
+    $platform = $platforms?->first();
+    $lastSegment = collect(request()->segments())->last();
     @endphp
+    
     <div class="side-content">
         <a href="{{route('user.home')}}" class="sidebar-logo d-block" style="text-decoration: none;">
             <div class="site-logo d-flex align-items-center gap-2">
@@ -32,328 +30,163 @@
         <div class="sidemenu-wrapper">
             <div class="sidebar-body" data-simplebar>
                 <ul class="sidemenu-list">
-                    <li class="side-menu-title">
-                        {{translate("Main")}}
-                    </li>
+                    <li class="side-menu-title">{{translate("Main")}}</li>
 
                     <li class="sidemenu-item">
                         <a href="{{route('user.home')}}" class="sidemenu-link {{request()->routeIs('user.home') ? 'active' :''}}">
-                            <div class="sidemenu-icon">
-                                <i class="bi bi-grid-1x2"></i>
-                            </div>
-                            <span>
-                                {{translate('Dashboard')}}
-                            </span>
+                            <div class="sidemenu-icon"><i class="bi bi-grid-1x2"></i></div>
+                            <span>{{translate('Dashboard')}}</span>
                         </a>
                     </li>
 
-                    @php
-                    $lastSegment = collect(request()->segments())->last();
-                    @endphp
-
+                    {{-- AUTO DM SECTION --}}
+                    <li class="side-menu-title">{{translate("Automation")}}</li>
                     <li class="sidemenu-item">
-                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse
-                            @if(request()->routeIs('user.social.post.*'))
-                                active
-                            @endif">
-                            <div class="sidemenu-icon">
-                                <i class="bi bi-stickies"></i>
-                            </div>
+                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse">
+                            <div class="sidemenu-icon"><i class="bi bi-chat-dots"></i></div>
                             <span>
-                                {{translate("Post Feed")}}
+                                {{translate("Auto DM")}}
                                 <small><i class="bi bi-chevron-down"></i></small>
                             </span>
                         </a>
-
-                        <div class="side-menu-dropdown @if(request()->routeIs('user.social.post.*')) show-sideMenu @endif">
+                        <div class="side-menu-dropdown">
                             <ul class="sub-menu">
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{request()->routeIs('user.social.post.create') ? 'active' :''}}" href="{{route('user.social.post.create')}}">
-                                        <span>
-                                            <i class="bi bi-pencil-square"></i>
-                                        </span>
-                                        <p>
-                                            {{translate('Create Post')}}
-                                        </p>
-                                    </a>
-                                </li>
-
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{request()->routeIs('user.social.post.show') || request()->routeIs('user.social.post.list')  ? 'active' :''}}" href="{{route('user.social.post.list')}}">
-                                        <span>
-                                            <i class="bi bi-newspaper"></i>
-                                        </span>
-                                        <p>
-                                            {{translate('All Post')}}
-                                        </p>
-                                    </a>
-                                </li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-graph-up"></i></span><p>{{translate('Insights')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-gear"></i></span><p>{{translate('Manage')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-broadcast"></i></span><p>{{translate('Live')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-archive"></i></span><p>{{translate('Old')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-pause-circle"></i></span><p>{{translate('Pause')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-plus-square"></i></span><p>{{translate('Create')}}</p></a></li>
                             </ul>
                         </div>
                     </li>
 
                     <li class="sidemenu-item">
-                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse
-                            @if(request()->routeIs('user.social.account.*'))
-                                active
-                            @endif">
-                            <div class="sidemenu-icon">
-                                <i class="bi bi-person-gear"></i>
-                            </div>
+                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse">
+                            <div class="sidemenu-icon"><i class="bi bi-send"></i></div>
                             <span>
-                                {{translate("Social Accounts")}}
+                                {{translate("Auto Post")}}
                                 <small><i class="bi bi-chevron-down"></i></small>
                             </span>
                         </a>
-
-                        <div class="side-menu-dropdown @if(request()->routeIs('user.social.account.*')) show-sideMenu @endif">
+                        <div class="side-menu-dropdown">
                             <ul class="sub-menu">
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{request()->routeIs('user.social.account.list') || request()->routeIs('user.social.account.show') || request()->routeIs('user.social.account.create')   ? 'active' :''}}" href="{{ $platform ? route('user.social.account.list',['platform' => $platform->slug]) : route('user.social.account.list')    }}">
-                                        <span>
-                                            <i class="bi bi-person-lines-fill"></i>
-                                        </span>
-                                        <p>
-                                            {{translate('Account list')}}
-                                        </p>
-                                    </a>
-                                </li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-instagram"></i></span><p>{{translate('Insta')}}</p></a></li>
+                            </ul>
+                        </div>
+                    </li>
 
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{request()->routeIs('user.social.account.platform')   ? 'active' :''}}" href="{{route('user.social.account.platform')}}">
-                                        <span>
-                                            <i class="bi bi-gear-wide-connected"></i>
-                                        </span>
-                                        <p>
-                                            {{translate('Platform')}}
-                                        </p>
-                                    </a>
-                                </li>
+                    {{-- MEDIA KIT SECTION --}}
+                    <li class="side-menu-title">{{translate("Creator Tools")}}</li>
+                    <li class="sidemenu-item">
+                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse">
+                            <div class="sidemenu-icon"><i class="bi bi-person-badge"></i></div>
+                            <span>
+                                {{translate("Media Kit")}}
+                                <small><i class="bi bi-chevron-down"></i></small>
+                            </span>
+                        </a>
+                        <div class="side-menu-dropdown">
+                            <ul class="sub-menu">
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-stars"></i></span><p>{{translate('Media Kit AI Maker')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-clock-history"></i></span><p>{{translate('Previous Media Kit')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-pencil-square"></i></span><p>{{translate('Media Kit Edit')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-bar-chart-line"></i></span><p>{{translate('Media Kit Insights')}}</p></a></li>
                             </ul>
                         </div>
                     </li>
 
                     <li class="sidemenu-item">
-                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse
-                            @if(request()->routeIs('user.ai.content.list') || request()->routeIs('user.ai.content.image.list')||request()->routeIs('user.ai.content.video.list'))
-                                active
-                            @endif">
-                            <div class="sidemenu-icon">
-                                <i class="bi bi-play-btn"></i>
-                            </div>
+                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse">
+                            <div class="sidemenu-icon"><i class="bi bi-receipt"></i></div>
                             <span>
-                                {{ translate("AI Contents") }}
+                                {{translate("Invoice Maker")}}
                                 <small><i class="bi bi-chevron-down"></i></small>
                             </span>
                         </a>
-
-                        <div class="side-menu-dropdown @if(request()->routeIs('user.ai.content.list') || request()->routeIs('user.ai.content.image.list')||request()->routeIs('user.ai.content.video.list')) show-sideMenu @endif">
+                        <div class="side-menu-dropdown">
                             <ul class="sub-menu">
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{ request()->routeIs('user.ai.content.list') ? 'active' : '' }}" href="{{ route('user.ai.content.list') }}">
-                                        <span><i class="bi bi-card-text"></i></span>
-                                        <p>{{ translate('Text Contents') }}</p>
-                                    </a>
-                                </li>
-
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{ request()->routeIs('user.ai.content.image.list') ? 'active' : '' }}" href="{{ route('user.ai.content.image.list') }}">
-                                        <span><i class="bi bi-image"></i></span>
-                                        <p>{{ translate('Image Contents') }}</p>
-                                    </a>
-                                </li>
-
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{ request()->routeIs('user.ai.content.video.list') ? 'active' : '' }}" href="{{ route('user.ai.content.video.list') }}">
-                                        <span><i class="bi bi-camera-video"></i></span>
-                                        <p>{{ translate('Video Contents') }}</p>
-                                    </a>
-                                </li>
-
-
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-plus-circle"></i></span><p>{{translate('Make Invoice')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-share"></i></span><p>{{translate('Shared Invoice')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-files"></i></span><p>{{translate('Total Invoice')}}</p></a></li>
                             </ul>
                         </div>
                     </li>
 
+                    {{-- SOCIAL MEDIA SECTION --}}
+                    <li class="side-menu-title">{{translate("Social Media")}}</li>
+                    <li class="sidemenu-item">
+                        <a href="{{route('user.social.post.create')}}" class="sidemenu-link {{request()->routeIs('user.social.post.create') ? 'active' :''}}">
+                            <div class="sidemenu-icon"><i class="bi bi-calendar-plus"></i></div>
+                            <span>{{translate("Schedule Post")}}</span>
+                        </a>
+                    </li>
 
                     <li class="sidemenu-item">
-                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse
-                            @if(request()->routeIs('user.ai.content.image.gallery') || request()->routeIs('user.ai.content.video.gallery'))
-                                active
-                            @endif">
-                            <div class="sidemenu-icon">
-                                <i class="bi bi-collection-play"></i>
-                            </div>
+                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse">
+                            <div class="sidemenu-icon"><i class="bi bi-lightbulb"></i></div>
                             <span>
-                                {{ translate("AI Galleries") }}
+                                {{translate("AI Suggestions")}}
                                 <small><i class="bi bi-chevron-down"></i></small>
                             </span>
                         </a>
-
-                        <div class="side-menu-dropdown @if(request()->routeIs('user.ai.content.image.gallery') || request()->routeIs('user.ai.content.video.gallery')) show-sideMenu @endif">
+                        <div class="side-menu-dropdown">
                             <ul class="sub-menu">
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{ request()->routeIs('user.ai.content.image.gallery') ? 'active' : '' }}" href="{{ route('user.ai.content.image.gallery') }}">
-                                        <span><i class="bi bi-images"></i></span>
-                                        <p>{{ translate('Image Gallery') }}</p>
-                                    </a>
-                                </li>
-
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{ request()->routeIs('user.ai.content.video.gallery') ? 'active' : '' }}" href="{{ route('user.ai.content.video.gallery') }}">
-                                        <span><i class="bi bi-film"></i></span>
-                                        <p>{{ translate('Video Gallery') }}</p>
-                                    </a>
-                                </li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-hash"></i></span><p>{{translate('AI Post Hashtag')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-chat-left-text"></i></span><p>{{translate('AI Post Suggestion')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-clock"></i></span><p>{{translate('AI Post Timing')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-graph-up-arrow"></i></span><p>{{translate('AI Current Trend')}}</p></a></li>
                             </ul>
                         </div>
                     </li>
 
-
+                    {{-- INSTAGRAM SECTION --}}
+                    <li class="side-menu-title">{{translate("Instagram")}}</li>
                     <li class="sidemenu-item">
-                        <a href="{{route('user.plan')}}" class="sidemenu-link  {{request()->routeIs('user.plan') ? 'active' :''}}">
-                            <div class="sidemenu-icon" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="custom-tooltip" data-bs-title="{{translate('Plans')}}">
-                                <i class="bi bi-box-seam"></i>
-                            </div>
+                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse">
+                            <div class="sidemenu-icon"><i class="bi bi-instagram"></i></div>
+                            <span>
+                                {{translate("Manage Account")}}
+                                <small><i class="bi bi-chevron-down"></i></small>
+                            </span>
+                        </a>
+                        <div class="side-menu-dropdown">
+                            <ul class="sub-menu">
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="{{route('user.social.account.platform')}}"><span><i class="bi bi-plus-circle"></i></span><p>{{translate('Connect Account')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="{{ $platform ? route('user.social.account.list',['platform' => 'instagram']) : route('user.social.account.list') }}"><span><i class="bi bi-person-check"></i></span><p>{{translate('Connected Account')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-bar-chart"></i></span><p>{{translate('Instagram Insights')}}</p></a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    {{-- PLANS & BILLING SECTION --}}
+                    <li class="side-menu-title">{{translate("Plans & Billing")}}</li>
+                    <li class="sidemenu-item">
+                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse">
+                            <div class="sidemenu-icon"><i class="bi bi-box-seam"></i></div>
                             <span>
                                 {{translate("Plans")}}
+                                <small><i class="bi bi-chevron-down"></i></small>
                             </span>
                         </a>
-                    </li>
-
-                    <li class="sidemenu-item">
-                        <a href="javascript:void(0)" class='sidemenu-link sidemenu-collapse
-                                @if($lastSegment == "reports")
-                                    active
-                                @endif'>
-                            <div class="sidemenu-icon">
-                                <i class="bi bi-graph-up"></i>
-                            </div>
-                            <span>
-                                {{translate("Reports")}} <small><i class="bi bi-chevron-down"></i></small>
-                            </span>
-                        </a>
-
-                        <div class="side-menu-dropdown  @if($lastSegment == 'reports')
-                                    show-sideMenu
-                                @endif">
+                        <div class="side-menu-dropdown">
                             <ul class="sub-menu">
-
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{request()->routeIs('user.subscription.report.*') ? 'active' :''}}" href="{{route('user.subscription.report.list')}}">
-                                        <span>
-                                            <i class="bi bi-bookmarks"></i>
-                                        </span>
-
-                                        <p>
-                                            {{translate('Subscription Reports')}}
-                                        </p>
-                                    </a>
-                                </li>
-
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{request()->routeIs('user.credit.report.*') ? 'active' :''}}" href="{{route('user.credit.report.list')}}">
-                                        <span><i class="bi bi-credit-card-2-front"></i></span>
-                                        <p>
-                                            {{translate('Credit Reports')}}
-                                        </p>
-                                    </a>
-                                </li>
-
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link  {{request()->routeIs('user.deposit.report.*') ? 'active' :''}}" href="{{route('user.deposit.report.list')}}">
-                                        <span><i class="bi bi-wallet"></i></span>
-                                        <p>
-                                            {{translate('Deposit Reports')}}
-                                        </p>
-                                    </a>
-                                </li>
-
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{request()->routeIs('user.withdraw.report.*') ? 'active' :''}}" href="{{route('user.withdraw.report.list')}}">
-                                        <span><i class="bi bi-box-arrow-in-up-left"></i></span>
-                                        <p>
-                                            {{translate('Withdraw Reports')}}
-                                        </p>
-                                    </a>
-                                </li>
-
-                                @if(site_settings("affiliate_system") == App\Enums\StatusEnum::true->status())
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{request()->routeIs('user.affiliate.report.*') ? 'active' :''}}" href="{{route('user.affiliate.report.list')}}">
-                                        <span><i class="bi bi-share"></i></span>
-                                        <p>
-                                            {{translate('Affiliate Reports')}}
-                                        </p>
-                                    </a>
-                                </li>
-
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{request()->routeIs('user.affiliate.user.*') ? 'active' :''}}" href="{{route('user.affiliate.user.list')}}">
-                                        <span><i class="bi bi-people"></i></span>
-                                        <p>
-                                            {{translate('Affiliate Users')}}
-                                        </p>
-                                    </a>
-                                </li>
-                                @endif
-
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{request()->routeIs('user.transaction.report.*') ? 'active' :''}}" href="{{route('user.transaction.report.list')}}">
-                                        <span><i class="bi bi-arrow-left-right"></i></span>
-                                        <p>{{ translate('Transaction Reports' )}}</p>
-                                    </a>
-                                </li>
-
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{request()->routeIs('user.kyc.report.*') ? 'active' :''}}" href="{{route('user.kyc.report.list')}}">
-                                        <span><i class="bi bi-shield-lock"></i></span>
-                                        <p>
-                                            {{translate('KYC Reports')}}
-                                        </p>
-                                    </a>
-                                </li>
-
-                                @if($webhookAccess == App\Enums\StatusEnum::true->status())
-                                <li class="sub-menu-item">
-                                    <a class="sidebar-menu-link {{request()->routeIs('user.webhook.report.*') ? 'active' :''}}" href="{{route('user.webhook.report.list')}}">
-                                        <span><i class="bi bi-bell"></i></span>
-                                        <p>
-                                            {{translate('Webhook Reports')}}
-                                        </p>
-                                    </a>
-                                </li>
-                                @endif
-
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.plan.active') ? 'active' :''}}" href="{{route('user.plan.active')}}"><span><i class="bi bi-check-circle"></i></span><p>{{translate('Active Plan')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.plan.history') ? 'active' :''}}" href="{{route('user.plan.history')}}"><span><i class="bi bi-clock-history"></i></span><p>{{translate('Previous Plan')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="{{route('user.transaction.report.list')}}"><span><i class="bi bi-receipt"></i></span><p>{{translate('Invoice')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.plan.billing.upcoming') ? 'active' :''}}" href="{{route('user.plan.billing.upcoming')}}"><span><i class="bi bi-calendar-event"></i></span><p>{{translate('Upcoming Billing')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="{{route('user.transaction.report.list')}}"><span><i class="bi bi-arrow-left-right"></i></span><p>{{translate('Previous Transaction')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-x-circle"></i></span><p>{{translate('Failed Transaction')}}</p></a></li>
                             </ul>
                         </div>
                     </li>
 
+                    {{-- ACCOUNT SETTINGS --}}
+                    <li class="side-menu-title">{{translate("Account Settings")}}</li>
                     <li class="sidemenu-item">
-                        <a href="{{route('user.ticket.list')}}" class="sidemenu-link  {{request()->routeIs('user.ticket.*') ? 'active' :''}}">
-                            <div class="sidemenu-icon">
-                                <i class="bi bi-patch-question"></i>
-                            </div>
-
-                            <span>
-                                {{translate("Tickets")}}
-                            </span>
-                        </a>
-                    </li>
-
-                    <li class="side-menu-title">
-                        {{translate('Setting')}}
-                    </li>
-
-                    <li class="sidemenu-item">
-                        <a href="{{route('user.profile')}}" class="sidemenu-link  {{request()->routeIs('user.profile') ? 'active' :''}}">
-                            <div class="sidemenu-icon">
-                                <i class="bi bi-gear"></i>
-                            </div>
-
-                            <span>
-                                {{translate("Profile")}}
-                            </span>
+                        <a href="{{route('user.profile')}}" class="sidemenu-link {{request()->routeIs('user.profile') ? 'active' :''}}">
+                            <div class="sidemenu-icon"><i class="bi bi-person-gear"></i></div>
+                            <span>{{translate("Profile Settings")}}</span>
                         </a>
                     </li>
                 </ul>
@@ -368,30 +201,18 @@
                             @endif>
                             {{session()->get('currency')?->code}}
                         </button>
-
                         @if($currencies->count() > 0)
                         <ul class="dropdown-menu dropdown-menu-end">
-
                             @foreach($currencies as $currency)
-                            <li>
-                                <a class="dropdown-item" href="{{route('currency.change',$currency->code)}}"> {{$currency->code}}</a>
-                            </li>
+                            <li><a class="dropdown-item" href="{{route('currency.change',$currency->code)}}"> {{$currency->code}}</a></li>
                             @endforeach
-
                         </ul>
                         @endif
                     </div>
                 </div>
 
-                <div class="total-balance">
-                    <h4>
-                        {{num_format(number:$user->balance,calC:true)}}
-                    </h4>
-                    <p>
-                        {{translate('Total Balance')}}
-                    </p>
-                </div>
-                <a href="{{route('user.logout')}}"><span><i class="bi bi-box-arrow-right"></i></span>
+                <a href="{{route('user.logout')}}" class="logout-btn">
+                    <span><i class="bi bi-box-arrow-right"></i></span>
                     {{translate('Logout')}}
                 </a>
             </div>

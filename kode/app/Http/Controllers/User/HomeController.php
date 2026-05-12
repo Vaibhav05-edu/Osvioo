@@ -409,5 +409,30 @@ class HomeController extends Controller
 
         return back()->with( $response);
     }
+    /**
+     * Active Plan details
+     */
+    public function activePlan() :View{
+        return view('user.plan.active', [
+            'meta_data' => $this->metaData(['title' => translate("Active Plan")]),
+        ]);
+    }
 
+    /**
+     * Subscription History
+     */
+    public function planHistory() :View{
+        return view('user.plan.history', [
+            'meta_data' => $this->metaData(['title' => translate("Subscription History")]),
+        ]);
+    }
+
+    /**
+     * Upcoming Billing
+     */
+    public function upcomingBilling() :View{
+        return view('user.plan.upcoming', [
+            'meta_data' => $this->metaData(['title' => translate("Upcoming Billing")]),
+        ]);
+    }
 }
