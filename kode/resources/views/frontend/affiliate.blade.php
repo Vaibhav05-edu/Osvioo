@@ -92,8 +92,9 @@
         border-radius: 50%; margin-right: 8px;
     }
     
-    .fs-1-8rem { font-size: 1.8rem; }
     .fs-2-2rem { font-size: 2.2rem; }
+    .fs-1-8rem { font-size: 1.8rem; }
+    .fs-1-5rem { font-size: 1.5rem; }
     .fs-1-1rem { font-size: 1.1rem; }
     .fs-1-05rem { font-size: 1.05rem; }
     .fs-1rem { font-size: 1rem; }
@@ -109,7 +110,7 @@
     <!-- Hero Section -->
     <section class="section-affiliate-hero hero-content">
         <div class="container text-center">
-            <h1 class="display-3 fw-bold mb-4 font-comic letter-spacing-md text-dark-custom">
+            <h1 class="display-4 fw-bold mb-4 font-comic letter-spacing-md text-dark-custom">
                 Join the <span class="font-comic text-royal-blue">Socialyt</span> Affiliate Program
             </h1>
             <p class="fs-5 text-muted mb-5 mx-auto font-comic max-w-700">
@@ -125,7 +126,7 @@
     <!-- Earnings Scale -->
     <section class="earnings-content py-5">
         <div class="container py-5 text-center">
-            <h3 class="mb-5 font-outfit fs-1-8rem fw-normal text-gray-lightest">
+            <h3 class="mb-5 font-outfit fs-1-5rem fw-normal text-gray-lightest">
                 Scale your affiliate earnings with Socialyt
             </h3>
             <div class="row g-4 justify-content-center mt-2">
@@ -152,7 +153,7 @@
 <!-- 3 Easy Steps -->
 <section class="py-5 bg-white steps-section">
     <div class="container py-5 text-center">
-        <h2 class="fw-bold mb-5 font-outfit fs-2-2rem text-almost-black">
+        <h2 class="fw-bold mb-5 font-outfit fs-1-8rem text-almost-black">
             Start earning in 3 easy steps
         </h2>
         <div class="row g-5 mt-4 justify-content-center">
@@ -181,7 +182,7 @@
 <!-- Who Can Apply -->
 <section class="py-5 bg-light-gray">
     <div class="container py-5">
-        <h2 class="display-5 fw-bold text-center mb-5 font-outfit letter-spacing-sm">
+        <h2 class="display-6 fw-bold text-center mb-5 font-outfit letter-spacing-sm">
             Who Can Apply?
         </h2>
         <div class="row g-4 justify-content-center">
@@ -217,7 +218,7 @@
 <!-- CTA Section -->
 <section class="py-5">
     <div class="container py-5 text-center">
-        <h2 class="display-5 fw-bold mb-4 font-outfit letter-spacing-sm">
+        <h2 class="display-6 fw-bold mb-4 font-outfit letter-spacing-sm">
             Ready to start earning?
         </h2>
         <p class="fs-5 text-muted mb-5 mx-auto max-w-600 font-outfit">

@@ -62,9 +62,22 @@
                                                 fill="none" />
                                         </svg>
                                     </div>
-                                    <span class="icon-image">
-                                        <img src="{{imageUrl(@$platform->file,'platform',true)}}"
-                                            alt="{{@$platform->name.'.jpg'}}" />
+                                    @php
+                                        $platformIcons = [
+                                            'facebook'  => ['icon' => 'bi-facebook', 'color' => '#1877F2'],
+                                            'instagram' => ['icon' => 'bi-instagram', 'color' => '#E4405F'],
+                                            'twitter'   => ['icon' => 'bi-twitter-x', 'color' => '#000000'],
+                                            'linkedin'  => ['icon' => 'bi-linkedin', 'color' => '#0A66C2'],
+                                            'tiktok'    => ['icon' => 'bi-tiktok', 'color' => '#000000'],
+                                            'youtube'   => ['icon' => 'bi-youtube', 'color' => '#FF0000'],
+                                            'pinterest' => ['icon' => 'bi-pinterest', 'color' => '#BD081C'],
+                                            'reddit'    => ['icon' => 'bi-reddit', 'color' => '#FF4500'],
+                                        ];
+                                        $pSlug = strtolower($platform->slug);
+                                        $pInfo = $platformIcons[$pSlug] ?? ['icon' => 'bi-share', 'color' => '#5D5AF1'];
+                                    @endphp
+                                    <span class="icon-image d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background: {{ $pInfo['color'] }}15; border-radius: 12px;">
+                                        <i class="bi {{ $pInfo['icon'] }}" style="font-size: 24px; color: {{ $pInfo['color'] }};"></i>
                                     </span>
                                     <div class="p-3">
                                         <h5 class="card--title-sm">
