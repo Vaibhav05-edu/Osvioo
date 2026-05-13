@@ -34,14 +34,14 @@
     <div class="col-12">
         <div class="row g-4">
             <div class="col-xl-6">
-                <div class="i-card h-550">
+                <div class="glass-card h-550 p-4">
                     <h4 class="card--title mb-4">
                          {{translate('Connected Social Accounts')}}
                     </h4>
                     <div class="row g-3">
                        @forelse(Arr::get($data['account_report'] ,'accounts_by_platform',[]) as $platform)
                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="i-card no-border p-0 border position-relative bg--light">
+                                <div class="glass-card no-border p-0 border position-relative bg--light">
                                     <div class="shape-one">
                                         <svg width="65" height="65" viewBox="0 0 65 65" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -87,7 +87,7 @@
                                         <p class="mb-3 fs-14">
                                               {{translate('Total Posts')}}
                                         </p>
-                                        <a href="{{route('user.social.account.create',['platform' => $platform->slug])}}" class="i-btn btn--sm btn--outline capsuled w-100">
+                                        <a href="{{route('user.social.account.create',['platform' => $platform->slug])}}" class="frosted-btn btn--sm capsuled w-100">
                                              <i class="bi bi-plus-lg"></i>
                                               {{translate('Create Account')}}
                                         </a>
@@ -106,7 +106,7 @@
             </div>
 
             <div class="col-xl-6">
-                <div class="i-card h-100 p-0 overflow-hidden" style="border-radius: 16px; border: 1px solid #eef0f2;">
+                <div class="glass-card h-100 p-0 overflow-hidden" style="border-radius: 16px; border: 1px solid #eef0f2;">
                     <div class="p-4 bg--primary-soft" style="border-bottom: 1px solid #eef0f2;">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <div class="d-flex align-items-center gap-2">
@@ -146,13 +146,13 @@
                     <div class="p-4">
                         <div class="row g-3">
                             <div class="col-6">
-                                <a href="{{route('user.plan')}}" class="i-btn btn--primary w-100 d-flex align-items-center justify-content-center gap-2" style="padding: 10px; border-radius: 12px;">
+                                <a href="{{route('user.plan')}}" class="frosted-btn w-100 d-flex align-items-center justify-content-center gap-2" style="padding: 10px; border-radius: 12px;">
                                     <i class="bi bi-arrow-up-circle"></i>
                                     {{translate('Upgrade Plan')}}
                                 </a>
                             </div>
                             <div class="col-6">
-                                <a href="{{route('user.plan')}}" class="i-btn btn--outline w-100 d-flex align-items-center justify-content-center gap-2" style="padding: 10px; border-radius: 12px; border-color: #eef0f2; color: #444;">
+                                <a href="{{route('user.plan')}}" class="frosted-btn-outline w-100 d-flex align-items-center justify-content-center gap-2" style="padding: 10px; border-radius: 12px; border-color: #eef0f2; color: #444;">
                                     <i class="bi bi-plus-square"></i>
                                     {{translate('Add-ons')}}
                                 </a>
@@ -174,7 +174,7 @@
             </div>
 
             <div class="col-12">
-                <div class="i-card h-100">
+                <div class="glass-card h-100 p-4">
                     <div class="row align-items-center g-2 mb-4">
                         <div class="col-md-9">
                             <h4 class="card--title">
@@ -185,7 +185,7 @@
                     <div class="row g-4">
                         {{-- TOTAL ACCOUNTS --}}
                         <div class="col-xl-4 col-md-6">
-                            <div class="i-card border shadow-sm p-0 overflow-hidden" style="border-radius: 16px; background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);">
+                            <div class="glass-card border shadow-sm p-0 overflow-hidden" style="border-radius: 16px; background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);">
                                 <div class="p-4">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
                                         <div class="icon-box" style="width: 48px; height: 48px; background: #5D5AF115; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -205,7 +205,7 @@
 
                         {{-- TOTAL POSTS --}}
                         <div class="col-xl-4 col-md-6">
-                            <div class="i-card border shadow-sm p-0 overflow-hidden" style="border-radius: 16px; background: linear-gradient(135deg, #fffcf5 0%, #ffffff 100%);">
+                            <div class="glass-card border shadow-sm p-0 overflow-hidden" style="border-radius: 16px; background: linear-gradient(135deg, #fffcf5 0%, #ffffff 100%);">
                                 <div class="p-4">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
                                         <div class="icon-box" style="width: 48px; height: 48px; background: #FF950015; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -225,7 +225,7 @@
 
                         {{-- TOTAL MEDIA KITS --}}
                         <div class="col-xl-4 col-md-6">
-                            <div class="i-card border shadow-sm p-0 overflow-hidden" style="border-radius: 16px; background: linear-gradient(135deg, #f5fff8 0%, #ffffff 100%);">
+                            <div class="glass-card border shadow-sm p-0 overflow-hidden" style="border-radius: 16px; background: linear-gradient(135deg, #f5fff8 0%, #ffffff 100%);">
                                 <div class="p-4">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
                                         <div class="icon-box" style="width: 48px; height: 48px; background: #22c55e15; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -254,7 +254,7 @@
         <div class="row g-4">
                     {{-- INSTAGRAM INSIGHTS --}}
                     <div class="col-xl-6">
-                        <div class="i-card h-100 p-4 shadow-sm" style="border-radius: 24px; border: 1px solid #eef0f2; background: #fff; transition: all 0.3s ease;">
+                        <div class="glass-card h-100 p-4 shadow-sm" style="border-radius: 24px; border: 1px solid #eef0f2; background: #fff; transition: all 0.3s ease;">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="icon-box" style="background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); color: white; width: 45px; height: 45px; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(228, 64, 95, 0.3);">
@@ -303,7 +303,7 @@
 
                     {{-- AI PROFILE ANALYSIS --}}
                     <div class="col-xl-6">
-                        <div class="i-card h-100 p-4 shadow-sm overflow-hidden position-relative" style="border-radius: 24px; border: 1px solid rgba(93, 90, 241, 0.2); background: linear-gradient(145deg, #ffffff 0%, #f8faff 100%); transition: all 0.3s ease;">
+                        <div class="glass-card h-100 p-4 shadow-sm overflow-hidden position-relative" style="border-radius: 24px; border: 1px solid rgba(93, 90, 241, 0.2); background: linear-gradient(145deg, #ffffff 0%, #f8faff 100%); transition: all 0.3s ease;">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="icon-box bg--primary text-white" style="width: 45px; height: 45px; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(93, 90, 241, 0.3);">
@@ -360,7 +360,7 @@
 
             {{-- AI OPTIMIZATION ROADMAP --}}
             <div class="col-12 mt-4 mb-2">
-                <div class="i-card p-4 shadow-sm border-0 position-relative overflow-hidden" style="border-radius: 24px; background: #fff;">
+                <div class="glass-card p-4 shadow-sm border-0 position-relative overflow-hidden" style="border-radius: 24px; background: #fff;">
                     <div class="position-absolute top-0 end-0 p-4 opacity-10">
                         <i class="bi bi-rocket-takeoff" style="font-size: 80px; color: #5D5AF1;"></i>
                     </div>
@@ -425,7 +425,7 @@
             </div>
 
             <div class="col-12">
-                <div class="i-card-md card-height-100">
+                <div class="glass-card card-height-100 p-4 shadow-sm">
                     <div class="card-header">
                         <h4 class="card--title">
                             {{translate("Latest Transaction Log")}}
@@ -540,7 +540,7 @@
             </div>
 
             <div class="col-12">
-                <div class="i-card-md card-height-100">
+                <div class="glass-card card-height-100 p-4 shadow-sm">
                     <div class="card-header">
                         <h4 class="card--title">
                             {{translate("Latest Subscription Log")}}

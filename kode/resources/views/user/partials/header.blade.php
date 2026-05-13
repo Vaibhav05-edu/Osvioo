@@ -1,4 +1,4 @@
-  <header class="header">
+  <header class="header glass-panel">
     @php
         $lang = $active_languages->where('code',session()->get('locale'));
         $code = count($lang)!=0 ? $lang->first()->code:"en";

@@ -60,21 +60,16 @@
             </div>
         </div>
 
-        <!-- RIGHT PANEL (Form) -->
         <div class="col-lg-6 d-flex align-items-center justify-content-center bg-white p-lg-5 p-4">
-            <div class="plixi-form-container">
+            <div class="plixi-form-container glass-card p-lg-5 p-4">
                 <!-- Sharp Vibrant Logo -->
                 <div class="plixi-logo-row mb-4">
-                    <svg width="42" height="42" viewBox="0 0 40 40" fill="none" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));">
-                        <path d="M28 12C25.2 12 22.8 13.3 21.2 15.4C19.6 17.5 18.6 20.2 18.6 23.1C18.6 26 19.6 28.7 21.2 30.8C22.8 32.9 25.2 34.2 28 34.2C33.3 34.2 37.6 29.9 37.6 24.6C37.6 19.3 33.3 15 28 15V12ZM12 12C6.7 12 2.4 16.3 2.4 21.6C2.4 26.9 6.7 31.2 12 31.2C14.8 31.2 17.2 29.9 18.8 27.8C20.4 25.7 21.4 23 21.4 20.1C21.4 17.2 20.4 14.5 18.8 12.4C17.2 10.3 14.8 9 12 9V12ZM28 31C26 31 24.4 30 23.3 28.5C22.2 27 21.5 25.1 21.5 23.1C21.5 21.1 22.2 19.2 23.3 17.7C24.4 16.2 26 15.2 28 15.2C31.9 15.2 35 18.3 35 22.2C35 26.1 31.9 29.2 28 29.2V31ZM12 29.4C8.1 29.4 5 26.3 5 22.4C5 18.5 8.1 15.4 12 15.4C14 15.4 15.6 16.4 16.7 17.9C17.8 19.4 18.5 21.3 18.5 23.3C18.5 25.3 17.8 27.2 16.7 28.7C15.6 30.2 14 31.2 12 31.2V29.4Z" fill="url(#plixi_grad_sharp)"/>
-                        <defs>
-                            <linearGradient id="plixi_grad_sharp" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#FF0080"/>
-                                <stop offset="1" stop-color="#0066FF"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                    <span class="plixi-text-logo" style="color: #0F172A !important;">socialyt</span>
+                    <div class="logo-icon-wrapper d-flex align-items-center justify-content-center" style="width: 42px; height: 42px; background: var(--primary-gradient); border-radius: 12px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <span class="gradient-text plixi-text-logo">socialyt</span>
                 </div>
 
                 <h2 class="plixi-form-title mb-1">Create your Account</h2>
@@ -169,7 +164,7 @@
                         </div>
                     @endif
 
-                    <button type="submit" class="plixi-submit-btn">Register</button>
+                    <button type="submit" class="plixi-submit-btn frosted-btn py-3">Register</button>
                 </form>
 
                 @if($socialAuth == App\Enums\StatusEnum::true->status())
@@ -181,7 +176,7 @@
 
                     <div class="d-flex flex-column gap-2">
                         @foreach($mediums as $medium)
-                            <a href="{{route('auth.social.login', $medium)}}" class="plixi-google-btn">
+                            <a href="{{route('auth.social.login', $medium)}}" class="plixi-google-btn frosted-btn-outline">
                                 <i class="bi bi-{{$medium}} fs-5"></i>
                                 <span>Sign up with {{ucfirst($medium)}}</span>
                             </a>
@@ -341,7 +336,7 @@
 
     /* VIOLET SECTION MASTER CLONE */
     .plixi-promo-panel {
-        background: #5D5AF1 !important;
+        background: var(--primary-gradient) !important;
         color: #ffffff !important;
     }
 

@@ -1,4 +1,4 @@
-<aside class="aside">
+<aside class="aside glass-panel">
     @php
     $user = auth_user('web');
     $subscription = $user->runningSubscription;
@@ -15,15 +15,15 @@
     @endphp
     
     <div class="side-content">
-        <a href="{{route('user.home')}}" class="sidebar-logo d-block" style="text-decoration: none;">
+        <a href="{{route('user.home')}}" class="sidebar-logo d-block mb-4" style="text-decoration: none;">
             <div class="site-logo d-flex align-items-center gap-2">
-                <div class="logo-icon-wrapper d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: #5D5AF1; border-radius: 8px;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="logo-icon-wrapper d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; background: var(--primary-gradient); border-radius: 12px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="white"/>
                         <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="white"/>
                     </svg>
                 </div>
-                <span style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.5rem; color: #111; letter-spacing: -1px;">socialyt</span>
+                <span class="gradient-text" style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.6rem; letter-spacing: -1px;">socialyt</span>
             </div>
         </a>
 
@@ -211,7 +211,7 @@
                     </div>
                 </div>
 
-                <a href="{{route('user.logout')}}" class="logout-btn">
+                <a href="{{route('user.logout')}}" class="logout-btn frosted-btn-outline w-100 mt-3" style="border-radius: 12px; font-size: 14px;">
                     <span><i class="bi bi-box-arrow-right"></i></span>
                     {{translate('Logout')}}
                 </a>

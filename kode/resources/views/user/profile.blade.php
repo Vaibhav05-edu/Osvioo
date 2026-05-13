@@ -9,7 +9,7 @@
     $affiliateLogs = $user->affiliates;
 @endphp
 
-<div class="i-card mb-4">
+<div class="glass-card mb-4 p-4">
     <div class="row g-4">
         <div class="col-xxl-9 col-xl-8 col-lg-8">
             <div class="d-flex align-items-start justify-content-start flex-sm-nowrap flex-wrap gap-lg-4 gap-3">
@@ -48,7 +48,7 @@
         </div>
     </div>
 </div>
-<div class="i-card">
+<div class="glass-card p-4">
     <div class="plan-detail">
         <div class="container-fluid px-0">
             <div>

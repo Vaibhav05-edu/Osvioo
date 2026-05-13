@@ -3,13 +3,13 @@
 <div class="row g-4">
     {{-- LEFT SIDE: CURRENT PLAN INFO --}}
     <div class="col-xl-8">
-        <div class="i-card h-100 p-0 overflow-hidden" style="border-radius: 20px; border: 1px solid #eef0f2;">
+        <div class="glass-card h-100 p-0 overflow-hidden">
             @php
                 $user = auth_user('web')->load(['runningSubscription','runningSubscription.package']);
                 $subscription = $user->runningSubscription;
             @endphp
 
-            <div class="p-4 @if($subscription) bg--primary @else bg-secondary @endif text-white">
+            <div class="p-4 @if($subscription) frosted-btn @else bg-secondary @endif text-white" style="border-radius: 0; width: 100%;">
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <div>
                         <span class="badge bg-white text-dark capsuled mb-2 fw-bold text-uppercase fs-10" style="letter-spacing: 1px;">{{translate('Current Active Plan')}}</span>
@@ -94,7 +94,7 @@
 
     {{-- RIGHT SIDE: ADD-ON MARKETPLACE --}}
     <div class="col-xl-4">
-        <div class="i-card h-100 p-4" style="border-radius: 20px; background: #fff; border: 1px solid #eef0f2;">
+        <div class="glass-card h-100 p-4">
             <h4 class="card--title mb-1 fw-bold text--primary">{{translate('Boost Your Plan')}}</h4>
             <p class="text-muted fs-13 mb-4">{{translate('Upgrade specific limits without changing your entire plan.')}}</p>
 

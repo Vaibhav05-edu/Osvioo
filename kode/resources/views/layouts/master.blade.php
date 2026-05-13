@@ -193,7 +193,7 @@
 
    </style>
   </head>
-  <body class="body-master">
+  <body class="body-master {{request()->routeIs('user.*') ? 'user-panel' : ''}}">
 
 
 

@@ -650,7 +650,177 @@
     font-weight: 700 !important;
     text-align: center !important;
 }
-.check-icon-predis {
-    color: #10B981 !important;
-    font-size: 1.2rem !important;
+/* Modern Dashboard Design System */
+:root {
+    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+    --card-radius: 24px;
 }
+
+[data-bs-theme="dark"] {
+    --glass-bg: rgba(30, 30, 30, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+.body-master[class*="user"] {
+    background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05), transparent),
+                radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.05), transparent),
+                #f8faff;
+}
+
+[data-bs-theme="dark"] .body-master {
+    background: #0f172a;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: var(--glass-shadow);
+}
+
+.glass-card {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border) !important;
+    border-radius: var(--card-radius) !important;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Frosted Buttons */
+.frosted-btn {
+    background: var(--primary-gradient);
+    color: white !important;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.frosted-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    filter: brightness(1.1);
+}
+
+.frosted-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
+}
+
+.frosted-btn:hover::after {
+    left: 100%;
+}
+
+.frosted-btn-outline {
+    background: transparent;
+    color: #6366f1 !important;
+    border: 2px solid #6366f1;
+    border-radius: 12px;
+    padding: 10px 22px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.frosted-btn-outline:hover {
+    background: #6366f1;
+    color: white !important;
+}
+
+/* Sidebar Modernization */
+.aside.glass-panel {
+    border-right: 1px solid var(--glass-border) !important;
+}
+
+.sidemenu-link {
+    border-radius: 12px !important;
+    margin: 4px 15px !important;
+    padding: 10px 15px !important;
+    color: #64748b !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+}
+
+.sidemenu-link:hover {
+    background: rgba(99, 102, 241, 0.05) !important;
+    color: #6366f1 !important;
+}
+
+.sidemenu-link.active {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.sidemenu-link.active .sidemenu-icon i {
+    color: white !important;
+}
+
+/* Global Button Overrides for Frosted Look */
+.i-btn:not(.frosted-btn):not(.frosted-btn-outline) {
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+}
+
+.i-btn.btn--primary {
+    background: var(--primary-gradient) !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2) !important;
+}
+
+.i-btn.btn--primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3) !important;
+}
+
+.icon-btn.primary {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    border: none !important;
+}
+
+.icon-btn:hover {
+    transform: scale(1.1) !important;
+}
+
+.i-badge {
+    border-radius: 8px !important;
+    backdrop-filter: blur(4px) !important;
+}
+
+/* Gradient Text */
+.gradient-text {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+
