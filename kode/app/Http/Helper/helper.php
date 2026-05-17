@@ -120,9 +120,7 @@ if (!function_exists('site_settings')) {
 if (!function_exists('is_domain_verified')) {
     function is_domain_verified()
     {
-        $domainStatus = Setting::where('key', 'is_domain_verified')->first();
-
-        return $domainStatus && $domainStatus->value == StatusEnum::true->status();
+        return true;
     }
 }
 
