@@ -7,9 +7,11 @@
     @endphp
 
     <div class="inner-banner-wrapper">
+        @if($breadcrumbIMG && $breadcrumbIMG->file)
         <div class="inner-banner-img">
-            <img src="{{imageURL($breadcrumbIMG,'frontend',true,$breadcrumbSize)}}" alt="{{@$breadcrumbIMG->file->name??'breadcrumb.jpg'}}">
+            <img src="{{imageURL($breadcrumbIMG,'frontend',false,$breadcrumbSize)}}" alt="{{@$breadcrumbIMG->file->name??'breadcrumb.jpg'}}">
         </div>
+        @endif
         <div class="container">
             <div class="row">
                 <div class="col-xl-7 col-lg-8 mx-auto">
