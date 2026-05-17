@@ -16,15 +16,6 @@ class VerifyDomain
      */
     public function handle(Request $request, Closure $next): Response
     {
-        try {
-
-            if(!is_domain_verified())  return redirect()->route('domain.unverified')->with('error', 'Domain verification failed.');;
-            return $next($request);
-
-        } catch (\Exception $ex) {
-
-            return redirect()->route('domain.unverified')->with('error', 'Domain verification failed.');
-
-        }
+        return $next($request);
     }
 }

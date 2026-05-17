@@ -43,7 +43,8 @@ class Account
                     'business_management',
                     'instagram_basic',
                     'instagram_content_publish',
-                    'pages_read_engagement'
+                    'pages_read_engagement',
+                    'instagram_manage_messages'
                 ];
 
             default:
@@ -1114,6 +1115,50 @@ class Account
                 'status' => false,
                 'message' => 'Error fetching Instagram metrics: ' . $e->getMessage(),
                 'metrics' => [],
+            ];
+        }
+    }
+
+    /**
+     * Send a Direct Message on Instagram
+     *
+     * @param \App\Models\SocialAccount $account
+     * @param string $recipientId
+     * @param string $text
+     * @return array
+     */
+    public static function sendMessage(\App\Models\SocialAccount $account, string $recipientId, string $text): array
+    {
+        try {
+            $platform = $account->platform;
+            $configuration = $platform->configuration;
+            $token = $account->token;
+            $accountId = $account->account_id;
+
+            // Instagram Direct Messages endpoint via Messenger API
+            $apiUrl = self::getApiUrl($accountId . '/messages', [], $configuration);
+
+            $response = \Illuminate\Support\Facades\Http::withToken($token)
+                ->post($apiUrl, [
+                    'recipient' => ['id' => $recipientId],
+                    'message' => ['text' => $text],
+                ]);
+
+            if ($response->successful()) {
+                return [
+                    'status' => true,
+                    'message_id' => $response->json('message_id'),
+                ];
+            }
+
+            return [
+                'status' => false,
+                'message' => $response->json('error.message') ?? 'Unknown error',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => false,
+                'message' => $e->getMessage(),
             ];
         }
     }

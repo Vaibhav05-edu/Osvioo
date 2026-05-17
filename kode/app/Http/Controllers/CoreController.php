@@ -31,6 +31,8 @@ use App\Models\Core\Language;
 use App\Models\Core\Setting;
 use App\Models\MediaPlatform;
 use App\Models\Package;
+use App\Models\AutoDmLog;
+use App\Models\AutoDmTrigger;
 use App\Models\PostWebhookLog;
 use App\Models\SocialAccount;
 use App\Models\SocialPost;
@@ -1248,24 +1250,86 @@ class CoreController extends Controller
      */
     public function postWebhook()
     {
-
-
         $hubToken = request()->query('hub_verify_token');
         $apiKey = site_settings("webhook_api_key");
         $isUserToken = User::whereNotNull('webhook_api_key')->where('webhook_api_key', $hubToken)->exists();
 
-
-        if ($apiKey == $hubToken || $isUserToken)
+        if ($apiKey == $hubToken || $isUserToken) {
             return response(request()->query('hub_challenge'));
+        }
 
+        $payload = request()->all();
 
-        $user = User::where('uid', request()->input('uid'))->first();
+        // Handle Instagram Direct Messages
+        if (isset($payload['object']) && $payload['object'] == 'instagram') {
+            foreach ($payload['entry'] as $entry) {
+                if (isset($entry['messaging'])) {
+                    foreach ($entry['messaging'] as $messaging) {
+                        $senderId = $messaging['sender']['id'] ?? null;
+                        $recipientId = $messaging['recipient']['id'] ?? null;
+                        $messageText = $messaging['message']['text'] ?? null;
 
+                        if (!$senderId || !$recipientId || !$messageText) {
+                            continue;
+                        }
+
+                        // Find the SocialAccount
+                        $account = SocialAccount::where('account_id', $recipientId)->first();
+                        if (!$account) {
+                            continue;
+                        }
+
+                        // Search for triggers
+                        $triggers = AutoDmTrigger::where('user_id', $account->user_id)
+                            ->where(function ($query) use ($account) {
+                                $query->whereNull('social_account_id')
+                                      ->orWhere('social_account_id', $account->id);
+                            })
+                            ->where('status', true)
+                            ->get();
+
+                        foreach ($triggers as $trigger) {
+                            $match = false;
+                            $keyword = strtolower($trigger->keyword);
+                            $receivedText = strtolower($messageText);
+
+                            if ($trigger->match_type == 'exact') {
+                                if ($receivedText == $keyword) $match = true;
+                            } elseif ($trigger->match_type == 'contains') {
+                                if (str_contains($receivedText, $keyword)) $match = true;
+                            } elseif ($trigger->match_type == 'start_with') {
+                                if (str_starts_with($receivedText, $keyword)) $match = true;
+                            }
+
+                            if ($match) {
+                                // Send reply
+                                $response = InstagramAccount::sendMessage($account, $senderId, $trigger->reply_text);
+
+                                // Log the DM
+                                AutoDmLog::create([
+                                    'user_id' => $account->user_id,
+                                    'social_account_id' => $account->id,
+                                    'sender_id' => $senderId,
+                                    'received_message' => $messageText,
+                                    'reply_sent' => $trigger->reply_text,
+                                    'status' => $response['status'] ? 'success' : 'failed',
+                                    'error_message' => $response['status'] ? null : $response['message'],
+                                ]);
+
+                                break; // Stop after first match
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Keep existing logging for other webhooks or general tracking
         PostWebhookLog::create([
-            'user_id' => $user ? $user->id : null,
-            'webhook_response' => request()->all()
+            'webhook_response' => $payload
         ]);
 
+        return response('EVENT_RECEIVED', 200);
     }
 
     public function processImages(Request $request)

@@ -42,23 +42,10 @@
                     {{-- AUTO DM SECTION --}}
                     <li class="side-menu-title">{{translate("Automation")}}</li>
                     <li class="sidemenu-item">
-                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse">
+                        <a href="{{route('user.social.auto_dm.list')}}" class="sidemenu-link {{request()->routeIs('user.social.auto_dm.list') ? 'active' :''}}">
                             <div class="sidemenu-icon"><i class="bi bi-chat-dots"></i></div>
-                            <span>
-                                {{translate("Auto DM")}}
-                                <small><i class="bi bi-chevron-down"></i></small>
-                            </span>
+                            <span>{{translate("Auto DM")}}</span>
                         </a>
-                        <div class="side-menu-dropdown">
-                            <ul class="sub-menu">
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-graph-up"></i></span><p>{{translate('Insights')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-gear"></i></span><p>{{translate('Manage')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-broadcast"></i></span><p>{{translate('Live')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-archive"></i></span><p>{{translate('Old')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-pause-circle"></i></span><p>{{translate('Pause')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-plus-square"></i></span><p>{{translate('Create')}}</p></a></li>
-                            </ul>
-                        </div>
                     </li>
 
                     <li class="sidemenu-item">

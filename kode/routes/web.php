@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\Socialyt\StoryController as SocialytStoryControll
 use App\Http\Controllers\Admin\Socialyt\PlatformStatController as SocialytPlatformStatController;
 use App\Http\Controllers\Admin\Socialyt\CreatorController as SocialytCreatorController;
 use App\Http\Controllers\Admin\Socialyt\VideoController as SocialytVideoController;
+use App\Http\Controllers\User\AutoDmController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -326,6 +327,14 @@ use Illuminate\Support\Facades\Http;
                  Route::get('/destroy/{id}','destroy')->name('destroy');
                  Route::get('/show/{uid}','show')->name('show');
 
+            });
+
+            #Auto DM manager
+            Route::controller(AutoDmController::class)->name('auto_dm.')->prefix('auto-dm/')->group(function () {
+                 Route::get('/list','list')->name('list');
+                 Route::post('/store','store')->name('store');
+                 Route::post('/update/status','updateStatus')->name('update.status');
+                 Route::get('/destroy/{uid}','destroy')->name('destroy');
             });
 
          });
