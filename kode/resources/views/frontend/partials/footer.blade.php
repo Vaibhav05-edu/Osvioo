@@ -83,9 +83,9 @@
 
             <!-- Footer Bottom -->
             <div class="footer-bottom-master">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Cookie Policy</a>
-                <a href="#">Terms Of Service</a>
+                <a href="{{ route('page', 'privacy-policy') }}">Privacy Policy</a>
+                <a href="{{ route('page', 'data-deletion') }}">Data Deletion</a>
+                <a href="{{ route('page', 'terms-and-conditions') }}">Terms Of Service</a>
             </div>
         </div>
     </div>

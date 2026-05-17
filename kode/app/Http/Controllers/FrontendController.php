@@ -197,6 +197,35 @@ class FrontendController extends Controller
      */
     public function page(string $slug): View
     {
+        if ($slug === 'privacy-policy') {
+            return view('frontend.privacy_policy', [
+                'meta_data' => $this->metaData([
+                    "title" => translate("Privacy Policy"),
+                    "meta_description" => translate("Socialyt Privacy Policy - Learn how we collect, use, and protect your personal information and social platform integrations under Meta guidelines."),
+                    "meta_keywords" => ["privacy policy", "data security", "socialyt privacy"],
+                ]),
+                'breadcrumbs' => ['Home' => 'home', 'Privacy Policy' => null],
+                'banner' => (object) [
+                    'title' => translate('Privacy Policy'), 
+                    'description' => translate('Your privacy is extremely important to us. Learn about our strict data handling, privacy compliance, and user safety standards.')
+                ]
+            ]);
+        }
+
+        if ($slug === 'data-deletion' || $slug === 'account-deletion') {
+            return view('frontend.data_deletion', [
+                'meta_data' => $this->metaData([
+                    "title" => translate("Data Deletion Instructions"),
+                    "meta_description" => translate("Instructions for requesting user data and account deletion under GDPR & Meta Platform rules."),
+                    "meta_keywords" => ["data deletion", "delete account", "gdpr", "socialyt delete data"],
+                ]),
+                'breadcrumbs' => ['Home' => 'home', 'Data Deletion' => null],
+                'banner' => (object) [
+                    'title' => translate('Data Deletion Instructions'), 
+                    'description' => translate('Clear, simple instructions on how to request deletion of your account and personal data from our platform.')
+                ]
+            ]);
+        }
 
         $page = Page::active()->where('slug', $slug)
             ->firstOrfail();

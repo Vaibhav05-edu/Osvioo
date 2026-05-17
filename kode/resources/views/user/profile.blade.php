@@ -69,6 +69,14 @@
                         </button>
                     </li>
 
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-danger" id="tab-delete-account" data-bs-toggle="tab"
+                            data-bs-target="#tab-delete-account-pane" type="button" role="tab"
+                            aria-controls="tab-delete-account-pane" aria-selected="false">
+                            <i class="bi bi-trash me-1"></i> {{translate('Delete Account')}}
+                        </button>
+                    </li>
+
                     @if(site_settings("affiliate_system") == App\Enums\StatusEnum::true->status())
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="tab-affiliate" data-bs-toggle="tab"
@@ -248,6 +256,32 @@
                             <div class="col-lg-12">
                                 <button class="i-btn btn--lg btn--primary capsuled" type="submit">
                                     {{translate('Update')}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tab-pane fade" id="tab-delete-account-pane" role="tabpanel" aria-labelledby="tab-delete-account"
+                    tabindex="0">
+
+                    <p class="pb-2 text-danger fw-bold">
+                        {{translate('Warning: This action is permanent and cannot be undone. All of your social connections, post histories, invoices, and profile settings will be permanently removed immediately.')}}
+                    </p>
+                    <form action="{{route('user.profile.delete')}}" method="post" onsubmit="return confirm('{{translate('Are you absolutely sure you want to permanently delete your account and all associated data?')}}')">
+                        @csrf
+                        <div class="row">
+                            <div class="col-lg-12 mb-4">
+                                <div class="form-check">
+                                    <input required class="form-check-input" type="checkbox" id="confirmDeleteCheck">
+                                    <label class="form-check-label text-muted" for="confirmDeleteCheck">
+                                        {{translate('I understand that all of my data will be deleted forever and cannot be recovered.')}}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <button class="btn btn-danger btn--lg capsuled px-4 py-2" type="submit">
+                                    <i class="bi bi-exclamation-triangle me-1"></i> {{translate('Permanently Delete My Account')}}
                                 </button>
                             </div>
                         </div>

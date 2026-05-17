@@ -160,6 +160,7 @@ use Illuminate\Support\Facades\Http;
                 Route::any('dashboard','home')->name('home');
                 Route::get('profile','profile')->name('profile');
                 Route::post('profile/update','profileUpdate')->name('profile.update');
+                Route::post('profile/delete','deleteAccount')->name('profile.delete');
                 Route::post('/update', 'passwordUpdate')->name('password.update');
                 Route::post('/affiliate/update', 'affiliateUpdate')->name('affiliate.update');
                 Route::post('/webhook/update', 'webhookUpdate')->name('webhook.update');

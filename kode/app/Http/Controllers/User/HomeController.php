@@ -435,4 +435,42 @@ class HomeController extends Controller
             'meta_data' => $this->metaData(['title' => translate("Upcoming Billing")]),
         ]);
     }
+
+    /**
+     * Delete user account permanently
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function deleteAccount(Request $request): RedirectResponse
+    {
+        $user = $this->user;
+
+        if ($user->email == 'demo@cartuser.test') {
+            return back()->with('error', translate('This function is not available for website demo mode'));
+        }
+
+        \Illuminate\Support\Facades\DB::transaction(function () use ($user) {
+            // Delete related tables to prevent FK errors
+            $user->accounts()->delete();
+            $user->posts()->delete();
+            $user->subscriptions()->delete();
+            $user->transactions()->delete();
+            $user->creditLogs()->delete();
+            $user->tickets()->delete();
+            $user->kycLogs()->delete();
+            $user->affiliates()->delete();
+            $user->webhookLogs()->delete();
+
+            // Finally delete the user
+            $user->delete();
+        });
+
+        // Logout user
+        auth()->guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('home')->with('success', translate('Your account and all associated data have been permanently deleted successfully.'));
+    }
 }
