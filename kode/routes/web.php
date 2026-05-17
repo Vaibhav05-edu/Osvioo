@@ -18,13 +18,13 @@ use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\ReportController;
 use App\Http\Controllers\User\SocialAccountController;
 use App\Http\Controllers\User\TicketController;
-use App\Http\Controllers\SocialytDashboardController;
-use App\Http\Controllers\Auth\SocialytAuthController;
-use App\Http\Controllers\Admin\Socialyt\FAQController as SocialytFAQController;
-use App\Http\Controllers\Admin\Socialyt\StoryController as SocialytStoryController;
-use App\Http\Controllers\Admin\Socialyt\PlatformStatController as SocialytPlatformStatController;
-use App\Http\Controllers\Admin\Socialyt\CreatorController as SocialytCreatorController;
-use App\Http\Controllers\Admin\Socialyt\VideoController as SocialytVideoController;
+use App\Http\Controllers\SocialytDashboardController as OsivooDashboardController;
+use App\Http\Controllers\Auth\SocialytAuthController as OsivooAuthController;
+use App\Http\Controllers\Admin\Socialyt\FAQController as OsivooFAQController;
+use App\Http\Controllers\Admin\Socialyt\StoryController as OsivooStoryController;
+use App\Http\Controllers\Admin\Socialyt\PlatformStatController as OsivooPlatformStatController;
+use App\Http\Controllers\Admin\Socialyt\CreatorController as OsivooCreatorController;
+use App\Http\Controllers\Admin\Socialyt\VideoController as OsivooVideoController;
 use App\Http\Controllers\User\AutoDmController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -431,23 +431,23 @@ use Illuminate\Support\Facades\Http;
 
     Route::get('/access-denied', [CoreController::class, 'accessDenied'])->name('access.denied')->middleware(['sanitizer','firewall.all']);
 
-    // Socialyt Specific Routes
+    // Osivoo Specific Routes
     Route::middleware(['web'])->group(function () {
-        Route::get('/socialyt-login', [SocialytAuthController::class, 'showLoginForm'])->name('socialyt.login');
-        Route::post('/socialyt-login', [SocialytAuthController::class, 'login'])->name('socialyt.login.submit');
+        Route::get('/osivoo-login', [OsivooAuthController::class, 'showLoginForm'])->name('osivoo.login');
+        Route::post('/osivoo-login', [OsivooAuthController::class, 'login'])->name('osivoo.login.submit');
         
         Route::middleware(['auth'])->group(function () {
-            Route::get('/socialyt-dashboard', [SocialytDashboardController::class, 'index'])->name('socialyt.dashboard');
-            Route::get('/socialyt-profile', [SocialytDashboardController::class, 'profile'])->name('socialyt.profile');
-            Route::post('/socialyt-profile/update', [SocialytDashboardController::class, 'updateProfile'])->name('socialyt.profile.update');
-            Route::post('/socialyt-logout', [SocialytAuthController::class, 'logout'])->name('socialyt.logout');
+            Route::get('/osivoo-dashboard', [OsivooDashboardController::class, 'index'])->name('osivoo.dashboard');
+            Route::get('/osivoo-profile', [OsivooDashboardController::class, 'profile'])->name('osivoo.profile');
+            Route::post('/osivoo-profile/update', [OsivooDashboardController::class, 'updateProfile'])->name('osivoo.profile.update');
+            Route::post('/osivoo-logout', [OsivooAuthController::class, 'logout'])->name('osivoo.logout');
 
-            Route::prefix('socialyt-admin')->name('socialyt-admin.')->group(function () {
-                Route::resource('faq', SocialytFAQController::class);
-                Route::resource('story', SocialytStoryController::class);
-                Route::resource('stats', SocialytPlatformStatController::class);
-                Route::resource('creator', SocialytCreatorController::class);
-                Route::resource('video', SocialytVideoController::class);
+            Route::prefix('osivoo-admin')->name('osivoo-admin.')->group(function () {
+                Route::resource('faq', OsivooFAQController::class);
+                Route::resource('story', OsivooStoryController::class);
+                Route::resource('stats', OsivooPlatformStatController::class);
+                Route::resource('creator', OsivooCreatorController::class);
+                Route::resource('video', OsivooVideoController::class);
             });
         });
     });

@@ -14,7 +14,7 @@
                                     <div class="hero-image-wrapper">
                                         <img
                                             src="{{ asset('assets/images/auth/login-hero.png') }}"
-                                            alt="Socialyt Creator"
+                                            alt="Osivoo Creator"
                                             loading="lazy"
                                             class="auth-hero-img" />
                                     </div>

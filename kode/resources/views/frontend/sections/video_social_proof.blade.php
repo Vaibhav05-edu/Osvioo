@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="video-caption-bottom">
                                     <div class="fw-bold">{{ $reel['title'] }}</div>
-                                    <div class="text-info" style="font-size: 0.7rem;">#SocialytAI #Growth</div>
+                                    <div class="text-info" style="font-size: 0.7rem;">#OsivooAI #Growth</div>
                                 </div>
                             </div>
                         </div>

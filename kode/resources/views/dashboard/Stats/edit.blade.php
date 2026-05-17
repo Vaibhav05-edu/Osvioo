@@ -7,12 +7,12 @@
             <div class="card border-0 shadow-sm p-4" style="border-radius: 15px;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h4 class="fw-bold mb-0">Edit Feature Stat</h4>
-                    <a href="{{ route('socialyt-admin.stats.index') }}" class="btn btn-light btn-sm text-muted">
+                    <a href="{{ route('osivoo-admin.stats.index') }}" class="btn btn-light btn-sm text-muted">
                         <i class="fas fa-arrow-left me-1"></i> Back to List
                     </a>
                 </div>
 
-                <form action="{{ route('socialyt-admin.stats.update', $stat->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('osivoo-admin.stats.update', $stat->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 

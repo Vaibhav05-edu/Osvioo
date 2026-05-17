@@ -5,21 +5,21 @@
             'handle' => '@pehenawah',
             'followers' => '625k',
             'img' => 'https://i.pravatar.cc/400?u=vaibhav',
-            'quote' => '"Socialyt has been a game-changer for me as it has opened up a sustainable source of income that perfectly complements my YouTube and Instagram. The seamless way of sharing product links and automating post comments has saved me countless hours, allowing me to focus on creating content."'
+            'quote' => '"Osivoo has been a game-changer for me as it has opened up a sustainable source of income that perfectly complements my YouTube and Instagram. The seamless way of sharing product links and automating post comments has saved me countless hours, allowing me to focus on creating content."'
         ],
         [
             'name' => 'Ananya Panday',
             'handle' => '@ananyapanday',
             'followers' => '24M',
             'img' => 'https://i.pravatar.cc/400?u=ananya',
-            'quote' => '"The automation features are incredible. I can finally engage with all my fans without feeling overwhelmed. Socialyt is a must-have for anyone looking to grow their digital presence authentically."'
+            'quote' => '"The automation features are incredible. I can finally engage with all my fans without feeling overwhelmed. Osivoo is a must-have for anyone looking to grow their digital presence authentically."'
         ],
         [
             'name' => 'Ranveer Allahbadia',
             'handle' => '@beerbiceps',
             'followers' => '7M',
             'img' => 'https://i.pravatar.cc/400?u=ranveer',
-            'quote' => '"Efficiency is key when you are running multiple shows. Socialyt helps us bridge the gap between content and commerce perfectly. It\'s the future of creator monetization."'
+            'quote' => '"Efficiency is key when you are running multiple shows. Osivoo helps us bridge the gap between content and commerce perfectly. It\'s the future of creator monetization."'
         ]
     ];
 @endphp

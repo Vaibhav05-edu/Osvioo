@@ -7,7 +7,7 @@
             <div class="card border-0 shadow-sm p-4" style="border-radius: 12px;">
                 <h4 class="fw-bold mb-4">Edit Story Card</h4>
                 
-                <form action="{{ route('socialyt-admin.story.update', $story->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('osivoo-admin.story.update', $story->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf @method('PUT')
                     
                     <div class="mb-3">
@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="mt-4 pt-3 border-top d-flex justify-content-end gap-2">
-                        <a href="{{ route('socialyt-admin.story.index') }}" class="btn btn-light">Cancel</a>
+                        <a href="{{ route('osivoo-admin.story.index') }}" class="btn btn-light">Cancel</a>
                         <button type="submit" class="btn btn-primary px-4">Update Story</button>
                     </div>
                 </form>

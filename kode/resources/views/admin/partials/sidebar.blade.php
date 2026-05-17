@@ -2,7 +2,7 @@
     <div class="sidebar-logo d-flex align-items-center px-4 py-3">
         <a href="{{ route('admin.home') }}" class="text-decoration-none">
             <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; color: #6366f1; letter-spacing: -1px;">
-                Socialyt<span style="color: #f43f5e;">.</span>
+                Osivoo<span style="color: #f43f5e;">.</span>
             </div>
         </a>
     </div>

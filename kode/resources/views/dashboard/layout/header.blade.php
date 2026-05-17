@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Admin') — {{ config('app.name', 'Socialyt') }}</title>
+    <title>@yield('title', 'Admin') — {{ config('app.name', 'Osivoo') }}</title>
 
     <!-- Bootstrap 5 -->
     <link href="{{ asset('assets/global/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -225,12 +225,12 @@
     <aside class="sidebar">
         <div class="brand-section">
             <div class="brand-logo-sq">S</div>
-            <span class="brand-name">Socialyt</span>
+            <span class="brand-name">Osivoo</span>
         </div>
 
         <nav class="flex-grow-1 mt-3">
             <div class="nav-section-title">Core</div>
-            <a href="{{ route('socialyt.dashboard') }}" class="nav-link {{ request()->routeIs('socialyt.dashboard') ? 'active' : '' }}">
+            <a href="{{ route('osivoo.dashboard') }}" class="nav-link {{ request()->routeIs('osivoo.dashboard') ? 'active' : '' }}">
                 <i class="fa-solid fa-chart-line"></i> Analytics
             </a>
 
@@ -240,26 +240,26 @@
                 <i class="fa-solid fa-users"></i> Users List
             </a> -->
 
-            <a href="{{ route('socialyt-admin.faq.index') }}" class="nav-link">
+            <a href="{{ route('osivoo-admin.faq.index') }}" class="nav-link">
                 <i class="fa-solid fa-comments "></i> Faqs
             </a>
 
-            <a href="{{ route('socialyt-admin.story.index') }}" class="nav-link">
+            <a href="{{ route('osivoo-admin.story.index') }}" class="nav-link">
                 <i class="fa-solid fa-credit-card"></i> Storyboard
             </a>
-            <a href="{{ route('socialyt-admin.stats.index') }}" class="nav-link">
+            <a href="{{ route('osivoo-admin.stats.index') }}" class="nav-link">
                 <i class="fa-solid fa-gears"></i> Stats
             </a>
-            <a href="{{ route('socialyt-admin.creator.index') }}" class="nav-link">
+            <a href="{{ route('osivoo-admin.creator.index') }}" class="nav-link">
                 <i class="fa-solid fa-gears"></i> Creators
             </a>
-            <a href="{{ route('socialyt-admin.video.index') }}" class="nav-link">
+            <a href="{{ route('osivoo-admin.video.index') }}" class="nav-link">
                 <i class="fa-solid fa-gears"></i> Videos
             </a>
         </nav>
 
         <div class="p-4 mt-auto border-top border-secondary border-opacity-10">
-            <form method="POST" action="{{ route('socialyt.logout') }}">
+            <form method="POST" action="{{ route('osivoo.logout') }}">
                 @csrf
                 <button type="submit" class="btn btn-dark w-100 py-2" style="border-radius: 10px; font-size: 14px;">
                     <i class="fa-solid fa-right-from-bracket me-2"></i> Sign Out
@@ -272,7 +272,7 @@
     <div class="main-content">
         <header class="topbar">
             <div class="breadcrumb-rr">
-                Socialyt <i class="fa-solid fa-chevron-right mx-2 text-muted" style="font-size: 10px;"></i>
+                Osivoo <i class="fa-solid fa-chevron-right mx-2 text-muted" style="font-size: 10px;"></i>
                 <span class="current">@yield('breadcrumb', 'Dashboard')</span>
             </div>
 
@@ -321,11 +321,11 @@
                         </div>
                     </div>
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" style="border-radius: 12px; min-width: 200px;">
-                        <li><a class="dropdown-item py-2" href="{{ route('socialyt.profile') }}"><i class="fa-solid fa-user-circle me-2 text-muted"></i> My Profile</a></li>
+                        <li><a class="dropdown-item py-2" href="{{ route('osivoo.profile') }}"><i class="fa-solid fa-user-circle me-2 text-muted"></i> My Profile</a></li>
                         <li><a class="dropdown-item py-2" href="#"><i class="fa-solid fa-key me-2 text-muted"></i> API Keys</a></li>
                         <li><hr class="dropdown-divider opacity-50"></li>
                         <li>
-                            <form method="POST" action="{{ route('socialyt.logout') }}">
+                            <form method="POST" action="{{ route('osivoo.logout') }}">
                                 @csrf
                                 <button type="submit" class="dropdown-item py-2 text-danger"><i class="fa-solid fa-sign-out-alt me-2"></i> Logout</button>
                             </form>

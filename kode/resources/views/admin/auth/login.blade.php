@@ -9,7 +9,7 @@
                     <div class="col-md-12 text-center">
                         <a href="{{route('admin.home')}}" class="site-logo text-decoration-none d-block">
                             <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.2rem; color: #6366f1; letter-spacing: -1px;">
-                                Socialyt<span style="color: #f43f5e;">.</span>
+                                Osivoo<span style="color: #f43f5e;">.</span>
                             </div>
                         </a>
                     </div>

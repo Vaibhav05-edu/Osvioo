@@ -4,7 +4,7 @@
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">Video Gallery</h2>
-        <a href="{{ route('socialyt-admin.video.create') }}" class="btn btn-dark px-4">Add New Video</a>
+        <a href="{{ route('osivoo-admin.video.create') }}" class="btn btn-dark px-4">Add New Video</a>
     </div>
 
     <div class="row">
