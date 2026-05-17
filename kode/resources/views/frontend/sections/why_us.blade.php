@@ -24,14 +24,14 @@
     ];
 @endphp
 
-<section class="section-why-osivoo">
+<section class="section-why-socialyt">
     <div class="container">
-        <div class="why-osivoo-swiper-container swiper">
-            <div class="swiper-wrapper why-osivoo-wrapper">
+        <div class="why-socialyt-swiper-container swiper">
+            <div class="swiper-wrapper why-socialyt-wrapper">
                 @foreach($steps as $step)
                     <div class="swiper-slide">
-                        <div class="why-osivoo-slide">
-                            <div class="why-osivoo-text">
+                        <div class="why-socialyt-slide">
+                            <div class="why-socialyt-text">
                                 <h2>Why Osivoo?</h2>
                                 <div class="step-box">
                                     <div class="step-header">
@@ -41,7 +41,7 @@
                                     <p>{{ $step['desc'] }}</p>
                                 </div>
                             </div>
-                            <div class="why-osivoo-image">
+                            <div class="why-socialyt-image">
                                 <div class="linkdm-clone-wrapper" style="background: transparent !important;">
                                     <!-- Textured Halo -->
                                     <div class="textured-halo" style="background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%) !important;"></div>
@@ -91,7 +91,7 @@
                 @endforeach
             </div>
             <!-- Vertical Pagination -->
-            <div class="why-osivoo-pagination swiper-pagination"></div>
+            <div class="why-socialyt-pagination swiper-pagination"></div>
         </div>
     </div>
 </section>

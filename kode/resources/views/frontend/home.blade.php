@@ -374,7 +374,7 @@
             });
 
             // Why Osivoo (Orange Section)
-            const whySwiper = new Swiper('.why-osivoo-swiper-container', {
+            const whySwiper = new Swiper('.why-socialyt-swiper-container', {
                 direction: 'vertical',
                 loop: true,
                 autoplay: {
@@ -383,7 +383,7 @@
                 },
                 speed: 800,
                 pagination: {
-                    el: '.why-osivoo-pagination',
+                    el: '.why-socialyt-pagination',
                     clickable: true,
                 },
                 height: 600
