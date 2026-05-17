@@ -197,6 +197,21 @@ class FrontendController extends Controller
      */
     public function page(string $slug): View
     {
+        if ($slug === 'terms-and-conditions') {
+            return view('frontend.terms_and_conditions', [
+                'meta_data' => $this->metaData([
+                    "title" => translate("Terms & Conditions"),
+                    "meta_description" => translate("Osivoo Terms & Conditions - Read our service terms, account responsibilities, and Meta integration rules."),
+                    "meta_keywords" => ["terms", "conditions", "terms of service", "osivoo terms"],
+                ]),
+                'breadcrumbs' => ['Home' => 'home', 'Terms & Conditions' => null],
+                'banner' => (object) [
+                    'title' => translate('Terms & Conditions'), 
+                    'description' => translate('Please read our terms of service and acceptable platform use rules before using Osivoo.')
+                ]
+            ]);
+        }
+
         if ($slug === 'privacy-policy') {
             return view('frontend.privacy_policy', [
                 'meta_data' => $this->metaData([
