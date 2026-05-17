@@ -201,8 +201,8 @@ class FrontendController extends Controller
             return view('frontend.privacy_policy', [
                 'meta_data' => $this->metaData([
                     "title" => translate("Privacy Policy"),
-                    "meta_description" => translate("Socialyt Privacy Policy - Learn how we collect, use, and protect your personal information and social platform integrations under Meta guidelines."),
-                    "meta_keywords" => ["privacy policy", "data security", "socialyt privacy"],
+                    "meta_description" => translate("Osivoo Privacy Policy - Learn how we collect, use, and protect your personal information and social platform integrations under Meta guidelines."),
+                    "meta_keywords" => ["privacy policy", "data security", "osivoo privacy"],
                 ]),
                 'breadcrumbs' => ['Home' => 'home', 'Privacy Policy' => null],
                 'banner' => (object) [
@@ -217,7 +217,7 @@ class FrontendController extends Controller
                 'meta_data' => $this->metaData([
                     "title" => translate("Data Deletion Instructions"),
                     "meta_description" => translate("Instructions for requesting user data and account deletion under GDPR & Meta Platform rules."),
-                    "meta_keywords" => ["data deletion", "delete account", "gdpr", "socialyt delete data"],
+                    "meta_keywords" => ["data deletion", "delete account", "gdpr", "osivoo delete data"],
                 ]),
                 'breadcrumbs' => ['Home' => 'home', 'Data Deletion' => null],
                 'banner' => (object) [

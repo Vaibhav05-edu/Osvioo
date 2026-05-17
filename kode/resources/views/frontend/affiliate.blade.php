@@ -111,7 +111,7 @@
     <section class="section-affiliate-hero hero-content">
         <div class="container text-center">
             <h1 class="display-4 fw-bold mb-4 font-comic letter-spacing-md text-dark-custom">
-                Join the <span class="font-comic text-royal-blue">Socialyt</span> Affiliate Program
+                Join the <span class="font-comic text-royal-blue">Osivoo</span> Affiliate Program
             </h1>
             <p class="fs-5 text-muted mb-5 mx-auto font-comic max-w-700">
                 Earn <strong class="text-dark">30% recurring commissions</strong> for every new customer you refer. 
@@ -127,7 +127,7 @@
     <section class="earnings-content py-5">
         <div class="container py-5 text-center">
             <h3 class="mb-5 font-outfit fs-1-5rem fw-normal text-gray-lightest">
-                Scale your affiliate earnings with Socialyt
+                Scale your affiliate earnings with Osivoo
             </h3>
             <div class="row g-4 justify-content-center mt-2">
                 <div class="col-md-4">
@@ -222,7 +222,7 @@
             Ready to start earning?
         </h2>
         <p class="fs-5 text-muted mb-5 mx-auto max-w-600 font-outfit">
-            Join thousands of partners who are already earning recurring income with Socialyt.
+            Join thousands of partners who are already earning recurring income with Osivoo.
         </p>
         <a href="{{ route('auth.register') }}" class="btn btn-lg rounded-pill px-5 py-3 fw-bold btn-royal-blue font-outfit">
             Get Started Free →

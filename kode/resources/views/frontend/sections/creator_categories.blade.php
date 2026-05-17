@@ -5,7 +5,7 @@
                 The #1 Rated Instagram Growth Service
             </h2>
             <p class="fs-5 text-muted mx-auto" style="max-width: 700px; font-family: 'Outfit', sans-serif !important; opacity: 0.8;">
-                Socialyt helps you get more Instagram followers, likes and comments (and a bunch of other stuff) 10x faster.
+                Osivoo helps you get more Instagram followers, likes and comments (and a bunch of other stuff) 10x faster.
             </p>
         </div>
 
@@ -82,7 +82,7 @@
                     </div>
                     <h3 class="plixi-card-title plixi-gradient-text">AI-Match™</h3>
                     <p class="plixi-card-desc">
-                        Train your Socialyt AI model to better identify your ideal target followers by swiping accounts just like on Tinder.
+                        Train your Osivoo AI model to better identify your ideal target followers by swiping accounts just like on Tinder.
                     </p>
                     <ul class="plixi-list">
                         <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> Growth Auto-Optimization</li>

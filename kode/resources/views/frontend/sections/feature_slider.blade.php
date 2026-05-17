@@ -7,7 +7,7 @@
             'type' => 'dual'
         ],
         [
-            'title' => 'Redefine <span class="paint-highlight">Inbox Starters</span> with Socialyt',
+            'title' => 'Redefine <span class="paint-highlight">Inbox Starters</span> with Osivoo',
             'desc' => 'Set up automated conversation starters in your Instagram inbox to guide users to your most important links immediately.',
             'img' => asset('assets/frontend/images/features/hand_phone.png'),
             'type' => 'single'

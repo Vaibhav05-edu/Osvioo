@@ -44,7 +44,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Socialyt - Instagram & Facebook DM Automation</title>
+    <title>Osivoo - Instagram & Facebook DM Automation</title>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Caveat:wght@400..700&family=Dancing+Script:wght@700&family=Playball&family=Syne:wght@700;800&family=Montserrat:wght@700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -165,7 +165,7 @@
     @include('frontend.sections.feature_slider')
 
     <!-- Alternating Features (Stats & Stories) -->
-    <!-- Why Socialyt Section (Vertical Carousel) -->
+    <!-- Why Osivoo Section (Vertical Carousel) -->
     @include('frontend.sections.why_us')
 
     <!-- Are you one of them? (Categories) Section -->
@@ -187,7 +187,7 @@
                 <p class="fs-6 text-muted mx-auto lh-base" style="max-width: 800px; font-family: 'Outfit', sans-serif !important;">
                     Help your followers shop smarter with great product recommendations and 
                     <span class="text-dark fw-bold px-2" style="background-color: var(--royal-yellow) !important; display: inline-block !important; border-radius: 4px;">earn when they shop from your content.</span> 
-                    With Socialyt, you can expand your reach, engage a wider audience, and effortlessly manage everything from a single app.
+                    With Osivoo, you can expand your reach, engage a wider audience, and effortlessly manage everything from a single app.
                 </p>
             </div>
 
@@ -199,11 +199,11 @@
                 <div class="accordion accordion-flush d-grid gap-3" id="faqAccordion">
                     @php
                         $faqs_list = [
-                            ['q' => 'How does the <span class="socialyt-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Socialyt</span> Creator payout process work?', 'a' => 'Payouts are processed automatically every month. Once you hit the minimum threshold, your earnings are transferred directly to your linked bank account or PayPal.'],
-                            ['q' => 'How does <span class="socialyt-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Socialyt</span> help Creators grow?', 'a' => 'Socialyt automates your engagement, allowing you to respond to 100% of comments and DMs instantly. This boosts your ranking in the algorithm and keeps your audience active.'],
-                            ['q' => 'Will Brands control my content?', 'a' => 'Absolutely not. You maintain 100% creative control over your content. Socialyt just provides the tools to manage your audience and monetization.'],
-                            ['q' => 'Is my account safe with <span class="socialyt-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Socialyt</span>?', 'a' => 'Yes, Socialyt is an official Meta Business Partner. We use only official APIs and never ask for your password. Your account remains 100% secure.'],
-                            ['q' => 'Can I use <span class="socialyt-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Socialyt</span> for multiple accounts?', 'a' => 'Yes! Depending on your plan, you can manage multiple Instagram and Facebook pages from a single unified dashboard.'],
+                            ['q' => 'How does the <span class="osivoo-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Osivoo</span> Creator payout process work?', 'a' => 'Payouts are processed automatically every month. Once you hit the minimum threshold, your earnings are transferred directly to your linked bank account or PayPal.'],
+                            ['q' => 'How does <span class="osivoo-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Osivoo</span> help Creators grow?', 'a' => 'Osivoo automates your engagement, allowing you to respond to 100% of comments and DMs instantly. This boosts your ranking in the algorithm and keeps your audience active.'],
+                            ['q' => 'Will Brands control my content?', 'a' => 'Absolutely not. You maintain 100% creative control over your content. Osivoo just provides the tools to manage your audience and monetization.'],
+                            ['q' => 'Is my account safe with <span class="osivoo-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Osivoo</span>?', 'a' => 'Yes, Osivoo is an official Meta Business Partner. We use only official APIs and never ask for your password. Your account remains 100% secure.'],
+                            ['q' => 'Can I use <span class="osivoo-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Osivoo</span> for multiple accounts?', 'a' => 'Yes! Depending on your plan, you can manage multiple Instagram and Facebook pages from a single unified dashboard.'],
                         ];
                     @endphp
 
@@ -318,7 +318,7 @@
         <img id="sp-img" src="https://i.pravatar.cc/150?u=1" alt="User" class="sp-img-box">
         <div class="d-flex align-items-center gap-2">
             <span id="sp-name" class="fw-bold text-dark" style="font-size: 0.8rem;">Manas 🇺🇸</span>
-            <span id="sp-action" class="text-muted" style="font-size: 0.8rem;">Just signed up to <span class="socialyt-logo-script" style="font-size: 1rem !important;">Socialyt</span></span>
+            <span id="sp-action" class="text-muted" style="font-size: 0.8rem;">Just signed up to <span class="osivoo-logo-script" style="font-size: 1rem !important;">Osivoo</span></span>
             <span id="sp-time" class="text-muted" style="font-size: 0.7rem; opacity: 0.7;">• Just now</span>
         </div>
         <button onclick="document.getElementById('dynamic-social-proof').classList.add('d-none')" class="btn-close ms-2" style="font-size: 0.5rem; opacity: 0.4; flex-shrink: 0;" aria-label="Close"></button>
@@ -327,10 +327,10 @@
     @include('frontend.partials.footer')
     <script nonce="{{ csp_nonce() }}">
         const notifications = [
-            { name: 'Manas 🇺🇸', action: 'Just signed up to <span class="socialyt-logo-script" style="font-size: 1rem !important;">Socialyt</span>', time: 'Just now', img: 'https://i.pravatar.cc/150?u=1' },
+            { name: 'Manas 🇺🇸', action: 'Just signed up to <span class="osivoo-logo-script" style="font-size: 1rem !important;">Osivoo</span>', time: 'Just now', img: 'https://i.pravatar.cc/150?u=1' },
             { name: 'Sarah 🇬🇧', action: 'Upgraded to Pro', time: '2 mins ago', img: 'https://i.pravatar.cc/150?u=2' },
             { name: 'Alex 🇨🇦', action: 'Started automating comments', time: '5 mins ago', img: 'https://i.pravatar.cc/150?u=3' },
-            { name: 'Priya 🇮🇳', action: 'Just signed up to <span class="socialyt-logo-script" style="font-size: 1rem !important;">Socialyt</span>', time: '12 mins ago', img: 'https://i.pravatar.cc/150?u=4' },
+            { name: 'Priya 🇮🇳', action: 'Just signed up to <span class="osivoo-logo-script" style="font-size: 1rem !important;">Osivoo</span>', time: '12 mins ago', img: 'https://i.pravatar.cc/150?u=4' },
             { name: 'Mike 🇦🇺', action: 'Upgraded to Agency', time: '1 hour ago', img: 'https://i.pravatar.cc/150?u=5' },
             { name: 'Elena 🇪🇸', action: 'Hit 10k DMs sent!', time: '3 hours ago', img: 'https://i.pravatar.cc/150?u=6' }
         ];
@@ -373,8 +373,8 @@
                 }
             });
 
-            // Why Socialyt (Orange Section)
-            const whySwiper = new Swiper('.why-socialyt-swiper-container', {
+            // Why Osivoo (Orange Section)
+            const whySwiper = new Swiper('.why-osivoo-swiper-container', {
                 direction: 'vertical',
                 loop: true,
                 autoplay: {
@@ -383,7 +383,7 @@
                 },
                 speed: 800,
                 pagination: {
-                    el: '.why-socialyt-pagination',
+                    el: '.why-osivoo-pagination',
                     clickable: true,
                 },
                 height: 600
@@ -416,7 +416,7 @@
             }
             if (whySwiper && whySwiper.autoplay) {
                 whySwiper.autoplay.start();
-                console.log('Why Socialyt autoplay started');
+                console.log('Why Osivoo autoplay started');
             }
 
             setTimeout(() => {

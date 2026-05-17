@@ -11,11 +11,11 @@
             <div class="footer-grid-master">
                 <!-- Column 1: Branding -->
                 <div class="footer-col branding-col">
-                    <span class="socialyt-logo-script" style="font-size: 2.8rem !important;">Socialyt</span>
+                    <span class="osivoo-logo-script" style="font-size: 2.8rem !important;">Osivoo</span>
                     <p class="copyright-text mt-3">Copyright © 2026, All Rights Reserved</p>
                     
                     <div class="legal-info-box mt-4">
-                        <h6 class="fw-bold mb-1">Socialyt Private Limited</h6>
+                        <h6 class="fw-bold mb-1">Osivoo Private Limited</h6>
                         <p class="small-grey mb-3">CIN - U74994HR2022PTC100843</p>
                         <p class="address-text">
                             4th Floor, Plot No 48, AIHP Executive Centre,<br>
@@ -35,7 +35,7 @@
 
                     <div class="query-box mt-5">
                         <h5 class="master-col-title compact">For Brands<br>Related Queries</h5>
-                        <a href="mailto:info@socialyt.com" class="master-email">info@socialyt.com</a>
+                        <a href="mailto:info@osivoo.com" class="master-email">info@osivoo.com</a>
                     </div>
                 </div>
 
@@ -51,7 +51,7 @@
 
                     <div class="query-box mt-5">
                         <h5 class="master-col-title compact">For Creators<br>Related Queries</h5>
-                        <a href="mailto:support@socialyt.com" class="master-email">support@socialyt.com</a>
+                        <a href="mailto:support@osivoo.com" class="master-email">support@osivoo.com</a>
                     </div>
                 </div>
 
