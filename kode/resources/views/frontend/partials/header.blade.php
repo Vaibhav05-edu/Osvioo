@@ -24,7 +24,7 @@
             <div class="container-fluid px-0">
                 <!-- Logo -->
                 <a class="navbar-brand me-5" href="{{route('home')}}">
-                    <span class="osivoo-logo-script">Osivoo</span>
+                    <span class="osvioo-logo-script">Osvioo</span>
                 </a>
 
                 <!-- Mobile Toggle -->
@@ -70,7 +70,7 @@
 
 <style nonce="{{ csp_nonce() }}">
     /* GLOBAL MASTER HEADER & LOGO RESTORE */
-    .osivoo-logo-script {
+    .osvioo-logo-script {
         font-family: 'Caveat', cursive !important;
         color: #0052FF !important;
         font-size: 1.8rem !important;

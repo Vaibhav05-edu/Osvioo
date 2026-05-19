@@ -1,6 +1,6 @@
 @extends('auth.layout')
 
-@section('title', 'Osivoo - Admin Access')
+@section('title', 'Osvioo - Admin Access')
 
 @section('content')
 <style>
@@ -13,7 +13,7 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 
-    .osivoo-logo-script {
+    .osvioo-logo-script {
         font-family: 'Caveat', cursive !important;
         color: #0052FF !important;
         font-size: 2.5rem !important;
@@ -207,7 +207,7 @@
 
 <div class="split-container">
 
-    <!-- Left Side: Osivoo Context -->
+    <!-- Left Side: Osvioo Context -->
     <div class="info-side">
         <div class="status-badge">
             <div class="pulse"></div>
@@ -215,7 +215,7 @@
         </div>
         <h1>Control the Flow <br> of Conversation.</h1>
         <p>
-            Manage DM automations, monitor lead generations, and oversee the Osivoo ecosystem from your central command center.
+            Manage DM automations, monitor lead generations, and oversee the Osvioo ecosystem from your central command center.
         </p>
 
         <!-- Abstract Background Icon -->
@@ -226,7 +226,7 @@
     <div class="form-side">
         <div class="login-card">
             <div class="brand-logo">
-                <span class="osivoo-logo-script">Osivoo</span>
+                <span class="osvioo-logo-script">Osvioo</span>
             </div>
 
             <div style="margin-bottom: 30px;">
@@ -241,13 +241,13 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('osivoo.login.submit') }}">
+            <form method="POST" action="{{ route('osvioo.login.submit') }}">
                 @csrf
                 <div class="form-group mb-4">
                     <label style="display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Admin Email</label>
                     <div class="input-wrapper">
                         <i class="fas fa-user-shield"></i>
-                        <input type="email" name="email" class="custom-input" placeholder="admin@osivoo.com" value="{{ old('email') }}" required autofocus>
+                        <input type="email" name="email" class="custom-input" placeholder="admin@osvioo.com" value="{{ old('email') }}" required autofocus>
                     </div>
                 </div>
 
@@ -273,7 +273,7 @@
             </form>
 
             <div style="text-align: center; margin-top: 30px; border-top: 1px solid #f1f5f9; padding-top: 20px;">
-                <p style="font-size: 12px; color: #94a3b8;">&copy; 2026 Osivoo HQ. Secure Environment.</p>
+                <p style="font-size: 12px; color: #94a3b8;">&copy; 2026 Osvioo HQ. Secure Environment.</p>
             </div>
         </div>
     </div>

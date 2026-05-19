@@ -32,7 +32,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">Frequently Asked Questions</h2>
         <!-- Add FAQ Button -->
-        <a href="{{ route('osivoo-admin.faq.create') }}" class="btn-add">
+        <a href="{{ route('osvioo-admin.faq.create') }}" class="btn-add">
             <i class="fas fa-plus me-2"></i> Add New FAQ
         </a>
     </div>
@@ -77,12 +77,12 @@
                         <td class="text-end">
                             <div class="d-flex justify-content-end gap-2">
                                 <!-- Edit Button -->
-                                <a href="{{ route('osivoo-admin.faq.edit', $faq->id) }}" class="btn btn-sm btn-outline-primary">
+                                <a href="{{ route('osvioo-admin.faq.edit', $faq->id) }}" class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 
                                 <!-- Delete Button (with Form for Security) -->
-                                <form action="{{ route('osivoo-admin.faq.destroy', $faq->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                                <form action="{{ route('osvioo-admin.faq.destroy', $faq->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger">

@@ -15,14 +15,14 @@
                     <div class="content-section mb-5">
                         <h4 class="fw-bold mb-3" style="color: #2b2b2b;">1. {{ translate('Introduction') }}</h4>
                         <p class="text-muted leading-relaxed fs-15">
-                            {{ translate('Welcome to Osivoo ("we," "our," or "us"). We are dedicated to protecting your personal data and your privacy. This Privacy Policy explains how we collect, use, process, and protect your information when you connect and use our platform, including our Meta and Instagram API-powered Auto DM automation services.') }}
+                            {{ translate('Welcome to Osvioo ("we," "our," or "us"). We are dedicated to protecting your personal data and your privacy. This Privacy Policy explains how we collect, use, process, and protect your information when you connect and use our platform, including our Meta and Instagram API-powered Auto DM automation services.') }}
                         </p>
                     </div>
 
                     <div class="content-section mb-5">
                         <h4 class="fw-bold mb-3" style="color: #2b2b2b;">2. {{ translate('Information We Collect') }}</h4>
                         <p class="text-muted leading-relaxed fs-15">
-                            {{ translate('When you authenticate your social platforms (such as Facebook or Instagram) with Osivoo, we collect and store certain data to provide our automation and posting services:') }}
+                            {{ translate('When you authenticate your social platforms (such as Facebook or Instagram) with Osvioo, we collect and store certain data to provide our automation and posting services:') }}
                         </p>
                         <ul class="text-muted fs-15 ps-4" style="list-style-type: square; line-height: 1.8;">
                             <li><strong>{{ translate('Social Profile Info:') }}</strong> {{ translate('Your name, profile picture, platform account ID, and platform usernames.') }}</li>
@@ -35,7 +35,7 @@
                     <div class="content-section mb-5">
                         <h4 class="fw-bold mb-3" style="color: #2b2b2b;">3. {{ translate('How We Use Your Information') }}</h4>
                         <p class="text-muted leading-relaxed fs-15">
-                            {{ translate('We strictly use your information to operate and optimize the Osivoo service. Specifically, we use it to:') }}
+                            {{ translate('We strictly use your information to operate and optimize the Osvioo service. Specifically, we use it to:') }}
                         </p>
                         <ul class="text-muted fs-15 ps-4" style="list-style-type: square; line-height: 1.8;">
                             <li>{{ translate('Enable OAuth login and manage connected social accounts.') }}</li>
@@ -68,7 +68,7 @@
                     <div class="content-section mb-4">
                         <h4 class="fw-bold mb-3" style="color: #2b2b2b;">6. {{ translate('Contact Us') }}</h4>
                         <p class="text-muted leading-relaxed fs-15">
-                            {{ translate('If you have any questions or feedback regarding this Privacy Policy, please feel free to reach out to our privacy compliance officer at') }} <a href="mailto:support@osivoo.com" class="text-primary fw-bold">support@osivoo.com</a>.
+                            {{ translate('If you have any questions or feedback regarding this Privacy Policy, please feel free to reach out to our privacy compliance officer at') }} <a href="mailto:support@osvioo.com" class="text-primary fw-bold">support@osvioo.com</a>.
                         </p>
                     </div>
 

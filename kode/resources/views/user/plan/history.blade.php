@@ -5,7 +5,7 @@
         <div class="i-card h-100">
             <div class="card-header d-flex align-items-center justify-content-between mb-20">
                 <h4 class="card--title">{{translate('Subscription History')}}</h4>
-                <p class="text-muted fs-14">{{translate('Track your journey as an influencer on Osivoo.')}}</p>
+                <p class="text-muted fs-14">{{translate('Track your journey as an influencer on Osvioo.')}}</p>
             </div>
 
             <div class="card-body px-0">

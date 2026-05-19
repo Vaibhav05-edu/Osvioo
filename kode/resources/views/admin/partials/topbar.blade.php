@@ -11,7 +11,7 @@
         </button>
       </div>
       <div class="d-none d-sm-block ms-2">
-          <span class="badge bg-primary-subtle text-primary border border-primary-subtle fw-bold px-3 py-2 rounded-pill">Osivoo Admin v1.0</span>
+          <span class="badge bg-primary-subtle text-primary border border-primary-subtle fw-bold px-3 py-2 rounded-pill">Osvioo Admin v1.0</span>
       </div>
     </div>
     <div class="d-flex align-items-center gap-lg-3 gap-2">

@@ -3,7 +3,7 @@
 <div class="container-fluid py-4">
     <div class="card border-0 shadow-sm p-4 mx-auto" style="max-width: 600px; border-radius: 15px;">
         <h4 class="fw-bold mb-4">Edit Creator</h4>
-        <form action="{{ route('osivoo-admin.creator.update', $creator->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('osvioo-admin.creator.update', $creator->id) }}" method="POST" enctype="multipart/form-data">
             @csrf @method('PUT')
             
             <div class="text-center mb-4">

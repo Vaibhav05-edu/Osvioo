@@ -224,11 +224,11 @@
         <div class="faq-accordion-custom" id="pricingAccordion">
             @php
                 $faqs = [
-                    ['q' => 'How does the Osivoo Creator payout process work?', 'a' => 'Creators are paid out automatically through our secure payment gateway once they reach the minimum threshold.'],
-                    ['q' => 'How does Osivoo help Creators grow?', 'a' => 'We provide AI-driven insights, content automation, and direct brand connection tools to amplify your reach.'],
+                    ['q' => 'How does the Osvioo Creator payout process work?', 'a' => 'Creators are paid out automatically through our secure payment gateway once they reach the minimum threshold.'],
+                    ['q' => 'How does Osvioo help Creators grow?', 'a' => 'We provide AI-driven insights, content automation, and direct brand connection tools to amplify your reach.'],
                     ['q' => 'Will Brands control my content?', 'a' => 'No, you maintain full creative control. Brands only provide guidelines and approve final deliverables.'],
-                    ['q' => 'Is my account safe with Osivoo?', 'a' => 'Yes, we use industry-standard encryption and official APIs to ensure your accounts are always secure.'],
-                    ['q' => 'Can I use Osivoo for multiple accounts?', 'a' => 'Yes, depending on your plan, you can manage multiple social profiles from a single dashboard.']
+                    ['q' => 'Is my account safe with Osvioo?', 'a' => 'Yes, we use industry-standard encryption and official APIs to ensure your accounts are always secure.'],
+                    ['q' => 'Can I use Osvioo for multiple accounts?', 'a' => 'Yes, depending on your plan, you can manage multiple social profiles from a single dashboard.']
                 ];
             @endphp
             @foreach($faqs as $i => $f)

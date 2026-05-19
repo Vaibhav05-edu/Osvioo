@@ -32,7 +32,7 @@
                     <div class="swiper-slide">
                         <div class="why-socialyt-slide">
                             <div class="why-socialyt-text">
-                                <h2>Why Osivoo?</h2>
+                                <h2>Why Osvioo?</h2>
                                 <div class="step-box">
                                     <div class="step-header">
                                         <div class="step-circle">{{ $step['number'] }}</div>

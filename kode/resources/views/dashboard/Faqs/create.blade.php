@@ -9,14 +9,14 @@
                     <h4 class="fw-bold mb-0">Add New FAQ</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('osivoo-admin.faq.store') }}" method="POST">
+                    <form action="{{ route('osvioo-admin.faq.store') }}" method="POST">
                         @csrf
 
                         <!-- Basic Info Section -->
                         <div class="row mb-4">
                             <div class="col-md-12 mb-3">
                                 <label class="form-label fw-bold">Question</label>
-                                <input type="text" name="question" class="form-control" placeholder="e.g. What is Osivoo?" required>
+                                <input type="text" name="question" class="form-control" placeholder="e.g. What is Osvioo?" required>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <label class="form-label fw-bold">Answer</label>
@@ -64,7 +64,7 @@
 
                         <!-- Action Buttons -->
                         <div class="d-flex justify-content-end gap-2">
-                            <a href="{{ route('osivoo-admin.faq.index') }}" class="btn btn-light px-4">Cancel</a>
+                            <a href="{{ route('osvioo-admin.faq.index') }}" class="btn btn-light px-4">Cancel</a>
                             <button type="submit" class="btn btn-dark px-4">Save FAQ</button>
                         </div>
                     </form>

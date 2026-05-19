@@ -15,7 +15,7 @@
                             with Creators
                         </h1>
                         <p class="fs-4 opacity-75 mb-5 pe-lg-5 fw-medium">
-                            Osivoo is your new awareness and sales engine <br>
+                            Osvioo is your new awareness and sales engine <br>
                             driven by Creators who genuinely love your Brand
                         </p>
                     </div>
@@ -53,7 +53,7 @@
         <div class="floating-cta-bar">
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center bg-white rounded-pill px-5 py-3 shadow-lg">
-                    <p class="mb-0 fw-bold text-royal-blue">Partner with Osivoo to accelerate your growth</p>
+                    <p class="mb-0 fw-bold text-royal-blue">Partner with Osvioo to accelerate your growth</p>
                     <a href="{{route('auth.register')}}" class="btn btn-royal-blue rounded-pill px-4 fw-black">GET STARTED</a>
                 </div>
             </div>

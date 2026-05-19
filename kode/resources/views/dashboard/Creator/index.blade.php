@@ -7,7 +7,7 @@
             <h2 class="fw-bold">Instagram Creators</h2>
             <p class="text-muted small">Manage the list of creators shown in the 'Creators Trust' section.</p>
         </div>
-        <a href="{{ route('osivoo-admin.creator.create') }}" class="btn btn-dark px-4">
+        <a href="{{ route('osvioo-admin.creator.create') }}" class="btn btn-dark px-4">
             <i class="fas fa-plus me-2"></i> Add New Creator
         </a>
     </div>
@@ -57,10 +57,10 @@
                         </td>
                         <td class="text-end">
                             <div class="d-flex justify-content-end gap-2">
-                                <a href="{{ route('osivoo-admin.creator.edit', $creator->id) }}" class="btn btn-sm btn-outline-primary">
+                                <a href="{{ route('osvioo-admin.creator.edit', $creator->id) }}" class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('osivoo-admin.creator.destroy', $creator->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this creator?')">
+                                <form action="{{ route('osvioo-admin.creator.destroy', $creator->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this creator?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger">

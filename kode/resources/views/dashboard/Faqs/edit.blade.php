@@ -9,7 +9,7 @@
                     <h4 class="fw-bold mb-0">Edit FAQ</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('osivoo-admin.faq.update', $faq->id) }}" method="POST">
+                    <form action="{{ route('osvioo-admin.faq.update', $faq->id) }}" method="POST">
                         @csrf
                         @method('PUT') <!-- Laravel mein update ke liye PUT method zaroori hai -->
 
@@ -63,7 +63,7 @@
                         <hr>
 
                         <div class="d-flex justify-content-end gap-2">
-                            <a href="{{ route('osivoo-admin.faq.index') }}" class="btn btn-light px-4">Cancel</a>
+                            <a href="{{ route('osvioo-admin.faq.index') }}" class="btn btn-light px-4">Cancel</a>
                             <button type="submit" class="btn btn-primary px-4">Update FAQ</button>
                         </div>
                     </form>

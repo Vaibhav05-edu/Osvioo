@@ -7,7 +7,7 @@
             <div class="card border-0 shadow-sm p-4" style="border-radius: 12px;">
                 <h4 class="fw-bold mb-4">Create New Story Card</h4>
                 
-                <form action="{{ route('osivoo-admin.story.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('osvioo-admin.story.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label class="form-label fw-bold">Title</label>
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="mt-4 pt-3 border-top d-flex justify-content-end gap-2">
-                        <a href="{{ route('osivoo-admin.story.index') }}" class="btn btn-light">Cancel</a>
+                        <a href="{{ route('osvioo-admin.story.index') }}" class="btn btn-light">Cancel</a>
                         <button type="submit" class="btn btn-dark px-4">Create Story</button>
                     </div>
                 </form>

@@ -15,21 +15,21 @@
                     <div class="content-section mb-5">
                         <h4 class="fw-bold mb-3" style="color: #2b2b2b;">1. {{ translate('Acceptance of Terms') }}</h4>
                         <p class="text-muted leading-relaxed fs-15">
-                            {{ translate('By accessing, signing up for, or using Osivoo ("we," "our," or "us") and all related services, you agree to be bound by these Terms & Conditions. These terms constitute a legally binding agreement between you and Osivoo. If you do not agree to all of these terms, you are prohibited from using the platform and must immediately disconnect all integrated social media accounts.') }}
+                            {{ translate('By accessing, signing up for, or using Osvioo ("we," "our," or "us") and all related services, you agree to be bound by these Terms & Conditions. These terms constitute a legally binding agreement between you and Osvioo. If you do not agree to all of these terms, you are prohibited from using the platform and must immediately disconnect all integrated social media accounts.') }}
                         </p>
                     </div>
 
                     <div class="content-section mb-5">
                         <h4 class="fw-bold mb-3" style="color: #2b2b2b;">2. {{ translate('Description of Services') }}</h4>
                         <p class="text-muted leading-relaxed fs-15">
-                            {{ translate('Osivoo provides a premium SaaS automation and scheduling platform designed to connect securely with Meta APIs (specifically Instagram and Facebook) to manage direct messaging (DM) automations, post scheduling, and comment auto-replies. All features are provided to help Creators, Brands, and Agencies scale organic engagement lawfully and securely.') }}
+                            {{ translate('Osvioo provides a premium SaaS automation and scheduling platform designed to connect securely with Meta APIs (specifically Instagram and Facebook) to manage direct messaging (DM) automations, post scheduling, and comment auto-replies. All features are provided to help Creators, Brands, and Agencies scale organic engagement lawfully and securely.') }}
                         </p>
                     </div>
 
                     <div class="content-section mb-5">
                         <h4 class="fw-bold mb-3" style="color: #2b2b2b;">3. {{ translate('User Account & Security') }}</h4>
                         <p class="text-muted leading-relaxed fs-15">
-                            {{ translate('To use Osivoo, you must register and authenticate your identity. You are solely responsible for:') }}
+                            {{ translate('To use Osvioo, you must register and authenticate your identity. You are solely responsible for:') }}
                         </p>
                         <ul class="text-muted fs-15 ps-4" style="list-style-type: square; line-height: 1.8;">
                             <li><strong>{{ translate('Account Details:') }}</strong> {{ translate('Providing accurate, current, and truthful information during registration.') }}</li>
@@ -41,7 +41,7 @@
                     <div class="content-section mb-5">
                         <h4 class="fw-bold mb-3" style="color: #2b2b2b;">4. {{ translate('Acceptable Use & Anti-Spam Policy') }}</h4>
                         <p class="text-muted leading-relaxed fs-15">
-                            {{ translate('We promote organic growth and highly ethical interactions. By using Osivoo, you strictly covenant that you will not:') }}
+                            {{ translate('We promote organic growth and highly ethical interactions. By using Osvioo, you strictly covenant that you will not:') }}
                         </p>
                         <ul class="text-muted fs-15 ps-4" style="list-style-type: square; line-height: 1.8;">
                             <li>{{ translate('Use the Auto DM system to distribute unsolicited marketing messages (Spam), misleading promotions, or phishing links.') }}</li>
@@ -56,21 +56,21 @@
                     <div class="content-section mb-5">
                         <h4 class="fw-bold mb-3" style="color: #2b2b2b;">5. {{ translate('Subscribing, Payments & Refunds') }}</h4>
                         <p class="text-muted leading-relaxed fs-15">
-                            {{ translate('Osivoo offers monthly and annual subscription plans. By subscribing, you agree to our automated recurring billing terms. Subscription fees are processed through secure gateways, and you authorize billing of the specified charges. Cancellation can be performed at any time via your user dashboard, and access will remain active until the end of the current billing cycle.') }}
+                            {{ translate('Osvioo offers monthly and annual subscription plans. By subscribing, you agree to our automated recurring billing terms. Subscription fees are processed through secure gateways, and you authorize billing of the specified charges. Cancellation can be performed at any time via your user dashboard, and access will remain active until the end of the current billing cycle.') }}
                         </p>
                     </div>
 
                     <div class="content-section mb-5">
                         <h4 class="fw-bold mb-3" style="color: #2b2b2b;">6. {{ translate('Limitation of Liability') }}</h4>
                         <p class="text-muted leading-relaxed fs-15">
-                            {{ translate('Osivoo is built directly on the official and secure Meta Developer API framework. However, you acknowledge that we are not responsible for any modifications, limitations, rate changes, or downtime imposed by Meta. Osivoo, its employees, and affiliates will not be liable for any direct, indirect, incidental, or consequential damages resulting from account actions, suspension by third-party platforms, or loss of access to automated services.') }}
+                            {{ translate('Osvioo is built directly on the official and secure Meta Developer API framework. However, you acknowledge that we are not responsible for any modifications, limitations, rate changes, or downtime imposed by Meta. Osvioo, its employees, and affiliates will not be liable for any direct, indirect, incidental, or consequential damages resulting from account actions, suspension by third-party platforms, or loss of access to automated services.') }}
                         </p>
                     </div>
 
                     <div class="content-section mb-4">
                         <h4 class="fw-bold mb-3" style="color: #2b2b2b;">7. {{ translate('Governing Law & Contact') }}</h4>
                         <p class="text-muted leading-relaxed fs-15">
-                            {{ translate('These terms shall be governed by and construed in accordance with the laws governing digital services and platform terms. If you have any inquiries, suggestions, or complaints regarding these Terms, please contact us at') }} <a href="mailto:support@osivoo.com" class="text-primary fw-bold">support@osivoo.com</a>.
+                            {{ translate('These terms shall be governed by and construed in accordance with the laws governing digital services and platform terms. If you have any inquiries, suggestions, or complaints regarding these Terms, please contact us at') }} <a href="mailto:support@osvioo.com" class="text-primary fw-bold">support@osvioo.com</a>.
                         </p>
                     </div>
 

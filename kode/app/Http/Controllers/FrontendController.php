@@ -201,13 +201,13 @@ class FrontendController extends Controller
             return view('frontend.terms_and_conditions', [
                 'meta_data' => $this->metaData([
                     "title" => translate("Terms & Conditions"),
-                    "meta_description" => translate("Osivoo Terms & Conditions - Read our service terms, account responsibilities, and Meta integration rules."),
-                    "meta_keywords" => ["terms", "conditions", "terms of service", "osivoo terms"],
+                    "meta_description" => translate("Osvioo Terms & Conditions - Read our service terms, account responsibilities, and Meta integration rules."),
+                    "meta_keywords" => ["terms", "conditions", "terms of service", "osvioo terms"],
                 ]),
                 'breadcrumbs' => ['Home' => 'home', 'Terms & Conditions' => null],
                 'banner' => (object) [
                     'title' => translate('Terms & Conditions'), 
-                    'description' => translate('Please read our terms of service and acceptable platform use rules before using Osivoo.')
+                    'description' => translate('Please read our terms of service and acceptable platform use rules before using Osvioo.')
                 ]
             ]);
         }
@@ -216,8 +216,8 @@ class FrontendController extends Controller
             return view('frontend.privacy_policy', [
                 'meta_data' => $this->metaData([
                     "title" => translate("Privacy Policy"),
-                    "meta_description" => translate("Osivoo Privacy Policy - Learn how we collect, use, and protect your personal information and social platform integrations under Meta guidelines."),
-                    "meta_keywords" => ["privacy policy", "data security", "osivoo privacy"],
+                    "meta_description" => translate("Osvioo Privacy Policy - Learn how we collect, use, and protect your personal information and social platform integrations under Meta guidelines."),
+                    "meta_keywords" => ["privacy policy", "data security", "osvioo privacy"],
                 ]),
                 'breadcrumbs' => ['Home' => 'home', 'Privacy Policy' => null],
                 'banner' => (object) [
@@ -232,7 +232,7 @@ class FrontendController extends Controller
                 'meta_data' => $this->metaData([
                     "title" => translate("Data Deletion Instructions"),
                     "meta_description" => translate("Instructions for requesting user data and account deletion under GDPR & Meta Platform rules."),
-                    "meta_keywords" => ["data deletion", "delete account", "gdpr", "osivoo delete data"],
+                    "meta_keywords" => ["data deletion", "delete account", "gdpr", "osvioo delete data"],
                 ]),
                 'breadcrumbs' => ['Home' => 'home', 'Data Deletion' => null],
                 'banner' => (object) [

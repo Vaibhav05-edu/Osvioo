@@ -138,7 +138,7 @@
                 <h5 class="fw-bold mb-0">Recent Creators</h5>
                 <p class="text-muted small mb-0">Latest onboarded influencers</p>
             </div>
-            <a href="{{ route('osivoo-admin.creator.index') }}" class="btn btn-light btn-sm fw-bold">View All</a>
+            <a href="{{ route('osvioo-admin.creator.index') }}" class="btn btn-light btn-sm fw-bold">View All</a>
         </div>
 
         <div class="table-responsive">

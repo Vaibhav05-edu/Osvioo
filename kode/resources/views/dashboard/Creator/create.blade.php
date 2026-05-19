@@ -3,7 +3,7 @@
 <div class="container-fluid py-4">
     <div class="card border-0 shadow-sm p-4 mx-auto" style="max-width: 600px; border-radius: 15px;">
         <h4 class="fw-bold mb-4">Add Instagram Creator</h4>
-        <form action="{{ route('osivoo-admin.creator.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('osvioo-admin.creator.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label class="form-label fw-bold">Instagram Username</label>

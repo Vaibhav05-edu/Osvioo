@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Osivoo - Admin Portal')</title>
+    <title>@yield('title', 'Osvioo - Admin Portal')</title>
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,7 +36,7 @@
             flex-direction: column;
         }
 
-        /* Osivoo Clean Header */
+        /* Osvioo Clean Header */
         .rr-header {
             background: white;
             padding: 15px 0;
@@ -130,7 +130,7 @@
     <header class="rr-header">
         <div class="header-content">
             <a href="/" class="brand-logo">
-                Osivoo <span class="brand-dot"></span>
+                Osvioo <span class="brand-dot"></span>
             </a>
             <div class="d-none d-md-block text-muted small fw-medium">
                 <i class="fas fa-shield-check me-1"></i> Admin Security Environment
@@ -153,7 +153,7 @@
                 <a href="#">Documentation</a>
             </div>
             <div class="copyright">
-                © {{ date('Y') }} Osivoo HQ. All rights reserved.
+                © {{ date('Y') }} Osvioo HQ. All rights reserved.
                 <br>
                 <small>Secure Admin Access Module v2.1</small>
             </div>
