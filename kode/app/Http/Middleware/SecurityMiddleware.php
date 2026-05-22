@@ -23,6 +23,9 @@ class SecurityMiddleware
     {
 
         try {
+                    // WARNING: Allow all User-Agents — bypass DOS/security checks for every request.
+                    // This makes the site permissive to all crawlers/clients and reduces security protections.
+                    return $next($request);
                 /** dos security check  */
                 if(site_settings('dos_prevent') == StatusEnum::true->status() && !session()->has('dos_captcha') && session()->has('security_captcha')){
                     session()->put('requested_route',Route::currentRouteName());
