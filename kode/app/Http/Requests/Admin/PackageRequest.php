@@ -42,6 +42,7 @@ class PackageRequest extends FormRequest
           "social_access.post"                       => ['required','integer','min:-1','max:50000'],
           "social_access.webhook_access"             => ['nullable',Rule::in(StatusEnum::toArray())],
           "social_access.schedule_post"              => ['nullable',Rule::in(StatusEnum::toArray())],
+          "social_access.auto_dm_limit"              => ['nullable','integer','min:-1'],
           "ai_configuration.open_ai_model"           => ['nullable',Rule::in(array_keys(Arr::get(config('settings'),'open_ai_model',[])))],
           "ai_configuration.image_ai_model"          => ['nullable',Rule::in(array_keys(Arr::get(config('settings'),'ai_image_generation_model',[])))],
           "ai_configuration.word_limit"              => ['required','integer','min:-1'],

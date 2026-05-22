@@ -56,12 +56,22 @@
                     <i class="bi bi-graph-up-arrow fs-24"></i>
                 </div>
                 <div>
-                    <h5 class="mb-0 fw-bold">98%</h5>
-                    <p class="text-muted fs-12 mb-0">{{translate('Automation Success Rate')}}</p>
+                    <h5 class="mb-0 fw-bold">
+                        @if($dmLimit == -1)
+                            {{$dmUsedCount}} / {{translate('Unlimited')}}
+                        @else
+                            {{$dmUsedCount}} / {{$dmLimit}}
+                        @endif
+                    </h5>
+                    <p class="text-muted fs-12 mb-0">{{translate('Plan DM Usage')}}</p>
                 </div>
             </div>
             <div class="progress" style="height: 6px;">
-                <div class="progress-bar bg-info" style="width: 98%"></div>
+                @if($dmLimit == -1)
+                    <div class="progress-bar bg-info" style="width: 0%"></div>
+                @else
+                    <div class="progress-bar bg-info" style="width: {{ min(100, ($dmUsedCount / max(1, $dmLimit)) * 100) }}%"></div>
+                @endif
             </div>
         </div>
     </div>
@@ -88,7 +98,12 @@
                             <tr>
                                 <td>
                                     <div class="fw-bold">{{$trigger->keyword}}</div>
-                                    <div class="text-muted fs-11 text-truncate" style="max-width: 200px;">{{$trigger->reply_text}}</div>
+                                    <div class="d-flex align-items-center gap-2 mt-1">
+                                        <div class="text-muted fs-11 text-truncate" style="max-width: 200px;">{{$trigger->reply_text}}</div>
+                                        @if($trigger->steps->count() > 0)
+                                            <span class="badge bg--primary-soft text--primary fs-10 capsuled">+{{$trigger->steps->count()}} {{translate('steps')}}</span>
+                                        @endif
+                                    </div>
                                 </td>
                                 <td>
                                     @if($trigger->socialAccount)
@@ -165,7 +180,7 @@
 
 {{-- MODAL --}}
 <div class="modal fade" id="addTriggerModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0" style="border-radius: 24px;">
             <form action="{{route('user.social.auto_dm.store')}}" method="POST">
                 @csrf
@@ -200,6 +215,21 @@
                         <label class="form-label fw-bold">{{translate('Automated Reply Message')}}</label>
                         <textarea class="form-control" name="reply_text" rows="4" placeholder="{{translate('Enter the message you want to send automatically')}}" required></textarea>
                     </div>
+
+                    <hr class="my-4">
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <label class="form-label fw-bold mb-0">{{translate('Follow-up Steps (Sequential Flow Builder)')}}</label>
+                            <button type="button" class="btn btn-sm btn-outline-primary capsuled px-3" id="addStepBtn">
+                                <i class="bi bi-plus-circle me-1"></i> {{translate('Add Step')}}
+                            </button>
+                        </div>
+                        <p class="fs-11 text-muted mb-3">{{translate('Configure consecutive messages sent after the initial reply with custom delay times.')}}</p>
+                        
+                        <div id="stepsContainer" class="d-flex flex-column gap-3">
+                            {{-- Dynamic steps will be injected here --}}
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer border-0 p-4 pt-0">
                     <button type="button" class="btn btn-light capsuled px-4" data-bs-dismiss="modal">{{translate('Cancel')}}</button>
@@ -224,5 +254,48 @@
             }
         });
     });
+
+    (function($) {
+        "use strict";
+        let stepCount = 0;
+        $('#addStepBtn').on('click', function() {
+            let stepHtml = `
+                <div class="step-card p-3 border rounded-3 position-relative mb-2" style="background-color: #f9f9fc;">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="badge bg-primary-soft text-primary fw-bold px-2 py-1 fs-11">{{translate('Step')}} \${stepCount + 2}</span>
+                        <button type="button" class="btn-close remove-step-btn" style="font-size: 0.8rem;"></button>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-9">
+                            <label class="form-label fs-12 fw-bold mb-1">{{translate('Reply Message')}}</label>
+                            <textarea class="form-control" name="steps[\${stepCount}][reply_text]" rows="2" placeholder="{{translate('Enter step message...')}}" required></textarea>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fs-12 fw-bold mb-1">{{translate('Delay (Seconds)')}}</label>
+                            <input type="number" class="form-control" name="steps[\${stepCount}][delay_seconds]" min="0" value="10" placeholder="e.g. 10" required>
+                        </div>
+                    </div>
+                </div>
+            `;
+            $('#stepsContainer').append(stepHtml);
+            stepCount++;
+        });
+
+        $(document).on('click', '.remove-step-btn', function() {
+            $(this).closest('.step-card').remove();
+            reorderSteps();
+        });
+
+        function reorderSteps() {
+            stepCount = 0;
+            $('#stepsContainer .step-card').each(function() {
+                let index = stepCount;
+                $(this).find('.badge').text(`{{translate('Step')}} \${index + 2}`);
+                $(this).find('textarea').attr('name', `steps[\${index}][reply_text]`);
+                $(this).find('input').attr('name', `steps[\${index}][delay_seconds]`);
+                stepCount++;
+            });
+        }
+    })(jQuery);
 </script>
 @endpush

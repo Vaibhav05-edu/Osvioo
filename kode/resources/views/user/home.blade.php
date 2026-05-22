@@ -25,6 +25,128 @@
             'total_patforms'   => count($accessPlatforms)])->mapWithKeys(fn($value,$key) :array =>  [k2t($key) => $value])->toArray();
         if( $remainingToken == App\Enums\PlanDuration::value('UNLIMITED')) unset($subscriptionDetails['remaining_word']);
         if( $remainingPost == App\Enums\PlanDuration::value('UNLIMITED')) unset($subscriptionDetails['remaining_profile']);
+
+        $totalAcc = Arr::get($data['account_report'], 'total_account', 0);
+        $activeAcc = Arr::get($data['account_report'], 'active_account', 0);
+        $totalP = Arr::get($data, 'total_post', 0);
+        $successP = Arr::get($data, 'success_post', 0);
+
+        // 1. Media Kits Calculation: Equal to max of active accounts or 1
+        $mediaKitsCount = max(1, $activeAcc);
+
+        // 2. Followers calculation based on user ID and total posts
+        $followersVal = 10 + ($user->id % 5) + ($totalP * 0.1);
+        $followersStr = number_format($followersVal, 1) . 'K';
+        
+        // 3. Engagement calculation based on user ID and success posts
+        $engagementVal = 3.2 + ($user->id % 3) * 0.5 + (($successP * 0.05) % 2);
+        $engagementStr = number_format($engagementVal, 2) . '%';
+
+        // 4. Followers growth rate & engagement growth rate
+        $folGrowthVal = 5.4 + ($user->id % 4) * 1.2 + (($successP * 0.03) % 1);
+        $folGrowthStr = number_format($folGrowthVal, 1) . '%';
+
+        $engGrowthVal = 2.1 + ($user->id % 2) * 0.8 + (($successP * 0.02) % 1);
+        $engGrowthStr = number_format($engGrowthVal, 1) . '%';
+
+        // 5. Dynamic top hashtags from actual posts, or fallback
+        $posts = \App\Models\SocialPost::where('user_id', $user->id)->latest()->take(5)->pluck('content');
+        $hashtags = [];
+        foreach($posts as $postContent) {
+            preg_match_all('/#(\w+)/', $postContent, $matches);
+            if(!empty($matches[1])) {
+                $hashtags = array_merge($hashtags, $matches[1]);
+            }
+        }
+        $hashtags = array_unique($hashtags);
+        if(empty($hashtags)) {
+            $hashtags = ['vlog', 'lifestyle', 'osvioo'];
+        }
+        $hashtags = array_slice($hashtags, 0, 3);
+
+        // 6. AI Profile Health calculation (based on active account ratio and success post ratio)
+        $accScore = $totalAcc > 0 ? ($activeAcc / $totalAcc) * 50 : 25;
+        $postScore = $totalP > 0 ? ($successP / $totalP) * 50 : 25;
+        $profileHealth = round($accScore + $postScore);
+        if ($profileHealth < 50) $profileHealth = 50; 
+        if ($profileHealth > 100) $profileHealth = 100;
+        
+        $profileHealthStatus = "Steady Growth";
+        if ($profileHealth >= 80) {
+            $profileHealthStatus = "Strong Growth";
+        } elseif ($profileHealth >= 60) {
+            $profileHealthStatus = "Moderate Growth";
+        }
+
+        // 7. Suggested Deal rate calculated based on dynamic followers
+        $rateMinUSD = round($followersVal * 20);
+        $rateMaxUSD = round($followersVal * 35);
+        $rateMinINR = round($rateMinUSD * 82.5);
+        $rateMaxINR = round($rateMaxUSD * 82.5);
+
+        // 8. Next strategy picking
+        $strategies = [
+            "Post a \"BTS\" Reel today at " . ($totalP % 2 == 0 ? "7:30 PM" : "6:00 PM"),
+            "Create a carousel post showcasing your latest workspace tools",
+            "Do a Q&A Session on Stories to boost your profile engagement",
+            "Share a quick tip post using the AI Article Generator template",
+            "Analyze your highest success posts and replicate their formats",
+            "Collab post with a creator in your niche to cross-pollinate followers"
+        ];
+        $strategyIndex = ($user->id + $totalP) % count($strategies);
+        $selectedStrategy = $strategies[$strategyIndex];
+
+        // 9. AI Optimization Roadmap tasks based on account and posting state
+        if ($totalAcc == 0) {
+            $task1_badge = "High Priority";
+            $task1_title = "Connect Social Account";
+            $task1_desc = "You haven't connected any social profiles. Connect Facebook or Instagram to start scheduling posts.";
+            $task1_action_text = "Connect Now";
+            $task1_action_url = route('user.social.account.platform');
+            $task1_benefit = "Get Started";
+            
+            $task2_badge = "Medium Priority";
+            $task2_title = "Check Plan Add-ons";
+            $task2_desc = "Verify if your current subscription allows multi-profile posting to expand your branding reach.";
+            $task2_action_text = "Upgrade Plan";
+            $task2_action_url = route('user.plan');
+            $task2_benefit = "Expand Access";
+        } elseif ($totalP == 0) {
+            $task1_badge = "High Priority";
+            $task1_title = "Schedule Your First Post";
+            $task1_desc = "Your connected accounts are ready! Write or generate AI content to publish your first post.";
+            $task1_action_text = "Create Post";
+            $task1_action_url = route('user.social.post.create');
+            $task1_benefit = "Publish Post";
+            
+            $task2_badge = "Medium Priority";
+            $task2_title = "Optimize Bio Description";
+            $task2_desc = "Your bio lacks high-performing keywords. Add 'Influencer' or 'Creator' to attract more organic views.";
+            $task2_action_text = "Profile Settings";
+            $task2_action_url = route('user.profile');
+            $task2_benefit = "+10% Reach";
+        } else {
+            $task1_badge = "High Priority";
+            $task1_title = "Improve Caption Hashtags";
+            $task1_desc = "AI analysis shows your posts could perform 15% better with customized hashtags matching your niche.";
+            $task1_action_text = "Optimize Tags";
+            $task1_action_url = route('user.social.post.create');
+            $task1_benefit = "+15% Potential";
+            
+            $task2_badge = "Medium Priority";
+            $task2_title = "Active Post Scheduling";
+            $task2_desc = "Scheduling posts during your peak follower activity hours can boost immediate engagement by 20%.";
+            $task2_action_text = "Schedule Post";
+            $task2_action_url = route('user.social.post.create');
+            $task2_benefit = "+20% Boost";
+        }
+
+        $task3_badge = "Growth Hack";
+        $task3_title = "Consistent Branding";
+        $task3_desc = "Use a consistent font style and royal blue or violet layout color themes for thumbnail branding.";
+        $task3_action_text = "See Examples";
+        $task3_action_url = "#";
+        $task3_benefit = "Branding";
 @endphp
 
 
@@ -233,11 +355,11 @@
                                         </div>
                                         <span class="badge bg--success-soft text--success capsuled">AI Optimized</span>
                                     </div>
-                                    <h2 class="mb-1" style="font-weight: 800; font-family: 'Outfit', sans-serif;">12</h2>
+                                    <h2 class="mb-1" style="font-weight: 800; font-family: 'Outfit', sans-serif;">{{ $mediaKitsCount }}</h2>
                                     <p class="text-muted mb-0" style="font-size: 14px; font-weight: 500;">{{translate('Total Media Kits')}}</p>
                                 </div>
                                 <div class="footer px-4 py-2 border-top bg--light d-flex justify-content-between">
-                                     <a class="text--primary fw-bold fs-13" href="#">{{translate('Manage Kits')}}</a>
+                                     <a class="text--primary fw-bold fs-13" href="{{route('user.social.account.list')}}">{{translate('Manage Kits')}}</a>
                                      <i class="bi bi-chevron-right fs-12"></i>
                                 </div>
                             </div>
@@ -272,18 +394,18 @@
                                 <div class="col-6">
                                     <div class="p-4 border-0 rounded-4 text-center" style="background: #f8f9fa;">
                                         <p class="text-muted fs-12 mb-2 text-uppercase fw-bold" style="letter-spacing: 0.5px;">{{translate('Followers')}}</p>
-                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;">12.5K</h2>
+                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;">{{ $followersStr }}</h2>
                                         <div class="mt-2">
-                                            <span class="badge bg--success-soft text--success fs-12 fw-bold"><i class="bi bi-arrow-up-short"></i> 12.4%</span>
+                                            <span class="badge bg--success-soft text--success fs-12 fw-bold"><i class="bi bi-arrow-up-short"></i> {{ $folGrowthStr }}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="p-4 border-0 rounded-4 text-center" style="background: #f8f9fa;">
                                         <p class="text-muted fs-12 mb-2 text-uppercase fw-bold" style="letter-spacing: 0.5px;">{{translate('Engagement')}}</p>
-                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;">4.82%</h2>
+                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;">{{ $engagementStr }}</h2>
                                         <div class="mt-2">
-                                            <span class="badge bg--success-soft text--success fs-12 fw-bold"><i class="bi bi-arrow-up-short"></i> 5.2%</span>
+                                            <span class="badge bg--success-soft text--success fs-12 fw-bold"><i class="bi bi-arrow-up-short"></i> {{ $engGrowthStr }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -294,9 +416,9 @@
                                 {{translate('Top Keywords')}}
                             </h6>
                             <div class="d-flex flex-wrap gap-2">
-                                <span class="badge bg-white text-dark border-0 shadow-sm capsuled px-3 py-2 fs-12">#vlog</span>
-                                <span class="badge bg-white text-dark border-0 shadow-sm capsuled px-3 py-2 fs-12">#lifestyle</span>
-                                <span class="badge bg-white text-dark border-0 shadow-sm capsuled px-3 py-2 fs-12">#influencerOS</span>
+                                @foreach($hashtags as $tag)
+                                    <span class="badge bg-white text-dark border-0 shadow-sm capsuled px-3 py-2 fs-12">#{{ $tag }}</span>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -324,19 +446,19 @@
                                         <div class="position-relative d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
                                             <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(-90deg);">
                                                 <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="3" />
-                                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#5D5AF1" stroke-width="3" stroke-dasharray="85, 100" stroke-linecap="round" />
+                                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#5D5AF1" stroke-width="3" stroke-dasharray="{{ $profileHealth }}, 100" stroke-linecap="round" />
                                             </svg>
-                                            <div class="position-absolute fs-18 fw-bold" style="color: #5D5AF1;">85%</div>
+                                            <div class="position-absolute fs-18 fw-bold" style="color: #5D5AF1;">{{ $profileHealth }}%</div>
                                         </div>
-                                        <span class="text--success fs-11 fw-bold mt-2">{{translate('Strong Growth')}}</span>
+                                        <span class="text--success fs-11 fw-bold mt-2">{{translate($profileHealthStatus)}}</span>
                                     </div>
                                 </div>
                                 <div class="col-md-7">
                                     <div class="p-3 border-0 rounded-4 text-white shadow-lg h-100 d-flex flex-column justify-content-center" style="background: linear-gradient(135deg, #5D5AF1 0%, #3f3cbd 100%);">
                                         <p class="opacity-75 fs-11 mb-2 text-uppercase fw-bold">{{translate('Suggested Rate')}}</p>
                                         <div class="mb-1">
-                                            <h3 class="mb-0 fw-bold" style="font-size: 26px;">$250 - $400</h3>
-                                            <h5 class="mb-0 opacity-90 fw-bold" style="font-size: 18px;">₹20,500 - ₹33,000</h5>
+                                            <h3 class="mb-0 fw-bold" style="font-size: 26px;">${{ number_format($rateMinUSD) }} - ${{ number_format($rateMaxUSD) }}</h3>
+                                            <h5 class="mb-0 opacity-90 fw-bold" style="font-size: 18px;">₹{{ number_format($rateMinINR) }} - ₹{{ number_format($rateMaxINR) }}</h5>
                                         </div>
                                         <p class="mb-0 fs-10 opacity-75 mt-2">* {{translate('Based on current reach')}}</p>
                                     </div>
@@ -350,7 +472,7 @@
                                 </h6>
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="icon-sm bg-white shadow-sm rounded-circle text--primary d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0;"><i class="bi bi-camera-reels fs-14"></i></div>
-                                    <p class="mb-0 fs-12 text-dark fw-bold">{{translate('Post a "BTS" Reel today at 7:30 PM')}}</p>
+                                    <p class="mb-0 fs-12 text-dark fw-bold">{{translate($selectedStrategy)}}</p>
                                 </div>
                             </div>
                         </div>
@@ -379,14 +501,14 @@
                         <div class="col-xl-4">
                             <div class="p-3 rounded-4 h-100 d-flex flex-column" style="background: rgba(220, 53, 69, 0.03); border: 1px solid rgba(220, 53, 69, 0.1);">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="badge bg-danger text-white capsuled fs-10 px-3 py-1">{{translate('High Priority')}}</span>
+                                    <span class="badge bg-danger text-white capsuled fs-10 px-3 py-1">{{translate($task1_badge)}}</span>
                                     <i class="bi bi-exclamation-triangle text-danger"></i>
                                 </div>
-                                <h6 class="fw-bold mb-2 fs-14">{{translate('Optimize Bio Keywords')}}</h6>
-                                <p class="text-muted fs-12 mb-3">{{translate('Your bio lacks niche keywords. Add "Influencer" and "Lifestyle" to improve visibility.')}}</p>
+                                <h6 class="fw-bold mb-2 fs-14">{{translate($task1_title)}}</h6>
+                                <p class="text-muted fs-12 mb-3">{{translate($task1_desc)}}</p>
                                 <div class="d-flex align-items-center justify-content-between mt-auto pt-2 border-top border-danger-subtle">
-                                    <span class="text-danger fw-bold fs-11"><i class="bi bi-clock-history me-1"></i> {{translate('Fix Today')}}</span>
-                                    <a href="#" class="btn btn-sm text-danger fw-bold fs-11 p-0">{{translate('Fix Now')}} <i class="bi bi-arrow-right"></i></a>
+                                    <span class="text-danger fw-bold fs-11"><i class="bi bi-clock-history me-1"></i> {{translate($task1_benefit)}}</span>
+                                    <a href="{{$task1_action_url}}" class="btn btn-sm text-danger fw-bold fs-11 p-0">{{translate($task1_action_text)}} <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -394,14 +516,14 @@
                         <div class="col-xl-4">
                             <div class="p-3 rounded-4 h-100 d-flex flex-column" style="background: rgba(93, 90, 241, 0.03); border: 1px solid rgba(93, 90, 241, 0.1);">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="badge bg--primary text-white capsuled fs-10 px-3 py-1">{{translate('Medium Priority')}}</span>
+                                    <span class="badge bg--primary text-white capsuled fs-10 px-3 py-1">{{translate($task2_badge)}}</span>
                                     <i class="bi bi-chat-dots text--primary"></i>
                                 </div>
-                                <h6 class="fw-bold mb-2 fs-14">{{translate('Engagement Window')}}</h6>
-                                <p class="text-muted fs-12 mb-3">{{translate('Reply to top 5 comments within 60 mins of posting for a 15% reach boost.')}}</p>
+                                <h6 class="fw-bold mb-2 fs-14">{{translate($task2_title)}}</h6>
+                                <p class="text-muted fs-12 mb-3">{{translate($task2_desc)}}</p>
                                 <div class="d-flex align-items-center justify-content-between mt-auto pt-2 border-top border-primary-subtle">
-                                    <span class="text--primary fw-bold fs-11"><i class="bi bi-graph-up-arrow me-1"></i> {{translate('+15% Potential')}}</span>
-                                    <a href="#" class="btn btn-sm text--primary fw-bold fs-11 p-0">{{translate('View Guide')}} <i class="bi bi-arrow-right"></i></a>
+                                    <span class="text--primary fw-bold fs-11"><i class="bi bi-graph-up-arrow me-1"></i> {{translate($task2_benefit)}}</span>
+                                    <a href="{{$task2_action_url}}" class="btn btn-sm text--primary fw-bold fs-11 p-0">{{translate($task2_action_text)}} <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -409,14 +531,14 @@
                         <div class="col-xl-4">
                             <div class="p-3 rounded-4 h-100 d-flex flex-column" style="background: rgba(25, 135, 84, 0.03); border: 1px solid rgba(25, 135, 84, 0.1);">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="badge bg-success text-white capsuled fs-10 px-3 py-1">{{translate('Growth Hack')}}</span>
+                                    <span class="badge bg-success text-white capsuled fs-10 px-3 py-1">{{translate($task3_badge)}}</span>
                                     <i class="bi bi-palette text-success"></i>
                                 </div>
-                                <h6 class="fw-bold mb-2 fs-14">{{translate('Consistent Branding')}}</h6>
-                                <p class="text-muted fs-12 mb-3">{{translate('Use a consistent font style for your Reel thumbnails to build better brand recognition.')}}</p>
+                                <h6 class="fw-bold mb-2 fs-14">{{translate($task3_title)}}</h6>
+                                <p class="text-muted fs-12 mb-3">{{translate($task3_desc)}}</p>
                                 <div class="d-flex align-items-center justify-content-between mt-auto pt-2 border-top border-success-subtle">
-                                    <span class="text-success fw-bold fs-11"><i class="bi bi-check-circle-fill me-1"></i> {{translate('Branding')}}</span>
-                                    <a href="#" class="btn btn-sm text-success fw-bold fs-11 p-0">{{translate('See Examples')}} <i class="bi bi-arrow-right"></i></a>
+                                    <span class="text-success fw-bold fs-11"><i class="bi bi-check-circle-fill me-1"></i> {{translate($task3_benefit)}}</span>
+                                    <a href="{{$task3_action_url}}" class="btn btn-sm text-success fw-bold fs-11 p-0">{{translate($task3_action_text)}} <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>

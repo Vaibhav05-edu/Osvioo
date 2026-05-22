@@ -157,6 +157,18 @@
                                                 </div>
 
                                                 <div class="col-xl-6">
+                                                    <div class="form-inner mb-0">
+                                                        <label for="auto_dm_limit" class="form-label">
+                                                            {{ translate('Auto DM Limit') }}
+                                                            <small class="text-danger" >*</small>
+                                                            <i data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{translate('Set -1 to make it unlimited')}}" class="ms-1  pointer las la-question-circle  text--danger"></i>
+                                                        </label>
+                                                        <input type="number" min="-1"
+                                                        value="{{ old('social_access.auto_dm_limit', isset($package->social_access->auto_dm_limit) ? $package->social_access->auto_dm_limit : -1) }}" name="social_access[auto_dm_limit]" id="auto_dm_limit" placeholder="{{translate('Auto DM Limit')}}" required   >
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-6">
                                                     <div>
                                                         <label class="form-label lh-1">
                                                             {{ translate('Webhook & Schedule') }}

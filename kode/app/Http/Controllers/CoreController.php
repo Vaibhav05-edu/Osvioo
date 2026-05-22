@@ -1279,8 +1279,26 @@ class CoreController extends Controller
                             continue;
                         }
 
-                        // Search for triggers
-                        $triggers = AutoDmTrigger::where('user_id', $account->user_id)
+                        // Check package limits and webhook access
+                        $user = $account->user()->with(['runningSubscription', 'runningSubscription.package'])->first();
+                        if (!$user) {
+                            continue;
+                        }
+
+                        $subscription = $user->runningSubscription;
+                        if (!$subscription) {
+                            continue;
+                        }
+
+                        $package = $subscription->package;
+                        $webhookAccess = @$package->social_access->webhook_access;
+                        if (!$webhookAccess || $webhookAccess != StatusEnum::true->status()) {
+                            continue;
+                        }
+
+                        // Search for triggers with sequence steps
+                        $triggers = AutoDmTrigger::with('steps')
+                            ->where('user_id', $account->user_id)
                             ->where(function ($query) use ($account) {
                                 $query->whereNull('social_account_id')
                                       ->orWhere('social_account_id', $account->id);
@@ -1302,19 +1320,31 @@ class CoreController extends Controller
                             }
 
                             if ($match) {
-                                // Send reply
-                                $response = InstagramAccount::sendMessage($account, $senderId, $trigger->reply_text);
-
-                                // Log the DM
-                                AutoDmLog::create([
-                                    'user_id' => $account->user_id,
-                                    'social_account_id' => $account->id,
-                                    'sender_id' => $senderId,
-                                    'received_message' => $messageText,
-                                    'reply_sent' => $trigger->reply_text,
-                                    'status' => $response['status'] ? 'success' : 'failed',
-                                    'error_message' => $response['status'] ? null : $response['message'],
-                                ]);
+                                // If trigger has steps, dispatch a job for each step
+                                if ($trigger->steps && $trigger->steps->isNotEmpty()) {
+                                    $cumulativeDelay = 0;
+                                    foreach ($trigger->steps as $step) {
+                                        $cumulativeDelay += (int)$step->delay_seconds;
+                                        \App\Jobs\SendAutoDmJob::dispatch(
+                                            $account->id,
+                                            $senderId,
+                                            $step->reply_text,
+                                            $account->user_id,
+                                            $trigger->id,
+                                            $messageText
+                                        )->delay(now()->addSeconds($cumulativeDelay));
+                                    }
+                                } else {
+                                    // Fallback to single step reply_text with 0 delay
+                                    \App\Jobs\SendAutoDmJob::dispatch(
+                                        $account->id,
+                                        $senderId,
+                                        $trigger->reply_text,
+                                        $account->user_id,
+                                        $trigger->id,
+                                        $messageText
+                                    );
+                                }
 
                                 break; // Stop after first match
                             }

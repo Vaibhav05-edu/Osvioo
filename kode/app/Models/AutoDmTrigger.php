@@ -36,4 +36,9 @@ class AutoDmTrigger extends Model
     {
         return $this->belongsTo(SocialAccount::class);
     }
+
+    public function steps()
+    {
+        return $this->hasMany(AutoDmStep::class, 'auto_dm_trigger_id')->orderBy('step_order');
+    }
 }
