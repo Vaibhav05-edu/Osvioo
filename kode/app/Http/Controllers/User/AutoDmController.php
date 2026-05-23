@@ -16,7 +16,13 @@ class AutoDmController extends Controller
 {
     public function list()
     {
-        $user = auth_user('web')->load(['runningSubscription', 'runningSubscription.package']);
+        $user = auth_user('web');
+
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        $user->load(['runningSubscription', 'runningSubscription.package']);
         $subscription = $user->runningSubscription;
         
         $dmLimit = -1;
@@ -53,6 +59,7 @@ class AutoDmController extends Controller
             ->get();
 
         return view('user.auto_dm.index', [
+            'meta_data' => $this->metaData(['title' => translate('Auto DM Manager')]),
             'title' => translate('Auto DM Manager'),
             'triggers' => $triggers,
             'logs' => $logs,
@@ -64,7 +71,13 @@ class AutoDmController extends Controller
 
     public function store(Request $request)
     {
-        $user = auth_user('web')->load(['runningSubscription', 'runningSubscription.package']);
+        $user = auth_user('web');
+
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        $user->load(['runningSubscription', 'runningSubscription.package']);
         $subscription = $user->runningSubscription;
         
         if (!$subscription) {

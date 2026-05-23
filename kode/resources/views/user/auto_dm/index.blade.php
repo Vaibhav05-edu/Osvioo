@@ -115,7 +115,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <span class="badge bg-info-soft text-info capsuled">{{strtoupper($trigger->match_type)}}</span>
+                                    <span class="badge bg-info-soft text-info capsuled">{{strtoupper($trigger->match_type ?? '')}}</span>
                                 </td>
                                 <td>
                                     <div class="form-check form-switch">
@@ -161,11 +161,11 @@
                         <div class="flex-grow-1 border-bottom pb-3">
                             <div class="d-flex justify-content-between align-items-start mb-1">
                                 <h6 class="mb-0 fs-14 fw-bold">ID: {{$log->sender_id}}</h6>
-                                <span class="fs-10 text-muted">{{$log->created_at->diffForHumans()}}</span>
+                                <span class="fs-10 text-muted">{{optional($log->created_at)->diffForHumans()}}</span>
                             </div>
                             <p class="mb-1 fs-12 text-muted">
-                                <span class="fw-bold">"{{$log->received_message}}"</span> ⮕ 
-                                <span class="text-success">{{$log->reply_sent}}</span>
+                                <span class="fw-bold">"{{ $log->received_message ?? '' }}"</span> ⮕ 
+                                <span class="text-success">{{ $log->reply_sent ?? '' }}</span>
                             </p>
                             <span class="fs-10 badge {{ $log->status == 'success' ? 'bg-success' : 'bg-danger' }}">{{strtoupper($log->status)}}</span>
                         </div>
