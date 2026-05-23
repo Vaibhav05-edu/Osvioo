@@ -177,7 +177,9 @@
         </div>
     </div>
 </div>
+@endsection
 
+@section('modal')
 {{-- MODAL --}}
 <div class="modal fade" id="addTriggerModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
