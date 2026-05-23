@@ -96,7 +96,7 @@
                     </thead>
                     <tbody>
                         @forelse($triggers as $trigger)
-                            <tr>
+                            <tr class="{{ $trigger->status ? '' : 'opacity-75 bg-light-soft' }}">
                                 <td>
                                     <div class="fw-bold fs-14">"{{$trigger->keyword}}"</div>
                                     <div class="mt-1">
@@ -118,26 +118,35 @@
                                     </div>
                                 </td>
                                 <td>
-                                    @if($trigger->trigger_type == 'comment_to_dm')
-                                        <span class="badge bg-warning-soft text-warning capsuled fs-11">
-                                            <i class="bi bi-chat-dots-fill me-1"></i> {{translate('Comment-to-DM')}}
-                                        </span>
-                                        @if($trigger->media_id)
-                                            <div class="mt-1">
-                                                <a href="{{$trigger->media_url}}" target="_blank" class="d-inline-flex align-items-center gap-1 fs-11 text-decoration-none text-primary fw-bold">
-                                                    <i class="bi bi-link-45deg"></i> {{translate('View Target Post')}}
-                                                </a>
+                                    <div class="d-flex align-items-center gap-2">
+                                        @if($trigger->trigger_type == 'comment_to_dm')
+                                            @if($trigger->media_id && $trigger->media_url)
+                                                <div style="width: 36px; height: 36px; border-radius: 6px; overflow: hidden; background: #eee;" class="border shadow-sm flex-shrink-0">
+                                                    <img src="{{$trigger->media_url}}" style="width: 100%; height: 100%; object-fit: cover;">
+                                                </div>
+                                            @endif
+                                            <div>
+                                                <span class="badge bg-warning-soft text-warning capsuled fs-10 d-block mb-1">
+                                                    <i class="bi bi-chat-dots-fill me-1"></i> {{translate('Comment-to-DM')}}
+                                                </span>
+                                                @if($trigger->media_id)
+                                                    <span class="fs-10 text-primary fw-bold">
+                                                        <i class="bi bi-pin-angle-fill me-1"></i> {{translate('Specific Post')}}
+                                                    </span>
+                                                @else
+                                                    <span class="fs-10 text-muted">
+                                                        <i class="bi bi-grid-fill me-1"></i> {{translate('All Reels / Posts')}}
+                                                    </span>
+                                                @endif
                                             </div>
                                         @else
-                                            <div class="fs-10 text-muted mt-1">
-                                                <i class="bi bi-grid-fill me-1"></i> {{translate('All Reels / Posts')}}
+                                            <div>
+                                                <span class="badge bg-success-soft text-success capsuled fs-10">
+                                                    <i class="bi bi-envelope-fill me-1"></i> {{translate('Inbox DM')}}
+                                                </span>
                                             </div>
                                         @endif
-                                    @else
-                                        <span class="badge bg-success-soft text-success capsuled fs-11">
-                                            <i class="bi bi-envelope-fill me-1"></i> {{translate('Inbox DM')}}
-                                        </span>
-                                    @endif
+                                    </div>
                                 </td>
                                 <td>
                                     @if($trigger->socialAccount)
@@ -152,8 +161,11 @@
                                     <span class="badge bg-info-soft text-info capsuled">{{strtoupper($trigger->match_type ?? '')}}</span>
                                 </td>
                                 <td>
-                                    <div class="form-check form-switch">
+                                    <div class="form-check form-switch d-flex align-items-center gap-2">
                                         <input class="form-check-input status-toggle" type="checkbox" role="switch" data-uid="{{$trigger->uid}}" {{$trigger->status ? 'checked' : ''}}>
+                                        <span class="fs-10 fw-bold {{ $trigger->status ? 'text-success' : 'text-muted' }}" id="statusLabel-{{$trigger->uid}}">
+                                            {{ $trigger->status ? translate('ON') : translate('OFF') }}
+                                        </span>
                                     </div>
                                 </td>
                                 <td>
@@ -257,16 +269,25 @@
                     <div class="mb-3 d-none animate__animated animate__fadeIn" id="postTargetGroup">
                         <label class="form-label fw-bold">{{translate('Target Post / Reel')}}</label>
                         <select class="form-select capsuled" name="post_target_type" id="postTargetTypeSelect">
-                            <option value="all">{{translate('All Posts & Reels')}}</option>
-                            <option value="specific">{{translate('Specific Post / Reel')}}</option>
+                            <option value="all">{{translate('All Posts & Reels (Triggers on any comment on any video)')}}</option>
+                            <option value="specific">{{translate('Specific Post / Reel (Triggers only on a selected video)')}}</option>
                         </select>
                     </div>
 
                     {{-- SPECIFIC MEDIA SELECTOR (ONLY FOR SPECIFIC COMMENT-TO-DM) --}}
                     <div class="mb-3 d-none animate__animated animate__fadeIn" id="specificMediaSelectorGroup">
-                        <label class="form-label fw-bold mb-2">{{translate('Choose Instagram Reel / Post')}}</label>
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <label class="form-label fw-bold mb-0">{{translate('Choose Instagram Reel / Post')}}</label>
+                            <span class="badge bg-primary-soft text-primary fs-10 px-2 py-1 capsuled">{{translate('Latest 50 media')}}</span>
+                        </div>
                         <input type="hidden" name="media_id" id="selectedMediaId">
                         <input type="hidden" name="media_url" id="selectedMediaUrl">
+
+                        {{-- Real-time filter/search bar --}}
+                        <div class="input-group mb-2 d-none" id="mediaSearchGroup">
+                            <span class="input-group-text bg-light border-end-0 border" style="border-radius: 12px 0 0 12px;"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" class="form-control border border-start-0 ps-0" id="mediaSearchInput" placeholder="{{translate('Search Reel or Post by caption text...')}}" style="border-radius: 0 12px 12px 0; font-size: 13px;">
+                        </div>
 
                         {{-- Spinner --}}
                         <div id="mediaLoadingSpinner" class="text-center py-4 d-none">
@@ -329,7 +350,7 @@
                 </div>
                 <div class="modal-footer border-0 p-4 pt-0">
                     <button type="button" class="btn btn-light capsuled px-4" data-bs-dismiss="modal">{{translate('Cancel')}}</button>
-                    <button type="submit" class="btn btn--primary capsuled px-4 fw-bold shadow-sm">{{translate('Create Automation')}}</button>
+                    <button type="submit" class="btn btn--primary capsuled px-4 fw-bold shadow-sm" id="submitBtn">{{translate('Create Automation')}}</button>
                 </div>
             </form>
         </div>
@@ -341,12 +362,22 @@
 <script nonce="{{ csp_nonce() }}">
     $(document).on('change', '.status-toggle', function() {
         let uid = $(this).data('uid');
+        let checkbox = $(this);
+        let label = $('#statusLabel-' + uid);
+        
         $.post("{{route('user.social.auto_dm.update.status')}}", {
             _token: "{{csrf_token()}}",
             uid: uid
         }, function(res) {
             if(res.status) {
-                // Success toast or notification
+                // Update UI text label
+                if (checkbox.is(':checked')) {
+                    label.text("{{translate('ON')}}").removeClass('text-muted').addClass('text-success');
+                    checkbox.closest('tr').removeClass('opacity-75 bg-light-soft');
+                } else {
+                    label.text("{{translate('OFF')}}").removeClass('text-success').addClass('text-muted');
+                    checkbox.closest('tr').addClass('opacity-75 bg-light-soft');
+                }
             }
         });
     });
@@ -400,11 +431,27 @@
             }
         });
 
+        // Real-time local search/filter of loaded Reels and Posts
+        $('#mediaSearchInput').on('keyup', function() {
+            let query = $(this).val().toLowerCase();
+            $('#mediaListContainer .media-select-card').each(function() {
+                let caption = $(this).find('.media-caption').text().toLowerCase();
+                let type = $(this).find('.media-type').text().toLowerCase();
+                if (caption.includes(query) || type.includes(query)) {
+                    $(this).closest('.col-md-6').removeClass('d-none');
+                } else {
+                    $(this).closest('.col-md-6').addClass('d-none');
+                }
+            });
+        });
+
         function clearMediaSelection() {
             $('#selectedMediaId').val('');
             $('#selectedMediaUrl').val('');
             $('#mediaListContainer .media-select-card').removeClass('border-primary bg-light-blue shadow-sm');
             $('#mediaListContainer .check-badge').addClass('d-none');
+            $('#mediaSearchInput').val('');
+            $('#mediaSearchGroup').addClass('d-none');
         }
 
         function triggerMediaFetch() {
@@ -413,6 +460,7 @@
                 $('#mediaAlertMessage').removeClass('d-none').text("{{translate('Please select a specific Instagram Account above to fetch media.')}}");
                 $('#mediaListContainer').addClass('d-none');
                 $('#mediaLoadingSpinner').addClass('d-none');
+                $('#mediaSearchGroup').addClass('d-none');
                 clearMediaSelection();
                 return;
             }
@@ -420,6 +468,7 @@
             $('#mediaAlertMessage').addClass('d-none');
             $('#mediaLoadingSpinner').removeClass('d-none');
             $('#mediaListContainer').addClass('d-none').empty();
+            $('#mediaSearchGroup').addClass('d-none');
             clearMediaSelection();
 
             $.get("/user/auto-dm/instagram-media/" + accountId, function(res) {
@@ -440,16 +489,16 @@
                                 <div class="media-select-card p-2 border rounded-3 d-flex gap-2 align-items-center position-relative cursor-pointer" 
                                      style="transition: all 0.2s ease; cursor: pointer;" 
                                      data-id="${item.id}" 
-                                     data-url="${item.permalink}">
-                                    <div class="position-relative" style="width: 50px; height: 50px; border-radius: 8px; overflow: hidden; background: #eee;">
+                                     data-thumb="${thumb}">
+                                    <div class="position-relative flex-shrink-0" style="width: 50px; height: 50px; border-radius: 8px; overflow: hidden; background: #eee;">
                                         <img src="${thumb}" style="width: 100%; height: 100%; object-fit: cover;">
                                         <div class="position-absolute bottom-0 end-0 bg-dark text-white p-1 d-flex align-items-center justify-content-center" style="font-size: 8px; border-radius: 4px 0 0 0; opacity: 0.8;">
                                             <i class="bi ${icon}"></i>
                                         </div>
                                     </div>
                                     <div class="flex-grow-1 overflow-hidden">
-                                        <div class="fs-11 fw-bold text-dark text-truncate">${item.media_type}</div>
-                                        <div class="fs-10 text-muted text-truncate">${caption ? caption : 'No Caption'}</div>
+                                        <div class="fs-11 fw-bold text-dark media-type">${item.media_type}</div>
+                                        <div class="fs-10 text-muted media-caption text-truncate">${caption ? caption : 'No Caption'}</div>
                                     </div>
                                     <div class="check-badge position-absolute top-0 end-0 bg-primary text-white d-none" 
                                          style="width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transform: translate(5px, -5px);">
@@ -460,6 +509,7 @@
                         `;
                     });
                     $('#mediaListContainer').html(html).removeClass('d-none');
+                    $('#mediaSearchGroup').removeClass('d-none'); // Show search input once media is loaded
                 } else {
                     $('#mediaAlertMessage').removeClass('d-none').text(res.message || "{{translate('No posts or reels found on this account.')}}");
                 }
@@ -478,7 +528,17 @@
             $(this).find('.check-badge').removeClass('d-none');
 
             $('#selectedMediaId').val($(this).data('id'));
-            $('#selectedMediaUrl').val($(this).data('url'));
+            $('#selectedMediaUrl').val($(this).data('thumb')); // We store the thumbnail URL for direct list display preview
+        });
+
+        // Form submit validation: If specific target is selected, media_id must be populated
+        $('#addTriggerForm').on('submit', function(e) {
+            if ($('#triggerTypeSelect').val() === 'comment_to_dm' && $('#postTargetTypeSelect').val() === 'specific') {
+                if (!$('#selectedMediaId').val()) {
+                    e.preventDefault();
+                    alert("{{translate('Please select a specific Reel or Post from the loaded list to create the trigger!')}}");
+                }
+            }
         });
 
         // Steps handling
