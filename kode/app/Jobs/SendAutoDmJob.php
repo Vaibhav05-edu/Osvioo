@@ -25,11 +25,13 @@ class SendAutoDmJob implements ShouldQueue
     public $userId;
     public $triggerId;
     public $messageText;
+    public $commentId;
+    public $commentReplyText;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($accountId, string $senderId, string $replyText, $userId, $triggerId, ?string $messageText = null)
+    public function __construct($accountId, string $senderId, string $replyText, $userId, $triggerId, ?string $messageText = null, ?string $commentId = null, ?string $commentReplyText = null)
     {
         $this->accountId = $accountId;
         $this->senderId = $senderId;
@@ -37,6 +39,8 @@ class SendAutoDmJob implements ShouldQueue
         $this->userId = $userId;
         $this->triggerId = $triggerId;
         $this->messageText = $messageText;
+        $this->commentId = $commentId;
+        $this->commentReplyText = $commentReplyText;
     }
 
     /**
@@ -60,7 +64,7 @@ class SendAutoDmJob implements ShouldQueue
                 AutoDmLog::create([
                     'user_id' => $user->id,
                     'social_account_id' => $account->id,
-                    'sender_id' => $this->senderId,
+                    'sender_id' => $this->commentId ?? $this->senderId,
                     'received_message' => $this->messageText ?? 'N/A (Trigger Execution)',
                     'reply_sent' => $this->replyText,
                     'status' => 'failed',
@@ -75,7 +79,7 @@ class SendAutoDmJob implements ShouldQueue
                 AutoDmLog::create([
                     'user_id' => $user->id,
                     'social_account_id' => $account->id,
-                    'sender_id' => $this->senderId,
+                    'sender_id' => $this->commentId ?? $this->senderId,
                     'received_message' => $this->messageText ?? 'N/A (Trigger Execution)',
                     'reply_sent' => $this->replyText,
                     'status' => 'failed',
@@ -98,7 +102,7 @@ class SendAutoDmJob implements ShouldQueue
                     AutoDmLog::create([
                         'user_id' => $user->id,
                         'social_account_id' => $account->id,
-                        'sender_id' => $this->senderId,
+                        'sender_id' => $this->commentId ?? $this->senderId,
                         'received_message' => $this->messageText ?? 'N/A (Trigger Execution)',
                         'reply_sent' => $this->replyText,
                         'status' => 'failed',
@@ -108,14 +112,24 @@ class SendAutoDmJob implements ShouldQueue
                 }
             }
 
+            // Handle public comment reply if comment ID and reply text are provided
+            if ($this->commentId && $this->commentReplyText) {
+                InstagramAccount::replyToComment($account, $this->commentId, $this->commentReplyText);
+            }
+
             // Dispatch message via Instagram Account service
-            $response = InstagramAccount::sendMessage($account, $this->senderId, $this->replyText);
+            if ($this->commentId) {
+                // If it is a comment, we send the DM using comment ID to link the opt-in and thread
+                $response = InstagramAccount::sendMessage($account, $this->commentId, $this->replyText, true);
+            } else {
+                $response = InstagramAccount::sendMessage($account, $this->senderId, $this->replyText, false);
+            }
 
             // Log DM execution
             AutoDmLog::create([
                 'user_id' => $user->id,
                 'social_account_id' => $account->id,
-                'sender_id' => $this->senderId,
+                'sender_id' => $this->commentId ?? $this->senderId,
                 'received_message' => $this->messageText ?? 'N/A (Trigger Execution)',
                 'reply_sent' => $this->replyText,
                 'status' => isset($response['status']) && $response['status'] ? 'success' : 'failed',
@@ -128,7 +142,7 @@ class SendAutoDmJob implements ShouldQueue
                 AutoDmLog::create([
                     'user_id' => $this->userId,
                     'social_account_id' => $this->accountId,
-                    'sender_id' => $this->senderId,
+                    'sender_id' => $this->commentId ?? $this->senderId,
                     'received_message' => $this->messageText ?? 'N/A (Trigger Execution)',
                     'reply_sent' => $this->replyText,
                     'status' => 'failed',

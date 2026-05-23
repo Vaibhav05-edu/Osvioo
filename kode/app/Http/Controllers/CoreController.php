@@ -1351,6 +1351,114 @@ class CoreController extends Controller
                         }
                     }
                 }
+
+                // Handle Instagram Comments (Comment-to-DM)
+                if (isset($entry['changes'])) {
+                    foreach ($entry['changes'] as $change) {
+                        if (($change['field'] ?? '') == 'comments') {
+                            $value = $change['value'] ?? [];
+                            $commentId = $value['id'] ?? null;
+                            $mediaId = $value['media']['id'] ?? null;
+                            $commenterId = $value['from']['id'] ?? null;
+                            $messageText = $value['text'] ?? null;
+
+                            if (!$commentId || !$mediaId || !$commenterId || !$messageText) {
+                                continue;
+                            }
+
+                            // Avoid replying to our own comments
+                            if ($commenterId == ($entry['id'] ?? null)) {
+                                continue;
+                            }
+
+                            // Find the SocialAccount
+                            $account = SocialAccount::where('account_id', $entry['id'] ?? null)->first();
+                            if (!$account) {
+                                continue;
+                            }
+
+                            // Check package limits and webhook access
+                            $user = $account->user()->with(['runningSubscription', 'runningSubscription.package'])->first();
+                            if (!$user) {
+                                continue;
+                            }
+
+                            $subscription = $user->runningSubscription;
+                            if (!$subscription) {
+                                continue;
+                            }
+
+                            $package = $subscription->package;
+                            $webhookAccess = @$package->social_access->webhook_access;
+                            if (!$webhookAccess || $webhookAccess != StatusEnum::true->status()) {
+                                continue;
+                            }
+
+                            // Search for comment triggers
+                            $triggers = AutoDmTrigger::with('steps')
+                                ->where('user_id', $account->user_id)
+                                ->where('social_account_id', $account->id)
+                                ->where('trigger_type', 'comment_to_dm')
+                                ->where('status', true)
+                                ->where(function ($query) use ($mediaId) {
+                                    $query->whereNull('media_id')
+                                          ->orWhere('media_id', $mediaId);
+                                })
+                                ->get();
+
+                            foreach ($triggers as $trigger) {
+                                $match = false;
+                                $keyword = strtolower($trigger->keyword);
+                                $receivedText = strtolower($messageText);
+
+                                if ($trigger->match_type == 'exact') {
+                                    if ($receivedText == $keyword) $match = true;
+                                } elseif ($trigger->match_type == 'contains') {
+                                    if (str_contains($receivedText, $keyword)) $match = true;
+                                } elseif ($trigger->match_type == 'start_with') {
+                                    if (str_starts_with($receivedText, $keyword)) $match = true;
+                                }
+
+                                if ($match) {
+                                    // If trigger has steps, dispatch a job for each step
+                                    if ($trigger->steps && $trigger->steps->isNotEmpty()) {
+                                        $cumulativeDelay = 0;
+                                        foreach ($trigger->steps as $index => $step) {
+                                            $cumulativeDelay += (int)$step->delay_seconds;
+                                            // Only the first step posts the comment reply
+                                            $commentReplyText = ($index == 0) ? $trigger->comment_reply_text : null;
+
+                                            \App\Jobs\SendAutoDmJob::dispatch(
+                                                $account->id,
+                                                $commenterId,
+                                                $step->reply_text,
+                                                $account->user_id,
+                                                $trigger->id,
+                                                $messageText,
+                                                $commentId,
+                                                $commentReplyText
+                                            )->delay(now()->addSeconds($cumulativeDelay));
+                                        }
+                                    } else {
+                                        // Fallback to single step reply_text with 0 delay
+                                        \App\Jobs\SendAutoDmJob::dispatch(
+                                            $account->id,
+                                            $commenterId,
+                                            $trigger->reply_text,
+                                            $account->user_id,
+                                            $trigger->id,
+                                            $messageText,
+                                            $commentId,
+                                            $trigger->comment_reply_text
+                                        );
+                                    }
+
+                                    break; // Stop after first matched trigger
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 

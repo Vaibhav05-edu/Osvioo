@@ -336,6 +336,7 @@ use Illuminate\Support\Facades\Http;
                  Route::post('/store','store')->name('store');
                  Route::post('/update/status','updateStatus')->name('update.status');
                  Route::get('/destroy/{uid}','destroy')->name('destroy');
+                 Route::get('/instagram-media/{account_id}', 'fetchInstagramMedia')->name('instagram_media');
             });
 
          });

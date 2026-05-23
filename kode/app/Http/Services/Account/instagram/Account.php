@@ -1127,7 +1127,7 @@ class Account
      * @param string $text
      * @return array
      */
-    public static function sendMessage(\App\Models\SocialAccount $account, string $recipientId, string $text): array
+    public static function sendMessage(\App\Models\SocialAccount $account, string $recipientId, string $text, bool $isComment = false): array
     {
         try {
             $platform = $account->platform;
@@ -1138,9 +1138,11 @@ class Account
             // Instagram Direct Messages endpoint via Messenger API
             $apiUrl = self::getApiUrl($accountId . '/messages', [], $configuration);
 
+            $recipient = $isComment ? ['comment_id' => $recipientId] : ['id' => $recipientId];
+
             $response = \Illuminate\Support\Facades\Http::withToken($token)
                 ->post($apiUrl, [
-                    'recipient' => ['id' => $recipientId],
+                    'recipient' => $recipient,
                     'message' => ['text' => $text],
                 ]);
 
@@ -1148,6 +1150,86 @@ class Account
                 return [
                     'status' => true,
                     'message_id' => $response->json('message_id'),
+                ];
+            }
+
+            return [
+                'status' => false,
+                'message' => $response->json('error.message') ?? 'Unknown error',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Get Instagram media (Posts and Reels)
+     */
+    public static function getInstagramMedia(\App\Models\SocialAccount $account): array
+    {
+        try {
+            $platform = $account->platform;
+            $configuration = $platform->configuration;
+            $baseApi = $configuration->graph_api_url;
+            $apiVersion = $configuration->app_version;
+            $api = $baseApi . "/" . $apiVersion;
+            $token = $account->token;
+            $userId = $account->account_id;
+            $apiUrl = $api . "/" . $userId . "/media";
+            $fields = 'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp';
+
+            $params = [
+                'fields' => $fields,
+                'access_token' => $token,
+                'limit' => 50,
+            ];
+
+            $response = Http::get($apiUrl, $params);
+            $apiResponse = $response->json();
+
+            if (isset($apiResponse['error'])) {
+                return [
+                    'status' => false,
+                    'message' => $apiResponse['error']['message']
+                ];
+            }
+
+            return [
+                'status' => true,
+                'data' => $apiResponse['data'] ?? [],
+            ];
+        } catch (\Exception $ex) {
+            return [
+                'status' => false,
+                'message' => $ex->getMessage()
+            ];
+        }
+    }
+
+    /**
+     * Reply to a comment on Instagram
+     */
+    public static function replyToComment(\App\Models\SocialAccount $account, string $commentId, string $text): array
+    {
+        try {
+            $platform = $account->platform;
+            $configuration = $platform->configuration;
+            $token = $account->token;
+
+            $apiUrl = self::getApiUrl($commentId . '/replies', [], $configuration);
+
+            $response = \Illuminate\Support\Facades\Http::withToken($token)
+                ->post($apiUrl, [
+                    'message' => $text,
+                ]);
+
+            if ($response->successful()) {
+                return [
+                    'status' => true,
+                    'reply_id' => $response->json('id'),
                 ];
             }
 

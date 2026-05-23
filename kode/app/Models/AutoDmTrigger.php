@@ -18,6 +18,10 @@ class AutoDmTrigger extends Model
         'reply_text',
         'match_type',
         'status',
+        'trigger_type',
+        'media_id',
+        'media_url',
+        'comment_reply_text',
     ];
 
     protected static function booted()

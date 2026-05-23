@@ -95,7 +95,11 @@ class AutoDmController extends Controller
             'keyword' => 'required|string|max:255',
             'reply_text' => 'required|string',
             'match_type' => 'required|in:exact,contains,start_with',
-            'social_account_id' => 'nullable|exists:social_accounts,id',
+            'social_account_id' => 'required_if:trigger_type,comment_to_dm|nullable|exists:social_accounts,id',
+            'trigger_type' => 'required|in:inbox_dm,comment_to_dm',
+            'comment_reply_text' => 'nullable|required_if:trigger_type,comment_to_dm|string',
+            'media_id' => 'nullable|string',
+            'media_url' => 'nullable|string',
             'steps' => 'nullable|array',
             'steps.*.reply_text' => 'required|string',
             'steps.*.delay_seconds' => 'required|integer|min:0',
@@ -107,6 +111,10 @@ class AutoDmController extends Controller
             'keyword' => $request->keyword,
             'reply_text' => $request->reply_text,
             'match_type' => $request->match_type,
+            'trigger_type' => $request->trigger_type,
+            'media_id' => $request->trigger_type == 'comment_to_dm' ? $request->media_id : null,
+            'media_url' => $request->trigger_type == 'comment_to_dm' ? $request->media_url : null,
+            'comment_reply_text' => $request->trigger_type == 'comment_to_dm' ? $request->comment_reply_text : null,
             'status' => true,
         ]);
 
@@ -146,5 +154,26 @@ class AutoDmController extends Controller
         $trigger->delete();
 
         return back()->with('success', translate('Trigger deleted successfully'));
+    }
+
+    public function fetchInstagramMedia($accountId)
+    {
+        $user = auth_user('web');
+        if (!$user) {
+            return response()->json(['status' => false, 'message' => translate('Unauthorized')]);
+        }
+
+        $account = SocialAccount::where('user_id', $user->id)
+            ->where('id', $accountId)
+            ->active()
+            ->first();
+
+        if (!$account) {
+            return response()->json(['status' => false, 'message' => translate('Instagram account not found or inactive')]);
+        }
+
+        $response = \App\Http\Services\Account\instagram\Account::getInstagramMedia($account);
+
+        return response()->json($response);
     }
 }
