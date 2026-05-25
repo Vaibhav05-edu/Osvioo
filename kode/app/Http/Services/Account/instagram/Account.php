@@ -39,18 +39,16 @@ class Account
 
             case 'auth':
                 return [
-                    'ads_management',
-                    'business_management',
-                    'instagram_basic',
-                    'instagram_content_publish',
-                    'pages_read_engagement',
-                    'instagram_manage_messages'
+                    'instagram_business_basic',
+                    'instagram_business_manage_messages',
+                    'instagram_business_manage_comments',
+                    'instagram_business_content_publish'
                 ];
 
             default:
 
                 return [
-                    'pages_read_engagement'
+                    'instagram_business_basic'
                 ];
         }
 
@@ -101,16 +99,16 @@ class Account
      */
     public static function getAccessToken(string $code, MediaPlatform $mediaPlatform)
     {
-
         $configuration = $mediaPlatform->configuration;
-        $apiUrl = self::getApiUrl('/oauth/access_token', [
+        $apiUrl = 'https://api.instagram.com/oauth/access_token';
+
+        return Http::asForm()->post($apiUrl, [
             'code' => $code,
             'client_id' => $configuration->client_id,
             'client_secret' => $configuration->client_secret,
             'redirect_uri' => url('/account/instagram/callback?medium=' . $mediaPlatform->slug),
-        ], $configuration);
-
-        return Http::post($apiUrl);
+            'grant_type' => 'authorization_code',
+        ]);
     }
 
 
@@ -148,20 +146,15 @@ class Account
      */
     public static function authRedirect(MediaPlatform $mediaPlatform)
     {
-
-
         $scopes = collect(self::getScopes())->join(',');
         $configuration = $mediaPlatform->configuration;
 
-
-        return self::getApiUrl('dialog/oauth', [
-            'response_type' => 'code',
+        return 'https://api.instagram.com/oauth/authorize?' . http_build_query([
             'client_id' => $configuration->client_id,
             'redirect_uri' => url('/account/instagram/callback?medium=' . $mediaPlatform->slug),
+            'response_type' => 'code',
             'scope' => $scopes,
-        ], $configuration, true);
-
-
+        ]);
     }
 
 
@@ -297,6 +290,45 @@ class Account
 
 
         }
+    }
+
+
+    /**
+     * Save direct Instagram account obtained from direct Instagram login
+     *
+     * @param array $user
+     * @param string $guard
+     * @param MediaPlatform $mediaPlatform
+     * @param string $account_type
+     * @param string $is_official
+     * @param string $token
+     * @param int|string|null $dbId
+     * @return array
+     */
+    public static function saveDirectIgAccount(
+        array $user,
+        string $guard,
+        MediaPlatform $mediaPlatform,
+        string $account_type,
+        string $is_official,
+        string $token,
+        int|string $dbId = null
+    ) {
+        $instagram = new self();
+
+        $accountInfo = [
+            'id' => $user['id'],
+            'account_id' => $user['id'],
+            'name' => Arr::get($user, 'username', null),
+            'avatar' => null,
+            'email' => null,
+            'token' => $token,
+            'access_token_expire_at' => now()->addMonths(2),
+            'refresh_token' => $token,
+            'refresh_token_expire_at' => now()->addMonths(2),
+        ];
+
+        return $instagram->saveAccount($guard, $mediaPlatform, $accountInfo, $account_type, $is_official, $dbId);
     }
 
 

@@ -945,29 +945,21 @@ class CoreController extends Controller
 
                 case 'instagram':
 
-
-
                     $token = InstagramAccount::getAccessToken($code, $platform)->throw()->json('access_token');
-                    $pages = InstagramAccount::getAccounts(
-                        ['connected_instagram_account,name,access_token'],
-                        $platform,
-                        $token
-                    )
-                        ->throw()
-                        ->json('data');
+                    
+                    // Fetch direct Instagram profile details using Instagram User Access Token
+                    $igUser = Http::get('https://graph.instagram.com/me', [
+                        'fields' => 'id,username',
+                        'access_token' => $token,
+                    ])->throw()->json();
 
-                    Log::info('Instagram Access Token:', ['token' => $token]);
+                    Log::info('Instagram Direct User Data:', ['user' => $igUser]);
 
-                    Log::info('Instagram Pages Data:', ['pages' => $pages]);
-
-
-
-
-                    InstagramAccount::saveIgAccount(
-                        $pages,
+                    InstagramAccount::saveDirectIgAccount(
+                        $igUser,
                         $guard,
                         $platform,
-                        AccountType::PAGE->value,
+                        AccountType::PROFILE->value,
                         ConnectionType::OFFICIAL->value,
                         $token,
                     );
