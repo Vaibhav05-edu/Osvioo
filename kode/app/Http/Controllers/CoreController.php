@@ -948,6 +948,9 @@ class CoreController extends Controller
                     Log::info('Instagram Connect Started');
 
                     try {
+                        // Strip #_ if present in the authorization code
+                        $code = preg_replace('/#_$/', '', $code);
+                        
                         $response = InstagramAccount::getAccessToken($code, $platform);
                         Log::info('Instagram Token Response', ['body' => $response->json()]);
                         
