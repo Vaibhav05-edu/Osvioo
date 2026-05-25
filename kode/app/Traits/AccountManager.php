@@ -86,7 +86,7 @@ trait AccountManager
                         
                         $account->save();
 
-                        if($account->user_id && !$dbId){
+                        if($account->user_id && !$dbId && $user->runningSubscription){
 
                             $this->generateCreditLog(
                                 user        : $user,
