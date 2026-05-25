@@ -945,24 +945,38 @@ class CoreController extends Controller
 
                 case 'instagram':
 
-                    $token = InstagramAccount::getAccessToken($code, $platform)->throw()->json('access_token');
-                    
-                    // Fetch direct Instagram profile details using Instagram User Access Token
-                    $igUser = Http::get('https://graph.instagram.com/me', [
-                        'fields' => 'id,username',
-                        'access_token' => $token,
-                    ])->throw()->json();
+                    Log::info('Instagram Connect Started');
 
-                    Log::info('Instagram Direct User Data:', ['user' => $igUser]);
+                    try {
+                        $response = InstagramAccount::getAccessToken($code, $platform);
+                        Log::info('Instagram Token Response', ['body' => $response->json()]);
+                        
+                        $token = $response->throw()->json('access_token');
+                        
+                        Log::info('Instagram Fetching Profile with Token', ['token' => $token]);
+                        // Fetch direct Instagram profile details using Instagram User Access Token
+                        $igUser = Http::get('https://graph.instagram.com/me', [
+                            'fields' => 'id,username',
+                            'access_token' => $token,
+                        ])->throw()->json();
 
-                    InstagramAccount::saveDirectIgAccount(
-                        $igUser,
-                        $guard,
-                        $platform,
-                        AccountType::PROFILE->value,
-                        ConnectionType::OFFICIAL->value,
-                        $token,
-                    );
+                        Log::info('Instagram Direct User Data:', ['user' => $igUser]);
+
+                        InstagramAccount::saveDirectIgAccount(
+                            $igUser,
+                            $guard,
+                            $platform,
+                            AccountType::PROFILE->value,
+                            ConnectionType::OFFICIAL->value,
+                            $token,
+                        );
+
+                        Log::info('Instagram Connect Success');
+
+                    } catch (\Exception $e) {
+                        Log::error('Instagram Connect Error', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+                        throw $e;
+                    }
 
                     return redirect()->route($routeName, ['platform' => $platform->slug])
                         ->with(response_status("Account Added"));

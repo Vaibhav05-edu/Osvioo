@@ -106,7 +106,7 @@ class Account
             'code' => $code,
             'client_id' => $configuration->client_id,
             'client_secret' => $configuration->client_secret,
-            'redirect_uri' => url('/account/instagram/callback?medium=' . $mediaPlatform->slug),
+            'redirect_uri' => url('/account/instagram/callback'),
             'grant_type' => 'authorization_code',
         ]);
     }
@@ -151,7 +151,7 @@ class Account
 
         return 'https://api.instagram.com/oauth/authorize?' . http_build_query([
             'client_id' => $configuration->client_id,
-            'redirect_uri' => url('/account/instagram/callback?medium=' . $mediaPlatform->slug),
+            'redirect_uri' => url('/account/instagram/callback'),
             'response_type' => 'code',
             'scope' => $scopes,
         ]);
