@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('auto_dm_triggers', function (Blueprint $table) {
-            $table->string('media_id')->nullable()->after('trigger_type');
-            $table->text('media_url')->nullable()->after('media_id');
+            if (!Schema::hasColumn('auto_dm_triggers', 'media_id')) {
+                $table->string('media_id')->nullable()->after('trigger_type');
+            }
+            if (!Schema::hasColumn('auto_dm_triggers', 'media_url')) {
+                $table->text('media_url')->nullable()->after('media_id');
+            }
         });
     }
 
