@@ -122,6 +122,8 @@ Route::middleware([
             Route::get('/edit/{uid}', 'edit')->name('edit');
             Route::post('/bulk/action', 'bulk')->name('bulk');
             Route::get('/destroy/{id}', 'destroy')->name('destroy');
+            Route::post('/affiliate-approve/{id}', 'affiliateApprove')->name('affiliate.approve');
+            Route::post('/affiliate-reject/{id}', 'affiliateReject')->name('affiliate.reject');
             Route::post('configuration', 'configuration')->name('configuration');
 
         });
@@ -597,6 +599,22 @@ Route::middleware([
             Route::post('/bulk/action', 'bulk')->name('bulk');
             Route::get('/destroy/file/{id}', 'destroyFile')->name('destroy.file');
 
+        });
+        
+        # invoice route
+        Route::controller(\App\Http\Controllers\Admin\InvoiceController::class)->prefix("/invoice")->name('invoice.')->group(function(){
+            Route::get('/list','list')->name('list');
+            Route::post('/watermark-approve/{uid}','approveWatermark')->name('watermark.approve');
+            Route::post('/watermark-reject/{uid}','rejectWatermark')->name('watermark.reject');
+        });
+
+        # addon route
+        Route::controller(\App\Http\Controllers\Admin\AddonController::class)->prefix("/addon")->name('addon.')->group(function(){
+            Route::get('/list','list')->name('list');
+            Route::post('/store','store')->name('store');
+            Route::post('/update','update')->name('update');
+            Route::post('/update/status','updateStatus')->name('update.status');
+            Route::get('/destroy/{id}','destroy')->name('destroy');
         });
 
         #social account and post route

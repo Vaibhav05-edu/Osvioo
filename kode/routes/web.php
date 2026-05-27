@@ -154,14 +154,15 @@ use Illuminate\Support\Facades\Http;
                 Route::get('/logout', 'logout')->name('logout')->withoutMiddleware(['kyc','user.verified']);
             });
 
-            #home & profile route
-            Route::controller(HomeController::class)->group(function(){
-
-                Route::any('dashboard','home')->name('home');
-                Route::get('profile','profile')->name('profile');
-                Route::post('profile/update','profileUpdate')->name('profile.update');
-                Route::post('profile/delete','deleteAccount')->name('profile.delete');
-                Route::post('/update', 'passwordUpdate')->name('password.update');
+            //Profile
+            Route::controller(\App\Http\Controllers\User\HomeController::class)->group(function(){
+                Route::get('/dashboard', 'home')->name('home');
+                Route::get('/profile', 'profile')->name('profile');
+                Route::post('/profile/update', 'profileUpdate')->name('profile.update');
+                Route::post('/profile/delete', 'deleteAccount')->name('profile.delete');
+                Route::post('/password/update', 'passwordUpdate')->name('password.update');
+                
+                Route::post('/affiliate/apply', 'affiliateApply')->name('affiliate.apply');
                 Route::post('/affiliate/update', 'affiliateUpdate')->name('affiliate.update');
                 Route::post('/webhook/update', 'webhookUpdate')->name('webhook.update');
                 Route::get('/notifications','notification')->name('notifications');
@@ -189,6 +190,22 @@ use Illuminate\Support\Facades\Http;
                     Route::post('/request/process','withdrawProcess')->name('request.process');
                     Route::get('/preview/{trx}','withdrawPreview')->name('preview');
                     Route::post('/request/submit','withdrawRequest')->name('request.submit');
+                });
+
+                # invoice route
+                Route::prefix("/invoice")->name('invoice.')->group(function(){
+                    Route::get('/list', [\App\Http\Controllers\User\InvoiceController::class, 'list'])->name('list');
+                    Route::get('/create', [\App\Http\Controllers\User\InvoiceController::class, 'create'])->name('create');
+                    Route::post('/store', [\App\Http\Controllers\User\InvoiceController::class, 'store'])->name('store');
+                    Route::get('/download/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'download'])->name('download');
+                    Route::get('/share/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'share'])->name('share');
+                    Route::post('/request-watermark-removal/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'requestWatermarkRemoval'])->name('watermark.request');
+                });
+
+                # addon route
+                Route::prefix("/addons")->name('addon.')->group(function(){
+                    Route::get('/marketplace', [\App\Http\Controllers\User\AddonController::class, 'marketplace'])->name('marketplace');
+                    Route::post('/purchase/{uid}', [\App\Http\Controllers\User\AddonController::class, 'purchase'])->name('purchase');
                 });
 
                 Route::get('/plans', 'plan')->name('plan');
@@ -355,6 +372,8 @@ use Illuminate\Support\Facades\Http;
             Route::get('/pages/{slug}', 'page')->name('page');
             Route::get('/integrations/{slug}/{uid}', 'integration')->name('integration');
             Route::get('/services/{slug}/{uid}', 'service')->name('service');
+            
+            Route::get('/ref/{username}', [\App\Http\Controllers\FrontendController::class, 'affiliateRedirect'])->name('affiliate.ref');
 
         });
 

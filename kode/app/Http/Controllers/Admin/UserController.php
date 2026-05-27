@@ -203,5 +203,19 @@ class UserController extends Controller
         return  back()->with($response);
     }
 
+    public function affiliateApprove($id)
+    {
+        $user = User::findOrFail($id);
+        $user->affiliate_status = 2;
+        $user->save();
+        return back()->with('success', translate('Affiliate application approved.'));
+    }
 
+    public function affiliateReject($id)
+    {
+        $user = User::findOrFail($id);
+        $user->affiliate_status = 3;
+        $user->save();
+        return back()->with('success', translate('Affiliate application rejected.'));
+    }
 }

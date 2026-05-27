@@ -290,81 +290,105 @@
 
                 <div class="tab-pane fade" id="tab-affiliate-pane" role="tabpanel" aria-labelledby="tab-affiliate"
                     tabindex="0">
-                    <div class="row align-items-center gy-5">
-                        <div class="col-lg-4">
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <div class="bg--linear-primary text-center mb-3">
-                                        <div class="card-body p-3">
-                                            <h3 class="fw-bold mt-1 mb-3 text-white fs-20">
-                                                {{translate('Affiliate Setting')}}
-                                            </h3>
-                                            <p class="text-white opacity-75">
-                                                {{translate('Configure your affiliate settings to optimize your referral program. ')}}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <ul class="subcription-list">
-
-                                        <li>
-                                            <span> {{translate('This Earning')}} </span>
-                                            <span>
-                                                {{num_format(number:$affiliateLogs->sum('commission_amount'),calC:true)}}
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span> {{translate('Total Referred')}} </span>
-                                            <span>
-                                                {{ $user->affilateUser->count()}}
-                                            </span>
-                                        </li>
-
-                                    </ul>
-                                    <form action="{{route('user.affiliate.update')}}" method="post"
-                                        class="referral-form mt-5">
-                                        @csrf
-                                        <div class="form-inner">
-                                            <label for="referral_code" class="form-label">
-                                                {{ translate('Referral Code') }} <span class="text--danger">*</span>
-                                            </label>
-
-                                            <div class="input-with-btn">
-                                                <input placeholder="{{translate('Referral Code')}}" name="referral_code"
-                                                    value="{{$user->referral_code}}" type="text" id="referral_code">
-                                                <button data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    data-bs-title="{{translate('Generate Code')}}" type="button"
-                                                    class="code-generate"
-                                                    data-text="{{route('auth.register',['referral_code' => $user->referral_code])}}"><i
-                                                        class="bi bi-arrow-repeat"></i></button>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-inner">
-                                            <label for="ReferralURL" class="form-label">
-                                                {{ translate('Referral URL') }}
-                                            </label>
-
-                                            <div class="input-with-btn">
-                                                <input type="readonly"
-                                                    value="{{route('auth.register',['referral_code' => $user->referral_code])}}" id="ReferralURL">
-                                                <button data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    data-bs-title="{{translate('Copy')}}" type="button"
-                                                    class="copy-text"
-                                                    data-text="{{route('auth.register',['referral_code' => $user->referral_code])}}"><i
-                                                        class="bi bi-clipboard"></i></button>
-                                            </div>
-
-                                        </div>
-
-                                        <button class="i-btn btn--lg btn--primary capsuled" type="submit">
-                                            {{translate('Update')}}
-                                            <span><i class="bi bi-arrow-up-right"></i></span>
-                                        </button>
-
-                                    </form>
-                                </div>
+                    @if($user->affiliate_status == 0)
+                        <div class="card mb-4 border-0 shadow-sm">
+                            <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+                                <h4 class="card-title">{{translate('Become an Affiliate')}}</h4>
+                            </div>
+                            <div class="card-body">
+                                <p>{{translate('Join our affiliate program and earn commissions for every successful referral. Apply now to get your unique referral link.')}}</p>
+                                <form action="{{route('user.affiliate.apply')}}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="i-btn btn--primary capsuled mt-3">{{translate('Apply Now')}}</button>
+                                </form>
                             </div>
                         </div>
+                    @elseif($user->affiliate_status == 1)
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle me-2"></i>{{translate('Your affiliate application is currently pending approval. We will review it shortly.')}}
+                        </div>
+                    @elseif($user->affiliate_status == 3)
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-triangle me-2"></i>{{translate('Your affiliate application was rejected. Please contact support for more details.')}}
+                        </div>
+                    @elseif($user->affiliate_status == 2)
+                        <div class="row align-items-center gy-5">
+                            <div class="col-lg-4">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="bg--linear-primary text-center mb-3">
+                                            <div class="card-body p-3">
+                                                <h3 class="fw-bold mt-1 mb-3 text-white fs-20">
+                                                    {{translate('Affiliate Setting')}}
+                                                </h3>
+                                                <p class="text-white opacity-75">
+                                                    {{translate('Configure your affiliate settings to optimize your referral program. ')}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <ul class="subcription-list">
+                                            <li>
+                                                <span> {{translate('This Earning')}} </span>
+                                                <span>
+                                                    {{num_format(number:$affiliateLogs->sum('commission_amount'),calC:true)}}
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span> {{translate('Total Referred')}} </span>
+                                                <span>
+                                                    {{ $user->affilateUser->count()}}
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span> {{translate('Total Clicks')}} </span>
+                                                <span>
+                                                    {{ \App\Models\AffiliateClickLog::where('referral_id', $user->id)->count() }}
+                                                </span>
+                                            </li>
+                                        </ul>
+                                        <form action="{{route('user.affiliate.update')}}" method="post"
+                                            class="referral-form mt-5">
+                                            @csrf
+                                            <div class="form-inner">
+                                                <label for="referral_code" class="form-label">
+                                                    {{ translate('Referral Code') }} <span class="text--danger">*</span>
+                                                </label>
+
+                                                <div class="input-with-btn">
+                                                    <input placeholder="{{translate('Referral Code')}}" name="referral_code"
+                                                        value="{{$user->referral_code}}" type="text" id="referral_code">
+                                                    <button data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        data-bs-title="{{translate('Generate Code')}}" type="button"
+                                                        class="code-generate"
+                                                        data-text="{{url('/ref/'.$user->username)}}"><i
+                                                            class="bi bi-arrow-repeat"></i></button>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-inner">
+                                                <label for="ReferralURL" class="form-label">
+                                                    {{ translate('Referral URL') }}
+                                                </label>
+
+                                                <div class="input-with-btn">
+                                                    <input type="readonly"
+                                                        value="{{url('/ref/'.$user->username)}}" id="ReferralURL">
+                                                    <button data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        data-bs-title="{{translate('Copy')}}" type="button"
+                                                        class="copy-text"
+                                                        data-text="{{url('/ref/'.$user->username)}}"><i
+                                                            class="bi bi-clipboard"></i></button>
+                                                </div>
+                                            </div>
+
+                                            <button class="i-btn btn--lg btn--primary capsuled" type="submit">
+                                                {{translate('Update')}}
+                                                <span><i class="bi bi-arrow-up-right"></i></span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         <div class="col-lg-8 ps-lg-5">
                             <div class="plan-upgrade">
                                 <h4 class="mb-4 title">

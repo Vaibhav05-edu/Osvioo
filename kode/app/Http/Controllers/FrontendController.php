@@ -26,6 +26,31 @@ class FrontendController extends Controller
         $this->lastSegment = collect(request()->segments())->last();
 
     }
+
+    public function cookieReject()
+    {
+        Cookie::queue('cookie_consent', 'declined', 43200);
+        return back();
+    }
+
+    public function affiliateRedirect(Request $request, $username)
+    {
+        $referral = \App\Models\User::where('username', $username)->first();
+
+        if ($referral && $referral->affiliate_status == 2) {
+            // Log the click
+            \App\Models\AffiliateClickLog::create([
+                'referral_id' => $referral->id,
+                'ip_address' => $request->ip()
+            ]);
+
+            // Set session for registration
+            session()->put('reference', $referral->username);
+        }
+
+        return redirect()->route('register');
+    }
+
     /**
      * frontend view
      *

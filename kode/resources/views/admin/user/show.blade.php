@@ -58,6 +58,27 @@
                             </li>
                         @endif
 
+                        <li>
+                            <span>{{ translate('Affiliate Status') }} :</span>
+                            @if($user->affiliate_status == 0)
+                                <span class="badge bg-secondary">{{translate('Not Applied')}}</span>
+                            @elseif($user->affiliate_status == 1)
+                                <span class="badge bg-warning text-dark">{{translate('Pending')}}</span>
+                                <form action="{{route('admin.affiliate.approve', $user->id)}}" method="POST" class="d-inline-block ms-2">
+                                    @csrf
+                                    <button class="btn btn-sm btn-success py-0 px-2" type="submit">{{translate('Approve')}}</button>
+                                </form>
+                                <form action="{{route('admin.affiliate.reject', $user->id)}}" method="POST" class="d-inline-block ms-1">
+                                    @csrf
+                                    <button class="btn btn-sm btn-danger py-0 px-2" type="submit">{{translate('Reject')}}</button>
+                                </form>
+                            @elseif($user->affiliate_status == 2)
+                                <span class="badge bg-success">{{translate('Approved')}}</span>
+                            @elseif($user->affiliate_status == 3)
+                                <span class="badge bg-danger">{{translate('Rejected')}}</span>
+                            @endif
+                        </li>
+
                         <li><span>{{ translate('Name') }} :</span> {{ $user->name }}</li>
                         <li><span>{{ translate('Username') }} :</span> {{ $user->user_name ?? '--' }}</li>
                         <li><span>{{ translate('Phone') }} :</span> {{ $user->phone }}</li>

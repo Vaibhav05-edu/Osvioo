@@ -368,22 +368,28 @@ class HomeController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function affiliateUpdate(Request $request ) :RedirectResponse{
+    public function affiliateUpdate(Request $request)
+    {
+        $request->validate([
+            'referral_code' => ['required','unique:users,referral_code,'.auth_user('web')->id],
+        ]);
 
-        $response = response_status('Affiliate System Is Currently Disabled');
-        if(site_settings("affiliate_system") == StatusEnum::true->status()){
-            $response = response_status('Referral Code Updated');
-            $request->validate([
-                'referral_code'      => ['required','unique:users,referral_code,'.$this->user->id,'max:155'],
-            ]);
+        $user = auth_user('web');
+        $user->referral_code = $request->referral_code;
+        $user->save();
 
-            $user                       =  $this->user;
-            $user->referral_code        =  $request->input('referral_code');
+        return back()->with('success',translate('Affiliate configured successfully'));
+    }
+
+    public function affiliateApply(Request $request)
+    {
+        $user = auth_user('web');
+        if ($user->affiliate_status == 0) {
+            $user->affiliate_status = 1;
             $user->save();
-
+            return back()->with('success',translate('Affiliate application submitted successfully'));
         }
-
-        return back()->with( $response);
+        return back()->with('error',translate('You have already applied for affiliate program'));
     }
 
 
