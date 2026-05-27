@@ -6,7 +6,7 @@
    >
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1280" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{csrf_token()}}" />
     <meta name="color-scheme" content="light dark" />
 
@@ -152,6 +152,7 @@
       @endif
 
     <link nonce="{{ csp_nonce() }}" href="{{asset('assets/frontend/css/custom.css')}}" rel="stylesheet" type="text/css" />
+    <link nonce="{{ csp_nonce() }}" href="{{asset('assets/frontend/css/mobile.css')}}" rel="stylesheet" type="text/css" />
     
     <link nonce="{{ csp_nonce() }}" href="{{asset('assets/global/css/toastr.css')}}" rel="stylesheet" type="text/css" />
 
