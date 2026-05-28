@@ -1,4 +1,4 @@
-@extends('user.layouts.master')
+@extends('layouts.master')
 @section('content')
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">

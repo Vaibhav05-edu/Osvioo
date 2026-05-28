@@ -83,19 +83,22 @@
                         </div>
                     </li>
 
+                    @php
+                        $isInvoiceActive = request()->routeIs('user.invoice.*');
+                    @endphp
                     <li class="sidemenu-item">
                         <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse">
                             <div class="sidemenu-icon"><i class="bi bi-receipt"></i></div>
                             <span>
                                 {{translate("Invoice Maker")}}
-                                <small><i class="bi bi-chevron-down"></i></small>
+                                <small><i class="bi bi-chevron-down" @if($isInvoiceActive) style="transform: rotate(-180deg);" @endif></i></small>
                             </span>
                         </a>
-                        <div class="side-menu-dropdown">
+                        <div class="side-menu-dropdown @if($isInvoiceActive) show-sideMenu @endif">
                             <ul class="sub-menu">
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-plus-circle"></i></span><p>{{translate('Make Invoice')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-share"></i></span><p>{{translate('Shared Invoice')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-files"></i></span><p>{{translate('Total Invoice')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.invoice.create') ? 'active' : ''}}" href="{{route('user.invoice.create')}}"><span><i class="bi bi-plus-circle"></i></span><p>{{translate('Make Invoice')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.invoice.list') ? 'active' : ''}}" href="{{route('user.invoice.list')}}"><span><i class="bi bi-share"></i></span><p>{{translate('Shared Invoice')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.invoice.list') ? 'active' : ''}}" href="{{route('user.invoice.list')}}"><span><i class="bi bi-files"></i></span><p>{{translate('Total Invoice')}}</p></a></li>
                             </ul>
                         </div>
                     </li>
