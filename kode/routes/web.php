@@ -35,7 +35,45 @@ Route::get('/fix-prod', function () {
     try {
         Artisan::call('migrate', ['--force' => true]);
         Artisan::call('optimize:clear');
-        return "✅ Success! Migrations run and cache cleared. You can now use the Add-on Marketplace.";
+        
+        // Seed default addons if empty
+        if (\Illuminate\Support\Facades\Schema::hasTable('addons') && \App\Models\Addon::count() == 0) {
+            $defaultAddons = [
+                [
+                    'uid' => \Illuminate\Support\Str::uuid(),
+                    'title' => 'Extra Instagram Account',
+                    'type' => 'extra_account',
+                    'price' => 49.00,
+                    'value' => 1,
+                    'status' => 1,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'uid' => \Illuminate\Support\Str::uuid(),
+                    'title' => 'Extra Media Kit',
+                    'type' => 'extra_media_kit',
+                    'price' => 99.00,
+                    'value' => 1,
+                    'status' => 1,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'uid' => \Illuminate\Support\Str::uuid(),
+                    'title' => '1000 AI Credits',
+                    'type' => 'credits',
+                    'price' => 19.00,
+                    'value' => 1000,
+                    'status' => 1,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ];
+            \App\Models\Addon::insert($defaultAddons);
+        }
+
+        return "✅ Success! Migrations run, cache cleared, and Default Add-ons added. You can now use the Add-on Marketplace.";
     } catch (\Exception $e) {
         return "❌ Error: " . $e->getMessage();
     }
