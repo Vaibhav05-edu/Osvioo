@@ -179,6 +179,7 @@ Route::middleware([
             Route::get('/select/search', 'selectSearch')->name('selectSearch');
             
             // Affiliate Approvals
+            Route::get('/affiliate-applications', 'affiliateApplications')->name('affiliate.applications');
             Route::post('/affiliate-approve/{id}', 'affiliateApprove')->name('affiliate.approve');
             Route::post('/affiliate-reject/{id}', 'affiliateReject')->name('affiliate.reject');
 

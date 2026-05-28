@@ -72,7 +72,7 @@
                         <i class="las la-angle-down"></i>
                     </small>
                 </a>
-                <div class="side-menu-dropdown collapse {{ sidebar_awake(['admin.subscription.package.*'], 'drop_down') }} " id="packages">
+                <div class="side-menu-dropdown collapse {{ sidebar_awake(['admin.subscription.package.*','admin.invoice.*','admin.addon.*'], 'drop_down') }} " id="packages">
                     <ul class="sub-menu">
                         <li class="sub-menu-item">
                             <a class="sidebar-menu-link {{ sidebar_awake(['admin.subscription.package.list', 'admin.subscription.package.edit']) }}" href="{{ route('admin.subscription.package.list') }}">
@@ -87,6 +87,22 @@
                                 <span></span>
                                 <p>
                                     {{ translate('Add New') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a class="sidebar-menu-link {{ sidebar_awake(['admin.invoice.list','admin.invoice.create']) }}" href="{{ route('admin.invoice.list') }}">
+                                <span></span>
+                                <p>
+                                    {{ translate('Invoices & Watermark') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a class="sidebar-menu-link {{ sidebar_awake(['admin.addon.list']) }}" href="{{ route('admin.addon.list') }}">
+                                <span></span>
+                                <p>
+                                    {{ translate('Add-ons') }}
                                 </p>
                             </a>
                         </li>
@@ -327,6 +343,18 @@
                                 <span></span>
                                 <p>
                                     {{ translate('Affiliate Reports') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a class='sidebar-menu-link {{ sidebar_awake('admin.user.affiliate.applications') }}' href='{{ route('admin.user.affiliate.applications') }}'>
+                                <span></span>
+                                <p>
+                                    {{ translate('Affiliate Applications') }}
+                                    @php $pendingAffiliates = \App\Models\User::where('affiliate_status',1)->count(); @endphp
+                                    @if($pendingAffiliates > 0)
+                                    <span class="i-badge danger">{{ $pendingAffiliates }}</span>
+                                    @endif
                                 </p>
                             </a>
                         </li>
