@@ -58,23 +58,41 @@
                 <td>Item</td>
                 <td>Price</td>
             </tr>
-            @if(is_array($invoice->details) || is_object($invoice->details))
-                @foreach($invoice->details as $item)
+            @php
+                $details    = is_array($invoice->details) ? $invoice->details : [];
+                $items      = isset($details['items']) ? $details['items'] : (isset($details[0]) ? $details : []);
+                $currSymbol = $details['currency_symbol'] ?? '$';
+                $currCode   = $details['currency_code'] ?? 'USD';
+                $notes      = $details['notes'] ?? null;
+                $dueDate    = $details['due_date'] ?? null;
+            @endphp
+            @if(count($items) > 0)
+                @foreach($items as $item)
                 <tr class="item">
                     <td>{{ $item['description'] ?? 'Service' }}</td>
-                    <td>{{ num_format($item['price'] ?? 0) }}</td>
+                    <td>{{ $currSymbol }}{{ number_format((float)($item['price'] ?? 0), 2) }}</td>
                 </tr>
                 @endforeach
             @else
                 <tr class="item">
                     <td>Service</td>
-                    <td>{{ num_format($invoice->amount) }}</td>
+                    <td>{{ $currSymbol }}{{ number_format($invoice->amount, 2) }}</td>
                 </tr>
             @endif
             <tr class="total">
                 <td></td>
-                <td>Total: {{ num_format($invoice->amount) }}</td>
+                <td>Total ({{ $currCode }}): {{ $currSymbol }}{{ number_format($invoice->amount, 2) }}</td>
             </tr>
+            @if($dueDate)
+            <tr>
+                <td colspan="2" style="padding-top:10px; color:#888; font-size:13px;">Due Date: {{ \Carbon\Carbon::parse($dueDate)->format('M d, Y') }}</td>
+            </tr>
+            @endif
+            @if($notes)
+            <tr>
+                <td colspan="2" style="padding-top:14px; font-size:13px; border-top:1px solid #eee;"><strong>Notes:</strong><br>{{ $notes }}</td>
+            </tr>
+            @endif
         </table>
     </div>
 </body>
