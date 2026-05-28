@@ -23,7 +23,7 @@
         .logo-placeholder { font-size: 50px; color: #6a3be3; font-weight: bold; font-family: serif; text-align: right; }
 
         /* Billed By / To Boxes */
-        .billing-boxes { width: 100%; margin-bottom: 30px; border-collapse: separate; border-spacing: 20px 0; margin-left: -20px; width: calc(100% + 40px); }
+        .billing-boxes { width: 100%; margin-bottom: 30px; border-collapse: separate; border-spacing: 20px 0; }
         .billing-boxes td { width: 50%; background-color: #f4f0ff; padding: 20px; border-radius: 8px; vertical-align: top; }
         .box-title { color: #6a3be3; font-size: 14px; font-weight: bold; margin-bottom: 10px; }
         
@@ -79,12 +79,11 @@
         
         $statusClass = $invoice->status == 'paid' ? 'status-paid' : 'status-unpaid';
         
-        // Simple number to words function
-        function numberToWords($number) {
-            $f = new \NumberFormatter( 'en', \NumberFormatter::SPELLOUT );
-            return strtoupper($f->format($number));
+        $amountInWords = '';
+        if (class_exists('NumberFormatter')) {
+            $f = new \NumberFormatter('en', \NumberFormatter::SPELLOUT);
+            $amountInWords = strtoupper($f->format($invoice->amount));
         }
-        $amountInWords = class_exists('NumberFormatter') ? numberToWords($invoice->amount) : '';
     @endphp
 
     <div class="invoice-container">

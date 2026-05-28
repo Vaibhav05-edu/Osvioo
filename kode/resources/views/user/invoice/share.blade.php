@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $meta_data['title'] ?? 'Invoice' }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
+    <style nonce="{{ csp_nonce() }}">
         body { font-family: 'Inter', sans-serif; background: #f3f4f6; color: #374151; margin: 0; padding: 40px 20px; font-size: 14px; line-height: 1.5; }
         .invoice-wrapper { max-width: 850px; margin: 0 auto; }
         .invoice-box { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
@@ -100,11 +100,11 @@
         
         $statusClass = $invoice->status == 'paid' ? 'status-paid' : 'status-unpaid';
         
-        function numberToWordsHtml($number) {
-            $f = new \NumberFormatter( 'en', \NumberFormatter::SPELLOUT );
-            return strtoupper($f->format($number));
+        $amountInWords = '';
+        if (class_exists('NumberFormatter')) {
+            $f = new \NumberFormatter('en', \NumberFormatter::SPELLOUT);
+            $amountInWords = strtoupper($f->format($invoice->amount));
         }
-        $amountInWords = class_exists('NumberFormatter') ? numberToWordsHtml($invoice->amount) : '';
     @endphp
 
     <div class="invoice-wrapper">
