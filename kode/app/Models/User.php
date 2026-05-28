@@ -55,7 +55,9 @@ class User extends Authenticatable
         'role_id',
         'dob',
         'date_of_enrollment',
-        'profile_photo'
+        'profile_photo',
+        'extra_media_kits',
+        'extra_social_accounts'
     ];
 
     /**

@@ -21,29 +21,57 @@ class AddonController extends Controller
     public function purchase(Request $request, $uid)
     {
         $addon = Addon::where('uid', $uid)->where('status', 1)->firstOrFail();
-        
-        $request->validate([
-            'method_id' => 'required|exists:payment_methods,id'
-        ]);
+        $user  = auth_user('web');
 
+        // Check if user has sufficient balance
+        if ($user->balance < $addon->price) {
+            return back()->with('error', translate('Insufficient wallet balance. Please deposit funds first.'));
+        }
+
+        // Deduct balance
+        $user->balance -= $addon->price;
+
+        // Apply Add-on Benefits
+        if ($addon->type === 'extra_account') {
+            $user->extra_social_accounts += $addon->value;
+            if ($user->runningSubscription) {
+                $user->runningSubscription->total_profile += $addon->value;
+                $user->runningSubscription->save();
+            }
+        } elseif ($addon->type === 'extra_media_kit') {
+            $user->extra_media_kits += $addon->value;
+        } elseif ($addon->type === 'credits') {
+            // Apply AI Word Balance Credits
+            if ($user->runningSubscription) {
+                $user->runningSubscription->word_balance += $addon->value;
+                $user->runningSubscription->remaining_word_balance += $addon->value;
+                $user->runningSubscription->save();
+            } else {
+                return back()->with('error', translate('You need an active subscription to purchase AI credits.'));
+            }
+        }
+        $user->save();
+
+        // Record UserAddon purchase
         $userAddon = new UserAddon();
-        $userAddon->user_id = auth_user('web')->id;
+        $userAddon->user_id = $user->id;
         $userAddon->addon_id = $addon->id;
-        $userAddon->payment_status = 'pending';
+        $userAddon->payment_status = 'completed';
         $userAddon->status = 1;
         $userAddon->save();
 
-        // Redirecting to Deposit process to make payment
-        // Usually, you would integrate a seamless payment logic like Package purchase does.
-        // For simplicity in this milestone, we set up a mock or use DepositController.
-        // We will just redirect to deposit request page, or directly process.
-        
-        $request->merge([
-            'amount' => $addon->price,
-            'custom_data' => ['user_addon_id' => $userAddon->id],
-            'remarks' => 'Purchase Addon: ' . $addon->title,
-        ]);
-        
-        return app(\App\Http\Controllers\User\DepositController::class)->process($request);
+        // Log the transaction
+        $params = [
+            'currency_id'  => base_currency()->id,
+            'amount'       => $addon->price,
+            'final_amount' => $addon->price,
+            'trx_type'     => \App\Models\Transaction::$MINUS,
+            'remarks'      => 'addon_purchase',
+            'details'      => 'Purchased Addon: ' . $addon->title,
+            'trx_code'     => trx_number()
+        ];
+        \App\Http\Services\PaymentService::makeTransaction($user, $params);
+
+        return back()->with('success', translate('Addon purchased and activated successfully.'));
     }
 }

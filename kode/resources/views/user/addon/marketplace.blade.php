@@ -31,17 +31,18 @@
                     <div class="modal-body text-start">
                         <p>{{translate('You are about to purchase')}} <strong>{{$addon->title}}</strong> {{translate('for')}} {{num_format($addon->price)}}.</p>
                         <div class="mb-3">
-                            <label class="form-label">{{translate('Select Payment Method')}}</label>
-                            <select name="method_id" class="form-select" required>
-                                @foreach($methods as $method)
-                                    <option value="{{$method->id}}">{{$method->name}}</option>
-                                @endforeach
-                            </select>
+                            <p class="text-muted" style="font-size: 0.9rem;">
+                                <i class="bi bi-info-circle text-primary"></i> 
+                                {{translate('This amount will be deducted directly from your wallet balance. Please ensure you have sufficient funds before proceeding.')}}
+                            </p>
+                            <p class="mb-0 fw-semibold">{{translate('Current Wallet Balance:')}} {{num_format(auth_user('web')->balance)}}</p>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{translate('Cancel')}}</button>
-                        <button type="submit" class="btn btn-primary">{{translate('Pay Now')}}</button>
+                        <button type="submit" class="btn btn-primary" {{ auth_user('web')->balance < $addon->price ? 'disabled' : '' }}>
+                            {{ auth_user('web')->balance < $addon->price ? translate('Insufficient Balance') : translate('Pay with Wallet') }}
+                        </button>
                     </div>
                 </form>
             </div>

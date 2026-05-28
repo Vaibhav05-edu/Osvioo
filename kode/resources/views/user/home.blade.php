@@ -31,8 +31,8 @@
         $totalP = Arr::get($data, 'total_post', 0);
         $successP = Arr::get($data, 'success_post', 0);
 
-        // 1. Media Kits Calculation: Equal to max of active accounts or 1
-        $mediaKitsCount = max(1, $activeAcc);
+        // 1. Media Kits Calculation: Equal to max of active accounts or 1 + any extra purchased
+        $mediaKitsCount = max(1, $activeAcc) + (int) $user->extra_media_kits;
 
         // 2. Followers calculation based on user ID and total posts
         $followersVal = 10 + ($user->id % 5) + ($totalP * 0.1);

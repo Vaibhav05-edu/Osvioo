@@ -601,6 +601,7 @@ class UserService
             $postLimit                            = (int) @$package->social_access->post;
             $profileLimit                         = (int) @$package->social_access->profile;
 
+            $params['total_profile']              = $profileLimit + (int) $user->extra_social_accounts;
             $params['word_balance']               = $wordLimit;
             $params['remaining_word_balance']     = $wordLimit;
             $params['image_balance']              = $imageLimit;
