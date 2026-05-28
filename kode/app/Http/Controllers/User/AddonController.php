@@ -12,9 +12,18 @@ class AddonController extends Controller
 {
     public function marketplace()
     {
-        $addons = Addon::where('status', 1)->get();
-        $meta_data = $this->metaData(['title'=> translate("Add-on Marketplace")]);
-        $methods = PaymentMethod::with(['file','currency'])->active()->orderBy('serial_id','asc')->get();
+        try {
+            $addons  = \Illuminate\Support\Facades\Schema::hasTable('addons')
+                ? Addon::where('status', 1)->get()
+                : collect();
+            $methods = \Illuminate\Support\Facades\Schema::hasTable('payment_methods')
+                ? PaymentMethod::with(['file','currency'])->active()->orderBy('serial_id','asc')->get()
+                : collect();
+        } catch (\Exception $e) {
+            $addons  = collect();
+            $methods = collect();
+        }
+        $meta_data = $this->metaData(['title'=>translate("Add-on Marketplace")]);
         return view('user.addon.marketplace', compact('addons', 'meta_data', 'methods'));
     }
 

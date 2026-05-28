@@ -171,6 +171,7 @@
                     </li>
 
                     {{-- AFFILIATE PROGRAM --}}
+                    @if(\Illuminate\Support\Facades\Route::has('user.affiliate.index'))
                     <li class="side-menu-title">{{translate("Earn & Grow")}}</li>
                     <li class="sidemenu-item">
                         <a href="{{route('user.affiliate.index')}}" class="sidemenu-link {{request()->routeIs('user.affiliate.*') ? 'active' :''}}">
@@ -178,6 +179,7 @@
                             <span>{{translate("Affiliate Program")}}</span>
                         </a>
                     </li>
+                    @endif
 
                     {{-- ACCOUNT SETTINGS --}}
                     <li class="side-menu-title">{{translate("Account Settings")}}</li>
