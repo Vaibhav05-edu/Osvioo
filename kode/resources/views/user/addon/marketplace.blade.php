@@ -40,7 +40,21 @@
             </div>
         </div>
     </div>
+    @empty
+    <div class="col-12">
+        <div class="text-center py-5">
+            <div class="mb-3" style="font-size: 4rem;">🛍️</div>
+            <h5 class="fw-bold">{{translate('No Add-ons Available Yet')}}</h5>
+            <p class="text-muted">{{translate('The admin has not added any add-ons to the marketplace yet. Check back soon!')}}</p>
+        </div>
+    </div>
+    @endforelse
+</div>
 
+@endsection
+
+@section('modal')
+    @foreach($addons as $addon)
     {{-- Purchase Confirmation Modal --}}
     <div class="modal fade" id="purchaseModal{{$addon->id}}" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -76,15 +90,5 @@
             </div>
         </div>
     </div>
-    @empty
-    <div class="col-12">
-        <div class="text-center py-5">
-            <div class="mb-3" style="font-size: 4rem;">🛍️</div>
-            <h5 class="fw-bold">{{translate('No Add-ons Available Yet')}}</h5>
-            <p class="text-muted">{{translate('The admin has not added any add-ons to the marketplace yet. Check back soon!')}}</p>
-        </div>
-    </div>
-    @endforelse
-</div>
-
+    @endforeach
 @endsection
