@@ -13,3 +13,4 @@ class Addon extends Model
     {
         return $this->hasMany(UserAddon::class);
     }
+}
