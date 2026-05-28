@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('affiliate_status')->default(0)->comment('0: Not applied, 1: Pending, 2: Approved, 3: Rejected');
+            if (!Schema::hasColumn('users', 'affiliate_status')) {
+                $table->tinyInteger('affiliate_status')->default(0)->comment('0: Not applied, 1: Pending, 2: Approved, 3: Rejected');
+            }
         });
     }
 

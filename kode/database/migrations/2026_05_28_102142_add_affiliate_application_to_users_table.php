@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('affiliate_application')->nullable()->after('affiliate_status');
+            if (!Schema::hasColumn('users', 'affiliate_application')) {
+                $table->text('affiliate_application')->nullable()->after('affiliate_status');
+            }
         });
     }
 
