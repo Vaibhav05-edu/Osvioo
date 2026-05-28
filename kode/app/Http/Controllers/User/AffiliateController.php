@@ -15,16 +15,17 @@ class AffiliateController extends Controller
     public function index()
     {
         $user = auth_user('web');
+        $meta_data = $this->metaData(['title'=>translate("Affiliate Program")]);
 
         if ($user->affiliate_status == 2) {
             return $this->dashboard($user);
         } elseif ($user->affiliate_status == 1) {
-            return view('user.affiliate.pending');
+            return view('user.affiliate.pending', compact('meta_data'));
         } elseif ($user->affiliate_status == 3) {
-            return view('user.affiliate.apply', ['rejected' => true]);
+            return view('user.affiliate.apply', ['rejected' => true, 'meta_data' => $meta_data]);
         }
 
-        return view('user.affiliate.apply', ['rejected' => false]);
+        return view('user.affiliate.apply', ['rejected' => false, 'meta_data' => $meta_data]);
     }
 
     public function apply(Request $request)
@@ -68,9 +69,10 @@ class AffiliateController extends Controller
         }
 
         $referralLink = url('/') . '?ref=' . $user->referral_code;
+        $meta_data = $this->metaData(['title'=>translate("Affiliate Dashboard")]);
 
         return view('user.affiliate.dashboard', compact(
-            'totalClicks', 'totalSignups', 'totalEarnings', 'logs', 'referralLink', 'clicksChart', 'signupsChart'
+            'totalClicks', 'totalSignups', 'totalEarnings', 'logs', 'referralLink', 'clicksChart', 'signupsChart', 'meta_data'
         ));
     }
 }
