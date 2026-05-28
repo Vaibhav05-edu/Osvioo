@@ -100,14 +100,20 @@
                         $currSymbol  = $details['currency_symbol'] ?? '$';
                         $currCode    = $details['currency_code']   ?? 'USD';
                         $dueDate     = $details['due_date'] ?? null;
+                        $isAdminInv  = $invoice->type === 'admin';
                     @endphp
                     <tr>
                         <td class="uid-cell" title="{{ $invoice->uid }}">
-                            {{ substr($invoice->uid, 0, 8) }}...
+                            {{ $details['invoice_number'] ?? substr($invoice->uid, 0, 8).'...' }}
                         </td>
                         <td>{{ $invoice->created_at->format('d M Y') }}</td>
                         <td>
-                            <span class="fw-semibold">{{ $invoice->brand_name ?? 'Platform' }}</span>
+                            @if($isAdminInv)
+                                <span class="fw-semibold">{{ $invoice->brand_name ?? 'Osvioo' }}</span>
+                                <small class="d-block" style="font-size:0.72rem; background:#ede9fe; color:#7c3aed; border-radius:50px; padding:1px 8px; display:inline-block!important; margin-top:2px;">From Osvioo</small>
+                            @else
+                                <span class="fw-semibold">{{ $invoice->brand_name ?? 'Platform' }}</span>
+                            @endif
                         </td>
                         <td>
                             <span class="fw-bold text-dark">{{ $currSymbol }}{{ number_format($invoice->amount, 2) }}</span>
@@ -136,7 +142,9 @@
                             @endif
                         </td>
                         <td>
-                            @if($invoice->watermark_removed)
+                            @if($isAdminInv)
+                                <span class="badge-wm-removed"><i class="bi bi-check2"></i> {{ translate('N/A') }}</span>
+                            @elseif($invoice->watermark_removed)
                                 <span class="badge-wm-removed"><i class="bi bi-check2"></i> {{ translate('Removed') }}</span>
                             @elseif($invoice->watermark_request_status == 'pending')
                                 <span class="badge-wm-requested"><i class="bi bi-hourglass-split"></i> {{ translate('Requested') }}</span>

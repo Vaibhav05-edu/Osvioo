@@ -604,6 +604,9 @@ Route::middleware([
         # invoice route
         Route::controller(\App\Http\Controllers\Admin\InvoiceController::class)->prefix("/invoice")->name('invoice.')->group(function(){
             Route::get('/list','list')->name('list');
+            Route::get('/create','create')->name('create');
+            Route::post('/store','store')->name('store');
+            Route::get('/download/{uid}','download')->name('download')->withoutMiddleware(['sanitizer']);
             Route::post('/watermark-approve/{uid}','approveWatermark')->name('watermark.approve');
             Route::post('/watermark-reject/{uid}','rejectWatermark')->name('watermark.reject');
         });
