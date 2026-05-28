@@ -41,6 +41,7 @@
 .invoice-table tbody tr:last-child td { border-bottom: none; }
 .invoice-table tbody tr:hover { background: #f8faff; }
 .badge-paid   { background: #d1fae5; color: #059669; border-radius: 50px; padding: 4px 12px; font-size:0.78rem; font-weight:700; }
+.badge-partpaid { background: #e0f2fe; color: #0284c7; border-radius: 50px; padding: 4px 12px; font-size:0.78rem; font-weight:700; }
 .badge-unpaid { background: #fef3c7; color: #d97706; border-radius: 50px; padding: 4px 12px; font-size:0.78rem; font-weight:700; }
 .badge-wm-removed   { background: #d1fae5; color: #059669; border-radius: 50px; padding: 4px 10px; font-size:0.76rem; font-weight:700; }
 .badge-wm-requested { background: #fef3c7; color: #d97706; border-radius: 50px; padding: 4px 10px; font-size:0.76rem; font-weight:700; }
@@ -54,6 +55,8 @@
 .action-btn-view:hover   { background: #6366f1; color: #fff; }
 .action-btn-dl     { background: #f0fdf4; color: #16a34a; }
 .action-btn-dl:hover     { background: #16a34a; color: #fff; }
+.action-btn-pay     { background: #fef9c3; color: #ca8a04; }
+.action-btn-pay:hover     { background: #ca8a04; color: #fff; }
 .action-btn-wm     { background: #fff7ed; color: #ea580c; border: 1.5px solid #fed7aa; font-size:0.72rem; width:auto; padding: 0 10px; font-weight:600; }
 .action-btn-wm:hover     { background: #ea580c; color: #fff; border-color:#ea580c; }
 .empty-state { padding: 3.5rem 1rem; text-align: center; }
@@ -126,6 +129,8 @@
                         <td>
                             @if($invoice->status == 'paid')
                                 <span class="badge-paid"><i class="bi bi-check-circle me-1"></i>{{ translate('Paid') }}</span>
+                            @elseif($invoice->status == 'part_paid')
+                                <span class="badge-partpaid"><i class="bi bi-pie-chart me-1"></i>{{ translate('Partially Paid') }}</span>
                             @else
                                 <span class="badge-unpaid"><i class="bi bi-clock me-1"></i>{{ translate('Unpaid') }}</span>
                             @endif
@@ -146,6 +151,11 @@
                         </td>
                         <td>
                             <div class="d-flex gap-2">
+                                @if($invoice->status != 'paid')
+                                <button type="button" class="action-btn action-btn-pay" data-bs-toggle="modal" data-bs-target="#paymentModal{{ $invoice->uid }}" title="{{ translate('Record Payment') }}">
+                                    <i class="bi bi-currency-dollar"></i>
+                                </button>
+                                @endif
                                 <a href="{{ route('user.invoice.share', $invoice->uid) }}"
                                     class="action-btn action-btn-view" target="_blank"
                                     title="{{ translate('Preview Invoice') }}">
@@ -159,6 +169,44 @@
                             </div>
                         </td>
                     </tr>
+
+                    @if($invoice->status != 'paid')
+                    <!-- Payment Modal -->
+                    <div class="modal fade" id="paymentModal{{ $invoice->uid }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content" style="border-radius:12px; border:none;">
+                                <div class="modal-header border-0 pb-0">
+                                    <h5 class="modal-title fw-bold">{{ translate('Record Payment') }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form action="{{ route('user.invoice.payment.update', $invoice->uid) }}" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <p class="text-muted small mb-3">
+                                            {{ translate('Current Total:') }} <b>{{ $currSymbol }}{{ number_format($invoice->amount, 2) }}</b><br>
+                                            {{ translate('Amount Paid so far:') }} <b>{{ $currSymbol }}{{ number_format($details['amount_paid'] ?? 0, 2) }}</b><br>
+                                            @php $due = $invoice->amount - ($details['amount_paid'] ?? 0); @endphp
+                                            {{ translate('Due Amount:') }} <b class="text-danger">{{ $currSymbol }}{{ number_format($due, 2) }}</b>
+                                        </p>
+                                        <div class="form-group mb-0">
+                                            <label class="form-label fw-semibold">{{ translate('Enter Amount Received') }}</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">{{ $currCode }}</span>
+                                                <input type="number" step="0.01" name="amount_paid" class="form-control" placeholder="e.g. 500" required>
+                                            </div>
+                                            <small class="text-muted d-block mt-1">{{ translate('This amount will be added to the total amount paid.') }}</small>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer border-0 pt-0">
+                                        <button type="submit" class="btn btn-primary w-100" style="border-radius:8px; padding:10px; font-weight:600;">
+                                            {{ translate('Update Payment') }}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                     @empty
                     <tr>
                         <td colspan="8" class="p-0">

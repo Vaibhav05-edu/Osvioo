@@ -142,7 +142,44 @@ class InvoiceController extends Controller
         $pdf = Pdf::loadView('user.invoice.pdf', compact('invoice'))
             ->setPaper('a4', 'portrait');
 
+        if (ob_get_length()) {
+            ob_end_clean();
+        }
+
         return $pdf->download('Invoice-' . ($invoice->details['invoice_number'] ?? $invoice->uid) . '.pdf');
+    }
+
+    public function updatePayment(Request $request, $uid)
+    {
+        $request->validate([
+            'amount_paid' => 'required|numeric|min:0'
+        ]);
+
+        $invoice = Invoice::where('uid', $uid)->where('user_id', auth_user('web')->id)->firstOrFail();
+        
+        $details = is_array($invoice->details) ? $invoice->details : [];
+        $currentPaid = (float)($details['amount_paid'] ?? 0);
+        $newPayment = (float)$request->amount_paid;
+        $totalPaid = $currentPaid + $newPayment;
+
+        if ($totalPaid > $invoice->amount) {
+            $totalPaid = $invoice->amount;
+        }
+
+        $details['amount_paid'] = $totalPaid;
+        $invoice->details = $details;
+
+        if ($totalPaid >= $invoice->amount) {
+            $invoice->status = 'paid';
+        } else if ($totalPaid > 0) {
+            $invoice->status = 'part_paid';
+        } else {
+            $invoice->status = 'unpaid';
+        }
+
+        $invoice->save();
+
+        return back()->with('success', translate('Payment status updated successfully.'));
     }
 
     public function share($uid)

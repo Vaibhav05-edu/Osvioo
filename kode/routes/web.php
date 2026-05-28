@@ -197,8 +197,9 @@ use Illuminate\Support\Facades\Http;
                     Route::get('/list', [\App\Http\Controllers\User\InvoiceController::class, 'list'])->name('list');
                     Route::get('/create', [\App\Http\Controllers\User\InvoiceController::class, 'create'])->name('create');
                     Route::post('/store', [\App\Http\Controllers\User\InvoiceController::class, 'store'])->name('store');
-                    Route::get('/download/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'download'])->name('download');
+                    Route::get('/download/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'download'])->name('download')->withoutMiddleware(['sanitizer']);
                     Route::get('/share/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'share'])->name('share');
+                    Route::post('/payment-update/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'updatePayment'])->name('payment.update');
                     Route::post('/request-watermark-removal/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'requestWatermarkRemoval'])->name('watermark.request');
                 });
 

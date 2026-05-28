@@ -5,8 +5,8 @@
     <title>Invoice</title>
     <style>
         body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; margin: 0; padding: 0; font-size: 13px; line-height: 1.5; }
-        .invoice-container { padding: 40px; position: relative; }
-        .watermark { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg); font-size: 6rem; color: rgba(0,0,0,0.03); z-index: -1; white-space: nowrap; }
+        .invoice-container { padding: 40px; position: relative; padding-bottom: 60px; }
+        .watermark { position: absolute; bottom: 20px; right: 40px; font-size: 11px; color: #aaa; font-style: italic; z-index: 10; }
         
         /* Header */
         .header { width: 100%; margin-bottom: 30px; }
@@ -88,7 +88,7 @@
 
     <div class="invoice-container">
         @if(!$invoice->watermark_removed)
-            <div class="watermark">{{ site_settings('site_name', 'Osvioo') }} - PREVIEW</div>
+            <div class="watermark">Powered by {{ site_settings('site_name', 'Osvioo') }}</div>
         @endif
 
         <!-- Header -->
@@ -257,21 +257,20 @@
                             <td class="label">Total ({{ $currCode }})</td>
                             <td>{{ $currSymbol }}{{ number_format($invoice->amount, 2) }}</td>
                         </tr>
-                        @if($invoice->status == 'paid')
+                        @php
+                            $amountPaid = $details['amount_paid'] ?? 0;
+                            $dueAmount = $invoice->amount - $amountPaid;
+                        @endphp
+                        @if($amountPaid > 0)
                         <tr>
                             <td class="label">Amount Paid</td>
-                            <td>({{ $currSymbol }}{{ number_format($invoice->amount, 2) }})</td>
-                        </tr>
-                        <tr>
-                            <td class="label">Due Amount</td>
-                            <td>{{ $currSymbol }}0.00</td>
-                        </tr>
-                        @else
-                        <tr>
-                            <td class="label">Due Amount</td>
-                            <td>{{ $currSymbol }}{{ number_format($invoice->amount, 2) }}</td>
+                            <td>({{ $currSymbol }}{{ number_format($amountPaid, 2) }})</td>
                         </tr>
                         @endif
+                        <tr>
+                            <td class="label">Due Amount</td>
+                            <td>{{ $currSymbol }}{{ number_format($dueAmount, 2) }}</td>
+                        </tr>
                     </table>
                 </td>
             </tr>
