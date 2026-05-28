@@ -209,6 +209,12 @@ use Illuminate\Support\Facades\Http;
                     Route::post('/purchase/{uid}', [\App\Http\Controllers\User\AddonController::class, 'purchase'])->name('purchase');
                 });
 
+                # affiliate route
+                Route::prefix("/affiliate")->name('affiliate.')->group(function(){
+                    Route::get('/', [\App\Http\Controllers\User\AffiliateController::class, 'index'])->name('index');
+                    Route::post('/apply', [\App\Http\Controllers\User\AffiliateController::class, 'apply'])->name('apply');
+                });
+
                 Route::get('/plans', 'plan')->name('plan');
 
                 #kyc route

@@ -170,6 +170,15 @@
                         </div>
                     </li>
 
+                    {{-- AFFILIATE PROGRAM --}}
+                    <li class="side-menu-title">{{translate("Earn & Grow")}}</li>
+                    <li class="sidemenu-item">
+                        <a href="{{route('user.affiliate.index')}}" class="sidemenu-link {{request()->routeIs('user.affiliate.*') ? 'active' :''}}">
+                            <div class="sidemenu-icon"><i class="bi bi-gift"></i></div>
+                            <span>{{translate("Affiliate Program")}}</span>
+                        </a>
+                    </li>
+
                     {{-- ACCOUNT SETTINGS --}}
                     <li class="side-menu-title">{{translate("Account Settings")}}</li>
                     <li class="sidemenu-item">

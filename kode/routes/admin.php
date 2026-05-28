@@ -122,8 +122,6 @@ Route::middleware([
             Route::get('/edit/{uid}', 'edit')->name('edit');
             Route::post('/bulk/action', 'bulk')->name('bulk');
             Route::get('/destroy/{id}', 'destroy')->name('destroy');
-            Route::post('/affiliate-approve/{id}', 'affiliateApprove')->name('affiliate.approve');
-            Route::post('/affiliate-reject/{id}', 'affiliateReject')->name('affiliate.reject');
             Route::post('configuration', 'configuration')->name('configuration');
 
         });
@@ -179,7 +177,10 @@ Route::middleware([
             Route::post('/balance', 'balance')->name('balance');
             Route::post('/subscription', 'subscription')->name('subscription');
             Route::get('/select/search', 'selectSearch')->name('selectSearch');
-
+            
+            // Affiliate Approvals
+            Route::post('/affiliate-approve/{id}', 'affiliateApprove')->name('affiliate.approve');
+            Route::post('/affiliate-reject/{id}', 'affiliateReject')->name('affiliate.reject');
 
         });
 

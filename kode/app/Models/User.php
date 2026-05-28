@@ -57,7 +57,9 @@ class User extends Authenticatable
         'date_of_enrollment',
         'profile_photo',
         'extra_media_kits',
-        'extra_social_accounts'
+        'extra_social_accounts',
+        'affiliate_status',
+        'affiliate_application'
     ];
 
     /**

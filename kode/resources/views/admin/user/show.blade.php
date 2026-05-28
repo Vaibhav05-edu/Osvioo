@@ -78,6 +78,24 @@
                                 <span class="badge bg-danger">{{translate('Rejected')}}</span>
                             @endif
                         </li>
+                        
+                        @if($user->affiliate_application)
+                            @php $appData = json_decode($user->affiliate_application, true); @endphp
+                            @if(is_array($appData))
+                            <li class="mt-2 bg-light p-3 rounded">
+                                <span class="d-block mb-1 fw-bold">{{ translate('Affiliate Application Details') }} :</span>
+                                <div class="text-muted small">
+                                    <strong>{{translate('Promotion Strategy')}}:</strong> {{ $appData['how_to_promote'] ?? 'N/A' }}<br>
+                                    <strong>{{translate('Website/Social')}}:</strong> 
+                                    @if(!empty($appData['website_url']))
+                                        <a href="{{ $appData['website_url'] }}" target="_blank">{{ $appData['website_url'] }}</a>
+                                    @else
+                                        N/A
+                                    @endif
+                                </div>
+                            </li>
+                            @endif
+                        @endif
 
                         <li><span>{{ translate('Name') }} :</span> {{ $user->name }}</li>
                         <li><span>{{ translate('Username') }} :</span> {{ $user->user_name ?? '--' }}</li>
