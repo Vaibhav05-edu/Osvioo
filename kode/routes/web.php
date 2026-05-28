@@ -31,6 +31,16 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
+Route::get('/fix-prod', function () {
+    try {
+        Artisan::call('migrate', ['--force' => true]);
+        Artisan::call('optimize:clear');
+        return "✅ Success! Migrations run and cache cleared. You can now use the Add-on Marketplace.";
+    } catch (\Exception $e) {
+        return "❌ Error: " . $e->getMessage();
+    }
+});
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
