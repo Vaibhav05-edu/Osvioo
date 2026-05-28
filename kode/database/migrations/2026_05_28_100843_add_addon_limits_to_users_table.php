@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('extra_media_kits')->default(0)->after('balance');
-            $table->integer('extra_social_accounts')->default(0)->after('extra_media_kits');
+            if (!Schema::hasColumn('users', 'extra_media_kits')) {
+                $table->integer('extra_media_kits')->default(0)->after('balance');
+            }
+            if (!Schema::hasColumn('users', 'extra_social_accounts')) {
+                $table->integer('extra_social_accounts')->default(0)->after('extra_media_kits');
+            }
         });
     }
 
