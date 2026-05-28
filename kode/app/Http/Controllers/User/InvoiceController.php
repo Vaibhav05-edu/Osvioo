@@ -7,61 +7,119 @@ use Illuminate\Http\Request;
 use App\Models\Invoice;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Schema;
 
 class InvoiceController extends Controller
 {
     public function list()
     {
-        $invoices = Invoice::where('user_id', auth_user('web')->id)->latest()->paginate(15);
+        $invoices  = Invoice::where('user_id', auth_user('web')->id)->latest()->paginate(15);
         $meta_data = $this->metaData(['title' => translate("My Invoices")]);
         return view('user.invoice.list', compact('invoices', 'meta_data'));
     }
 
     public function create()
     {
+        $user      = auth_user('web');
         $meta_data = $this->metaData(['title' => translate("Create Invoice")]);
-        return view('user.invoice.create', compact('meta_data'));
+
+        // Auto-generate next invoice number
+        $count         = Invoice::where('user_id', $user->id)->count() + 1;
+        $invoiceNumber = 'INV-' . str_pad($count, 3, '0', STR_PAD_LEFT);
+
+        return view('user.invoice.create', compact('meta_data', 'user', 'invoiceNumber'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'brand_name'       => 'required|string|max:255',
-            'amount'           => 'required|numeric|min:0',
-            'details'          => 'nullable|array',
-            'details.*.description' => 'required_with:details|string|max:500',
-            'details.*.price'       => 'required_with:details|numeric|min:0',
-            'due_date'         => 'nullable|date|after_or_equal:today',
-            'notes'            => 'nullable|string|max:1000',
+            'brand_name'               => 'required|string|max:255',
+            'billed_to_address'        => 'nullable|string|max:500',
+            'billed_by_phone'          => 'nullable|string|max:50',
+            'billed_by_address'        => 'nullable|string|max:500',
+            'items'                    => 'required|array|min:1',
+            'items.*.description'      => 'required|string|max:500',
+            'items.*.quantity'         => 'required|numeric|min:0',
+            'items.*.rate'             => 'required|numeric|min:0',
+            'due_date'                 => 'nullable|date',
+            'notes'                    => 'nullable|string|max:1000',
+            'terms'                    => 'nullable|string|max:2000',
+            'discount'                 => 'nullable|numeric|min:0',
+            'additional_charges'       => 'nullable|numeric|min:0',
+            'bank_account_name'        => 'nullable|string|max:255',
+            'bank_account_number'      => 'nullable|string|max:50',
+            'bank_ifsc'                => 'nullable|string|max:30',
+            'bank_account_type'        => 'nullable|string|max:50',
+            'bank_name'                => 'nullable|string|max:255',
+            'upi_id'                   => 'nullable|string|max:100',
         ]);
 
         try {
             $currency = session()->get('currency');
+            $user     = auth_user('web');
 
-            $invoice              = new Invoice();
-            $invoice->uid         = (string) Str::uuid();
-            $invoice->user_id     = auth_user('web')->id;
-            $invoice->type        = 'brand';
-            $invoice->brand_name  = $request->brand_name;
-            $invoice->amount      = $request->amount;
-            $invoice->status      = 'unpaid';
+            // Build items & calculate subtotal
+            $subtotal = 0;
+            $items    = [];
+            foreach ($request->items as $item) {
+                $qty    = (float) ($item['quantity'] ?? 1);
+                $rate   = (float) ($item['rate'] ?? 0);
+                $amount = $qty * $rate;
+                $subtotal += $amount;
+                $items[] = [
+                    'description' => trim($item['description']),
+                    'quantity'    => $qty,
+                    'rate'        => $rate,
+                    'amount'      => $amount,
+                ];
+            }
 
-            // Build rich details payload
-            $detailsPayload = [
-                'items'         => collect($request->details ?? [])->values()->map(function ($item) {
-                    return [
-                        'description' => $item['description'] ?? '',
-                        'price'       => (float) ($item['price'] ?? 0),
-                    ];
-                })->toArray(),
-                'currency_code'   => optional($currency)->code   ?? 'USD',
-                'currency_symbol' => optional($currency)->symbol ?? '$',
-                'due_date'        => $request->due_date,
-                'notes'           => $request->notes,
+            $discount           = (float) ($request->discount ?? 0);
+            $additional_charges = (float) ($request->additional_charges ?? 0);
+            $total              = $subtotal - $discount + $additional_charges;
+
+            // Auto invoice number
+            $count         = Invoice::where('user_id', $user->id)->count() + 1;
+            $invoiceNumber = 'INV-' . str_pad($count, 3, '0', STR_PAD_LEFT);
+
+            $invoice           = new Invoice();
+            $invoice->uid      = (string) Str::uuid();
+            $invoice->user_id  = $user->id;
+            $invoice->type     = 'brand';
+            $invoice->brand_name = $request->brand_name;
+            $invoice->amount   = $total;
+            $invoice->status   = 'unpaid';
+
+            $invoice->details  = [
+                'invoice_number'     => $invoiceNumber,
+                'billed_by'          => [
+                    'name'    => $user->name,
+                    'email'   => $user->email,
+                    'phone'   => $request->billed_by_phone ?? '',
+                    'address' => $request->billed_by_address ?? '',
+                ],
+                'billed_to'          => [
+                    'name'    => $request->brand_name,
+                    'address' => $request->billed_to_address ?? '',
+                ],
+                'items'              => $items,
+                'subtotal'           => $subtotal,
+                'discount'           => $discount,
+                'additional_charges' => $additional_charges,
+                'currency_code'      => optional($currency)->code ?? 'USD',
+                'currency_symbol'    => optional($currency)->symbol ?? '$',
+                'due_date'           => $request->due_date,
+                'notes'              => $request->notes,
+                'terms'              => $request->terms ?? 'Please pay within the given date from the date of invoice.',
+                'bank_details'       => [
+                    'account_name'   => $request->bank_account_name ?? '',
+                    'account_number' => $request->bank_account_number ?? '',
+                    'ifsc'           => $request->bank_ifsc ?? '',
+                    'account_type'   => $request->bank_account_type ?? '',
+                    'bank_name'      => $request->bank_name ?? '',
+                ],
+                'upi_id'             => $request->upi_id ?? '',
             ];
 
-            $invoice->details = $detailsPayload;
             $invoice->save();
 
             return redirect()->route('user.invoice.list')
@@ -69,7 +127,7 @@ class InvoiceController extends Controller
 
         } catch (\Throwable $e) {
             return back()->withInput()
-                ->with('error', translate('Could not save invoice. Please ensure the database is up to date (run php artisan migrate).'));
+                ->with('error', translate('Could not save invoice. Please ensure migrations are run: php artisan migrate. Error: ') . $e->getMessage());
         }
     }
 
@@ -81,14 +139,16 @@ class InvoiceController extends Controller
             abort(403);
         }
 
-        $pdf = Pdf::loadView('user.invoice.pdf', compact('invoice'));
-        return $pdf->download('Invoice-' . $invoice->uid . '.pdf');
+        $pdf = Pdf::loadView('user.invoice.pdf', compact('invoice'))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->download('Invoice-' . ($invoice->details['invoice_number'] ?? $invoice->uid) . '.pdf');
     }
 
     public function share($uid)
     {
         $invoice   = Invoice::where('uid', $uid)->firstOrFail();
-        $meta_data = $this->metaData(['title' => translate("Invoice ") . $invoice->uid]);
+        $meta_data = $this->metaData(['title' => translate("Invoice ") . ($invoice->details['invoice_number'] ?? $invoice->uid)]);
         return view('user.invoice.share', compact('invoice', 'meta_data'));
     }
 
