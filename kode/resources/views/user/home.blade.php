@@ -274,7 +274,7 @@
                                 </a>
                             </div>
                             <div class="col-6">
-                                <a href="{{route('user.plan')}}" class="frosted-btn-outline w-100 d-flex align-items-center justify-content-center gap-2" style="padding: 10px; border-radius: 12px; border-color: #eef0f2; color: #444;">
+                                <a href="{{route('user.addon.marketplace')}}" class="frosted-btn-outline w-100 d-flex align-items-center justify-content-center gap-2" style="padding: 10px; border-radius: 12px; border-color: #eef0f2; color: #444;">
                                     <i class="bi bi-plus-square"></i>
                                     {{translate('Add-ons')}}
                                 </a>
