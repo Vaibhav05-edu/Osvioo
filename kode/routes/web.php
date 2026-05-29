@@ -210,8 +210,6 @@ Route::get('/fix-prod', function () {
                 Route::post('/profile/delete', 'deleteAccount')->name('profile.delete');
                 Route::post('/password/update', 'passwordUpdate')->name('password.update');
                 
-                Route::post('/affiliate/apply', 'affiliateApply')->name('affiliate.apply');
-                Route::post('/affiliate/update', 'affiliateUpdate')->name('affiliate.update');
                 Route::post('/webhook/update', 'webhookUpdate')->name('webhook.update');
                 Route::get('/notifications','notification')->name('notifications');
                 Route::post('/read-notification','readNotification')->name('read.notification');
