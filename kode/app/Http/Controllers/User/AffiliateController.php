@@ -50,7 +50,7 @@ class AffiliateController extends Controller
     {
         $totalClicks   = AffiliateClickLog::where('referral_id', $user->id)->count();
         $totalSignups  = User::where('referral_id', $user->id)->count();
-        $totalEarnings = AffiliateLog::where('user_id', $user->id)->sum('amount');
+        $totalEarnings = AffiliateLog::where('user_id', $user->id)->sum('commission_amount');
         $logs          = AffiliateLog::where('user_id', $user->id)->latest()->paginate(10);
 
         // Ensure referral code exists

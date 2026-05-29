@@ -85,8 +85,8 @@
                     <tr>
                         <td class="text-muted">{{ $log->created_at->format('M d, Y h:i A') }}</td>
                         <td class="fw-semibold">{{ $log->referral?->name ?? 'Unknown' }}</td>
-                        <td class="fw-bold text-success">+{{ session()->get('currency')?->symbol }}{{ number_format($log->amount, 2) }}</td>
-                        <td class="text-muted">{{ $log->details }}</td>
+                        <td class="fw-bold text-success">+{{ session()->get('currency')?->symbol }}{{ number_format($log->commission_amount, 2) }}</td>
+                        <td class="text-muted">{{ $log->note }}</td>
                     </tr>
                     @empty
                     <tr>
