@@ -48,7 +48,7 @@ class AffiliateController extends Controller
 
     private function dashboard(User $user)
     {
-        $totalClicks   = AffiliateClickLog::where('user_id', $user->id)->count();
+        $totalClicks   = AffiliateClickLog::where('referral_id', $user->id)->count();
         $totalSignups  = User::where('referral_id', $user->id)->count();
         $totalEarnings = AffiliateLog::where('user_id', $user->id)->sum('amount');
         $logs          = AffiliateLog::where('user_id', $user->id)->latest()->paginate(10);
@@ -64,7 +64,7 @@ class AffiliateController extends Controller
         $signupsChart = [];
         for ($i = 29; $i >= 0; $i--) {
             $date = now()->subDays($i)->toDateString();
-            $clicksChart[$date]  = AffiliateClickLog::where('user_id', $user->id)->whereDate('created_at', $date)->count();
+            $clicksChart[$date]  = AffiliateClickLog::where('referral_id', $user->id)->whereDate('created_at', $date)->count();
             $signupsChart[$date] = User::where('referral_id', $user->id)->whereDate('created_at', $date)->count();
         }
 
