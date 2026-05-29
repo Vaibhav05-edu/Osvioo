@@ -73,13 +73,13 @@
                         </td>
                         @if($status == 1)
                         <td>
-                            <form action="{{ route('admin.affiliate.approve', $user->id) }}" method="POST" class="d-inline">
+                            <form action="{{ route('admin.user.affiliate.approve', $user->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 <button class="btn btn-sm btn-success py-0 px-2" type="submit">
                                     <i class="las la-check"></i> {{ translate('Approve') }}
                                 </button>
                             </form>
-                            <form action="{{ route('admin.affiliate.reject', $user->id) }}" method="POST" class="d-inline ms-1">
+                            <form action="{{ route('admin.user.affiliate.reject', $user->id) }}" method="POST" class="d-inline ms-1">
                                 @csrf
                                 <button class="btn btn-sm btn-danger py-0 px-2" type="submit">
                                     <i class="las la-times"></i> {{ translate('Reject') }}
