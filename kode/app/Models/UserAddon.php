@@ -18,3 +18,4 @@ class UserAddon extends Model
     {
         return $this->belongsTo(Addon::class);
     }
+}

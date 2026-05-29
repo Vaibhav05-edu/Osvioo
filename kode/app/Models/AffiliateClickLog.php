@@ -13,3 +13,4 @@ class AffiliateClickLog extends Model
     {
         return $this->belongsTo(User::class, 'referral_id');
     }
+}
