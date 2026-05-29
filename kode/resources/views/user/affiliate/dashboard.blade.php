@@ -6,22 +6,22 @@
 </div>
 
 {{-- REFERRAL LINK SECTION --}}
-<div class="card border-0 shadow-sm mb-4" style="border-radius: 20px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white;">
+<div class="card border-0 shadow-sm mb-4" style="border-radius: 20px;">
     <div class="card-body p-4 p-md-5">
         <div class="row align-items-center">
             <div class="col-lg-8">
-                <h5 class="fw-bold mb-2 text-white">{{translate('Your Unique Referral Link')}}</h5>
-                <p class="mb-4" style="opacity: 0.9;">{{translate('Share this link to earn commissions on every successful signup and purchase.')}}</p>
+                <h5 class="fw-bold mb-2">{{translate('Your Unique Referral Link')}}</h5>
+                <p class="mb-4 text-muted">{{translate('Share this link to earn commissions on every successful signup and purchase.')}}</p>
                 
-                <div class="input-group" style="background: rgba(255,255,255,0.1); border-radius: 12px; padding: 4px;">
-                    <input type="text" class="form-control text-white" id="referralLink" value="{{ $referralLink }}" readonly style="background: transparent; border: none; font-size: 1.1rem;">
-                    <button class="btn btn-light" type="button" onclick="copyReferralLink()" style="border-radius: 10px; font-weight: 600;">
+                <div class="input-group" style="background: #f8f9fa; border-radius: 12px; padding: 4px; border: 1px solid #e9ecef;">
+                    <input type="text" class="form-control" id="referralLink" value="{{ $referralLink }}" readonly style="background: transparent; border: none; font-size: 1.1rem; color: #495057;">
+                    <button class="btn btn-primary" type="button" onclick="copyReferralLink()" style="border-radius: 10px; font-weight: 600;">
                         <i class="bi bi-clipboard me-2"></i>{{translate('Copy Link')}}
                     </button>
                 </div>
             </div>
             <div class="col-lg-4 text-center d-none d-lg-block">
-                <i class="bi bi-share" style="font-size: 6rem; opacity: 0.2;"></i>
+                <i class="bi bi-share text-primary" style="font-size: 6rem; opacity: 0.1;"></i>
             </div>
         </div>
     </div>
