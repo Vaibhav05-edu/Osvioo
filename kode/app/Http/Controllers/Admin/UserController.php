@@ -207,8 +207,9 @@ class UserController extends Controller
     {
         $status = $request->get('status', 1); // default: pending
         $users = User::where('affiliate_status', $status)->latest()->paginate(15);
+        $title = 'Affiliate Applications';
         $meta_data = [];
-        return view('admin.affiliate.applications', compact('users', 'status', 'meta_data'));
+        return view('admin.affiliate.applications', compact('users', 'status', 'title', 'meta_data'));
     }
 
     public function affiliateApprove($id)
