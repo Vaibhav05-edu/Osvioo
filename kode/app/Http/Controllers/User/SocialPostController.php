@@ -104,6 +104,12 @@ class SocialPostController extends Controller
         $accounts                   = $platforms->flatMap(fn(MediaPlatform $platform) : Collection =>  $platform->accounts);
         $accessCategories           = (array)@$this->templates->pluck('category_id')->unique()->toArray();
 
+        $bestTimes = [
+            'Today at 6:00 PM',
+            'Tomorrow at 9:00 AM',
+            'Tomorrow at 8:00 PM'
+        ];
+
         return view('user.social.post.create',[
 
             'meta_data'                 => $this->metaData(['title'=> translate("Create Post")]),
@@ -117,6 +123,7 @@ class SocialPostController extends Controller
             'templates'                 =>     $this->templates,
             'gallery_contents'          => Content::where("user_id",$this->user->id)->image()->get(),
             'video_gallery_contents'    => Content::where("user_id",$this->user->id)->video()->get(),
+            'bestTimes'                 => $bestTimes,
 
 
         ]);
@@ -192,5 +199,12 @@ class SocialPostController extends Controller
         return  back()->with($response);
     }
 
+
+    public function autoPost(): View
+    {
+        return view('user.social.post.auto_post', [
+            'meta_data' => $this->metaData(['title' => translate("Auto Post (Instagram)")]),
+        ]);
+    }
 
 }

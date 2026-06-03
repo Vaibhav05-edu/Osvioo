@@ -247,7 +247,36 @@ Route::get('/fix-prod', function () {
                     Route::get('/share/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'share'])->name('share');
                     Route::post('/payment-update/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'updatePayment'])->name('payment.update');
                     Route::post('/request-watermark-removal/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'requestWatermarkRemoval'])->name('watermark.request');
+                    Route::post('/send-email/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'sendEmail'])->name('send.email');
                 });
+
+                // AI Suggestions
+                Route::prefix('ai-suggestions')->name('ai_suggestions.')->group(function(){
+                    Route::get('hashtag', [\App\Http\Controllers\User\AiSuggestionController::class, 'hashtag'])->name('hashtag');
+                    Route::get('post', [\App\Http\Controllers\User\AiSuggestionController::class, 'post'])->name('post');
+                    Route::get('timing', [\App\Http\Controllers\User\AiSuggestionController::class, 'timing'])->name('timing');
+                    Route::get('trend', [\App\Http\Controllers\User\AiSuggestionController::class, 'trend'])->name('trend');
+                });
+
+                # brand deals
+                Route::prefix('brand-deals')->name('brand_deals.')->group(function () {
+                    Route::get('/list', [\App\Http\Controllers\User\BrandDealController::class, 'list'])->name('list');
+                    Route::post('/store', [\App\Http\Controllers\User\BrandDealController::class, 'store'])->name('store');
+                    Route::post('/update/{uid}', [\App\Http\Controllers\User\BrandDealController::class, 'update'])->name('update');
+                    Route::get('/destroy/{uid}', [\App\Http\Controllers\User\BrandDealController::class, 'destroy'])->name('destroy');
+                });
+
+                # media kit route
+                Route::prefix("/mediakit")->name('mediakit.')->group(function(){
+                    Route::get('/index', [\App\Http\Controllers\User\MediaKitController::class, 'index'])->name('index');
+                    Route::get('/create', [\App\Http\Controllers\User\MediaKitController::class, 'create'])->name('create');
+                    Route::post('/store', [\App\Http\Controllers\User\MediaKitController::class, 'store'])->name('store');
+                    Route::get('/edit/{id}', [\App\Http\Controllers\User\MediaKitController::class, 'edit'])->name('edit');
+                    Route::post('/update/{id}', [\App\Http\Controllers\User\MediaKitController::class, 'update'])->name('update');
+                    Route::post('/delete/{id}', [\App\Http\Controllers\User\MediaKitController::class, 'delete'])->name('delete');
+                    Route::get('/insights', [\App\Http\Controllers\User\MediaKitController::class, 'insights'])->name('insights');
+                });
+
 
                 # addon route
                 Route::prefix("/addons")->name('addon.')->group(function(){
@@ -355,6 +384,7 @@ Route::get('/fix-prod', function () {
                 });
                 Route::prefix("/transaction/reports")->name('transaction.report.')->group(function(){
                     Route::get('/','transactionReport')->name('list');
+                    Route::get('/failed','failedTransactionReport')->name('failed');
                 });
 
                 Route::prefix("/webhook/reports")->name('webhook.report.')->group(function(){
@@ -374,6 +404,7 @@ Route::get('/fix-prod', function () {
             Route::controller(SocialAccountController::class)->name('account.')->prefix('account/')->group(function () {
 
                  Route::any('/list','list')->name('list');
+                 Route::get('/insights','insights')->name('insights');
                  Route::get('/platform/list','platform')->name('platform');
                  Route::get('/create/{platform}','create')->name('create');
                  Route::post('/store','store')->name('store');
@@ -393,6 +424,7 @@ Route::get('/fix-prod', function () {
 
                  Route::any('/list','list')->name('list');
                  Route::any('/analytics/dashboard','analytics')->name('analytics');
+                 Route::get('/auto-post','autoPost')->name('auto_post');
                  Route::get('/create','create')->name('create');
                  Route::post('/store','store')->name('store');
                  Route::get('/destroy/{id}','destroy')->name('destroy');
@@ -411,6 +443,14 @@ Route::get('/fix-prod', function () {
 
          });
 
+        });
+
+        // AI Suggestions Module
+        Route::middleware(['auth:web','user.verified','kyc'])->prefix('user/ai-suggestions')->name('user.ai_suggestions.')->group(function(){
+            Route::get('hashtag', [\App\Http\Controllers\User\AiSuggestionController::class, 'hashtag'])->name('hashtag');
+            Route::get('post', [\App\Http\Controllers\User\AiSuggestionController::class, 'post'])->name('post');
+            Route::get('timing', [\App\Http\Controllers\User\AiSuggestionController::class, 'timing'])->name('timing');
+            Route::get('trend', [\App\Http\Controllers\User\AiSuggestionController::class, 'trend'])->name('trend');
         });
 
 
@@ -525,11 +565,12 @@ Route::get('/fix-prod', function () {
         });
     });
 
+    // Public Media Kit
+    Route::get('/{username}/mediakit/{uid}', [\App\Http\Controllers\User\MediaKitController::class, 'showPublic'])
+        ->middleware(['web', 'sanitizer', 'https', 'dos.security', 'maintenance.mode'])
+        ->name('mediakit.public');
 
-
-
-
-
-
-
-
+    // Custom referral fallback (e.g., /username)
+    Route::get('/{username}', [\App\Http\Controllers\FrontendController::class, 'affiliateRedirect'])
+        ->middleware(['web', 'sanitizer', 'https', 'dos.security', 'maintenance.mode'])
+        ->name('affiliate.custom');

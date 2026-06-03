@@ -63,7 +63,7 @@ class AddonController extends Controller
         $addon = Addon::findOrFail($request->id);
         $addon->status = $addon->status == 1 ? 2 : 1;
         $addon->save();
-        return back()->with('success', translate('Status updated successfully.'));
+        return response()->json(['message' => translate('Status updated successfully.')]);
     }
 
     public function destroy($id)

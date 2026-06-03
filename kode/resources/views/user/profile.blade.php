@@ -360,7 +360,7 @@
                                                     <button data-bs-toggle="tooltip" data-bs-placement="top"
                                                         data-bs-title="{{translate('Generate Code')}}" type="button"
                                                         class="code-generate"
-                                                        data-text="{{url('/ref/'.$user->username)}}"><i
+                                                        data-text="{{url('/'.$user->username)}}"><i
                                                             class="bi bi-arrow-repeat"></i></button>
                                                 </div>
                                             </div>
@@ -372,11 +372,11 @@
 
                                                 <div class="input-with-btn">
                                                     <input type="readonly"
-                                                        value="{{url('/ref/'.$user->username)}}" id="ReferralURL">
+                                                        value="{{url('/'.$user->username)}}" id="ReferralURL">
                                                     <button data-bs-toggle="tooltip" data-bs-placement="top"
                                                         data-bs-title="{{translate('Copy')}}" type="button"
                                                         class="copy-text"
-                                                        data-text="{{url('/ref/'.$user->username)}}"><i
+                                                        data-text="{{url('/'.$user->username)}}"><i
                                                             class="bi bi-clipboard"></i></button>
                                                 </div>
                                             </div>

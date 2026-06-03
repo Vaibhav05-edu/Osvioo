@@ -117,9 +117,18 @@
         var copyText = document.getElementById("referralLink");
         copyText.select();
         copyText.setSelectionRange(0, 99999);
-        navigator.clipboard.writeText(copyText.value);
         
-        toastr.success("{{translate('Referral link copied to clipboard!')}}", "{{translate('Success')}}");
+        try {
+            navigator.clipboard.writeText(copyText.value).then(function() {
+                toastr.success("{{translate('Referral link copied to clipboard!')}}", "{{translate('Success')}}");
+            }).catch(function(err) {
+                document.execCommand("copy");
+                toastr.success("{{translate('Referral link copied to clipboard!')}}", "{{translate('Success')}}");
+            });
+        } catch(e) {
+            document.execCommand("copy");
+            toastr.success("{{translate('Referral link copied to clipboard!')}}", "{{translate('Success')}}");
+        }
     }
 </script>
 @endpush

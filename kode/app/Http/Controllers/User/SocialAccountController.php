@@ -264,4 +264,17 @@ class SocialAccountController extends Controller
         ]);
 
     }
+
+    /**
+     * Account Insights
+     *
+     * @return \Illuminate\View\View
+     */
+    public function insights(): \Illuminate\View\View
+    {
+        return view('user.social.account.insights', [
+            'meta_data' => $this->metaData(['title' => translate("Instagram Insights")]),
+            'accounts'  => SocialAccount::where('user_id', $this->user->id)->get(),
+        ]);
+    }
 }

@@ -272,11 +272,23 @@
                                                         <button class="action-item image-dropdwon dropdown-toggle"
                                                             type="button" data-bs-toggle="dropdown"
                                                             aria-expanded="false">
-                                                            {{translate("AI Assistant")}}
+                                                            <i class="bi bi-robot"></i> {{translate("AI Assistant")}}
                                                         </button>
 
                                                         <ul class="dropdown-menu ai-dropdown p-2">
-
+                                                            <li>
+                                                                <button type="button" class="ai-quick-btn d-flex align-items-center gap-2 cursor-pointer px-2 py-1 bg-transparent border-0 w-100 text-start" onclick="generateQuickAI('caption')">
+                                                                    <i class="bi bi-magic text-warning"></i>
+                                                                    <p class="mb-0">{{translate("Write Caption")}}</p>
+                                                                </button>
+                                                            </li>
+                                                            <li>
+                                                                <button type="button" class="ai-quick-btn d-flex align-items-center gap-2 cursor-pointer px-2 py-1 bg-transparent border-0 w-100 text-start" onclick="generateQuickAI('hashtags')">
+                                                                    <i class="bi bi-hash text-primary"></i>
+                                                                    <p class="mb-0">{{translate("Suggest Hashtags")}}</p>
+                                                                </button>
+                                                            </li>
+                                                            <li><hr class="dropdown-divider"></li>
                                                             <li>
 
                                                                 <div
@@ -368,8 +380,15 @@
                                                             </div>
                                                             <p class="show-date"></p>
                                                         </div>
-                                                       <input type="datetime-local"  hidden name="schedule_date" id="schedule_date_input" >
-
+                                                       <input type="datetime-local" hidden name="schedule_date" id="schedule_date_input" >
+                                                       
+                                                       <!-- Best Times Suggestions -->
+                                                       <div class="d-flex align-items-center gap-2 ms-2 overflow-auto" style="white-space:nowrap;">
+                                                            <span class="text-muted" style="font-size:0.75rem;"><i class="bi bi-stars text-warning"></i> {{translate('AI Best Times:')}}</span>
+                                                            @foreach($bestTimes ?? [] as $bt)
+                                                            <button type="button" class="btn btn-sm" style="font-size:0.7rem; padding:2px 8px; border-radius:50px; background:#f0fdf4; color:#16a34a; border:1px solid #bbf7d0;" onclick="setScheduleTime('{{ $bt }}')">{{ $bt }}</button>
+                                                            @endforeach
+                                                       </div>
                                                     @endif
                                                 </div>
                                                 <ul class="file-list mt-3"></ul>
@@ -794,6 +813,70 @@
 
 
     });
+
+    // Helper to set schedule time from AI suggestion
+    window.setScheduleTime = function(timeStr) {
+        // timeStr example: 'Today at 6:00 PM' - simplistic parsing for UI mockup
+        var date = new Date();
+        if(timeStr.includes('Tomorrow')) {
+            date.setDate(date.getDate() + 1);
+        }
+        
+        let hours = 18; // default 6PM
+        if(timeStr.includes('9:00 AM')) hours = 9;
+        if(timeStr.includes('8:00 PM')) hours = 20;
+
+        date.setHours(hours, 0, 0, 0);
+        
+        // Format for datetime-local: YYYY-MM-DDThh:mm
+        var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+        var localISOTime = (new Date(date - tzoffset)).toISOString().slice(0, 16);
+        
+        $('#schedule_date_input').val(localISOTime);
+        $('.show-date').text(date.toLocaleString());
+    };
+
+    // Quick AI tools wrapper
+    window.generateQuickAI = function(type) {
+        var btnText = type === 'caption' ? 'Writing...' : 'Generating...';
+        toastr("AI is working...", "info");
+        
+        var prompt = type === 'caption' 
+            ? "Write a highly engaging Instagram caption for my latest post. Include emojis and a hook."
+            : "Give me 15 trending Instagram hashtags for a general lifestyle post.";
+
+        $.ajax({
+            url: "{{ route('user.ai.content.generate') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                custom_prompt: 1,
+                custom_prompt_input: prompt,
+                max_result: 150
+            },
+            success: function(res) {
+                try {
+                    res = JSON.parse(res);
+                    if(res.status) {
+                        var existing = $('#inputText').val();
+                        var newText = existing + (existing ? "\n\n" : "") + res.message;
+                        $('#inputText').val(newText);
+                        $(".caption-text").html(newText);
+                        $('.platform-note').addClass('d-none');
+                        $('.social-preview-body').removeClass('d-none');
+                        toastr("Added to your post!", "success");
+                    } else {
+                        toastr(res.message || "Failed to generate", "error");
+                    }
+                } catch(e) {
+                    toastr("Invalid response from AI", "error");
+                }
+            },
+            error: function() {
+                toastr("Server error occurred", "error");
+            }
+        });
+    };
 
     $(document).on('click', '.download-text', function(e) {
         e.preventDefault()

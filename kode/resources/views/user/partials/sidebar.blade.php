@@ -58,31 +58,41 @@
                         </a>
                         <div class="side-menu-dropdown">
                             <ul class="sub-menu">
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-instagram"></i></span><p>{{translate('Insta')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.social.post.auto_post') ? 'active' :''}}" href="{{route('user.social.post.auto_post')}}"><span><i class="bi bi-instagram"></i></span><p>{{translate('Insta')}}</p></a></li>
                             </ul>
                         </div>
                     </li>
 
                     {{-- MEDIA KIT SECTION --}}
-                    <li class="side-menu-title">{{translate("Creator Tools")}}</li>
-                    <li class="sidemenu-item">
-                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse">
-                            <div class="sidemenu-icon"><i class="bi bi-person-badge"></i></div>
-                            <span>
+                    @if (check_permission('view_account'))
+                    <li class="sidebar-menu-title">
+                        {{ translate('Creator Tools') }}
+                    </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-link {{ sidebar_awake('user.brand_deals.list') }}" href="{{ route('user.brand_deals.list') }}">
+                                <span><i class="las la-handshake"></i></span>
+                                <p>{{ translate('Brand Deals') }}</p>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                        <a class="sidebar-menu-link " data-bs-toggle="collapse" href="#mediaKit" role="button" aria-expanded="false" aria-controls="mediaKit">
+                            <span><i class="bi bi-person-badge-fill"></i></span>
+                            <p>
                                 {{translate("Media Kit")}}
-                                <small><i class="bi bi-chevron-down"></i></small>
-                            </span>
+                            </p>
+                            <small>
+                                <i class="las la-angle-down"></i>
+                            </small>
                         </a>
-                        <div class="side-menu-dropdown">
+                        <div class="side-menu-dropdown collapse {{ sidebar_awake(['user.mediakit.*'], 'drop_down') }} " id="mediaKit">
                             <ul class="sub-menu">
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-stars"></i></span><p>{{translate('Media Kit AI Maker')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-clock-history"></i></span><p>{{translate('Previous Media Kit')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-pencil-square"></i></span><p>{{translate('Media Kit Edit')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-bar-chart-line"></i></span><p>{{translate('Media Kit Insights')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{ sidebar_awake('user.mediakit.create') }}" href="{{ route('user.mediakit.create') }}"><span><i class="bi bi-stars"></i></span><p>{{translate('Media Kit AI Maker')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{ sidebar_awake('user.mediakit.index') }}" href="{{ route('user.mediakit.index') }}"><span><i class="bi bi-clock-history"></i></span><p>{{translate('Previous Media Kit')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{ sidebar_awake('user.mediakit.insights') }}" href="{{ route('user.mediakit.insights') }}"><span><i class="bi bi-bar-chart-line"></i></span><p>{{translate('Media Kit Insights')}}</p></a></li>
                             </ul>
                         </div>
                     </li>
-
+                    @endif
                     @php
                         $isInvoiceActive = request()->routeIs('user.invoice.*');
                     @endphp
@@ -121,10 +131,10 @@
                         </a>
                         <div class="side-menu-dropdown">
                             <ul class="sub-menu">
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-hash"></i></span><p>{{translate('AI Post Hashtag')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-chat-left-text"></i></span><p>{{translate('AI Post Suggestion')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-clock"></i></span><p>{{translate('AI Post Timing')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-graph-up-arrow"></i></span><p>{{translate('AI Current Trend')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.ai_suggestions.hashtag') ? 'active' :''}}" href="{{route('user.ai_suggestions.hashtag')}}"><span><i class="bi bi-hash"></i></span><p>{{translate('AI Post Hashtag')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.ai_suggestions.post') ? 'active' :''}}" href="{{route('user.ai_suggestions.post')}}"><span><i class="bi bi-chat-left-text"></i></span><p>{{translate('AI Post Suggestion')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.ai_suggestions.timing') ? 'active' :''}}" href="{{route('user.ai_suggestions.timing')}}"><span><i class="bi bi-clock"></i></span><p>{{translate('AI Post Timing')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.ai_suggestions.trend') ? 'active' :''}}" href="{{route('user.ai_suggestions.trend')}}"><span><i class="bi bi-graph-up-arrow"></i></span><p>{{translate('AI Current Trend')}}</p></a></li>
                             </ul>
                         </div>
                     </li>
@@ -143,7 +153,7 @@
                             <ul class="sub-menu">
                                 <li class="sub-menu-item"><a class="sidebar-menu-link" href="{{route('user.social.account.platform')}}"><span><i class="bi bi-plus-circle"></i></span><p>{{translate('Connect Account')}}</p></a></li>
                                 <li class="sub-menu-item"><a class="sidebar-menu-link" href="{{ $platform ? route('user.social.account.list',['platform' => 'instagram']) : route('user.social.account.list') }}"><span><i class="bi bi-person-check"></i></span><p>{{translate('Connected Account')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-bar-chart"></i></span><p>{{translate('Instagram Insights')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.social.account.insights') ? 'active' :''}}" href="{{route('user.social.account.insights')}}"><span><i class="bi bi-bar-chart"></i></span><p>{{translate('Instagram Insights')}}</p></a></li>
                             </ul>
                         </div>
                     </li>
@@ -165,7 +175,7 @@
                                 <li class="sub-menu-item"><a class="sidebar-menu-link" href="{{route('user.transaction.report.list')}}"><span><i class="bi bi-receipt"></i></span><p>{{translate('Invoice')}}</p></a></li>
                                 <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.plan.billing.upcoming') ? 'active' :''}}" href="{{route('user.plan.billing.upcoming')}}"><span><i class="bi bi-calendar-event"></i></span><p>{{translate('Upcoming Billing')}}</p></a></li>
                                 <li class="sub-menu-item"><a class="sidebar-menu-link" href="{{route('user.transaction.report.list')}}"><span><i class="bi bi-arrow-left-right"></i></span><p>{{translate('Previous Transaction')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link" href="#"><span><i class="bi bi-x-circle"></i></span><p>{{translate('Failed Transaction')}}</p></a></li>
+                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.transaction.report.failed') ? 'active' :''}}" href="{{route('user.transaction.report.failed')}}"><span><i class="bi bi-x-circle"></i></span><p>{{translate('Failed Transaction')}}</p></a></li>
                             </ul>
                         </div>
                     </li>

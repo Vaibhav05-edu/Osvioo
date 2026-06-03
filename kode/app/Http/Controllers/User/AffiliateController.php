@@ -68,7 +68,7 @@ class AffiliateController extends Controller
             $signupsChart[$date] = User::where('referral_id', $user->id)->whereDate('created_at', $date)->count();
         }
 
-        $referralLink = url('/') . '?ref=' . $user->referral_code;
+        $referralLink = url('/') . '/' . $user->username;
         $meta_data = $this->metaData(['title'=>translate("Affiliate Dashboard")]);
 
         return view('user.affiliate.dashboard', compact(

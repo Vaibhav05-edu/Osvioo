@@ -272,6 +272,24 @@
             </li>
             @endif
 
+            @if(check_permission('view_addon'))
+            <li class="sidebar-menu-item">
+                <a class='sidebar-menu-link {{ sidebar_awake('admin.addon.*') }}' href='{{ route('admin.addon.list') }}'>
+                    <span><i class="las la-puzzle-piece"></i></span>
+                    <p>{{ translate('Manage Add-ons') }}</p>
+                </a>
+            </li>
+            @endif
+
+            @if(check_permission('view_invoice'))
+            <li class="sidebar-menu-item">
+                <a class='sidebar-menu-link {{ sidebar_awake('admin.invoice.*') }}' href='{{ route('admin.invoice.list') }}'>
+                    <span><i class="las la-file-invoice"></i></span>
+                    <p>{{ translate('Invoices') }}</p>
+                </a>
+            </li>
+            @endif
+
             @if (check_permission('view_report'))
             <li class="sidebar-menu-item">
                 <a class="sidebar-menu-link " data-bs-toggle="collapse" href="#report" role="button" aria-expanded="false" aria-controls="report">

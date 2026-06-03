@@ -7,12 +7,17 @@ use Illuminate\Http\Request;
 use App\Models\Invoice;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
 
 class InvoiceController extends Controller
 {
-    public function list()
+    public function list(Request $request)
     {
-        $invoices  = Invoice::where('user_id', auth_user('web')->id)->latest()->paginate(15);
+        $query = Invoice::where('user_id', auth_user('web')->id);
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        $invoices  = $query->latest()->paginate(15);
         $meta_data = $this->metaData(['title' => translate("My Invoices")]);
         return view('user.invoice.list', compact('invoices', 'meta_data'));
     }
@@ -54,7 +59,7 @@ class InvoiceController extends Controller
         ]);
 
         try {
-            $currency = session()->get('currency');
+            $currency = session()->get('currency') ?? base_currency();
             $user     = auth_user('web');
 
             // Build items & calculate subtotal
@@ -187,6 +192,40 @@ class InvoiceController extends Controller
         $invoice   = Invoice::where('uid', $uid)->firstOrFail();
         $meta_data = $this->metaData(['title' => translate("Invoice ") . ($invoice->details['invoice_number'] ?? $invoice->uid)]);
         return view('user.invoice.share', compact('invoice', 'meta_data'));
+    }
+
+    public function sendEmail(Request $request, $uid)
+    {
+        $request->validate([
+            'client_email' => 'required|email|max:255',
+        ]);
+
+        $invoice = Invoice::where('uid', $uid)->where('user_id', auth_user('web')->id)->firstOrFail();
+        $details = is_array($invoice->details) ? $invoice->details : [];
+        $invNum  = $details['invoice_number'] ?? $invoice->uid;
+
+        try {
+            $pdf = Pdf::loadView('user.invoice.pdf', compact('invoice'))->setPaper('a4', 'portrait');
+            $pdfContent = $pdf->output();
+
+            Mail::send([], [], function ($message) use ($request, $invoice, $invNum, $pdfContent) {
+                $message->to($request->client_email)
+                    ->subject('Invoice ' . $invNum . ' from ' . auth_user('web')->name)
+                    ->setBody(
+                        '<p>Dear Client,</p>' .
+                        '<p>Please find attached your invoice <strong>' . $invNum . '</strong>.</p>' .
+                        '<p>Amount Due: <strong>' . ($invoice->details['currency_symbol'] ?? '$') . number_format($invoice->amount, 2) . '</strong></p>' .
+                        '<p>Thank you for your business!</p>' .
+                        '<p>Regards,<br>' . auth_user('web')->name . '</p>',
+                        'text/html'
+                    )
+                    ->attachData($pdfContent, 'Invoice-' . $invNum . '.pdf', ['mime' => 'application/pdf']);
+            });
+
+            return back()->with('success', translate('Invoice sent successfully to ') . $request->client_email);
+        } catch (\Throwable $e) {
+            return back()->with('error', translate('Failed to send invoice email. Error: ') . $e->getMessage());
+        }
     }
 
     public function requestWatermarkRemoval($uid)

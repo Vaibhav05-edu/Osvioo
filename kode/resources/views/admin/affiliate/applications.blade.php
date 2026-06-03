@@ -31,6 +31,9 @@
                         <th>{{ translate('Email') }}</th>
                         <th>{{ translate('How to Promote') }}</th>
                         <th>{{ translate('Website') }}</th>
+                        @if($status == 2)
+                        <th>{{ translate('Total Earnings') }}</th>
+                        @endif
                         <th>{{ translate('Applied At') }}</th>
                         <th>{{ translate('Status') }}</th>
                         @if($status == 1)
@@ -61,6 +64,12 @@
                                 <span class="text-muted">—</span>
                             @endif
                         </td>
+                        @if($status == 2)
+                        <td>
+                            @php $earnings = \App\Models\AffiliateLog::where('user_id', $user->id)->sum('commission_amount'); @endphp
+                            <span class="fw-bold text-success">{{ num_format($earnings, base_currency()) }}</span>
+                        </td>
+                        @endif
                         <td>{{ $user->updated_at->format('d M Y') }}</td>
                         <td>
                             @if($user->affiliate_status == 1)

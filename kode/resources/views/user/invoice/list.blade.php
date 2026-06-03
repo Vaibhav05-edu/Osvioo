@@ -78,6 +78,21 @@
         </a>
     </div>
 
+    <div class="px-4 py-3 bg-white border-bottom d-flex gap-2">
+        <a href="{{ route('user.invoice.list') }}" class="btn btn-sm {{ !request('status') ? 'btn-primary' : 'btn-outline-primary' }}">
+            {{ translate('All Invoices') }}
+        </a>
+        <a href="{{ route('user.invoice.list', ['status' => 'paid']) }}" class="btn btn-sm {{ request('status') == 'paid' ? 'btn-success' : 'btn-outline-success' }}">
+            {{ translate('Paid') }}
+        </a>
+        <a href="{{ route('user.invoice.list', ['status' => 'part_paid']) }}" class="btn btn-sm {{ request('status') == 'part_paid' ? 'btn-info' : 'btn-outline-info' }}">
+            {{ translate('Partially Paid') }}
+        </a>
+        <a href="{{ route('user.invoice.list', ['status' => 'unpaid']) }}" class="btn btn-sm {{ request('status') == 'unpaid' ? 'btn-warning' : 'btn-outline-warning' }}">
+            {{ translate('Unpaid') }}
+        </a>
+    </div>
+
     <div class="invoice-table-wrap">
         <div class="table-responsive">
             <table class="invoice-table table mb-0">
@@ -164,6 +179,9 @@
                                     <i class="bi bi-currency-dollar"></i>
                                 </button>
                                 @endif
+                                <button type="button" class="action-btn" style="background:#fef3c7; color:#b45309;" data-bs-toggle="modal" data-bs-target="#emailModal{{ $invoice->uid }}" title="{{ translate('Send Email') }}">
+                                    <i class="bi bi-envelope"></i>
+                                </button>
                                 <a href="{{ route('user.invoice.share', $invoice->uid) }}"
                                     class="action-btn action-btn-view" target="_blank"
                                     title="{{ translate('Preview Invoice') }}">
@@ -215,6 +233,37 @@
                         </div>
                     </div>
                     @endif
+                    <!-- Email Modal -->
+                    <div class="modal fade" id="emailModal{{ $invoice->uid }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content" style="border-radius:12px; border:none;">
+                                <div class="modal-header border-0 pb-0">
+                                    <h5 class="modal-title fw-bold">{{ translate('Send Invoice to Email') }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form action="{{ route('user.invoice.send.email', $invoice->uid) }}" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <p class="text-muted small mb-3">
+                                            {{ translate('Send this invoice as a PDF attachment to your client.') }}
+                                        </p>
+                                        <div class="form-group mb-0">
+                                            <label class="form-label fw-semibold">{{ translate('Client Email Address') }}</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                                <input type="email" name="client_email" class="form-control" placeholder="client@example.com" value="{{ $details['billed_to']['email'] ?? '' }}" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer border-0 pt-0">
+                                        <button type="submit" class="btn btn-primary w-100" style="border-radius:8px; padding:10px; font-weight:600;">
+                                            <i class="bi bi-send me-1"></i> {{ translate('Send Email') }}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     @empty
                     <tr>
                         <td colspan="8" class="p-0">
