@@ -1037,7 +1037,7 @@
     // Fetch Dynamic AI Insights
     $(document).ready(function() {
         $.ajax({
-            url: "{{ route('home.ai_insights') }}",
+            url: "{{ route('user.home.ai_insights') }}",
             type: "GET",
             success: function(response) {
                 if(response) {
