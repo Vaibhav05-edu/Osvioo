@@ -25,7 +25,11 @@ class MediaKitController extends Controller
         $user = auth_user('web');
         
         // Fetch stats from connected social accounts to help AI/user generate the kit
-        $accounts = SocialAccount::where('user_id', $user->id)->get();
+        $accounts = SocialAccount::where('user_id', $user->id)
+                                ->whereHas('platform', function($query) {
+                                    $query->where('slug', 'instagram');
+                                })
+                                ->get();
         
         return view('user.mediakit.create', compact('title', 'accounts'));
     }
