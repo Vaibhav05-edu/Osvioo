@@ -26,9 +26,6 @@
                             <label class="form-label fw-bold">{{translate('Target Platform')}}</label>
                             <select class="form-select capsuled" name="platform">
                                 <option value="instagram">Instagram</option>
-                                <option value="tiktok">TikTok</option>
-                                <option value="twitter">X (Twitter)</option>
-                                <option value="linkedin">LinkedIn</option>
                             </select>
                         </div>
                         <div class="mb-4">

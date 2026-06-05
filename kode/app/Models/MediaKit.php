@@ -12,13 +12,15 @@ class MediaKit extends Model
     protected $fillable = [
         'user_id', 'uid', 'title', 'bio', 'cover_image', 'theme_color',
         'total_followers', 'engagement_rate', 'top_platform',
-        'social_links', 'demographics', 'contact_email', 'is_public', 'views'
+        'social_links', 'demographics', 'contact_email', 'is_public', 'views',
+        'watermark_removed', 'watermark_request_status'
     ];
 
     protected $casts = [
         'social_links' => 'array',
         'demographics' => 'array',
         'is_public' => 'boolean',
+        'watermark_removed' => 'boolean',
     ];
 
     public function user()

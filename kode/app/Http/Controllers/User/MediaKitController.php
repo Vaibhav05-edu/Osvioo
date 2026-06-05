@@ -164,4 +164,23 @@ class MediaKitController extends Controller
         
         return view('user.mediakit.public', compact('mediaKit'));
     }
+
+    public function requestWatermarkRemoval($uid)
+    {
+        $user = auth_user('web');
+        $mediaKit = MediaKit::where('user_id', $user->id)->where('uid', $uid)->firstOrFail();
+
+        if ($mediaKit->watermark_removed) {
+            return back()->with('error', translate('Watermark is already removed from this Media Kit.'));
+        }
+
+        if ($mediaKit->watermark_request_status == 'pending') {
+            return back()->with('error', translate('Watermark removal request is already pending.'));
+        }
+
+        $mediaKit->watermark_request_status = 'pending';
+        $mediaKit->save();
+
+        return back()->with('success', translate('Watermark removal requested successfully.'));
+    }
 }

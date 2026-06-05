@@ -72,7 +72,7 @@
                         <i class="las la-angle-down"></i>
                     </small>
                 </a>
-                <div class="side-menu-dropdown collapse {{ sidebar_awake(['admin.subscription.package.*','admin.invoice.*','admin.addon.*'], 'drop_down') }} " id="packages">
+                <div class="side-menu-dropdown collapse {{ sidebar_awake(['admin.subscription.package.*','admin.invoice.*','admin.addon.*','admin.mediakit.*'], 'drop_down') }} " id="packages">
                     <ul class="sub-menu">
                         <li class="sub-menu-item">
                             <a class="sidebar-menu-link {{ sidebar_awake(['admin.subscription.package.list', 'admin.subscription.package.edit']) }}" href="{{ route('admin.subscription.package.list') }}">
@@ -103,6 +103,14 @@
                                 <span></span>
                                 <p>
                                     {{ translate('Add-ons') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="sub-menu-item">
+                            <a class="sidebar-menu-link {{ sidebar_awake(['admin.mediakit.list']) }}" href="{{ route('admin.mediakit.list') }}">
+                                <span></span>
+                                <p>
+                                    {{ translate('Media Kits') }}
                                 </p>
                             </a>
                         </li>
@@ -286,6 +294,12 @@
                 <a class='sidebar-menu-link {{ sidebar_awake('admin.invoice.*') }}' href='{{ route('admin.invoice.list') }}'>
                     <span><i class="las la-file-invoice"></i></span>
                     <p>{{ translate('Invoices') }}</p>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a class='sidebar-menu-link {{ sidebar_awake('admin.mediakit.*') }}' href='{{ route('admin.mediakit.list') }}'>
+                    <span><i class="las la-id-card"></i></span>
+                    <p>{{ translate('Media Kits') }}</p>
                 </a>
             </li>
             @endif

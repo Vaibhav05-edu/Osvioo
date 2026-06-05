@@ -10,13 +10,7 @@ use App\Enums\PostStatus;
 use App\Enums\StatusEnum;
 use App\Enums\SubscriptionStatus;
 use App\Http\Requests\LicenseRequest;
-use App\Http\Services\Account\facebook\Account;
 use App\Http\Services\Account\instagram\Account as InstagramAccount;
-use App\Http\Services\Account\linkedin\Account as LinkedinAccount;
-use App\Http\Services\Account\twitter\Account as TwitterAccount;
-use App\Http\Services\Account\tiktok\Account as TiktokAccount;
-use App\Http\Services\Account\youtube\Account as YoutubeAccount;
-use App\Http\Services\Account\threads\Account as ThreadsAccount;
 
 use App\Http\Services\Core\DemoService;
 use App\Http\Services\UserService;
@@ -237,7 +231,7 @@ class CoreController extends Controller
 
 
 
-                        if ($platform->slug == 'facebook' || $platform->slug == 'instagram') {
+                        if ($platform->slug == 'instagram') {
 
                             $responseData = $response->json();
                             $accessToken = Arr::get($responseData, 'access_token');
@@ -245,29 +239,6 @@ class CoreController extends Controller
                             $account->token = $accessToken;
                             $account->access_token_expire_at = now()->addMonths(2);
 
-                        } else if ($platform->slug == 'twitter') {
-
-
-                            $responseData = $response->json();
-                            $token = Arr::get($responseData, 'access_token');
-                            $refresh_token = Arr::get($responseData, 'refresh_token');
-
-                            $account->token = $token;
-                            $account->access_token_expire_at = now()->addMonths(2);
-                            $account->refresh_token = $refresh_token;
-                            $account->refresh_token_expire_at = now()->addMonths(2);
-
-                        } else if ($platform->slug == 'linkedin') {
-
-                            $responseData = $response->json();
-
-                            $accessToken = Arr::get($responseData, 'access_token');
-                            $refreshToken = Arr::get($responseData, 'refresh_token');
-
-                            $account->token = $accessToken;
-                            $account->access_token_expire_at = now()->seconds($responseData['expires_in']);
-                            $account->refresh_token = $refreshToken;
-                            $account->refresh_token_expire_at = now()->seconds($responseData['refresh_token_expires_in']);
                         }
                         $account->save();
                     }
@@ -887,20 +858,8 @@ class CoreController extends Controller
         $platform = MediaPlatform::where('slug', $medium)->firstOrfail();
 
         switch ($platform->slug) {
-            case 'facebook':
-                return redirect(Account::authRedirect($platform));
             case 'instagram':
                 return redirect(InstagramAccount::authRedirect($platform));
-            case 'twitter':
-                return redirect(TwitterAccount::authRedirect($platform));
-            case 'linkedin':
-                return redirect(LinkedinAccount::authRedirect($platform));
-            case 'tiktok':
-                return redirect(TiktokAccount::authRedirect($platform));
-            case 'youtube':
-                return redirect(YoutubeAccount::authRedirect($platform));
-            case 'threads':
-                return redirect(ThreadsAccount::authRedirect($platform));
 
             default:
 
@@ -931,17 +890,7 @@ class CoreController extends Controller
 
             switch ($platform->slug) {
 
-                case 'facebook':
-                    $token = Account::getAccessToken($code, $platform)->throw()->json('access_token');
-                    $pages = Account::getPagesInfo(
-                        ['name,username,picture,access_token'],
-                        $platform,
-                        $token
-                    );
 
-                    Account::saveFbAccount($pages, $guard, $platform, AccountType::PAGE->value, ConnectionType::OFFICIAL->value);
-                    return redirect()->route($routeName, ['platform' => $platform->slug])
-                        ->with(response_status("Account Added"));
 
                 case 'instagram':
 
@@ -986,127 +935,7 @@ class CoreController extends Controller
 
 
 
-                case 'twitter':
 
-
-                    $response = TwitterAccount::getAccessToken($code, $platform)->throw();
-
-                    // $token = Arr::get($response, 'access_token');
-
-                    TwitterAccount::saveTwAccount(
-                        $response,
-
-                        $guard,
-                        $platform,
-                        AccountType::PROFILE->value,
-                        ConnectionType::OFFICIAL->value,
-                    );
-
-
-
-
-                    return redirect()->route($routeName, ['platform' => $platform->slug])
-                        ->with(response_status("Account Added"));
-
-
-                case 'linkedin':
-
-                    $getAccessTokenResponse = LinkedinAccount::getAccessToken($code, $platform);
-                    $tokenResponse = $getAccessTokenResponse->json();
-
-
-                    $accessToken = @$tokenResponse['access_token'] ?? null;
-
-
-                    if ($getAccessTokenResponse->failed() || !$accessToken) {
-
-                        return redirect()->route($routeName, )
-                            ->with(response_status('Failed to connect', 'error'));
-                    }
-
-                    $tokenExpireIn = @$tokenResponse['expires_in'] ?? null;
-
-
-                    $linkedInAccount = LinkedinAccount::getAccount($accessToken, $platform);
-
-                    if ($linkedInAccount->failed()) {
-
-                        return redirect()->route($routeName, )
-                            ->with(response_status('Failed to connect', 'error'));
-
-                    }
-
-                    $user = $linkedInAccount->json();
-
-
-                    LinkedinAccount::saveLdAccount(
-                        $user,
-                        $guard,
-                        $platform,
-                        AccountType::PROFILE->value,
-                        ConnectionType::OFFICIAL->value,
-                        $accessToken,
-                        $tokenExpireIn
-                    );
-
-
-
-
-                    return redirect()->route($routeName, ['platform' => $platform->slug])
-                        ->with(response_status("Account Added"));
-
-                case "tiktok":
-                    $response = TikTokAccount::getAccessToken($code, $platform)->throw();
-                    $tokenResponse = $response->json();
-                    $accessToken = Arr::get($tokenResponse, 'access_token');
-
-                    TikTokAccount::saveTtAccount(
-                        $response,
-                        $guard,
-                        $platform,
-                        AccountType::PROFILE->value,
-                        ConnectionType::OFFICIAL->value
-                    );
-
-                    return redirect()->route($routeName, ['platform' => $platform->slug])
-                        ->with(response_status("Account Added"));
-
-                case "youtube":
-                    $response = YouTubeAccount::getAccessToken($code, $platform)->throw();
-                    $tokenResponse = $response->json();
-                    $accessToken = Arr::get($tokenResponse, 'access_token');
-
-                    YouTubeAccount::saveYtAccount(
-                        $response,
-                        $guard,
-                        $platform,
-                        AccountType::PROFILE->value,
-                        ConnectionType::OFFICIAL->value
-                    );
-
-                    return redirect()->route($routeName, ['platform' => $platform->slug])
-                        ->with(response_status("Account Added"));
-
-                case "threads":
-                    $cleanCode = preg_replace('/#_.*/', '', $code);
-                    $response = ThreadsAccount::getAccessToken($cleanCode, $platform)->throw();
-                    $tokenResponse = $response->json();
-                    $accessToken = Arr::get($tokenResponse, 'access_token');
-                    $long_token_response = ThreadsAccount::getLongLiveToken($accessToken, $platform);
-                    $longTokenResponse = $long_token_response->json();
-                    $longLiveToken = Arr::get($longTokenResponse, 'access_token');
-
-
-                    ThreadsAccount::saveThAccount(
-                        $longTokenResponse,
-                        $guard,
-                        $platform,
-                        AccountType::PROFILE->value,
-                        ConnectionType::OFFICIAL->value
-                    );
-
-                    return redirect()->route($routeName, ['platform' => $platform->slug])
-                        ->with(response_status("Account Added"));
 
                 default:
 

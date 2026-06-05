@@ -6,7 +6,7 @@
 @php
     $accountTypes = App\Enums\AccountType::toArray();
 
-    if($platform->slug != 'facebook' ) Arr::forget($accountTypes,['PAGE','GROUP']);
+
     $enumClassPrefix = ucfirst($platform->slug);
     $enumClass  = "App\\Enums\\{$enumClassPrefix}Connection";
     $connectionTypes = App\Enums\ConnectionType::toArray();
@@ -114,7 +114,7 @@
                                     <div class="text-center mt-4">
                                         @if($v != App\Enums\ConnectionType::UNOFFICIAL->value)
                                         <div class="d-flex gap-2 justify-content-center">
-                                            <a @if($platform->slug == 'facebook') data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{trans("default.facebook_profile_warning_note")}}"  @endif href='{{route("account.connect",[ "guard"=>"web","medium" => $platform->slug ,"type" => t2k(App\Enums\AccountType::PROFILE->name) ])}}'
+                                            <a href='{{route("account.connect",[ "guard"=>"web","medium" => $platform->slug ,"type" => t2k(App\Enums\AccountType::PROFILE->name) ])}}'
                                                 class="i-btn btn--primary btn--lg capsuled">
                                                 {{translate('Connect Account')}}
                                                 <i class="bi bi-link-45deg"></i>
@@ -154,36 +154,7 @@
 @section('modal')
 
     @include('modal.delete_modal')
-    <div class="modal fade" id="warning-note-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="warning-note-modal"   aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md">
-            <div class="modal-content">
 
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        {{translate('Warning note')}}
-                    </h5>
-                    <button class="close-btn" data-bs-dismiss="modal">
-                        <i class="las la-times"></i>
-                    </button>
-                </div>
-
-
-                <div class="modal-body">
-                    <div class="p-4 bg-danger-soft rounded-4">
-                        <p><span class="i-badge-solid danger me-2">{{translate("note")}} :</span>
-                            {{trans("default.facebook_profile_warning_note")}}
-                        </p>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="i-btn btn--md ripple-dark" data-anim="ripple" data-bs-dismiss="modal">
-                        {{translate("Close")}}
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 
@@ -192,7 +163,7 @@
 (function($) {
     "use strict";
 
-    var warningModal = $("#warning-note-modal");
+    "use strict";
 
     $("#account_type").select2({
         placeholder: "{{translate('Select type')}}",
@@ -219,9 +190,6 @@
                 $('.group-id').addClass('d-none');
 
             } else {
-                if(warningModal && warningModal.length) {
-                    warningModal.modal('show')
-                }
                 $('.page-id').addClass('d-none');
                 $('.group-id').addClass('d-none');
             }

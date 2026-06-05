@@ -61,9 +61,7 @@
                         </td>
                         <td>
                             <div class="social-icon-preview">
-                                @if($faq->fb_link) <i class="fab fa-facebook" title="Facebook"></i> @endif
-                                @if($faq->x_link) <i class="fa-brands fa-x-twitter" title="X (Twitter)"></i> @endif
-                                @if($faq->linkedin_link) <i class="fab fa-linkedin" title="LinkedIn"></i> @endif
+
                                 @if($faq->website_link) <i class="fas fa-link" title="Website"></i> @endif
                             </div>
                         </td>

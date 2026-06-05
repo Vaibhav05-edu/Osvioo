@@ -439,20 +439,6 @@ return [
     #PLATFORM CONFIGURATION
 
     "platforms" => [
-
-        'facebook' => [
-            'name'        => 'Facebook',
-            'credential'  => [
-                'client_id'       => '@@',
-                'client_secret'   => '@@',
-                'app_version'     => '@@',
-                'graph_api_url'   => '@@',
-                'group_url'       => 'https://www.facebook.com/groups',
-            ],
-            'is_integrated' => StatusEnum::true->status(),
-            'is_feature'    => StatusEnum::true->status(),
-            'view_option'   => StatusEnum::true->status()
-        ],
         'instagram' => [
             'name'        => 'Instagram',
             'credential'  => [
@@ -466,101 +452,13 @@ return [
             'view_option'   => StatusEnum::true->status(),
             'is_feature'    => StatusEnum::true->status()
 
-        ],
-        "twitter" => [
-            'name'        => 'Twitter',
-            'credential'  => [
-                'api_key' => '-',
-                'api_secret' => '-',
-                'access_token' => '-',
-                'access_token_secret' => '-',
-                'client_id'        => '@@',
-                'client_secret'    => '@@'
-            ],
-            'is_integrated' => StatusEnum::true->status(),
-            'unofficial'    => StatusEnum::false->status(),
-            'is_feature'    => StatusEnum::true->status()
-        ],
-        'linkedin' => [
-            'name'        => 'Linkedin',
-            'credential'  => [
-                'client_id'        => '@@',
-                'client_secret'    => '@@'
-            ],
-            'is_integrated' => StatusEnum::true->status(),
-            'unofficial'    => StatusEnum::false->status(),
-            'is_feature'    => StatusEnum::true->status()
-        ],
-        'tiktok' => [
-            'name'       => "TikTok",
-            'credential' => [
-                'client_key'        => '@@',
-                'client_secret'     => '@@',
-                'app_mode'          => 'sandbox'
-            ],
-            'is_integrated' => StatusEnum::true->status(),
-            'view_option'   => StatusEnum::true->status(),
-            'is_feature'    => StatusEnum::true->status()
-
-        ],
-        'youtube' => [
-            'name'       => "Youtube",
-            'credential' => [
-                'client_id'        => '@@',
-                'client_secret'     => '@@',
-            ],
-            'is_integrated' => StatusEnum::true->status(),
-            'view_option'   => StatusEnum::true->status(),
-            'is_feature'    => StatusEnum::true->status()
-
-        ],
-        'threads' => [
-            'name'       => "Threads",
-            'credential' => [
-                'client_id'        => '@@',
-                'client_secret'     => '@@',
-                'graph_api_url'   => 'https://graph.threads.net'
-            ],
-            'is_integrated' => StatusEnum::true->status(),
-            'view_option'   => StatusEnum::true->status(),
-            'is_feature'    => StatusEnum::true->status()
-
         ]
-
     ],
 
     "platforms_connetion_field" => [
-
-        "facebook" => [
-            "access_token"
-        ],
         "instagram" => [
             "username",
             "password"
-        ],
-        "twitter" => [
-            'consumer_key',
-            'consumer_secret',
-            'access_token',
-            'token_secret' ,
-            'bearer_token'
-        ],
-        "tiktok" => [
-            'client_key',
-            'client_secret',
-            'access_token',
-            'refresh_token'
-        ],
-        "youtube" => [
-            'client_id',
-            'client_secret',
-            'access_token',
-            'refresh_token'
-        ],
-        "threads" => [
-            'client_id',
-            'client_secret',
-            'access_token',
         ]
     ]
 

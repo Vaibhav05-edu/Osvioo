@@ -140,14 +140,10 @@
                                                     $platformConfig      = Arr::get($platforms,$account->platform->slug ,null);
                                                 @endphp
 
-                                                @if($account->is_connected ==  App\Enums\StatusEnum::false->status() && $account->platform->slug != 'twitter' )
+                                                @if($account->is_connected ==  App\Enums\StatusEnum::false->status())
                                                     @php
-                                                        $url = 'javascript:void(0)';
-                                                        $connectionClass  =   true;
-                                                        if($account->platform->slug != 'facebook'){
-                                                            $url = route("account.connect",[ "guard"=>"web","medium" => $account->platform->slug ,"type" => t2k(App\Enums\AccountType::PROFILE->name) ]);
-                                                            $connectionClass  =   false;
-                                                        }
+                                                        $url = route("account.connect",[ "guard"=>"web","medium" => $account->platform->slug ,"type" => t2k(App\Enums\AccountType::PROFILE->name) ]);
+                                                        $connectionClass  =   false;
                                                     @endphp
                                                     <a data-account = "{{$account}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{translate('Reconnect')}}"  href="{{$url}}" class=" {{$connectionClass ? 'reconnect' : ''}}  icon-btn icon-btn-sm danger"><i class="bi bi-plug"></i>
                                                     </a>

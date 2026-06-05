@@ -613,6 +613,13 @@ Route::middleware([
             Route::post('/watermark-reject/{uid}','rejectWatermark')->name('watermark.reject');
         });
 
+        # mediakit route
+        Route::controller(\App\Http\Controllers\Admin\MediaKitController::class)->prefix("/mediakit")->name('mediakit.')->group(function(){
+            Route::get('/list','index')->name('list');
+            Route::post('/watermark-approve/{uid}','approveWatermark')->name('watermark.approve');
+            Route::post('/watermark-reject/{uid}','rejectWatermark')->name('watermark.reject');
+        });
+
         # addon route
         Route::controller(\App\Http\Controllers\Admin\AddonController::class)->prefix("/addon")->name('addon.')->group(function(){
             Route::get('/list','list')->name('list');

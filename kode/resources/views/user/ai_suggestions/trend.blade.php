@@ -32,8 +32,6 @@
                             <label class="form-label fw-bold">{{translate('Platform Focus')}}</label>
                             <select class="form-select capsuled" name="platform">
                                 <option value="instagram_reels">Instagram Reels</option>
-                                <option value="tiktok">TikTok</option>
-                                <option value="youtube_shorts">YouTube Shorts</option>
                             </select>
                         </div>
                         <button type="button" class="btn btn--warning capsuled px-4 fw-bold w-100 text-dark" onclick="alert('{{translate('API integration required. Please connect the Trend API keys first.')}}')">
@@ -52,7 +50,7 @@
                             <div class="list-group-item p-3 d-flex justify-content-between align-items-center bg-light-soft">
                                 <div>
                                     <h6 class="mb-1 fw-bold">"Pedro Pedro Pedro" <span class="badge bg-secondary ms-2" style="font-size: 10px;">Audio</span></h6>
-                                    <p class="fs-12 text-muted mb-0">{{translate('Currently viral across TikTok and Reels. Great for transitions.')}}</p>
+                                    <p class="fs-12 text-muted mb-0">{{translate('Currently viral across Reels. Great for transitions.')}}</p>
                                 </div>
                                 <span class="fs-12 fw-bold text-success"><i class="bi bi-arrow-up-right me-1"></i>450%</span>
                             </div>

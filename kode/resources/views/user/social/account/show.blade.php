@@ -94,10 +94,8 @@
                                     <div class="emoji d-flex align-items-center gap-1">
                                         <ul class="d-flex gap-0 react-icon-list">
                                             <li><img src="{{asset('assets/images/default/like.png')}}" alt="like image preview"></li>
-                                            @if($account?->platform?->slug != 'youtube')
                                                 <li><img src="{{asset('assets/images/default/love.png')}}" alt="love image preview"></li>
                                                 <li><img src="{{asset('assets/images/default/care.png')}}" alt="Care image preview"></li>
-                                            @endif
 
                                         </ul>
                                         <span class="fs-13">
@@ -119,11 +117,7 @@
                                             <li>
                                                 {{ Arr::get($commentsSummary,'total_count',0) }} {{translate('Comments')}}
                                             </li>
-                                            @if($account?->platform?->slug == 'youtube')
-                                                <li>{{ Arr::get($views,'count',0) }} {{translate('Views')}} </li>
-                                            @else
                                                 <li>{{ Arr::get($shares,'count',0) }} {{translate('Shares')}} </li>
-                                            @endif
                                         </ul>
                                     </div>
                                 </div>

@@ -65,33 +65,34 @@
 
                     {{-- MEDIA KIT SECTION --}}
                     @if (check_permission('view_account'))
-                    <li class="sidebar-menu-title">
+                    <li class="side-menu-title">
                         {{ translate('Creator Tools') }}
                     </li>
-                        <li class="sidebar-menu-item">
-                            <a class="sidebar-menu-link {{ sidebar_awake('user.brand_deals.list') }}" href="{{ route('user.brand_deals.list') }}">
-                                <span><i class="las la-handshake"></i></span>
-                                <p>{{ translate('Brand Deals') }}</p>
+                        <li class="sidemenu-item">
+                            <a class="sidemenu-link {{ request()->routeIs('user.brand_deals.list') ? 'active' : '' }}" href="{{ route('user.brand_deals.list') }}">
+                                <div class="sidemenu-icon"><i class="las la-handshake"></i></div>
+                                <span>{{ translate('Brand Deals') }}</span>
                             </a>
                         </li>
-                        <li class="sidebar-menu-item">
-                        <a class="sidebar-menu-link " data-bs-toggle="collapse" href="#mediaKit" role="button" aria-expanded="false" aria-controls="mediaKit">
-                            <span><i class="bi bi-person-badge-fill"></i></span>
-                            <p>
-                                {{translate("Media Kit")}}
-                            </p>
-                            <small>
-                                <i class="las la-angle-down"></i>
-                            </small>
-                        </a>
-                        <div class="side-menu-dropdown collapse {{ sidebar_awake(['user.mediakit.*'], 'drop_down') }} " id="mediaKit">
-                            <ul class="sub-menu">
-                                <li class="sub-menu-item"><a class="sidebar-menu-link {{ sidebar_awake('user.mediakit.create') }}" href="{{ route('user.mediakit.create') }}"><span><i class="bi bi-stars"></i></span><p>{{translate('Media Kit AI Maker')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link {{ sidebar_awake('user.mediakit.index') }}" href="{{ route('user.mediakit.index') }}"><span><i class="bi bi-clock-history"></i></span><p>{{translate('Previous Media Kit')}}</p></a></li>
-                                <li class="sub-menu-item"><a class="sidebar-menu-link {{ sidebar_awake('user.mediakit.insights') }}" href="{{ route('user.mediakit.insights') }}"><span><i class="bi bi-bar-chart-line"></i></span><p>{{translate('Media Kit Insights')}}</p></a></li>
-                            </ul>
-                        </div>
-                    </li>
+                        @php
+                            $isMediaKitActive = request()->routeIs('user.mediakit.*');
+                        @endphp
+                        <li class="sidemenu-item">
+                            <a class="sidemenu-link sidemenu-collapse {{$isMediaKitActive ? 'active' : ''}}" href="javascript:void(0)">
+                                <div class="sidemenu-icon"><i class="bi bi-person-badge-fill"></i></div>
+                                <span>
+                                    {{translate("Media Kit")}}
+                                    <small><i class="bi bi-chevron-down" @if($isMediaKitActive) style="transform: rotate(-180deg);" @endif></i></small>
+                                </span>
+                            </a>
+                            <div class="side-menu-dropdown @if($isMediaKitActive) show-sideMenu @endif">
+                                <ul class="sub-menu">
+                                    <li class="sub-menu-item"><a class="sidebar-menu-link {{ request()->routeIs('user.mediakit.create') ? 'active' : '' }}" href="{{ route('user.mediakit.create') }}"><span><i class="bi bi-stars"></i></span><p>{{translate('Media Kit AI Maker')}}</p></a></li>
+                                    <li class="sub-menu-item"><a class="sidebar-menu-link {{ request()->routeIs('user.mediakit.index') ? 'active' : '' }}" href="{{ route('user.mediakit.index') }}"><span><i class="bi bi-clock-history"></i></span><p>{{translate('Previous Media Kit')}}</p></a></li>
+                                    <li class="sub-menu-item"><a class="sidebar-menu-link {{ request()->routeIs('user.mediakit.insights') ? 'active' : '' }}" href="{{ route('user.mediakit.insights') }}"><span><i class="bi bi-bar-chart-line"></i></span><p>{{translate('Media Kit Insights')}}</p></a></li>
+                                </ul>
+                            </div>
+                        </li>
                     @endif
                     @php
                         $isInvoiceActive = request()->routeIs('user.invoice.*');

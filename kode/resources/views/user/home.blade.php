@@ -100,7 +100,7 @@
         if ($totalAcc == 0) {
             $task1_badge = "High Priority";
             $task1_title = "Connect Social Account";
-            $task1_desc = "You haven't connected any social profiles. Connect Facebook or Instagram to start scheduling posts.";
+            $task1_desc = "You haven't connected any social profiles. Connect Instagram to start scheduling posts.";
             $task1_action_text = "Connect Now";
             $task1_action_url = route('user.social.account.platform');
             $task1_benefit = "Get Started";
@@ -182,14 +182,7 @@
                                     </div>
                                     @php
                                         $platformIcons = [
-                                            'facebook'  => ['icon' => 'bi-facebook', 'color' => '#1877F2'],
                                             'instagram' => ['icon' => 'bi-instagram', 'color' => '#E4405F'],
-                                            'twitter'   => ['icon' => 'bi-twitter-x', 'color' => '#000000'],
-                                            'linkedin'  => ['icon' => 'bi-linkedin', 'color' => '#0A66C2'],
-                                            'tiktok'    => ['icon' => 'bi-tiktok', 'color' => '#000000'],
-                                            'youtube'   => ['icon' => 'bi-youtube', 'color' => '#FF0000'],
-                                            'pinterest' => ['icon' => 'bi-pinterest', 'color' => '#BD081C'],
-                                            'reddit'    => ['icon' => 'bi-reddit', 'color' => '#FF4500'],
                                         ];
                                         $pSlug = strtolower($platform->slug);
                                         $pInfo = $platformIcons[$pSlug] ?? ['icon' => 'bi-share', 'color' => '#5D5AF1'];
@@ -394,18 +387,18 @@
                                 <div class="col-6">
                                     <div class="p-4 border-0 rounded-4 text-center" style="background: #f8f9fa;">
                                         <p class="text-muted fs-12 mb-2 text-uppercase fw-bold" style="letter-spacing: 0.5px;">{{translate('Followers')}}</p>
-                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;">{{ $followersStr }}</h2>
+                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;" id="ai-followers">{{ $followersStr }}</h2>
                                         <div class="mt-2">
-                                            <span class="badge bg--success-soft text--success fs-12 fw-bold"><i class="bi bi-arrow-up-short"></i> {{ $folGrowthStr }}</span>
+                                            <span class="badge bg--success-soft text--success fs-12 fw-bold" id="ai-fol-growth"><i class="bi bi-arrow-up-short"></i> {{ $folGrowthStr }}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="p-4 border-0 rounded-4 text-center" style="background: #f8f9fa;">
                                         <p class="text-muted fs-12 mb-2 text-uppercase fw-bold" style="letter-spacing: 0.5px;">{{translate('Engagement')}}</p>
-                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;">{{ $engagementStr }}</h2>
+                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;" id="ai-engagement">{{ $engagementStr }}</h2>
                                         <div class="mt-2">
-                                            <span class="badge bg--success-soft text--success fs-12 fw-bold"><i class="bi bi-arrow-up-short"></i> {{ $engGrowthStr }}</span>
+                                            <span class="badge bg--success-soft text--success fs-12 fw-bold" id="ai-eng-growth"><i class="bi bi-arrow-up-short"></i> {{ $engGrowthStr }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -415,7 +408,7 @@
                                 <i class="bi bi-lightning-fill text-warning"></i>
                                 {{translate('Top Keywords')}}
                             </h6>
-                            <div class="d-flex flex-wrap gap-2">
+                            <div class="d-flex flex-wrap gap-2" id="ai-keywords">
                                 @foreach($hashtags as $tag)
                                     <span class="badge bg-white text-dark border-0 shadow-sm capsuled px-3 py-2 fs-12">#{{ $tag }}</span>
                                 @endforeach
@@ -446,19 +439,19 @@
                                         <div class="position-relative d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
                                             <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(-90deg);">
                                                 <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="3" />
-                                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#5D5AF1" stroke-width="3" stroke-dasharray="{{ $profileHealth }}, 100" stroke-linecap="round" />
+                                                <path id="ai-health-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#5D5AF1" stroke-width="3" stroke-dasharray="{{ $profileHealth }}, 100" stroke-linecap="round" />
                                             </svg>
-                                            <div class="position-absolute fs-18 fw-bold" style="color: #5D5AF1;">{{ $profileHealth }}%</div>
+                                            <div class="position-absolute fs-18 fw-bold" style="color: #5D5AF1;" id="ai-health-val">{{ $profileHealth }}%</div>
                                         </div>
-                                        <span class="text--success fs-11 fw-bold mt-2">{{translate($profileHealthStatus)}}</span>
+                                        <span class="text--success fs-11 fw-bold mt-2" id="ai-health-status">{{translate($profileHealthStatus)}}</span>
                                     </div>
                                 </div>
                                 <div class="col-md-7">
                                     <div class="p-3 border-0 rounded-4 text-white shadow-lg h-100 d-flex flex-column justify-content-center" style="background: linear-gradient(135deg, #5D5AF1 0%, #3f3cbd 100%);">
                                         <p class="opacity-75 fs-11 mb-2 text-uppercase fw-bold">{{translate('Suggested Rate')}}</p>
                                         <div class="mb-1">
-                                            <h3 class="mb-0 fw-bold" style="font-size: 26px;">${{ number_format($rateMinUSD) }} - ${{ number_format($rateMaxUSD) }}</h3>
-                                            <h5 class="mb-0 opacity-90 fw-bold" style="font-size: 18px;">₹{{ number_format($rateMinINR) }} - ₹{{ number_format($rateMaxINR) }}</h5>
+                                            <h3 class="mb-0 fw-bold" style="font-size: 26px;" id="ai-rate-usd">${{ number_format($rateMinUSD) }} - ${{ number_format($rateMaxUSD) }}</h3>
+                                            <h5 class="mb-0 opacity-90 fw-bold" style="font-size: 18px;" id="ai-rate-inr">₹{{ number_format($rateMinINR) }} - ₹{{ number_format($rateMaxINR) }}</h5>
                                         </div>
                                         <p class="mb-0 fs-10 opacity-75 mt-2">* {{translate('Based on current reach')}}</p>
                                     </div>
@@ -472,7 +465,7 @@
                                 </h6>
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="icon-sm bg-white shadow-sm rounded-circle text--primary d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0;"><i class="bi bi-camera-reels fs-14"></i></div>
-                                    <p class="mb-0 fs-12 text-dark fw-bold">{{translate($selectedStrategy)}}</p>
+                                    <p class="mb-0 fs-12 text-dark fw-bold" id="ai-next-strategy">{{translate($selectedStrategy)}}</p>
                                 </div>
                             </div>
                         </div>
@@ -1039,6 +1032,40 @@
         language: {
             dir: getCurrentDirection()
         }
+    });
+    
+    // Fetch Dynamic AI Insights
+    $(document).ready(function() {
+        $.ajax({
+            url: "{{ route('home.ai_insights') }}",
+            type: "GET",
+            success: function(response) {
+                if(response) {
+                    $('#ai-followers').text(response.followersStr);
+                    $('#ai-engagement').text(response.engagementStr);
+                    $('#ai-fol-growth').html('<i class="bi bi-arrow-up-short"></i> ' + response.folGrowthStr);
+                    $('#ai-eng-growth').html('<i class="bi bi-arrow-up-short"></i> ' + response.engGrowthStr);
+                    
+                    $('#ai-rate-usd').text('$' + response.rateMinUSD + ' - $' + response.rateMaxUSD);
+                    $('#ai-rate-inr').text('₹' + response.rateMinINR + ' - ₹' + response.rateMaxINR);
+                    
+                    if(response.ai) {
+                        $('#ai-health-val').text(response.ai.profileHealth + '%');
+                        $('#ai-health-circle').attr('stroke-dasharray', response.ai.profileHealth + ', 100');
+                        $('#ai-health-status').text(response.ai.profileHealthStatus);
+                        $('#ai-next-strategy').text(response.ai.nextStrategy);
+                        
+                        if(response.ai.topKeywords && response.ai.topKeywords.length > 0) {
+                            let keywordsHtml = '';
+                            response.ai.topKeywords.forEach(function(kw) {
+                                keywordsHtml += '<span class="badge bg-white text-dark border-0 shadow-sm capsuled px-3 py-2 fs-12">#' + kw + '</span>';
+                            });
+                            $('#ai-keywords').html(keywordsHtml);
+                        }
+                    }
+                }
+            }
+        });
     });
 </script>
 @endpush

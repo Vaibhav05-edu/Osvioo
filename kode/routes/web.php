@@ -205,6 +205,7 @@ Route::get('/fix-prod', function () {
             //Profile
             Route::controller(\App\Http\Controllers\User\HomeController::class)->group(function(){
                 Route::get('/dashboard', 'home')->name('home');
+                Route::get('/dashboard/ai-insights', 'aiInsights')->name('home.ai_insights');
                 Route::get('/profile', 'profile')->name('profile');
                 Route::post('/profile/update', 'profileUpdate')->name('profile.update');
                 Route::post('/profile/delete', 'deleteAccount')->name('profile.delete');
@@ -275,6 +276,7 @@ Route::get('/fix-prod', function () {
                     Route::post('/update/{id}', [\App\Http\Controllers\User\MediaKitController::class, 'update'])->name('update');
                     Route::post('/delete/{id}', [\App\Http\Controllers\User\MediaKitController::class, 'delete'])->name('delete');
                     Route::get('/insights', [\App\Http\Controllers\User\MediaKitController::class, 'insights'])->name('insights');
+                    Route::post('/request-watermark-removal/{uid}', [\App\Http\Controllers\User\MediaKitController::class, 'requestWatermarkRemoval'])->name('watermark.request');
                 });
 
 

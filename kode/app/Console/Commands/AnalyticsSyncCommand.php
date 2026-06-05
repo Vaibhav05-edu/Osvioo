@@ -23,13 +23,7 @@ class AnalyticsSyncCommand extends Command
      * Supported platforms with their service classes
      */
     protected array $supportedPlatforms = [
-        'facebook' => \App\Http\Services\Account\facebook\Account::class,
         'instagram' => \App\Http\Services\Account\instagram\Account::class,
-        'twitter' => \App\Http\Services\Account\twitter\Account::class,
-        'tiktok' => \App\Http\Services\Account\tiktok\Account::class,
-        'youtube' => \App\Http\Services\Account\youtube\Account::class,
-        'linkedin' => \App\Http\Services\Account\linkedin\Account::class,
-        'threads' => \App\Http\Services\Account\threads\Account::class,
     ];
 
     /**
@@ -176,12 +170,7 @@ class AnalyticsSyncCommand extends Command
                     $stats['posts_failed']++;
                 }
 
-                // Longer delay for rate-limited APIs (especially X Free tier)
-                if ($platformSlug === 'twitter') {
-                    usleep(1000000); // 1 second delay for X
-                } else {
-                    usleep(200000); // 200ms delay for others
-                }
+                usleep(200000); // 200ms delay
 
             } catch (\Exception $e) {
                 $this->error("    ✗ Post #{$post->id}: " . $e->getMessage());

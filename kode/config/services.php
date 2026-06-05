@@ -31,24 +31,4 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'linkedin' => [
-        'client_id' => env('LINKEDIN_CLIENT_ID'),
-        'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
-        'redirect' => env('LINKEDIN_REDIRECT_URI'),
-        'scopes' => [
-            'r_liteprofile', // Basic profile information
-            'r_emailaddress', // Email address
-            'w_member_social', // Share on behalf of user
-            'rw_organization_admin', // Manage organizations
-    
-        ],
-
-    ],
-
-    'twitter' => [
-        'client_id' => env('LINKEDIN_CLIENT_ID'),
-        'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
-        'redirect' => env('LINKEDIN_REDIRECT_URI'),
-    ],
-
 ];

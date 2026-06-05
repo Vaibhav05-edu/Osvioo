@@ -84,11 +84,6 @@ return [
             'client_secret' => '@@',
             'status'        => StatusEnum::true->status(),
         ],
-        'facebook_oauth' => [
-            'client_id'     => '@@',
-            'client_secret' => '@@',
-            'status'        => StatusEnum::true->status(),
-        ],
     ]),
 
     'google_map_api_key' => '@@@@',

@@ -21,6 +21,7 @@
                                 <th>{{translate('Cover')}}</th>
                                 <th>{{translate('Stats')}}</th>
                                 <th>{{translate('Status')}}</th>
+                                <th>{{translate('Watermark')}}</th>
                                 <th>{{translate('Views')}}</th>
                                 <th>{{translate('Action')}}</th>
                             </tr>
@@ -46,6 +47,20 @@
                                     <span class="badge bg-danger">{{translate('Private')}}</span>
                                     @endif
                                 </td>
+                                <td>
+                                    @if($kit->watermark_removed)
+                                        <span class="badge bg-success">{{ translate('Removed') }}</span>
+                                    @elseif($kit->watermark_request_status == 'pending')
+                                        <span class="badge bg-warning">{{ translate('Pending Request') }}</span>
+                                    @else
+                                        <form action="{{ route('user.mediakit.watermark.request', $kit->uid) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="i-btn btn--sm warning" data-bs-toggle="tooltip" title="{{ translate('Request Watermark Removal') }}">
+                                                <i class="bi bi-droplet-half"></i>
+                                            </button>
+                                        </form>
+                                    @endif
+                                </td>
                                 <td>{{$kit->views}}</td>
                                 <td>
                                     <div class="d-flex gap-2">
@@ -66,7 +81,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="6" class="text-center">
+                                <td colspan="7" class="text-center">
                                     <div class="p-4">
                                         <i class="bi bi-person-badge text-muted" style="font-size: 3rem;"></i>
                                         <h5 class="mt-3">{{translate('No Media Kits Found')}}</h5>

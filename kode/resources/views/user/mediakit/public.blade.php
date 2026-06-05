@@ -267,7 +267,10 @@
         </div>
         
         <div class="text-center mt-5 text-muted">
-            <small>&copy; {{date('Y')}} {{$mediaKit->user->name}}. Powered by Socialyt.</small>
+            <small>&copy; {{date('Y')}} {{$mediaKit->user->name}}.</small>
+            @if(!$mediaKit->watermark_removed)
+                <small class="d-block mt-1">Powered by {{ site_settings('site_name', 'Osvioo') }}</small>
+            @endif
         </div>
     </div>
 
