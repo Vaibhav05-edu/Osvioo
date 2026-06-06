@@ -32,7 +32,7 @@
                                 <td>{{$kit->title}}</td>
                                 <td>
                                     @if($kit->cover_image)
-                                    <img src="{{ asset('assets/images/mediakits/' . $kit->cover_image) }}" alt="Cover" style="height: 40px; border-radius: 5px;">
+                                    <img src="{{ asset('assets/images/frontend/profile/' . $kit->cover_image) }}" alt="Cover" style="height: 40px; border-radius: 5px;">
                                     @else
                                     <span class="badge bg-secondary">{{translate('No Cover')}}</span>
                                     @endif
