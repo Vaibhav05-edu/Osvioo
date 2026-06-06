@@ -190,7 +190,7 @@
     <div class="container py-5">
         
         @if($mediaKit->cover_image)
-            <img src="{{ asset('assets/images/frontend/profile/' . $mediaKit->cover_image) }}" class="cover-img" alt="Cover">
+            <img src="{{ asset('assets/images/custom/' . $mediaKit->cover_image) }}" class="cover-img" alt="Cover">
         @endif
 
         <div class="row justify-content-center profile-container {{$mediaKit->cover_image ? '' : 'mt-5'}}">

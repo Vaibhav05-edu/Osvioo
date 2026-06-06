@@ -43,7 +43,7 @@
                                 <label for="cover_image">{{translate('Cover Image')}}</label>
                                 @if($mediaKit->cover_image)
                                     <div class="mb-2">
-                                        <img src="{{ asset('assets/images/frontend/profile/' . $mediaKit->cover_image) }}" class="img-fluid rounded" alt="Cover">
+                                        <img src="{{ asset('assets/images/custom/' . $mediaKit->cover_image) }}" class="img-fluid rounded" alt="Cover">
                                     </div>
                                 @endif
                                 <input type="file" id="cover_image" name="cover_image" accept="image/*">

@@ -87,7 +87,7 @@ class MediaKitController extends Controller
         if($request->hasFile('cover_image')){
             $file = $request->file('cover_image');
             $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/images/frontend/profile'), $filename);
+            $file->move(public_path('assets/images/custom'), $filename);
             $mediaKit->cover_image = $filename;
         }
         
@@ -127,12 +127,12 @@ class MediaKitController extends Controller
         
         if($request->hasFile('cover_image')){
             // delete old
-            if($mediaKit->cover_image && file_exists(public_path('assets/images/frontend/profile/' . $mediaKit->cover_image))) {
-                @unlink(public_path('assets/images/frontend/profile/' . $mediaKit->cover_image));
+            if($mediaKit->cover_image && file_exists(public_path('assets/images/custom/' . $mediaKit->cover_image))) {
+                @unlink(public_path('assets/images/custom/' . $mediaKit->cover_image));
             }
             $file = $request->file('cover_image');
             $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets/images/frontend/profile'), $filename);
+            $file->move(public_path('assets/images/custom'), $filename);
             $mediaKit->cover_image = $filename;
         }
         
@@ -145,8 +145,8 @@ class MediaKitController extends Controller
     {
         $user = auth_user('web');
         $mediaKit = MediaKit::where('user_id', $user->id)->where('id', $id)->firstOrFail();
-        if($mediaKit->cover_image && file_exists(public_path('assets/images/frontend/profile/' . $mediaKit->cover_image))) {
-            @unlink(public_path('assets/images/frontend/profile/' . $mediaKit->cover_image));
+        if($mediaKit->cover_image && file_exists(public_path('assets/images/custom/' . $mediaKit->cover_image))) {
+            @unlink(public_path('assets/images/custom/' . $mediaKit->cover_image));
         }
         $mediaKit->delete();
         
