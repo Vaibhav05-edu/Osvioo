@@ -85,7 +85,10 @@ class MediaKitController extends Controller
         $mediaKit->engagement_rate = rand(10, 50) / 10; // Mock 1.0% to 5.0%
         
         if($request->hasFile('cover_image')){
-            $mediaKit->cover_image = store_file($request->cover_image, config('settings')['file_path']['profile']['path']);
+            $file = $request->file('cover_image');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets/images/mediakits'), $filename);
+            $mediaKit->cover_image = $filename;
         }
         
         $mediaKit->save();
@@ -124,10 +127,13 @@ class MediaKitController extends Controller
         
         if($request->hasFile('cover_image')){
             // delete old
-            if($mediaKit->cover_image) {
-                remove_file(config('settings')['file_path']['profile']['path'], $mediaKit->cover_image);
+            if($mediaKit->cover_image && file_exists(public_path('assets/images/mediakits/' . $mediaKit->cover_image))) {
+                @unlink(public_path('assets/images/mediakits/' . $mediaKit->cover_image));
             }
-            $mediaKit->cover_image = store_file($request->cover_image, config('settings')['file_path']['profile']['path']);
+            $file = $request->file('cover_image');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets/images/mediakits'), $filename);
+            $mediaKit->cover_image = $filename;
         }
         
         $mediaKit->save();
@@ -139,8 +145,8 @@ class MediaKitController extends Controller
     {
         $user = auth_user('web');
         $mediaKit = MediaKit::where('user_id', $user->id)->where('id', $id)->firstOrFail();
-        if($mediaKit->cover_image) {
-            remove_file(config('settings')['file_path']['profile']['path'], $mediaKit->cover_image);
+        if($mediaKit->cover_image && file_exists(public_path('assets/images/mediakits/' . $mediaKit->cover_image))) {
+            @unlink(public_path('assets/images/mediakits/' . $mediaKit->cover_image));
         }
         $mediaKit->delete();
         
