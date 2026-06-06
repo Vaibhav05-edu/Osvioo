@@ -4,432 +4,448 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$mediaKit->title}} | Media Kit</title>
-    <!-- Fonts -->
+    <meta name="description" content="Media Kit for {{$mediaKit->user->name}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --theme-color: {{$mediaKit->theme_color ?? '#6366f1'}};
-            --bg-dark: #0a0a0a;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --text-primary: #ffffff;
-            --text-secondary: #a1a1aa;
+            --accent:  {{$mediaKit->theme_color ?? '#c9a97a'}};
+            --bg:      #f7f5f2;
+            --card:    #ffffff;
+            --text:    #1a1a1a;
+            --muted:   #6b6b6b;
+            --border:  #e5e0d8;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
             min-height: 100vh;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(255,255,255,0.02) 0%, transparent 50%),
-                radial-gradient(circle at 85% 30%, rgba(255,255,255,0.02) 0%, transparent 50%);
         }
 
-        /* Animated Background Orbs */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.4;
-            z-index: -1;
-            animation: float 10s ease-in-out infinite alternate;
-        }
-        .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: var(--theme-color);
-            top: -100px;
-            left: -100px;
-        }
-        .orb-2 {
-            width: 300px;
-            height: 300px;
-            background: #8b5cf6;
-            bottom: 10%;
-            right: -50px;
-            animation-delay: -5s;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, 50px) scale(1.1); }
-        }
-
-        .container {
-            max-width: 1200px;
+        /* ── Page Wrapper ── */
+        .page {
+            max-width: 900px;
             margin: 0 auto;
-            padding: 2rem;
-            animation: fadeIn 1s ease-out;
+            padding: 0 1.5rem 4rem;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Hero Section */
+        /* ── Top Hero ── */
         .hero {
-            position: relative;
-            border-radius: 32px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
             overflow: hidden;
-            margin-bottom: 3rem;
-            min-height: 400px;
-            display: flex;
-            align-items: flex-end;
-            padding: 3rem;
-            border: 1px solid var(--border-color);
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
+            margin: 2rem 0 1.5rem;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 340px;
         }
 
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
+        @media (max-width: 640px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-photo { height: 240px; }
+        }
+
+        .hero-photo {
+            position: relative;
+            overflow: hidden;
+            background: #e8e4dc;
+        }
+
+        .hero-photo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: 0;
-            opacity: 0.6;
+            object-position: top;
+            display: block;
         }
 
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .hero-photo-placeholder {
             width: 100%;
             height: 100%;
-            background: linear-gradient(to top, var(--bg-dark) 0%, transparent 100%);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .hero-text h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 4rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(to right, #fff, #a1a1aa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
+            background: linear-gradient(135deg, var(--accent) 0%, #e8e4dc 100%);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+            font-size: 4rem;
+            color: rgba(255,255,255,0.6);
         }
 
-        .badge-verified {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
+        .hero-info {
+            padding: 2.5rem 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 5px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
             margin-bottom: 1rem;
-            color: #fff;
-            backdrop-filter: blur(10px);
         }
 
-        .btn-primary {
-            background: var(--theme-color);
+        .badge::before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .hero-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            line-height: 1.05;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .hero-sub {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .divider {
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+            margin: 1.25rem 0;
+        }
+
+        .hero-action {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-collab {
+            background: var(--accent);
             color: #fff;
             text-decoration: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 10px 25px -5px var(--theme-color);
+            padding: 0.75rem 1.75rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            transition: opacity 0.2s;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px -5px var(--theme-color);
-            filter: brightness(1.1);
+        .btn-collab:hover { opacity: 0.85; }
+
+        .contact-text {
+            color: var(--muted);
+            font-size: 0.85rem;
         }
 
-        /* Main Content Grid */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-        }
-
-        @media (max-width: 992px) {
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero-text h1 {
-                font-size: 3rem;
-            }
-            .hero {
-                padding: 2rem;
-            }
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 2.5rem;
-            backdrop-filter: blur(20px);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-            height: 100%;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255,255,255,0.15);
-        }
-
-        .card h3 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .card h3 i {
-            color: var(--theme-color);
-        }
-
-        .bio-text {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 1.1rem;
-            white-space: pre-wrap;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
+        /* ── Stats Row ── */
+        .stats-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        @media (max-width: 480px) { .stats-row { grid-template-columns: 1fr; } }
 
-        .stat-item {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
             padding: 1.5rem;
             text-align: center;
-            transition: all 0.3s ease;
         }
 
-        .stat-item:hover {
-            background: rgba(255,255,255,0.05);
-            border-color: var(--theme-color);
-        }
-
-        .stat-value {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 0.5rem;
+        .stat-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: var(--text);
             line-height: 1;
         }
 
         .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            color: var(--muted);
+            margin-top: 0.35rem;
+        }
+
+        .stat-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        /* ── Content Grid ── */
+        .content-row {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 700px) { .content-row { grid-template-columns: 1fr; } }
+
+        .section-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
             font-weight: 600;
-        }
-
-        /* Social Links */
-        .social-links {
+            color: var(--text);
+            margin-bottom: 1rem;
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            align-items: center;
+            gap: 0.75rem;
         }
 
-        .social-btn {
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .bio-text {
+            color: var(--muted);
+            line-height: 1.9;
+            font-size: 1rem;
+            white-space: pre-wrap;
+        }
+
+        /* Social links */
+        .social-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+        .social-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1.2rem 1.5rem;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            color: #fff;
+            padding: 0.9rem 1.1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
         }
 
-        .social-btn .platform {
+        .social-item:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .social-item-left {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            font-size: 1.1rem;
+            gap: 0.6rem;
             text-transform: capitalize;
         }
 
-        .social-btn i.fa-arrow-right {
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.3s ease;
+        /* AI Captions Section */
+        .captions-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2rem;
+            margin-top: 1.5rem;
         }
 
-        .social-btn:hover {
-            background: var(--theme-color);
-            border-color: var(--theme-color);
-            transform: translateX(5px);
+        .caption-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
         }
 
-        .social-btn:hover i.fa-arrow-right {
-            opacity: 1;
-            transform: translateX(0);
+        .caption-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--text);
+            position: relative;
         }
 
+        .caption-num {
+            position: absolute;
+            top: -10px;
+            left: 12px;
+            background: var(--accent);
+            color: #fff;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        /* Footer */
         .footer {
             text-align: center;
-            padding: 3rem 0;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            padding: 2.5rem 0 0;
+            color: var(--muted);
+            font-size: 0.85rem;
         }
-        
+
         .footer a {
-            color: var(--theme-color);
+            color: var(--accent);
             text-decoration: none;
             font-weight: 600;
+        }
+
+        .powered {
+            margin-top: 0.4rem;
+            font-size: 0.78rem;
+            opacity: 0.6;
         }
     </style>
 </head>
 <body>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
+<div class="page">
 
-    <div class="container">
-        <!-- Hero Section -->
-        <div class="hero">
+    {{-- ── Hero Card ── --}}
+    <div class="hero">
+        <div class="hero-photo">
             @if($mediaKit->cover_image)
-                <img src="{{ asset('assets/images/custom/' . $mediaKit->cover_image) }}" class="hero-bg" alt="Cover">
+                <img src="{{ asset('assets/images/custom/' . $mediaKit->cover_image) }}" alt="{{ $mediaKit->title }}">
             @else
-                <div class="hero-bg" style="background: linear-gradient(45deg, var(--bg-dark), var(--theme-color));"></div>
+                <div class="hero-photo-placeholder">✦</div>
             @endif
-            <div class="hero-overlay"></div>
-            
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="badge-verified">
-                        <i class="fa-solid fa-circle-check" style="color: #3b82f6;"></i> Verified Creator
-                    </div>
-                    <h1>{{$mediaKit->title}}</h1>
-                    <p><i class="fa-solid fa-user"></i> Media Kit by {{$mediaKit->user->name}}</p>
-                </div>
-                <div class="hero-action">
-                    <a href="mailto:{{$mediaKit->contact_email}}" class="btn-primary">
-                        <i class="fa-solid fa-envelope"></i> Let's Collaborate
-                    </a>
-                </div>
-            </div>
         </div>
 
-        <!-- Stats Section -->
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-value">{{ number_format($mediaKit->total_followers) }}</div>
-                <div class="stat-label">Total Reach</div>
+        <div class="hero-info">
+            <div>
+                <div class="badge">Verified Creator</div>
+                <h1 class="hero-name">{{ $mediaKit->title }}</h1>
+                @php
+                    $socials = $mediaKit->social_links;
+                    if(is_string($socials)) $socials = json_decode($socials, true);
+                    $niche = is_array($socials) ? implode(' | ', array_map('strtoupper', array_keys($socials))) : 'CONTENT CREATOR';
+                @endphp
+                <div class="hero-sub">{{ $niche }}</div>
+                <div class="divider"></div>
+                <p class="bio-text" style="font-size:0.9rem;">{{ Str::limit($mediaKit->bio, 160) }}</p>
             </div>
-            <div class="stat-item">
-                <div class="stat-value">{{ $mediaKit->engagement_rate }}%</div>
-                <div class="stat-label">Avg. Engagement</div>
+            <div class="hero-action">
+                <a href="mailto:{{ $mediaKit->contact_email }}" class="btn-collab">✉ Let's Collaborate</a>
+                <span class="contact-text">{{ $mediaKit->contact_email }}</span>
             </div>
-            <div class="stat-item">
-                <div class="stat-value" style="color: var(--theme-color);">
-                    <i class="fa-brands fa-{{strtolower($mediaKit->top_platform ?? 'instagram')}}"></i>
-                </div>
-                <div class="stat-label">Top Platform: {{$mediaKit->top_platform ?? 'Various'}}</div>
-            </div>
-        </div>
-
-        <!-- Content Grid -->
-        <div class="content-grid">
-            <div class="card">
-                <h3><i class="fa-solid fa-address-card"></i> About Me</h3>
-                <div class="bio-text">
-                    {{$mediaKit->bio}}
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3><i class="fa-solid fa-hashtag"></i> Social Links</h3>
-                <div class="social-links">
-                    @php
-                        $socials = is_string($mediaKit->social_links) ? json_decode($mediaKit->social_links, true) : $mediaKit->social_links;
-                        if(is_string($socials)) $socials = json_decode($socials, true); // Double check decoding
-                    @endphp
-                    @if($socials && is_array($socials))
-                        @foreach($socials as $platform => $url)
-                            @if($url)
-                            <a href="{{$url}}" target="_blank" class="social-btn">
-                                <div class="platform">
-                                    <i class="fa-brands fa-{{strtolower($platform)}}"></i>
-                                    {{$platform}}
-                                </div>
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </a>
-                            @endif
-                        @endforeach
-                    @else
-                        <p class="text-secondary text-center py-4">No linked accounts provided.</p>
-                    @endif
-                </div>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>&copy; {{date('Y')}} {{$mediaKit->user->name}}. All rights reserved.</p>
-            @if(!$mediaKit->watermark_removed)
-                <p class="mt-2">Powered by <a href="/">{{ site_settings('site_name', 'Osvioo') }}</a></p>
-            @endif
         </div>
     </div>
+
+    {{-- ── Stats ── --}}
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-num">{{ number_format($mediaKit->total_followers) }}</div>
+            <div class="stat-label">Total Reach</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-num">{{ $mediaKit->engagement_rate }}%</div>
+            <div class="stat-label">Avg. Engagement</div>
+        </div>
+        <div class="stat-card">
+            @php
+                $platform = strtolower($mediaKit->top_platform ?? 'instagram');
+                $icons = ['instagram'=>'📸','youtube'=>'📺','tiktok'=>'🎵','twitter'=>'🐦','facebook'=>'👥'];
+                $icon = $icons[$platform] ?? '🌟';
+            @endphp
+            <div class="stat-icon">{{ $icon }}</div>
+            <div class="stat-num" style="font-size:1.4rem;font-family:'DM Sans',sans-serif;">{{ ucfirst($platform) }}</div>
+            <div class="stat-label">Top Platform</div>
+        </div>
+    </div>
+
+    {{-- ── Content Row ── --}}
+    <div class="content-row">
+        <div class="section-card">
+            <h2 class="section-title">My Mission</h2>
+            <div class="bio-text">{{ $mediaKit->ai_generated_bio ?: $mediaKit->bio }}</div>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-title">Connect</h2>
+            <div class="social-list">
+                @if($socials && is_array($socials))
+                    @foreach($socials as $pName => $url)
+                        @if($url)
+                        <a href="{{ $url }}" target="_blank" class="social-item">
+                            <div class="social-item-left">
+                                @php
+                                    $si = ['instagram'=>'📸','youtube'=>'📺','tiktok'=>'🎵','twitter'=>'🐦','facebook'=>'👥','linkedin'=>'💼'];
+                                    echo ($si[strtolower($pName)] ?? '🔗') . ' ' . $pName;
+                                @endphp
+                            </div>
+                            <span>→</span>
+                        </a>
+                        @endif
+                    @endforeach
+                @else
+                    <p style="color:var(--muted);font-size:0.9rem;">No accounts linked.</p>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    {{-- ── AI Captions ── --}}
+    @if($mediaKit->ai_generated_captions)
+        @php
+            $captions = is_string($mediaKit->ai_generated_captions)
+                ? json_decode($mediaKit->ai_generated_captions, true)
+                : $mediaKit->ai_generated_captions;
+        @endphp
+        @if(is_array($captions) && count($captions) > 0)
+        <div class="captions-section">
+            <h2 class="section-title">AI-Powered Captions</h2>
+            <div class="caption-grid">
+                @foreach($captions as $i => $caption)
+                <div class="caption-item">
+                    <div class="caption-num">{{ $i + 1 }}</div>
+                    {{ $caption }}
+                </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
+    @endif
+
+    {{-- ── Footer ── --}}
+    <div class="footer">
+        <p>© {{ date('Y') }} {{ $mediaKit->user->name }}. All rights reserved.</p>
+        @if(!$mediaKit->watermark_removed)
+            <p class="powered">Powered by <a href="/">{{ site_settings('site_name', 'Osvioo') }}</a></p>
+        @endif
+    </div>
+
+</div>
 </body>
 </html>
