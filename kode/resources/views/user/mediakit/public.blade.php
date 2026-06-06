@@ -4,448 +4,444 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$mediaKit->title}} | Media Kit</title>
-    <meta name="description" content="Media Kit for {{$mediaKit->user->name}}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --accent:  {{$mediaKit->theme_color ?? '#c9a97a'}};
-            --bg:      #f7f5f2;
-            --card:    #ffffff;
-            --text:    #1a1a1a;
-            --muted:   #6b6b6b;
-            --border:  #e5e0d8;
+    <meta name="description" content="Official Media Kit for {{$mediaKit->user->name}}">
+    @php
+        $accent = !empty($mediaKit->theme_color) ? $mediaKit->theme_color : '#c9a97a';
+        $socials = $mediaKit->social_links;
+        if(is_string($socials)) $socials = json_decode($socials, true);
+        if(!is_array($socials)) $socials = [];
+        $platforms = array_keys($socials);
+        $niche = count($platforms) ? implode(' | ', array_map('strtoupper', $platforms)) : 'CONTENT CREATOR';
+        $captions = [];
+        if($mediaKit->ai_generated_captions) {
+            $c = is_string($mediaKit->ai_generated_captions) ? json_decode($mediaKit->ai_generated_captions, true) : $mediaKit->ai_generated_captions;
+            if(is_array($c)) $captions = $c;
         }
-
+    @endphp
+    <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'DM Sans', sans-serif;
+            background-color: #f5f0ea;
+            color: #1a1a1a;
+            font-family: Georgia, 'Times New Roman', Times, serif;
             min-height: 100vh;
         }
 
-        /* ── Page Wrapper ── */
-        .page {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 1.5rem 4rem;
+        .wrapper {
+            max-width: 780px;
+            margin: 2rem auto;
+            background: #fdfbf8;
+            border: 1px solid #e8e0d5;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.08);
         }
 
-        /* ── Top Hero ── */
-        .hero {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            overflow: hidden;
-            margin: 2rem 0 1.5rem;
+        /* ── TOP CARD: photo left + info right ── */
+        .top-card {
             display: grid;
             grid-template-columns: 260px 1fr;
             min-height: 340px;
+            border-bottom: 1px solid #e8e0d5;
         }
 
-        @media (max-width: 640px) {
-            .hero { grid-template-columns: 1fr; }
-            .hero-photo { height: 240px; }
+        @media (max-width: 600px) {
+            .top-card { grid-template-columns: 1fr; }
+            .photo-col { height: 260px; }
         }
 
-        .hero-photo {
-            position: relative;
+        .photo-col {
+            background: #e8e2d9;
             overflow: hidden;
-            background: #e8e4dc;
+            position: relative;
         }
 
-        .hero-photo img {
+        .photo-col img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: top;
+            object-position: top center;
             display: block;
         }
 
-        .hero-photo-placeholder {
+        .photo-placeholder {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--accent) 0%, #e8e4dc 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
-            color: rgba(255,255,255,0.6);
+            background: linear-gradient(160deg, #e8ddd0 0%, #d4c9b8 100%);
+            font-size: 5rem;
+            color: rgba(150,130,110,0.4);
         }
 
-        .hero-info {
+        .info-col {
             padding: 2.5rem 2.5rem 2rem;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            text-align: center;
+            background: #fdfbf8;
         }
 
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 2px;
+        .creator-name {
+            font-size: 2.8rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: #1a1a1a;
+            line-height: 1.1;
+            margin-bottom: 0.6rem;
+        }
+
+        .creator-niche {
+            font-family: 'Arial Narrow', Arial, sans-serif;
+            font-size: 0.78rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            color: #7a7060;
             text-transform: uppercase;
-            color: var(--accent);
             margin-bottom: 1rem;
         }
 
-        .badge::before {
-            content: '';
-            display: block;
-            width: 20px;
-            height: 2px;
-            background: var(--accent);
+        .divider-line {
+            width: 120px;
+            height: 1px;
+            background: #c9b89a;
+            margin: 0 auto 1.25rem;
         }
 
-        .hero-name {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3.5rem;
-            line-height: 1.05;
-            font-weight: 600;
-            color: var(--text);
+        .followers-num {
+            font-size: 3rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            letter-spacing: 3px;
+            line-height: 1;
+            margin-bottom: 0.2rem;
         }
 
-        .hero-sub {
-            color: var(--muted);
-            font-size: 0.95rem;
-            margin-top: 0.5rem;
-            letter-spacing: 1px;
+        .followers-label {
+            font-family: Arial, sans-serif;
+            font-size: 0.78rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            font-weight: 500;
+            color: #7a7060;
+            margin-bottom: 1rem;
         }
 
-        .divider {
-            width: 40px;
-            height: 2px;
-            background: var(--accent);
-            margin: 1.25rem 0;
+        .handle {
+            font-family: Arial, sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #9a8e7f;
+            margin-bottom: 1.4rem;
         }
 
-        .hero-action {
+        /* Stat circles */
+        .stat-circles {
             display: flex;
-            align-items: center;
-            gap: 1rem;
+            justify-content: center;
+            gap: 1.2rem;
             flex-wrap: wrap;
         }
 
-        .btn-collab {
-            background: var(--accent);
-            color: #fff;
-            text-decoration: none;
-            padding: 0.75rem 1.75rem;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            transition: opacity 0.2s;
-        }
-
-        .btn-collab:hover { opacity: 0.85; }
-
-        .contact-text {
-            color: var(--muted);
-            font-size: 0.85rem;
-        }
-
-        /* ── Stats Row ── */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        @media (max-width: 480px) { .stats-row { grid-template-columns: 1fr; } }
-
-        .stat-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.5rem;
+        .stat-circle-item {
             text-align: center;
         }
 
-        .stat-num {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.8rem;
-            font-weight: 600;
-            color: var(--text);
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-top: 0.35rem;
-        }
-
-        .stat-icon {
-            font-size: 1.8rem;
-            margin-bottom: 0.3rem;
-        }
-
-        /* ── Content Grid ── */
-        .content-row {
-            display: grid;
-            grid-template-columns: 1fr 280px;
-            gap: 1.5rem;
-        }
-
-        @media (max-width: 700px) { .content-row { grid-template-columns: 1fr; } }
-
-        .section-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 2rem;
-        }
-
-        .section-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 1rem;
+        .stat-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 1.5px solid #1a1a1a;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            justify-content: center;
+            margin: 0 auto 0.35rem;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            font-family: Georgia, serif;
         }
 
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
+        .stat-circle-label {
+            font-family: Arial, sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #7a7060;
         }
 
-        .bio-text {
-            color: var(--muted);
+        /* ── MISSION SECTION ── */
+        .mission-section {
+            padding: 2.5rem 3rem;
+            border-bottom: 1px solid #e8e0d5;
+        }
+
+        .mission-title {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            margin-bottom: 1.2rem;
+        }
+
+        .mission-text {
+            font-size: 0.95rem;
             line-height: 1.9;
-            font-size: 1rem;
+            color: #4a4540;
             white-space: pre-wrap;
         }
 
-        /* Social links */
-        .social-list { display: flex; flex-direction: column; gap: 0.75rem; }
-
-        .social-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.9rem 1.1rem;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.2s;
+        /* ── SOCIAL LINKS ── */
+        .social-section {
+            padding: 2rem 3rem;
+            border-bottom: 1px solid #e8e0d5;
         }
 
-        .social-item:hover {
-            background: var(--accent);
-            color: #fff;
-            border-color: var(--accent);
-            transform: translateY(-2px);
+        .section-title-sm {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #7a7060;
+            margin-bottom: 1rem;
         }
 
-        .social-item-left {
+        .social-pills {
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             gap: 0.6rem;
-            text-transform: capitalize;
         }
 
-        /* AI Captions Section */
+        .social-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid #c9b89a;
+            border-radius: 50px;
+            font-family: Arial, sans-serif;
+            font-size: 0.8rem;
+            color: #4a4540;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .social-pill:hover {
+            background: #1a1a1a;
+            color: #fff;
+            border-color: #1a1a1a;
+        }
+
+        /* ── AI CAPTIONS ── */
         .captions-section {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 2rem;
-            margin-top: 1.5rem;
+            padding: 2rem 3rem;
+            border-bottom: 1px solid #e8e0d5;
+            background: #faf7f3;
         }
 
         .caption-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin-top: 0.75rem;
         }
 
-        .caption-item {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
+        .caption-card {
+            background: #fff;
+            border: 1px solid #e8e0d5;
+            border-radius: 6px;
             padding: 1rem;
-            font-size: 0.9rem;
+            font-family: Arial, sans-serif;
+            font-size: 0.8rem;
             line-height: 1.7;
-            color: var(--text);
+            color: #4a4540;
             position: relative;
+            padding-top: 1.4rem;
         }
 
         .caption-num {
             position: absolute;
-            top: -10px;
+            top: -1px;
             left: 12px;
-            background: var(--accent);
+            background: #1a1a1a;
             color: #fff;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            border-radius: 0 0 4px 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 700;
         }
 
-        /* Footer */
-        .footer {
+        /* ── COLLAB CTA ── */
+        .cta-section {
+            padding: 2rem 3rem;
             text-align: center;
-            padding: 2.5rem 0 0;
-            color: var(--muted);
-            font-size: 0.85rem;
+            border-bottom: 1px solid #e8e0d5;
         }
 
-        .footer a {
-            color: var(--accent);
+        .cta-btn {
+            display: inline-block;
+            background: #1a1a1a;
+            color: #fff;
             text-decoration: none;
-            font-weight: 600;
+            padding: 0.85rem 2.5rem;
+            font-family: Arial, sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: opacity 0.2s;
         }
 
-        .powered {
-            margin-top: 0.4rem;
-            font-size: 0.78rem;
-            opacity: 0.6;
+        .cta-btn:hover { opacity: 0.75; }
+
+        /* ── FOOTER ── */
+        .kit-footer {
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            background: #f5f0ea;
+        }
+
+        .footer-item {
+            font-family: Arial, sans-serif;
+            font-size: 0.72rem;
+            color: #7a7060;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-item a {
+            color: #7a7060;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-<div class="page">
 
-    {{-- ── Hero Card ── --}}
-    <div class="hero">
-        <div class="hero-photo">
+<div class="wrapper">
+
+    {{-- ── TOP CARD ── --}}
+    <div class="top-card">
+        <div class="photo-col">
             @if($mediaKit->cover_image)
                 <img src="{{ asset('assets/images/custom/' . $mediaKit->cover_image) }}" alt="{{ $mediaKit->title }}">
             @else
-                <div class="hero-photo-placeholder">✦</div>
+                <div class="photo-placeholder">✦</div>
             @endif
         </div>
 
-        <div class="hero-info">
-            <div>
-                <div class="badge">Verified Creator</div>
-                <h1 class="hero-name">{{ $mediaKit->title }}</h1>
-                @php
-                    $socials = $mediaKit->social_links;
-                    if(is_string($socials)) $socials = json_decode($socials, true);
-                    $niche = is_array($socials) ? implode(' | ', array_map('strtoupper', array_keys($socials))) : 'CONTENT CREATOR';
-                @endphp
-                <div class="hero-sub">{{ $niche }}</div>
-                <div class="divider"></div>
-                <p class="bio-text" style="font-size:0.9rem;">{{ Str::limit($mediaKit->bio, 160) }}</p>
-            </div>
-            <div class="hero-action">
-                <a href="mailto:{{ $mediaKit->contact_email }}" class="btn-collab">✉ Let's Collaborate</a>
-                <span class="contact-text">{{ $mediaKit->contact_email }}</span>
-            </div>
-        </div>
-    </div>
+        <div class="info-col">
+            <div class="creator-name">{{ $mediaKit->title }}</div>
+            <div class="creator-niche">{{ $niche }}</div>
+            <div class="divider-line"></div>
 
-    {{-- ── Stats ── --}}
-    <div class="stats-row">
-        <div class="stat-card">
-            <div class="stat-num">{{ number_format($mediaKit->total_followers) }}</div>
-            <div class="stat-label">Total Reach</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-num">{{ $mediaKit->engagement_rate }}%</div>
-            <div class="stat-label">Avg. Engagement</div>
-        </div>
-        <div class="stat-card">
-            @php
-                $platform = strtolower($mediaKit->top_platform ?? 'instagram');
-                $icons = ['instagram'=>'📸','youtube'=>'📺','tiktok'=>'🎵','twitter'=>'🐦','facebook'=>'👥'];
-                $icon = $icons[$platform] ?? '🌟';
-            @endphp
-            <div class="stat-icon">{{ $icon }}</div>
-            <div class="stat-num" style="font-size:1.4rem;font-family:'DM Sans',sans-serif;">{{ ucfirst($platform) }}</div>
-            <div class="stat-label">Top Platform</div>
-        </div>
-    </div>
+            @if($mediaKit->total_followers > 0)
+                <div class="followers-num">{{ number_format($mediaKit->total_followers) }}</div>
+                <div class="followers-label">{{ $mediaKit->top_platform ?? 'Instagram' }} followers</div>
+            @endif
 
-    {{-- ── Content Row ── --}}
-    <div class="content-row">
-        <div class="section-card">
-            <h2 class="section-title">My Mission</h2>
-            <div class="bio-text">{{ $mediaKit->ai_generated_bio ?: $mediaKit->bio }}</div>
-        </div>
+            @if(count($socials))
+                <div class="handle">@{{ '@' . (array_values($socials)[0] ? ltrim(parse_url(array_values($socials)[0], PHP_URL_PATH), '/') : $mediaKit->user->name) }}</div>
+            @endif
 
-        <div class="section-card">
-            <h2 class="section-title">Connect</h2>
-            <div class="social-list">
-                @if($socials && is_array($socials))
-                    @foreach($socials as $pName => $url)
-                        @if($url)
-                        <a href="{{ $url }}" target="_blank" class="social-item">
-                            <div class="social-item-left">
-                                @php
-                                    $si = ['instagram'=>'📸','youtube'=>'📺','tiktok'=>'🎵','twitter'=>'🐦','facebook'=>'👥','linkedin'=>'💼'];
-                                    echo ($si[strtolower($pName)] ?? '🔗') . ' ' . $pName;
-                                @endphp
-                            </div>
-                            <span>→</span>
-                        </a>
-                        @endif
-                    @endforeach
-                @else
-                    <p style="color:var(--muted);font-size:0.9rem;">No accounts linked.</p>
+            {{-- Stat Circles --}}
+            <div class="stat-circles">
+                @if($mediaKit->engagement_rate)
+                    <div class="stat-circle-item">
+                        <div class="stat-circle">{{ $mediaKit->engagement_rate }}%</div>
+                        <div class="stat-circle-label">Engagement</div>
+                    </div>
+                @endif
+                @if($mediaKit->total_followers > 0)
+                    <div class="stat-circle-item">
+                        <div class="stat-circle">{{ $mediaKit->total_followers >= 1000 ? round($mediaKit->total_followers/1000).'K' : $mediaKit->total_followers }}</div>
+                        <div class="stat-circle-label">Reach</div>
+                    </div>
+                @endif
+                @if($mediaKit->top_platform)
+                    <div class="stat-circle-item">
+                        <div class="stat-circle" style="font-size:0.7rem;">{{ strtoupper(substr($mediaKit->top_platform,0,2)) }}</div>
+                        <div class="stat-circle-label">Top Platform</div>
+                    </div>
+                @endif
+                @if(count($socials) > 0)
+                    <div class="stat-circle-item">
+                        <div class="stat-circle">{{ count($socials) }}</div>
+                        <div class="stat-circle-label">Platforms</div>
+                    </div>
                 @endif
             </div>
         </div>
     </div>
 
-    {{-- ── AI Captions ── --}}
-    @if($mediaKit->ai_generated_captions)
-        @php
-            $captions = is_string($mediaKit->ai_generated_captions)
-                ? json_decode($mediaKit->ai_generated_captions, true)
-                : $mediaKit->ai_generated_captions;
-        @endphp
-        @if(is_array($captions) && count($captions) > 0)
-        <div class="captions-section">
-            <h2 class="section-title">AI-Powered Captions</h2>
-            <div class="caption-grid">
-                @foreach($captions as $i => $caption)
-                <div class="caption-item">
-                    <div class="caption-num">{{ $i + 1 }}</div>
-                    {{ $caption }}
-                </div>
-                @endforeach
-            </div>
+    {{-- ── MISSION ── --}}
+    <div class="mission-section">
+        <div class="mission-title">My Mission</div>
+        <div class="mission-text">{{ $mediaKit->ai_generated_bio ?: $mediaKit->bio }}</div>
+    </div>
+
+    {{-- ── SOCIAL LINKS ── --}}
+    @if(count($socials) > 0)
+    <div class="social-section">
+        <div class="section-title-sm">Connect With Me</div>
+        <div class="social-pills">
+            @foreach($socials as $pName => $url)
+                @if($url)
+                    <a href="{{ $url }}" target="_blank" class="social-pill">
+                        {{ $pName }} ↗
+                    </a>
+                @endif
+            @endforeach
         </div>
-        @endif
+    </div>
     @endif
 
-    {{-- ── Footer ── --}}
-    <div class="footer">
-        <p>© {{ date('Y') }} {{ $mediaKit->user->name }}. All rights reserved.</p>
+    {{-- ── AI CAPTIONS ── --}}
+    @if(count($captions) > 0)
+    <div class="captions-section">
+        <div class="section-title-sm">Content Captions</div>
+        <div class="caption-grid">
+            @foreach($captions as $i => $cap)
+            <div class="caption-card">
+                <div class="caption-num">{{ $i + 1 }}</div>
+                {{ $cap }}
+            </div>
+            @endforeach
+        </div>
+    </div>
+    @endif
+
+    {{-- ── CTA ── --}}
+    <div class="cta-section">
+        <a href="mailto:{{ $mediaKit->contact_email }}" class="cta-btn">Let's Collaborate</a>
+        <p style="margin-top:0.75rem; font-family:Arial,sans-serif; font-size:0.78rem; color:#7a7060; letter-spacing:1px;">
+            {{ $mediaKit->contact_email }}
+        </p>
+    </div>
+
+    {{-- ── FOOTER ── --}}
+    <div class="kit-footer">
+        <span class="footer-item">{{ $mediaKit->contact_email }}</span>
+        <span class="footer-item">© {{ date('Y') }} {{ $mediaKit->user->name }}</span>
         @if(!$mediaKit->watermark_removed)
-            <p class="powered">Powered by <a href="/">{{ site_settings('site_name', 'Osvioo') }}</a></p>
+            <span class="footer-item">Powered by <a href="/">{{ site_settings('site_name', 'Osvioo') }}</a></span>
         @endif
     </div>
 
 </div>
+
 </body>
 </html>

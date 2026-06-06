@@ -278,6 +278,7 @@ Route::get('/fix-prod', function () {
                     Route::get('/insights', [\App\Http\Controllers\User\MediaKitController::class, 'insights'])->name('insights');
                     Route::post('/request-watermark-removal/{uid}', [\App\Http\Controllers\User\MediaKitController::class, 'requestWatermarkRemoval'])->name('watermark.request');
                     Route::post('/ai-generate', [\App\Http\Controllers\User\MediaKitController::class, 'aiGenerate'])->name('ai.generate');
+                    Route::post('/ai-quick', [\App\Http\Controllers\User\MediaKitController::class, 'aiQuick'])->name('ai.quick');
                 });
 
 

@@ -305,22 +305,71 @@ EOT;
         return view('user.mediakit.public', compact('mediaKit'));
     }
 
-    public function requestWatermarkRemoval($uid)
+    /**
+     * POST /user/mediakit/ai-quick
+     * No mediakit_id required — for use on the CREATE page before saving.
+     * Body: { prompt }
+     * Returns: JSON { bio, captions }
+     */
+    public function aiQuick(Request $request)
     {
-        $user     = auth_user('web');
-        $mediaKit = MediaKit::where('user_id', $user->id)->where('uid', $uid)->firstOrFail();
+        $request->validate([
+            'prompt' => 'required|string|max:500',
+        ]);
 
-        if ($mediaKit->watermark_removed) {
-            return back()->with('error', translate('Watermark is already removed from this Media Kit.'));
+        $apiKey = config('services.openai.key') ?: env('OPENAI_API_KEY');
+
+        if (!$apiKey) {
+            return response()->json(['error' => 'OpenAI API key not configured.'], 500);
         }
 
-        if ($mediaKit->watermark_request_status == 'pending') {
-            return back()->with('error', translate('Watermark removal request is already pending.'));
+        $systemPrompt = <<<EOT
+You are an expert influencer media kit copywriter. 
+Given a user prompt about their niche/brand, generate:
+1. A compelling "About Me" bio (2–3 paragraphs, professional yet personal, max 300 words).
+2. Five ready-to-post social media captions (Instagram-style, with emojis and relevant hashtags).
+
+Format your response STRICTLY as JSON:
+{
+  "bio": "...",
+  "captions": ["caption 1", "caption 2", "caption 3", "caption 4", "caption 5"]
+}
+EOT;
+
+        try {
+            $response = \Illuminate\Support\Facades\Http::withHeaders([
+                'Authorization' => 'Bearer ' . $apiKey,
+                'Content-Type'  => 'application/json',
+            ])->timeout(30)->post('https://api.openai.com/v1/chat/completions', [
+                'model'       => 'gpt-4o-mini',
+                'temperature' => 0.7,
+                'messages'    => [
+                    ['role' => 'system', 'content' => $systemPrompt],
+                    ['role' => 'user',   'content' => $request->prompt],
+                ],
+            ]);
+
+            if (!$response->successful()) {
+                return response()->json(['error' => 'AI service error. Try again.'], 500);
+            }
+
+            $content = $response->json('choices.0.message.content');
+            preg_match('/\{.*\}/s', $content, $matches);
+            $parsed = json_decode($matches[0] ?? $content, true);
+
+            if (!$parsed || !isset($parsed['bio'])) {
+                return response()->json(['error' => 'Could not parse AI response.'], 500);
+            }
+
+            return response()->json([
+                'bio'      => $parsed['bio'],
+                'captions' => $parsed['captions'] ?? [],
+            ]);
+
+        } catch (\Throwable $e) {
+            \Log::error('MediaKit aiQuick error: ' . $e->getMessage());
+            return response()->json(['error' => 'AI service unavailable.'], 500);
         }
-
-        $mediaKit->watermark_request_status = 'pending';
-        $mediaKit->save();
-
-        return back()->with('success', translate('Watermark removal requested successfully.'));
     }
 }
+
