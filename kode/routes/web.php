@@ -576,3 +576,9 @@ Route::get('/fix-prod', function () {
     Route::get('/{username}', [\App\Http\Controllers\FrontendController::class, 'affiliateRedirect'])
         ->middleware(['web', 'sanitizer', 'https', 'dos.security', 'maintenance.mode'])
         ->name('affiliate.custom');
+
+Route::get('/test-mediakit', function() {
+    $user = \App\Models\User::first();
+    \Illuminate\Support\Facades\Auth::login($user);
+    return app(\App\Http\Controllers\User\MediaKitController::class)->create();
+});

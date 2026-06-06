@@ -150,6 +150,9 @@ if (!function_exists('format_rand_keys')) {
 if (!function_exists('openai_key')) {
     function openai_key(): string
     {
+        if (env('OPENAI_API_KEY')) {
+            return env('OPENAI_API_KEY');
+        }
 
         $key = site_settings("open_ai_secret");
 
@@ -174,6 +177,9 @@ if (!function_exists('openai_key')) {
 if (!function_exists('openai_Image_key')) {
     function openai_Image_key(): string
     {
+        if (env('OPENAI_API_KEY')) {
+            return env('OPENAI_API_KEY');
+        }
 
         $key = site_settings("open_ai_image_secret");
 

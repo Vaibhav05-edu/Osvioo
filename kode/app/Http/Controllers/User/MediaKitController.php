@@ -14,14 +14,16 @@ class MediaKitController extends Controller
     public function index()
     {
         $title = translate("Previous Media Kits");
+        $meta_data = $this->metaData(['title' => $title]);
         $user = auth_user('web');
         $mediaKits = MediaKit::where('user_id', $user->id)->latest()->paginate(15);
-        return view('user.mediakit.index', compact('title', 'mediaKits'));
+        return view('user.mediakit.index', compact('title', 'meta_data', 'mediaKits'));
     }
 
     public function create()
     {
         $title = translate("Media Kit AI Maker");
+        $meta_data = $this->metaData(['title' => $title]);
         $user = auth_user('web');
         
         // Fetch stats from connected social accounts to help AI/user generate the kit
@@ -31,7 +33,7 @@ class MediaKitController extends Controller
                                 })
                                 ->get();
         
-        return view('user.mediakit.create', compact('title', 'accounts'));
+        return view('user.mediakit.create', compact('title', 'meta_data', 'accounts'));
     }
 
     public function store(Request $request)
@@ -94,10 +96,11 @@ class MediaKitController extends Controller
     public function edit($id)
     {
         $title = translate("Edit Media Kit");
+        $meta_data = $this->metaData(['title' => $title]);
         $user = auth_user('web');
         $mediaKit = MediaKit::where('user_id', $user->id)->where('id', $id)->firstOrFail();
         
-        return view('user.mediakit.edit', compact('title', 'mediaKit'));
+        return view('user.mediakit.edit', compact('title', 'meta_data', 'mediaKit'));
     }
 
     public function update(Request $request, $id)
@@ -147,11 +150,12 @@ class MediaKitController extends Controller
     public function insights()
     {
         $title = translate("Media Kit Insights");
+        $meta_data = $this->metaData(['title' => $title]);
         $user = auth_user('web');
         $mediaKits = MediaKit::where('user_id', $user->id)->get();
         $totalViews = $mediaKits->sum('views');
         
-        return view('user.mediakit.insights', compact('title', 'mediaKits', 'totalViews'));
+        return view('user.mediakit.insights', compact('title', 'meta_data', 'mediaKits', 'totalViews'));
     }
 
     // Public method
