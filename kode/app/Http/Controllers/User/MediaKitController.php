@@ -67,7 +67,20 @@ class MediaKitController extends Controller
                 ->get();
 
             foreach ($accounts as $acc) {
-                $followers = (int) ($acc->followers ?? rand(1000, 50000));
+                // Try real follower data from account_information
+                $info = $acc->account_information;
+                $followers = 0;
+                if ($info && isset($info->followers_count)) {
+                    $followers = (int) $info->followers_count;
+                } elseif ($info && isset($info->followers)) {
+                    $followers = (int) $info->followers;
+                } elseif ($acc->details && is_array($acc->details) && isset($acc->details['followers'])) {
+                    $followers = (int) $acc->details['followers'];
+                } else {
+                    // No real data — store 0, user can update later
+                    $followers = 0;
+                }
+
                 $totalFollowers += $followers;
 
                 if ($followers > $maxFollowers) {
@@ -77,7 +90,7 @@ class MediaKitController extends Controller
 
                 $platformSlug = $acc->platform->slug ?? 'instagram';
                 $socialLinks[$acc->platform->name ?? 'Platform'] =
-                    "https://" . $platformSlug . ".com/" . $acc->username;
+                    "https://" . $platformSlug . ".com/" . ($acc->username ?? $acc->name ?? '');
             }
         }
 

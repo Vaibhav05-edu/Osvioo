@@ -26,16 +26,16 @@
                             {{-- AI Bio Generator --}}
                             <div style="background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid #6366f1; border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem;">
                                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: 0.75rem;">
-                                    <span style="color:#a78bfa; font-weight:700; font-size:0.9rem;">
+                                    <span style="color:#a78bfa; font-weight:700; font-size:0.95rem;">
                                         <i class="bi bi-stars"></i> ✨ AI Bio & Caption Generator
                                     </span>
-                                    <button type="button" id="toggleAiPanel" style="background:rgba(99,102,241,0.2); border:1px solid #6366f1; color:#a78bfa; padding:3px 12px; border-radius:6px; font-size:0.8rem; cursor:pointer;">
-                                        Open AI Generator
+                                    <button type="button" id="toggleAiPanel" style="background:rgba(99,102,241,0.3)!important; border:1px solid #a78bfa!important; color:#a78bfa!important; padding:4px 14px!important; border-radius:6px!important; font-size:0.8rem!important; cursor:pointer!important; font-weight:600!important;">
+                                        <i class="bi bi-chevron-up" id="aiToggleIcon"></i> Hide
                                     </button>
                                 </div>
-                                <div id="aiPanel" style="display:none;">
-                                    <textarea id="aiPromptCreate" rows="2" placeholder="Describe yourself: niche, platform, audience, brand voice... e.g. Fashion & lifestyle influencer in Mumbai, targeting women 18-28, posting about sustainable fashion & skincare" style="width:100%; background:rgba(255,255,255,0.07); border:1px solid rgba(99,102,241,0.4); border-radius:8px; padding:0.75rem; color:#e2e8f0; font-size:0.9rem; resize:vertical;"></textarea>
-                                    <button type="button" id="aiQuickBtn" style="margin-top:0.6rem; background: linear-gradient(135deg, #6366f1, #8b5cf6); border:none; color:#fff; padding:8px 20px; border-radius:8px; font-weight:600; cursor:pointer; font-size:0.9rem;">
+                                <div id="aiPanel" style="display:block;">
+                                    <textarea id="aiPromptCreate" rows="2" placeholder="Describe yourself: niche, platform, audience, brand voice... e.g. Fashion &amp; lifestyle influencer in Mumbai, targeting women 18-28, posting about sustainable fashion &amp; skincare" style="width:100%!important; background:rgba(255,255,255,0.07)!important; border:1px solid rgba(99,102,241,0.4)!important; border-radius:8px!important; padding:0.75rem!important; color:#e2e8f0!important; font-size:0.9rem!important; resize:vertical!important; outline:none!important;"></textarea>
+                                    <button type="button" id="aiQuickBtn" style="margin-top:0.6rem!important; background:linear-gradient(135deg,#6366f1,#8b5cf6)!important; border:none!important; color:#fff!important; padding:10px 22px!important; border-radius:8px!important; font-weight:700!important; cursor:pointer!important; font-size:0.9rem!important; display:inline-flex!important; align-items:center!important; gap:6px!important;">
                                         <i class="bi bi-stars" id="aiQIcon"></i> <span id="aiQText">Generate Bio + Captions</span>
                                     </button>
                                     <div id="aiQuickResult" style="display:none; margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(99,102,241,0.3);">
@@ -122,7 +122,10 @@
         const panel = document.getElementById('aiPanel');
         const isOpen = panel.style.display !== 'none';
         panel.style.display = isOpen ? 'none' : 'block';
-        this.textContent = isOpen ? 'Open AI Generator' : 'Close';
+        document.getElementById('aiToggleIcon').className = isOpen ? 'bi bi-chevron-down' : 'bi bi-chevron-up';
+        this.innerHTML = isOpen
+            ? '<i class="bi bi-chevron-down" id="aiToggleIcon"></i> Show AI'
+            : '<i class="bi bi-chevron-up" id="aiToggleIcon"></i> Hide';
     });
 
     // Quick AI generate
