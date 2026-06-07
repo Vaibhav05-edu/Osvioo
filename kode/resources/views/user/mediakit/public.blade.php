@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$mediaKit->title}} | Media Kit</title>
     <meta name="description" content="Official Media Kit for {{$mediaKit->user->name ?? 'Creator'}}">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
-    <style>
+    <link nonce="{{ csp_nonce() }}" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+    <style nonce="{{ csp_nonce() }}">
         :root {
             --pink: #ff1b6b;
             --orange: #ff8e25;
