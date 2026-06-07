@@ -455,6 +455,10 @@ Route::get('/fix-prod', function () {
             Route::get('post', [\App\Http\Controllers\User\AiSuggestionController::class, 'post'])->name('post');
             Route::get('timing', [\App\Http\Controllers\User\AiSuggestionController::class, 'timing'])->name('timing');
             Route::get('trend', [\App\Http\Controllers\User\AiSuggestionController::class, 'trend'])->name('trend');
+            Route::post('generate-hashtag', [\App\Http\Controllers\User\AiSuggestionController::class, 'generateHashtag'])->name('generate.hashtag');
+            Route::post('generate-post', [\App\Http\Controllers\User\AiSuggestionController::class, 'generatePost'])->name('generate.post');
+            Route::post('analyze-timing', [\App\Http\Controllers\User\AiSuggestionController::class, 'analyzeTiming'])->name('analyze.timing');
+            Route::post('scan-trends', [\App\Http\Controllers\User\AiSuggestionController::class, 'scanTrends'])->name('scan.trends');
         });
 
 
