@@ -57,8 +57,8 @@
                             <a href="{{route('auth.password.request')}}" class="plixi-forgot-link">Forgot password?</a>
                         </div>
                         <div class="position-relative">
-                            <input type="password" name="password" class="plixi-form-input" placeholder="Enter your password" required>
-                            <i class="bi bi-eye position-absolute top-50 end-0 translate-middle-y me-3 text-muted" style="cursor:pointer"></i>
+                            <input type="password" name="password" id="login-password" class="plixi-form-input pe-5" placeholder="Enter your password" required>
+                            <i class="bi bi-eye position-absolute top-50 end-0 translate-middle-y me-4 text-muted" id="togglePassword" style="cursor:pointer; z-index: 10;"></i>
                         </div>
                     </div>
 
@@ -182,13 +182,23 @@
 
     .plixi-form-input {
         width: 100%;
-        padding: 12px 15px;
+        padding: 12px 45px 12px 15px;
         border: 1px solid #e2e8f0;
         border-radius: 8px;
         font-size: 0.95rem;
         color: #111;
         transition: all 0.2s;
+        background: transparent;
     }
+    #togglePassword {
+        font-size: 1.1rem;
+        right: 14px !important;
+        transform: translateY(-50%);
+        top: 50% !important;
+        color: #888;
+        user-select: none;
+    }
+    #togglePassword:hover { color: #7c3aed; }
     .plixi-form-input:focus { border-color: #7c3aed; outline: none; box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1); }
 
     .plixi-forgot-link {
@@ -294,3 +304,17 @@
     }
 </style>
 @endsection
+
+@push('script-push')
+<script nonce="{{ csp_nonce() }}">
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const password = document.getElementById('login-password');
+        if (password) {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('bi-eye');
+            this.classList.toggle('bi-eye-slash');
+        }
+    });
+</script>
+@endpush
