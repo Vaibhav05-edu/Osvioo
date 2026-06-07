@@ -140,18 +140,23 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::where('uid', $uid)->firstOrFail();
 
-        if (auth_user('web') && auth_user('web')->id !== $invoice->user_id && auth_user('admin') == null) {
-            abort(403);
+        $webUser = auth_user('web');
+        if ($webUser && (int)$webUser->id !== (int)$invoice->user_id && auth_user('admin') == null) {
+            abort(403, 'You do not have permission to download this invoice.');
         }
 
-        $pdf = Pdf::loadView('user.invoice.pdf', compact('invoice'))
-            ->setPaper('a4', 'portrait');
+        try {
+            $pdf = Pdf::loadView('user.invoice.pdf', compact('invoice'))
+                ->setPaper('a4', 'portrait');
 
-        if (ob_get_length()) {
-            ob_end_clean();
+            if (ob_get_length()) {
+                ob_end_clean();
+            }
+
+            return $pdf->download('Invoice-' . ($invoice->details['invoice_number'] ?? $invoice->uid) . '.pdf');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Could not generate PDF: ' . $e->getMessage());
         }
-
-        return $pdf->download('Invoice-' . ($invoice->details['invoice_number'] ?? $invoice->uid) . '.pdf');
     }
 
     public function updatePayment(Request $request, $uid)

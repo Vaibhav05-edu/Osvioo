@@ -48,20 +48,7 @@
                         </a>
                     </li>
 
-                    <li class="sidemenu-item">
-                        <a href="javascript:void(0)" class="sidemenu-link sidemenu-collapse">
-                            <div class="sidemenu-icon"><i class="bi bi-send"></i></div>
-                            <span>
-                                {{translate("Auto Post")}}
-                                <small><i class="bi bi-chevron-down"></i></small>
-                            </span>
-                        </a>
-                        <div class="side-menu-dropdown">
-                            <ul class="sub-menu">
-                                <li class="sub-menu-item"><a class="sidebar-menu-link {{request()->routeIs('user.social.post.auto_post') ? 'active' :''}}" href="{{route('user.social.post.auto_post')}}"><span><i class="bi bi-instagram"></i></span><p>{{translate('Insta')}}</p></a></li>
-                            </ul>
-                        </div>
-                    </li>
+                    {{-- Auto Post section removed --}}
 
                     {{-- MEDIA KIT SECTION --}}
                     @if (check_permission('view_account'))
