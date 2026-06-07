@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // Run every minute to process scheduled posts and refresh tokens
+        $schedule->command('cron:run')->everyMinute()->withoutOverlapping();
     }
 
     /**
