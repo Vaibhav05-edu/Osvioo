@@ -69,7 +69,7 @@
     </div>
 </div>
 
-@push('scripts')
+@push('script-push')
 <script nonce="{{ csp_nonce() }}">
 document.getElementById('generatePostBtn').addEventListener('click', function() {
     const prompt    = document.getElementById('postPrompt').value.trim();

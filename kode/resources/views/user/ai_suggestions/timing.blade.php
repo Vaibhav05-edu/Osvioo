@@ -71,7 +71,7 @@
     </div>
 </div>
 
-@push('scripts')
+@push('script-push')
 <script nonce="{{ csp_nonce() }}">
 document.getElementById('analyzeTimingBtn').addEventListener('click', function() {
     const timeframe = document.getElementById('timingTimeframe').value;

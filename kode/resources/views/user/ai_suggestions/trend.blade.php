@@ -88,7 +88,7 @@
     </div>
 </div>
 
-@push('scripts')
+@push('script-push')
 <script nonce="{{ csp_nonce() }}">
 document.getElementById('scanTrendsBtn').addEventListener('click', function() {
     const niche    = document.getElementById('trendNiche').value;

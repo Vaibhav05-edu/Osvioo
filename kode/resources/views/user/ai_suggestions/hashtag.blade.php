@@ -56,7 +56,7 @@
     </div>
 </div>
 
-@push('scripts')
+@push('script-push')
 <script nonce="{{ csp_nonce() }}">
 document.getElementById('generateHashtagBtn').addEventListener('click', function() {
     const prompt   = document.getElementById('hashtagPrompt').value.trim();
