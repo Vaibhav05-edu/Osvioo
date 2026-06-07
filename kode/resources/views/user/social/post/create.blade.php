@@ -5,157 +5,350 @@
 @push('style-include')
     <link nonce="{{ csp_nonce() }}"  href="{{asset('assets/frontend/css/post.css')}}" rel="stylesheet" type="text/css">
     <link nonce="{{ csp_nonce() }}" href="{{asset('assets/global/css/datepicker/daterangepicker.css')}}" rel="stylesheet" type="text/css" />
-    <style>
+    <style nonce="{{ csp_nonce() }}">
 
-    /* AI Assistant Dropdown Enhancements */
-    .compose-body-bottom .dropdown .action-item.image-dropdwon.dropdown-toggle {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border: none;
-        border-radius: 8px;
-        color: white;
-        font-weight: 500;
-        padding: 10px 16px;
-        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-        transition: all 0.3s ease;
+    /* ══════════════════════════════════════════
+       SCHEDULE POST — PREMIUM UI OVERHAUL
+    ══════════════════════════════════════════ */
+
+    /* Page Hero Header */
+    .sp-hero {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+        border-radius: 20px;
+        padding: 28px 32px;
+        margin-bottom: 24px;
         position: relative;
         overflow: hidden;
+        box-shadow: 0 8px 32px rgba(99,102,241,0.25);
+    }
+    .sp-hero::before {
+        content: '';
+        position: absolute;
+        top: -40px; right: -40px;
+        width: 200px; height: 200px;
+        background: rgba(255,255,255,0.08);
+        border-radius: 50%;
+    }
+    .sp-hero::after {
+        content: '';
+        position: absolute;
+        bottom: -60px; left: 20%;
+        width: 150px; height: 150px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+    .sp-hero h2 { color: #fff; font-weight: 800; font-size: 1.6rem; margin: 0 0 4px; }
+    .sp-hero p  { color: rgba(255,255,255,0.75); margin: 0; font-size: 0.92rem; }
+    .sp-hero-icon {
+        width: 52px; height: 52px;
+        background: rgba(255,255,255,0.18);
+        border-radius: 14px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.5rem; color: #fff;
+        backdrop-filter: blur(8px);
+        flex-shrink: 0;
     }
 
-    .compose-body-bottom .dropdown .action-item.image-dropdwon.dropdown-toggle:hover {
+    /* Main compose card */
+    .compose-wrapper .i-card-md {
+        background: rgba(255,255,255,0.85) !important;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(99,102,241,0.12) !important;
+        border-radius: 20px !important;
+        box-shadow: 0 4px 24px rgba(99,102,241,0.08) !important;
+        transition: box-shadow 0.3s ease;
+    }
+    .compose-wrapper .i-card-md:hover {
+        box-shadow: 0 8px 40px rgba(99,102,241,0.14) !important;
+    }
+
+    /* Section labels */
+    .compose-wrapper .card-title {
+        font-size: 0.85rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #6366f1 !important;
+        margin-bottom: 12px !important;
+    }
+
+    /* Platform tabs */
+    .post-select-tab .nav-link {
+        border-radius: 12px !important;
+        padding: 8px 14px !important;
+        border: 2px solid transparent !important;
+        transition: all 0.25s ease !important;
+        background: #f8f9ff !important;
+    }
+    .post-select-tab .nav-link.active,
+    .post-select-tab .nav-link:hover {
+        border-color: #6366f1 !important;
+        background: #eef2ff !important;
+        box-shadow: 0 0 0 3px rgba(99,102,241,0.12) !important;
+    }
+
+    /* Profile select */
+    .profile-select + .select2 .select2-selection,
+    .select2-container .select2-selection--multiple {
+        border-radius: 12px !important;
+        border: 1.5px solid #e0e7ff !important;
+        background: #f8f9ff !important;
+        padding: 6px 12px !important;
+        min-height: 46px !important;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+        border: none !important;
+        color: #fff !important;
+        border-radius: 20px !important;
+        padding: 3px 10px !important;
+        font-size: 12px !important;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        color: rgba(255,255,255,0.8) !important;
+    }
+
+    /* Compose textarea */
+    .compose-input.post-intput {
+        border: 1.5px solid #e0e7ff !important;
+        border-radius: 14px !important;
+        background: #fafbff !important;
+        padding: 14px 16px !important;
+        font-size: 0.95rem !important;
+        resize: vertical;
+        transition: border-color 0.2s, box-shadow 0.2s !important;
+        min-height: 130px !important;
+    }
+    .compose-input.post-intput:focus {
+        border-color: #6366f1 !important;
+        box-shadow: 0 0 0 3px rgba(99,102,241,0.12) !important;
+        outline: none !important;
+    }
+
+    /* Compose bottom toolbar */
+    .compose-body-bottom {
+        background: linear-gradient(135deg, #f8f9ff 0%, #eef2ff 100%);
+        border-top: 1px solid #e0e7ff;
+        border-radius: 0 0 14px 14px;
+        padding: 10px 14px !important;
+    }
+
+    /* AI Assistant button */
+    .compose-body-bottom .dropdown .action-item.image-dropdwon.dropdown-toggle {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+        border-radius: 10px !important;
+        font-size: 13px !important;
+        padding: 8px 16px !important;
+        box-shadow: 0 3px 10px rgba(99,102,241,0.3) !important;
+    }
+
+    /* Photo/Video upload button */
+    .upload-filed label {
+        background: #eef2ff;
+        border: 1.5px dashed #6366f1;
+        border-radius: 10px;
+        padding: 7px 14px !important;
+        color: #6366f1;
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+    .upload-filed label:hover {
+        background: #e0e7ff;
+    }
+
+    /* Schedule clock button */
+    .schedule-btn .custom-date-label {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: #fff !important;
+        border-radius: 10px;
+        padding: 8px 14px !important;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 3px 10px rgba(16,185,129,0.25);
+        transition: all 0.2s;
+    }
+    .schedule-btn .custom-date-label:hover {
         transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 5px 14px rgba(16,185,129,0.35);
+    }
+    .show-date {
+        font-size: 12px;
+        color: #10b981;
+        font-weight: 600;
+        margin: 0;
     }
 
-    .compose-body-bottom .dropdown .action-item.image-dropdwon.dropdown-toggle:focus {
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-        outline: none;
+    /* Links input */
+    .compose-wrapper .form-control {
+        border-radius: 12px !important;
+        border: 1.5px solid #e0e7ff !important;
+        background: #fafbff !important;
+        padding: 10px 14px !important;
+        transition: all 0.2s;
+    }
+    .compose-wrapper .form-control:focus {
+        border-color: #6366f1 !important;
+        box-shadow: 0 0 0 3px rgba(99,102,241,0.1) !important;
     }
 
-    .compose-body-bottom .dropdown .action-item.image-dropdwon.dropdown-toggle::after {
-        margin-left: 8px;
-        transition: transform 0.3s ease;
+    /* Submit button */
+    .postSubmitButton {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+        border: none !important;
+        border-radius: 14px !important;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+        padding: 12px 32px !important;
+        letter-spacing: 0.3px;
+        box-shadow: 0 4px 16px rgba(99,102,241,0.35) !important;
+        transition: all 0.3s ease !important;
+        color: #fff !important;
+    }
+    .postSubmitButton:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 24px rgba(99,102,241,0.45) !important;
     }
 
-    .compose-body-bottom .dropdown .action-item.image-dropdwon.dropdown-toggle[aria-expanded="true"]::after {
-        transform: rotate(180deg);
+    /* Right preview card */
+    .social-preview-user {
+        background: rgba(255,255,255,0.85) !important;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(99,102,241,0.12) !important;
+        border-radius: 20px !important;
+        box-shadow: 0 4px 24px rgba(99,102,241,0.08) !important;
+    }
+    .social-preview-user .card-header {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+        border-radius: 20px 20px 0 0 !important;
+        padding: 16px 20px !important;
+    }
+    .social-preview-user .card-header .card-title {
+        color: #fff !important;
+        text-transform: none !important;
+        letter-spacing: 0 !important;
+        font-size: 1rem !important;
+        margin: 0 !important;
     }
 
+    /* Platform note cards */
+    .platform-note.post-before-social-card {
+        background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+        border: 1px solid #bbf7d0;
+        border-radius: 14px;
+        padding: 14px;
+    }
+    .platform-note .icon {
+        width: 40px; height: 40px;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        color: #fff;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
 
-    /* Dropdown Menu Styling */
+    /* Post type radio buttons */
+    .radio--button label {
+        border-radius: 8px !important;
+        border: 1.5px solid #e0e7ff !important;
+        padding: 5px 12px !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        transition: all 0.2s !important;
+        cursor: pointer;
+        background: #f8f9ff !important;
+        color: #6366f1 !important;
+    }
+    .radio--button input:checked + label {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+        border-color: #6366f1 !important;
+        color: #fff !important;
+    }
+
+    /* File list preview */
+    .file-list li {
+        border-radius: 10px;
+        background: #f8f9ff;
+        border: 1px solid #e0e7ff;
+        margin-bottom: 6px;
+        padding: 8px 12px;
+    }
+
+    /* Predefined select */
+    .predefined-select {
+        border-radius: 10px !important;
+        border: 1.5px solid #e0e7ff !important;
+        background: #f8f9ff !important;
+        font-size: 13px !important;
+        padding: 6px 10px !important;
+    }
+
+    /* AI Best Times chips */
+    .ai-best-time-chip {
+        font-size: 0.72rem;
+        padding: 3px 10px;
+        border-radius: 50px;
+        background: #f0fdf4;
+        color: #16a34a;
+        border: 1px solid #bbf7d0;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+    .ai-best-time-chip:hover {
+        background: #16a34a;
+        color: #fff;
+    }
+
+    /* Dropdown animation */
+    @keyframes dropdownFadeIn {
+        from { opacity: 0; transform: translateY(-8px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
     .compose-body-bottom .dropdown .dropdown-menu {
-
         border: none;
-        border-radius: 12px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        border-radius: 14px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.12);
         background: white;
         padding: 8px !important;
         margin-top: 8px;
         animation: dropdownFadeIn 0.2s ease-out;
-        min-width : 200px !important;
+        min-width: 200px !important;
     }
-
-    @keyframes dropdownFadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Dropdown Items */
-    .compose-body-bottom .dropdown .dropdown-menu li {
-        margin-bottom: 4px;
-    }
-
-    .compose-body-bottom .dropdown .dropdown-menu li:last-child {
-        margin-bottom: 0;
-    }
-
+    .compose-body-bottom .dropdown .dropdown-menu li { margin-bottom: 4px; }
     .compose-body-bottom .dropdown .dropdown-menu .ai-modal,
     .compose-body-bottom .dropdown .dropdown-menu .ai-image-modal,
     .compose-body-bottom .dropdown .dropdown-menu .ai-video-modal,
     .compose-body-bottom .dropdown .dropdown-menu .ai-image-gallery-modal,
-    .compose-body-bottom .dropdown .dropdown-menu .ai-video-gallery-modal {
+    .compose-body-bottom .dropdown .dropdown-menu .ai-video-gallery-modal,
+    .ai-quick-btn {
         border-radius: 8px;
         transition: all 0.2s ease;
-        padding: 12px 16px !important;
-        margin: 0;
+        padding: 10px 14px !important;
         background: transparent;
         border: 1px solid transparent;
     }
-
     .compose-body-bottom .dropdown .dropdown-menu .ai-modal:hover,
     .compose-body-bottom .dropdown .dropdown-menu .ai-image-modal:hover,
     .compose-body-bottom .dropdown .dropdown-menu .ai-video-modal:hover,
     .compose-body-bottom .dropdown .dropdown-menu .ai-image-gallery-modal:hover,
-    .compose-body-bottom .dropdown .dropdown-menu .ai-video-gallery-modal:hover {
-        background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+    .compose-body-bottom .dropdown .dropdown-menu .ai-video-gallery-modal:hover,
+    .ai-quick-btn:hover {
+        background: linear-gradient(135deg, #f8f9ff, #eef2ff);
         border-color: #e0e7ff;
-        transform: translateX(4px);
+        transform: translateX(3px);
     }
+    .compose-body-bottom .dropdown .dropdown-menu .bi,
+    .ai-quick-btn .bi { font-size: 16px; color: #6366f1; width: 20px; text-align: center; }
+    .compose-body-bottom .dropdown .dropdown-menu p,
+    .ai-quick-btn p { margin: 0; font-weight: 500; color: #374151; font-size: 13.5px; }
 
-    /* Icons Styling */
-    .compose-body-bottom .dropdown .dropdown-menu .bi {
-        font-size: 18px;
-        color: #667eea;
-        width: 20px;
-        text-align: center;
-    }
-
-    .compose-body-bottom .dropdown .dropdown-menu .bi-robot {
-        color: #667eea;
-    }
-
-    .compose-body-bottom .dropdown .dropdown-menu .bi-images {
-        color: #f59e0b;
-    }
-
-    .compose-body-bottom .dropdown .dropdown-menu .bi-film {
-        color: #ef4444;
-    }
-
-    /* Text Styling */
-    .compose-body-bottom .dropdown .dropdown-menu p {
-        margin: 0;
-        font-weight: 500;
-        color: #374151;
-        font-size: 14px;
-        line-height: 1.4;
-    }
-
-    .compose-body-bottom .dropdown .dropdown-menu .ai-modal:hover p,
-    .compose-body-bottom .dropdown .dropdown-menu .ai-image-modal:hover p,
-    .compose-body-bottom .dropdown .dropdown-menu .ai-video-modal:hover p,
-    .compose-body-bottom .dropdown .dropdown-menu .ai-image-gallery-modal:hover p,
-    .compose-body-bottom .dropdown .dropdown-menu .ai-video-gallery-modal:hover p {
-        color: #1f2937;
-    }
-
-    /* Active/Focus States */
-    .compose-body-bottom .dropdown .dropdown-menu .ai-modal:active,
-    .compose-body-bottom .dropdown .dropdown-menu .ai-image-modal:active,
-    .compose-body-bottom .dropdown .dropdown-menu .ai-video-modal:active,
-    .compose-body-bottom .dropdown .dropdown-menu .ai-image-gallery-modal:active,
-    .compose-body-bottom .dropdown .dropdown-menu .ai-video-gallery-modal:active {
-        transform: translateX(2px);
-        background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
-    }
-
-    /* Responsive Design */
     @media (max-width: 768px) {
-        .compose-body-bottom .dropdown .dropdown-menu {
-            min-width: 220px !important;
-        }
-
-        .compose-body-bottom .dropdown .action-item.image-dropdwon.dropdown-toggle {
-            padding: 8px 12px;
-            font-size: 14px;
-        }
+        .sp-hero { padding: 20px; }
+        .sp-hero h2 { font-size: 1.3rem; }
     }
-
     </style>
 @endpush
 
@@ -173,6 +366,18 @@
 @endphp
 
 <div class="compose-wrapper">
+
+    {{-- ── HERO HEADER ─────────────────────────────────── --}}
+    <div class="sp-hero d-flex align-items-center gap-3 mb-4">
+        <div class="sp-hero-icon">
+            <i class="bi bi-calendar-plus"></i>
+        </div>
+        <div>
+            <h2>{{ translate('Schedule Post') }}</h2>
+            <p>{{ translate('Craft, preview and schedule your social posts in one place.') }}</p>
+        </div>
+    </div>
+
     <form action="{{route('user.social.post.store')}}" method="post" class="compose-form" enctype="multipart/form-data">
         @csrf
         <div class="row g-4">
