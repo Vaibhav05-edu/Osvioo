@@ -85,7 +85,7 @@
                                     <div class="p-4">
                                         <i class="bi bi-person-badge text-muted" style="font-size: 3rem;"></i>
                                         <h5 class="mt-3">{{translate('No Media Kits Found')}}</h5>
-                                        <p class="text-muted">{{translate('Create your first AI-powered media kit to showcase to brands.')}}</p>
+                                        <p class="text-muted">{{translate('Create your first media kit to showcase to brands.')}}</p>
                                         <a href="{{route('user.mediakit.create')}}" class="i-btn btn--md primary mt-2">{{translate('Create Now')}}</a>
                                     </div>
                                 </td>
