@@ -38,6 +38,32 @@ class AiSuggestionController extends Controller
 
     // ─── AJAX Generators ─────────────────────────────────────────────────────
 
+    private function callOpenAi(array $payload)
+    {
+        $apiKey = trim(openai_key());
+        if (empty($apiKey)) {
+            return ['status' => false, 'message' => 'API Key is missing. Please configure OpenAI keys first.'];
+        }
+
+        try {
+            $response = \Illuminate\Support\Facades\Http::withToken($apiKey)
+                ->timeout(30)
+                ->post('https://api.openai.com/v1/chat/completions', $payload);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                if (isset($data['choices'][0]['message']['content'])) {
+                    return ['status' => true, 'result' => $data['choices'][0]['message']['content']];
+                }
+            }
+            
+            $error = $response->json('error.message');
+            return ['status' => false, 'message' => $error ?: 'AI API Error: ' . $response->status()];
+        } catch (\Exception $e) {
+            return ['status' => false, 'message' => 'Error: ' . $e->getMessage()];
+        }
+    }
+
     public function generateHashtag(Request $request)
     {
         $request->validate([
@@ -53,25 +79,21 @@ class AiSuggestionController extends Controller
         $aiPrompt = "Generate exactly {$count} trending, niche-specific hashtags for a {$platform} post about: \"{$prompt}\". "
             . "Return ONLY the hashtags separated by spaces, each starting with #, no explanations, no numbering, no markdown.";
 
-        try {
-            $aiService = new AiService();
-            $response  = $aiService->generateContent([
-                'model'       => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
-                'temperature' => 0.8,
-                'messages'    => [
-                    ['role' => 'system', 'content' => 'You are an expert social media hashtag strategist.'],
-                    ['role' => 'user',   'content' => $aiPrompt],
-                ],
-            ], []);
+        $aiService = new AiService();
+        $payload = [
+            'model'       => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
+            'temperature' => 0.8,
+            'messages'    => [
+                ['role' => 'system', 'content' => 'You are an expert social media hashtag strategist.'],
+                ['role' => 'user',   'content' => $aiPrompt],
+            ],
+        ];
 
-            if (isset($response['status']) && $response['status'] && !empty($response['message'])) {
-                return response()->json(['status' => true, 'result' => trim($response['message'])]);
-            }
-
-            return response()->json(['status' => false, 'message' => $response['message'] ?? 'AI failed']);
-        } catch (\Exception $e) {
-            return response()->json(['status' => false, 'message' => 'Error: ' . $e->getMessage()]);
+        $response = $this->callOpenAi($payload);
+        if ($response['status']) {
+            $response['result'] = trim($response['result']);
         }
+        return response()->json($response);
     }
 
     public function generatePost(Request $request)
@@ -99,25 +121,21 @@ class AiSuggestionController extends Controller
         $aiPrompt = "Write an engaging social media caption/post in a {$tone} tone about: \"{$prompt}\". "
             . "Length: {$lengthDesc}. {$emojiNote} Return ONLY the post content, no explanations, no markdown.";
 
-        try {
-            $aiService = new AiService();
-            $response  = $aiService->generateContent([
-                'model'       => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
-                'temperature' => 0.8,
-                'messages'    => [
-                    ['role' => 'system', 'content' => 'You are an expert social media content writer.'],
-                    ['role' => 'user',   'content' => $aiPrompt],
-                ],
-            ], []);
+        $aiService = new AiService();
+        $payload = [
+            'model'       => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
+            'temperature' => 0.8,
+            'messages'    => [
+                ['role' => 'system', 'content' => 'You are an expert social media content writer.'],
+                ['role' => 'user',   'content' => $aiPrompt],
+            ],
+        ];
 
-            if (isset($response['status']) && $response['status'] && !empty($response['message'])) {
-                return response()->json(['status' => true, 'result' => trim($response['message'])]);
-            }
-
-            return response()->json(['status' => false, 'message' => $response['message'] ?? 'AI failed']);
-        } catch (\Exception $e) {
-            return response()->json(['status' => false, 'message' => 'Error: ' . $e->getMessage()]);
+        $response = $this->callOpenAi($payload);
+        if ($response['status']) {
+            $response['result'] = trim($response['result']);
         }
+        return response()->json($response);
     }
 
     public function analyzeTiming(Request $request)
@@ -133,29 +151,27 @@ class AiSuggestionController extends Controller
             . "\"time\" (e.g. \"06:00 PM\"), \"day\" (e.g. \"Wednesday\"), \"label\" (e.g. \"Top Choice\"), \"reason\" (short 1-sentence reason). "
             . "No markdown, no extra text.";
 
-        try {
-            $aiService = new AiService();
-            $response  = $aiService->generateContent([
-                'model'       => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
-                'temperature' => 0.6,
-                'messages'    => [
-                    ['role' => 'system', 'content' => 'You are a social media analytics expert. Respond only in JSON.'],
-                    ['role' => 'user',   'content' => $aiPrompt],
-                ],
-            ], []);
+        $aiService = new AiService();
+        $payload = [
+            'model'       => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
+            'temperature' => 0.6,
+            'messages'    => [
+                ['role' => 'system', 'content' => 'You are a social media analytics expert. Respond only in JSON.'],
+                ['role' => 'user',   'content' => $aiPrompt],
+            ],
+        ];
 
-            if (isset($response['status']) && $response['status'] && !empty($response['message'])) {
-                $clean = preg_replace('/```json|```/', '', $response['message']);
-                $data  = json_decode(trim($clean), true);
-                if (is_array($data)) {
-                    return response()->json(['status' => true, 'result' => $data]);
-                }
+        $response = $this->callOpenAi($payload);
+        if ($response['status']) {
+            $clean = preg_replace('/```json|```/', '', $response['result']);
+            $data  = json_decode(trim($clean), true);
+            if (is_array($data)) {
+                $response['result'] = $data;
+            } else {
+                return response()->json(['status' => false, 'message' => 'Could not parse timing data. Try again.']);
             }
-
-            return response()->json(['status' => false, 'message' => 'Could not parse timing data. Try again.']);
-        } catch (\Exception $e) {
-            return response()->json(['status' => false, 'message' => 'Error: ' . $e->getMessage()]);
         }
+        return response()->json($response);
     }
 
     public function scanTrends(Request $request)
@@ -173,29 +189,27 @@ class AiSuggestionController extends Controller
             . "\"title\" (trend name), \"type\" (Audio/Format/Topic/Hashtag), \"growth\" (e.g. \"+320%\"), \"description\" (1 sentence why it's trending). "
             . "No markdown, no extra text.";
 
-        try {
-            $aiService = new AiService();
-            $response  = $aiService->generateContent([
-                'model'       => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
-                'temperature' => 0.8,
-                'messages'    => [
-                    ['role' => 'system', 'content' => 'You are a social media trend analyst. Respond only in JSON.'],
-                    ['role' => 'user',   'content' => $aiPrompt],
-                ],
-            ], []);
+        $aiService = new AiService();
+        $payload = [
+            'model'       => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
+            'temperature' => 0.8,
+            'messages'    => [
+                ['role' => 'system', 'content' => 'You are a social media trend analyst. Respond only in JSON.'],
+                ['role' => 'user',   'content' => $aiPrompt],
+            ],
+        ];
 
-            if (isset($response['status']) && $response['status'] && !empty($response['message'])) {
-                $clean = preg_replace('/```json|```/', '', $response['message']);
-                $data  = json_decode(trim($clean), true);
-                if (is_array($data)) {
-                    return response()->json(['status' => true, 'result' => $data]);
-                }
+        $response = $this->callOpenAi($payload);
+        if ($response['status']) {
+            $clean = preg_replace('/```json|```/', '', $response['result']);
+            $data  = json_decode(trim($clean), true);
+            if (is_array($data)) {
+                $response['result'] = $data;
+            } else {
+                return response()->json(['status' => false, 'message' => 'Could not fetch trend data. Try again.']);
             }
-
-            return response()->json(['status' => false, 'message' => 'Could not fetch trend data. Try again.']);
-        } catch (\Exception $e) {
-            return response()->json(['status' => false, 'message' => 'Error: ' . $e->getMessage()]);
         }
+        return response()->json($response);
     }
 }
 

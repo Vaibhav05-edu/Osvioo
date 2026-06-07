@@ -151,7 +151,7 @@ if (!function_exists('openai_key')) {
     function openai_key(): string
     {
         if (env('OPENAI_API_KEY')) {
-            return env('OPENAI_API_KEY');
+            return trim(env('OPENAI_API_KEY'));
         }
 
         $key = site_settings("open_ai_secret");
@@ -168,7 +168,7 @@ if (!function_exists('openai_key')) {
             }
         }
 
-        return $key;
+        return trim($key);
 
     }
 
@@ -178,12 +178,12 @@ if (!function_exists('openai_Image_key')) {
     function openai_Image_key(): string
     {
         if (env('OPENAI_API_KEY')) {
-            return env('OPENAI_API_KEY');
+            return trim(env('OPENAI_API_KEY'));
         }
 
         $key = site_settings("open_ai_image_secret");
 
-        return $key;
+        return trim($key);
 
     }
 
@@ -195,7 +195,7 @@ if (!function_exists('kling_ai_video_key')) {
 
         $key = site_settings("kling_ai_video_secret");
 
-        return $key;
+        return trim($key);
 
     }
 
