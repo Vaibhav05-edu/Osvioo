@@ -9,25 +9,29 @@ class AiSuggestionController extends Controller
 {
     public function hashtag()
     {
-        $title = translate("AI Post Hashtag");
-        return view('user.ai_suggestions.hashtag', compact('title'));
+        $title     = translate("AI Post Hashtag");
+        $meta_data = $this->metaData(['title' => $title]);
+        return view('user.ai_suggestions.hashtag', compact('title', 'meta_data'));
     }
 
     public function post()
     {
-        $title = translate("AI Post Suggestion");
-        return view('user.ai_suggestions.post', compact('title'));
+        $title     = translate("AI Post Suggestion");
+        $meta_data = $this->metaData(['title' => $title]);
+        return view('user.ai_suggestions.post', compact('title', 'meta_data'));
     }
 
     public function timing()
     {
-        $title = translate("AI Post Timing");
-        return view('user.ai_suggestions.timing', compact('title'));
+        $title     = translate("AI Post Timing");
+        $meta_data = $this->metaData(['title' => $title]);
+        return view('user.ai_suggestions.timing', compact('title', 'meta_data'));
     }
 
     public function trend()
     {
-        $title = translate("AI Current Trend");
-        return view('user.ai_suggestions.trend', compact('title'));
+        $title     = translate("AI Current Trend");
+        $meta_data = $this->metaData(['title' => $title]);
+        return view('user.ai_suggestions.trend', compact('title', 'meta_data'));
     }
 }
