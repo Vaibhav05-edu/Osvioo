@@ -68,7 +68,7 @@ class AiSuggestionController extends Controller
                 return response()->json(['status' => true, 'result' => trim($response['message'])]);
             }
 
-            return response()->json(['status' => false, 'message' => 'AI did not return a valid response. Please try again.']);
+            return response()->json(['status' => false, 'message' => $response['message'] ?? 'AI failed']);
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => 'Error: ' . $e->getMessage()]);
         }
@@ -114,7 +114,7 @@ class AiSuggestionController extends Controller
                 return response()->json(['status' => true, 'result' => trim($response['message'])]);
             }
 
-            return response()->json(['status' => false, 'message' => 'AI did not return a valid response. Please try again.']);
+            return response()->json(['status' => false, 'message' => $response['message'] ?? 'AI failed']);
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => 'Error: ' . $e->getMessage()]);
         }
