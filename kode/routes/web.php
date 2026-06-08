@@ -409,6 +409,7 @@ Route::get('/fix-prod', function () {
 
                  Route::any('/list','list')->name('list');
                  Route::get('/insights','insights')->name('insights');
+                 Route::post('/insights/sync','syncInsights')->name('insights.sync');
                  Route::get('/platform/list','platform')->name('platform');
                  Route::get('/create/{platform}','create')->name('create');
                  Route::post('/store','store')->name('store');

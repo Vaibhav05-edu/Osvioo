@@ -277,4 +277,39 @@ class SocialAccountController extends Controller
             'accounts'  => SocialAccount::where('user_id', $this->user->id)->get(),
         ]);
     }
+
+    /**
+     * Sync Insights via AJAX
+     */
+    public function syncInsights(Request $request)
+    {
+        $request->validate([
+            'account_id' => 'required|exists:social_accounts,id',
+            'days' => 'required|integer|in:7,30,90'
+        ]);
+
+        $account = SocialAccount::with('platform')
+            ->where('user_id', $this->user->id)
+            ->where('id', $request->input('account_id'))
+            ->first();
+
+        if (!$account) {
+            return response()->json(['status' => false, 'message' => translate('Account not found')]);
+        }
+
+        if ($account->platform->slug != 'instagram') {
+            return response()->json(['status' => false, 'message' => translate('Invalid platform for this action')]);
+        }
+
+        $class = 'App\\Http\\Services\\Account\\'.$account->platform->slug.'\\Account';
+        if (class_exists($class)) {
+            $service = new $class();
+            if (method_exists($service, 'fetchInsights')) {
+                $response = $service->fetchInsights($account, $request->input('days'));
+                return response()->json($response);
+            }
+        }
+
+        return response()->json(['status' => false, 'message' => translate('Insights service not found for this platform')]);
+    }
 }

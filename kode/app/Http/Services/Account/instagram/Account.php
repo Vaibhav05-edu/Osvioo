@@ -1276,4 +1276,86 @@ class Account
             ];
         }
     }
+
+    /**
+     * Fetch Instagram Account Insights
+     *
+     * @param SocialAccount $account
+     * @param int $days
+     * @return array
+     */
+    public function fetchInsights(SocialAccount $account, int $days): array
+    {
+        try {
+            $platform = $account->platform;
+            $configuration = $platform->configuration;
+            $token = $account->token;
+            $igId = $account->account_id;
+
+            // Fetch basic account info for followers
+            $accountUrl = self::getApiUrl($igId, ['fields' => 'followers_count'], $configuration);
+            $accountResponse = \Illuminate\Support\Facades\Http::withToken($token)->get($accountUrl);
+            $followersCount = $accountResponse->json('followers_count') ?? 0;
+
+            // Fetch insights
+            $since = now()->subDays($days)->timestamp;
+            $until = now()->timestamp;
+            
+            $insightsUrl = self::getApiUrl($igId . '/insights', [
+                'metric' => 'reach,impressions,profile_views',
+                'period' => 'day',
+                'since' => $since,
+                'until' => $until,
+            ], $configuration);
+
+            $insightsResponse = \Illuminate\Support\Facades\Http::withToken($token)->get($insightsUrl);
+
+            if (!$insightsResponse->successful()) {
+                return [
+                    'status' => false,
+                    'message' => $insightsResponse->json('error.message') ?? 'Failed to fetch insights from Instagram',
+                ];
+            }
+
+            $data = $insightsResponse->json('data') ?? [];
+
+            $totalReach = 0;
+            $totalImpressions = 0;
+            $totalProfileViews = 0;
+
+            foreach ($data as $metric) {
+                if ($metric['name'] == 'reach') {
+                    foreach ($metric['values'] as $value) {
+                        $totalReach += $value['value'];
+                    }
+                }
+                if ($metric['name'] == 'impressions') {
+                    foreach ($metric['values'] as $value) {
+                        $totalImpressions += $value['value'];
+                    }
+                }
+                if ($metric['name'] == 'profile_views') {
+                    foreach ($metric['values'] as $value) {
+                        $totalProfileViews += $value['value'];
+                    }
+                }
+            }
+
+            return [
+                'status' => true,
+                'data' => [
+                    'followers_count' => $followersCount,
+                    'reach' => $totalReach,
+                    'impressions' => $totalImpressions,
+                    'profile_views' => $totalProfileViews,
+                ]
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
 }
