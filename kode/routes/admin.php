@@ -608,7 +608,7 @@ Route::middleware([
             Route::get('/list','list')->name('list');
             Route::get('/create','create')->name('create');
             Route::post('/store','store')->name('store');
-            Route::get('/download/{uid}','download')->name('download')->withoutMiddleware(['sanitizer']);
+            Route::get('/download/{uid}','download')->name('download')->withoutMiddleware(['sanitizer', \Spatie\Csp\AddCspHeaders::class]);
             Route::post('/watermark-approve/{uid}','approveWatermark')->name('watermark.approve');
             Route::post('/watermark-reject/{uid}','rejectWatermark')->name('watermark.reject');
         });

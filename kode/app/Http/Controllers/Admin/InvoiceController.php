@@ -125,7 +125,20 @@ class InvoiceController extends Controller
             ob_end_clean();
         }
 
-        return $pdf->download('Invoice-' . ($invoice->details['invoice_number'] ?? $invoice->uid) . '.pdf');
+        $filename = 'Invoice-' . ($invoice->details['invoice_number'] ?? $invoice->uid) . '.pdf';
+
+        $response = $pdf->download($filename);
+
+        // Remove CSP headers that block PDF download in browsers
+        $response->headers->remove('Content-Security-Policy');
+        $response->headers->remove('Content-Security-Policy-Report-Only');
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
+        $response->headers->set('X-Content-Type-Options', 'nosniff');
+        $response->headers->set('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+        $response->headers->set('Pragma', 'no-cache');
+
+        return $response;
     }
 
     /**
