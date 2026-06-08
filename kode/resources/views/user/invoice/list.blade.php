@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
-<style>
+<style nonce="{{ csp_nonce() }}">
 .invoice-list-header {
     background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
     border-radius: 18px 18px 0 0;

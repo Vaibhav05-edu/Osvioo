@@ -6,7 +6,7 @@
     $currencySymbol = optional($currency)->symbol ?? '$';
 @endphp
 
-<style>
+<style nonce="{{ csp_nonce() }}">
 .invoice-creator {
     background-color: #f8f9fa;
     min-height: 100vh;
