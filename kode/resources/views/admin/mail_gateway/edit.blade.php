@@ -14,7 +14,7 @@
 										<small class="text-danger">*</small>
 									</label>
 									@if($k == 'encryption')
-										<select class="select2" name="credential[{{ $k }}]" id="{{ $k }}">
+										<select class="select2" name="credential[{{ $k }}]" id="{{ $k }}" disabled>
 											<option {{$v ==  "SSL" ? "selected" :""}} value="SSL">  
 												{{translate("Secure encryption (SSL)")}}
 											</option>
@@ -23,8 +23,8 @@
 											</option>
 										</select>
 									@else
-									<input type="text" name="credential[{{ $k }}]" value='{{ is_demo() ? "@@@" :$v}}'
-									id="{{ $k }}">
+									<input type="text" name="credential[{{ $k }}]" value='Configured securely via .env file'
+									id="{{ $k }}" disabled readonly>
 									@endif
 								</div>								
 							</div> 

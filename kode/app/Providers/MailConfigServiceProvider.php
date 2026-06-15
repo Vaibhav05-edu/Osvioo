@@ -30,16 +30,16 @@ class MailConfigServiceProvider extends ServiceProvider
             $mail = MailGateway::where('code', '101SMTP')->first();
             if($mail){
                 $config = array(
-                    'driver'     => @$mail->credential->driver,
-                    'host'       => @$mail->credential->host,
-                    'port'       => @$mail->credential->port,
+                    'driver'     => env('MAIL_MAILER', @$mail->credential->driver),
+                    'host'       => env('MAIL_HOST', @$mail->credential->host),
+                    'port'       => env('MAIL_PORT', @$mail->credential->port),
                     'from'       => [
-                        'address'=> @$mail->credential->from->address,
-                        'name'   => @$mail->credential->from->name
+                        'address'=> env('MAIL_FROM_ADDRESS', @$mail->credential->from->address),
+                        'name'   => env('MAIL_FROM_NAME', @$mail->credential->from->name)
                     ],
-                    'encryption' => @$mail->credential->encryption=="PWMTA"?null:$mail->credential->encryption,
-                    'username'   => @$mail->credential->username,
-                    'password'   => @$mail->credential->password,
+                    'encryption' => env('MAIL_ENCRYPTION', @$mail->credential->encryption=="PWMTA"?null:$mail->credential->encryption),
+                    'username'   => env('MAIL_USERNAME', @$mail->credential->username),
+                    'password'   => env('MAIL_PASSWORD', @$mail->credential->password),
                     'sendmail'   => '/usr/sbin/sendmail -bs',
                     'pretend'    => false,
                 );

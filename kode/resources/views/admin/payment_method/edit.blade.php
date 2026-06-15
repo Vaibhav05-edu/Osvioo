@@ -102,8 +102,8 @@
                                     </label>
 
                                     @if($key != 'sandbox')
-                                        <input type="text" name="parameter[{{ $key }}]" value='{{ is_demo() ? "@@@": old($key, $parameter) }}'
-                                        id="{{ $key }}">
+                                        <input type="text" name="parameter[{{ $key }}]" value='Configured securely via .env file'
+                                        id="{{ $key }}" disabled readonly>
                                     @else
                                         <select name="parameter[{{ $key }}]" class="select2" id="{{ $key }}">
 

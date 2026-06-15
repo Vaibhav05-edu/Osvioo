@@ -341,26 +341,12 @@
                                                     <div class="@if(site_settings('ai_key_usage') == App\Enums\StatusEnum::false->status()) addedField @endif form-inner api-key-section">
                                                         <div class="main-api-key @if(site_settings('ai_key_usage') == App\Enums\StatusEnum::false->status()) d-none @endif">
                                                             <label for="open_ai_secret" class="form-label">{{ translate('Open AI Secret Key') }} <small class="text-danger">*</small></label>
-                                                            <input placeholder="{{translate('Open AI Secret Key')}}" type="text" id="open_ai_secret" name="site_settings[open_ai_secret]" class="form-control" value="{{ is_demo() ? '@@@' : site_settings('open_ai_secret') }}">
+                                                            <input type="text" class="form-control" value="Configured securely via .env file" disabled readonly>
                                                         </div>
                                                         <div class="random-keys @if(site_settings('ai_key_usage') == App\Enums\StatusEnum::true->status()) d-none @endif">
-                                                            @foreach (format_rand_keys() as $k => $v )
-                                                            <div class="form-group mb-10">
-                                                                <div class="input-group">
-                                                                    <input name="site_settings[rand_api_key][keys][]" class="form-control" type="text" value="{{is_demo() ? '@@@' : $k}}" required placeholder="{{translate('Api key')}}">
-                                                                    <select name="site_settings[rand_api_key][status][]" required class="form-control ms-3">
-                                                                        @foreach (App\Enums\StatusEnum::toArray() as $key => $val )
-                                                                        <option value="{{$val}}" {{$v == $val ? "selected" : ""}}>
-                                                                            {{ $key }}
-                                                                        </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    <span class="input-group-text pointer delete-option">
-                                                                        <i class="las la-times-circle"></i>
-                                                                    </span>
-                                                                </div>
+                                                            <div class="alert alert-warning">
+                                                                Random keys are disabled. API Keys are securely managed via the .env file to prevent compromise.
                                                             </div>
-                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </div>
@@ -407,7 +393,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="form-inner">
                                                         <label for="{{ $key }}_image_secret" class="form-label">{{ translate($value . ' API Secret Key') }} <small class="text-danger">*</small></label>
-                                                        <input placeholder="{{ translate($value . ' API Secret Key') }}" type="text" id="{{ $key }}_image_secret" name="site_settings[{{ $key }}_image_secret]" class="form-control" value="{{ is_demo() ? '@@@' : site_settings($key . '_image_secret') }}" required>
+                                                        <input type="text" class="form-control" value="Configured securely via .env file" disabled readonly>
                                                     </div>
                                                 </div>
                                                 @endforeach
@@ -446,7 +432,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="form-inner">
                                                         <label for="{{ $key }}_video_secret" class="form-label">{{ translate($value . ' API Secret Key') }} <small class="text-danger">*</small></label>
-                                                        <input placeholder="{{ translate($value . ' API Secret Key') }}" type="text" id="{{ $key }}_video_secret" name="site_settings[{{ $key }}_video_secret]" class="form-control" value="{{ is_demo() ? '@@@' : site_settings($key . '_video_secret') }}" required>
+                                                        <input type="text" class="form-control" value="Configured securely via .env file" disabled readonly>
                                                     </div>
                                                 </div>
                                                 @endforeach
