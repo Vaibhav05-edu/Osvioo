@@ -9,9 +9,14 @@
         <div class="col-xxl-9 col-xl-8">
             <div class="i-card-md">
                 <div class="card--header text-end">
-                    <h4 class="card-title">
-                        {{ translate('Affiliate Report (Current Year)')}}
-                    </h4>
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <h4 class="card-title mb-0">
+                            {{ translate('Affiliate Report (Current Year)')}}
+                        </h4>
+                        <a href="{{ route('admin.withdraw.report.list') }}" class="i-btn btn--sm success">
+                            <i class="las la-money-bill-wave"></i> {{ translate('View Withdrawal Requests') }}
+                        </a>
+                    </div>
                 </div>
 
                 <div class="card-body">

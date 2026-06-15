@@ -277,12 +277,51 @@
             </div>
 
             <div class="topbar-actions">
-                <button class="action-btn" title="System Logs">
+                <button class="action-btn" title="System Logs" data-bs-toggle="modal" data-bs-target="#systemLogsModal">
                     <i class="fa-solid fa-terminal"></i>
                 </button>
-                <button class="action-btn" title="Notifications">
+                <button class="action-btn" title="Notifications" data-bs-toggle="modal" data-bs-target="#notificationsModal">
                     <i class="fa-solid fa-bell"></i>
                 </button>
+
+                <!-- Modals for Header Actions -->
+                <div class="modal fade" id="systemLogsModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content border-0 shadow" style="border-radius: 12px; overflow: hidden;">
+                            <div class="modal-header bg-dark text-white border-0">
+                                <h5 class="modal-title"><i class="fa-solid fa-terminal me-2"></i> System Logs</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-0 bg-dark text-success" style="font-family: monospace; font-size: 13px; height: 300px; overflow-y: auto;">
+                                <div class="p-3">
+                                    <div>> System initialized successfully...</div>
+                                    <div>> Loading Osvioo dashboard...</div>
+                                    <div>> Database connection stable.</div>
+                                    <div>> No critical errors found.</div>
+                                    <div class="text-muted mt-2">-- End of logs --</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="notificationsModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content border-0 shadow" style="border-radius: 12px; overflow: hidden;">
+                            <div class="modal-header border-bottom">
+                                <h5 class="modal-title"><i class="fa-solid fa-bell me-2 text-primary"></i> Notifications</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center p-5">
+                                <div class="mb-3 text-muted">
+                                    <i class="fa-regular fa-bell-slash fa-3x"></i>
+                                </div>
+                                <h6>No New Notifications</h6>
+                                <p class="text-muted small mb-0">You're all caught up!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
     
