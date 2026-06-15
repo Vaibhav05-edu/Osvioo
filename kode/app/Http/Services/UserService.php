@@ -1118,6 +1118,17 @@ class UserService
             $log->user->save();
 
             $redirectRoute = 'payment.success';
+
+            // Auto-subscribe if this deposit was triggered via Plan checkout
+            if ($log->custom_data) {
+                $customData = json_decode($log->custom_data, true);
+                if (isset($customData['plan_id'])) {
+                    $package = \App\Models\Package::find($customData['plan_id']);
+                    if ($package) {
+                        (new self())->createSubscription($log->user, $package);
+                    }
+                }
+            }
         }
 
         return route($redirectRoute,['payment_intent' => base64_encode(json_encode([

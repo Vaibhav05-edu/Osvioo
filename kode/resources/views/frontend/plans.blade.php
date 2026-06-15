@@ -151,10 +151,10 @@
                                         <div class="current-price"><span class="price-currency">$</span><span class="price-amount dynamic-price">{{ $c['p'] }}</span><span class="price-period">/ month</span></div>
                                         <div class="billed-text dynamic-billed-text">{{$c['billed']}}</div>
                                     </div>
-                                    <div class="predis-btn-split">
+                                    <a href="{{ route('register') }}" class="predis-btn-split text-decoration-none">
                                         <div class="predis-btn-main {{ $c['n'] == 'Rise' ? 'btn-main-dark' : 'btn-main-light' }}">Start for free</div>
                                         @if(isset($c['off'])) <div class="predis-btn-discount">{{$c['off']}}</div> @endif
-                                    </div>
+                                    </a>
                                     <div class="trial-caption">$0 for 7 Days</div>
                                     <div class="credits-total"><span class="dynamic-total-credits">{{ number_format($c['cr'] + $c['bo']) }}</span> Total Credits</div>
                                     <div class="credits-breakdown">(<span class="dynamic-base-credits">{{ number_format($c['cr']) }}</span> + <span class="dynamic-bonus-credits">{{ number_format($c['bo']) }}</span> Bonus)</div>

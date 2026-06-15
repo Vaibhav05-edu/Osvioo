@@ -31,8 +31,8 @@
         $totalP = Arr::get($data, 'total_post', 0);
         $successP = Arr::get($data, 'success_post', 0);
 
-        // 1. Media Kits Calculation: Equal to max of active accounts or 1 + any extra purchased
-        $mediaKitsCount = max(1, $activeAcc) + (int) $user->extra_media_kits;
+        // 1. Media Kits Calculation: Fetch actual count from the database
+        $mediaKitsCount = \App\Models\MediaKit::where('user_id', $user->id)->count();
 
         // 2. Followers calculation based on user ID and total posts
         $followersVal = 10 + ($user->id % 5) + ($totalP * 0.1);
@@ -387,18 +387,18 @@
                                 <div class="col-6">
                                     <div class="p-4 border-0 rounded-4 text-center" style="background: #f8f9fa;">
                                         <p class="text-muted fs-12 mb-2 text-uppercase fw-bold" style="letter-spacing: 0.5px;">{{translate('Followers')}}</p>
-                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;" id="ai-followers">{{ $followersStr }}</h2>
+                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;" id="ai-followers"><span class="spinner-border spinner-border-sm text-muted"></span></h2>
                                         <div class="mt-2">
-                                            <span class="badge bg--success-soft text--success fs-12 fw-bold" id="ai-fol-growth"><i class="bi bi-arrow-up-short"></i> {{ $folGrowthStr }}</span>
+                                            <span class="badge bg--success-soft text--success fs-12 fw-bold" id="ai-fol-growth">...</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="p-4 border-0 rounded-4 text-center" style="background: #f8f9fa;">
                                         <p class="text-muted fs-12 mb-2 text-uppercase fw-bold" style="letter-spacing: 0.5px;">{{translate('Engagement')}}</p>
-                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;" id="ai-engagement">{{ $engagementStr }}</h2>
+                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;" id="ai-engagement"><span class="spinner-border spinner-border-sm text-muted"></span></h2>
                                         <div class="mt-2">
-                                            <span class="badge bg--success-soft text--success fs-12 fw-bold" id="ai-eng-growth"><i class="bi bi-arrow-up-short"></i> {{ $engGrowthStr }}</span>
+                                            <span class="badge bg--success-soft text--success fs-12 fw-bold" id="ai-eng-growth">...</span>
                                         </div>
                                     </div>
                                 </div>
@@ -409,9 +409,7 @@
                                 {{translate('Top Keywords')}}
                             </h6>
                             <div class="d-flex flex-wrap gap-2" id="ai-keywords">
-                                @foreach($hashtags as $tag)
-                                    <span class="badge bg-white text-dark border-0 shadow-sm capsuled px-3 py-2 fs-12">#{{ $tag }}</span>
-                                @endforeach
+                                <span class="spinner-border spinner-border-sm text-muted mt-1"></span>
                             </div>
                         </div>
                     </div>
@@ -439,19 +437,19 @@
                                         <div class="position-relative d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
                                             <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(-90deg);">
                                                 <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="3" />
-                                                <path id="ai-health-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#5D5AF1" stroke-width="3" stroke-dasharray="{{ $profileHealth }}, 100" stroke-linecap="round" />
+                                                <path id="ai-health-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#5D5AF1" stroke-width="3" stroke-dasharray="0, 100" stroke-linecap="round" />
                                             </svg>
-                                            <div class="position-absolute fs-18 fw-bold" style="color: #5D5AF1;" id="ai-health-val">{{ $profileHealth }}%</div>
+                                            <div class="position-absolute fs-18 fw-bold" style="color: #5D5AF1;" id="ai-health-val">...</div>
                                         </div>
-                                        <span class="text--success fs-11 fw-bold mt-2" id="ai-health-status">{{translate($profileHealthStatus)}}</span>
+                                        <span class="text--success fs-11 fw-bold mt-2" id="ai-health-status">...</span>
                                     </div>
                                 </div>
                                 <div class="col-md-7">
                                     <div class="p-3 border-0 rounded-4 text-white shadow-lg h-100 d-flex flex-column justify-content-center" style="background: linear-gradient(135deg, #5D5AF1 0%, #3f3cbd 100%);">
                                         <p class="opacity-75 fs-11 mb-2 text-uppercase fw-bold">{{translate('Suggested Rate')}}</p>
                                         <div class="mb-1">
-                                            <h3 class="mb-0 fw-bold" style="font-size: 26px;" id="ai-rate-usd">${{ number_format($rateMinUSD) }} - ${{ number_format($rateMaxUSD) }}</h3>
-                                            <h5 class="mb-0 opacity-90 fw-bold" style="font-size: 18px;" id="ai-rate-inr">₹{{ number_format($rateMinINR) }} - ₹{{ number_format($rateMaxINR) }}</h5>
+                                            <h3 class="mb-0 fw-bold" style="font-size: 26px;" id="ai-rate-usd"><span class="spinner-border spinner-border-sm text-white"></span></h3>
+                                            <h5 class="mb-0 opacity-90 fw-bold" style="font-size: 18px;" id="ai-rate-inr">...</h5>
                                         </div>
                                         <p class="mb-0 fs-10 opacity-75 mt-2">* {{translate('Based on current reach')}}</p>
                                     </div>
@@ -465,7 +463,7 @@
                                 </h6>
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="icon-sm bg-white shadow-sm rounded-circle text--primary d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0;"><i class="bi bi-camera-reels fs-14"></i></div>
-                                    <p class="mb-0 fs-12 text-dark fw-bold" id="ai-next-strategy">{{translate($selectedStrategy)}}</p>
+                                    <p class="mb-0 fs-12 text-dark fw-bold" id="ai-next-strategy"><span class="spinner-border spinner-border-sm text-muted"></span></p>
                                 </div>
                             </div>
                         </div>
@@ -494,14 +492,14 @@
                         <div class="col-xl-4">
                             <div class="p-3 rounded-4 h-100 d-flex flex-column" style="background: rgba(220, 53, 69, 0.03); border: 1px solid rgba(220, 53, 69, 0.1);">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="badge bg-danger text-white capsuled fs-10 px-3 py-1">{{translate($task1_badge)}}</span>
+                                    <span class="badge bg-danger text-white capsuled fs-10 px-3 py-1" id="roadmap-badge-0"><span class="spinner-border spinner-border-sm" style="width:10px; height:10px;"></span></span>
                                     <i class="bi bi-exclamation-triangle text-danger"></i>
                                 </div>
-                                <h6 class="fw-bold mb-2 fs-14">{{translate($task1_title)}}</h6>
-                                <p class="text-muted fs-12 mb-3">{{translate($task1_desc)}}</p>
+                                <h6 class="fw-bold mb-2 fs-14" id="roadmap-title-0"><span class="spinner-border spinner-border-sm text-muted"></span></h6>
+                                <p class="text-muted fs-12 mb-3" id="roadmap-desc-0">...</p>
                                 <div class="d-flex align-items-center justify-content-between mt-auto pt-2 border-top border-danger-subtle">
-                                    <span class="text-danger fw-bold fs-11"><i class="bi bi-clock-history me-1"></i> {{translate($task1_benefit)}}</span>
-                                    <a href="{{$task1_action_url}}" class="btn btn-sm text-danger fw-bold fs-11 p-0">{{translate($task1_action_text)}} <i class="bi bi-arrow-right"></i></a>
+                                    <span class="text-danger fw-bold fs-11"><i class="bi bi-clock-history me-1"></i> <span id="roadmap-benefit-0">...</span></span>
+                                    <a href="#" id="roadmap-action-url-0" class="btn btn-sm text-danger fw-bold fs-11 p-0"><span id="roadmap-action-text-0">...</span> <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -509,14 +507,14 @@
                         <div class="col-xl-4">
                             <div class="p-3 rounded-4 h-100 d-flex flex-column" style="background: rgba(93, 90, 241, 0.03); border: 1px solid rgba(93, 90, 241, 0.1);">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="badge bg--primary text-white capsuled fs-10 px-3 py-1">{{translate($task2_badge)}}</span>
+                                    <span class="badge bg--primary text-white capsuled fs-10 px-3 py-1" id="roadmap-badge-1"><span class="spinner-border spinner-border-sm" style="width:10px; height:10px;"></span></span>
                                     <i class="bi bi-chat-dots text--primary"></i>
                                 </div>
-                                <h6 class="fw-bold mb-2 fs-14">{{translate($task2_title)}}</h6>
-                                <p class="text-muted fs-12 mb-3">{{translate($task2_desc)}}</p>
+                                <h6 class="fw-bold mb-2 fs-14" id="roadmap-title-1"><span class="spinner-border spinner-border-sm text-muted"></span></h6>
+                                <p class="text-muted fs-12 mb-3" id="roadmap-desc-1">...</p>
                                 <div class="d-flex align-items-center justify-content-between mt-auto pt-2 border-top border-primary-subtle">
-                                    <span class="text--primary fw-bold fs-11"><i class="bi bi-graph-up-arrow me-1"></i> {{translate($task2_benefit)}}</span>
-                                    <a href="{{$task2_action_url}}" class="btn btn-sm text--primary fw-bold fs-11 p-0">{{translate($task2_action_text)}} <i class="bi bi-arrow-right"></i></a>
+                                    <span class="text--primary fw-bold fs-11"><i class="bi bi-graph-up-arrow me-1"></i> <span id="roadmap-benefit-1">...</span></span>
+                                    <a href="#" id="roadmap-action-url-1" class="btn btn-sm text--primary fw-bold fs-11 p-0"><span id="roadmap-action-text-1">...</span> <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -524,14 +522,14 @@
                         <div class="col-xl-4">
                             <div class="p-3 rounded-4 h-100 d-flex flex-column" style="background: rgba(25, 135, 84, 0.03); border: 1px solid rgba(25, 135, 84, 0.1);">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="badge bg-success text-white capsuled fs-10 px-3 py-1">{{translate($task3_badge)}}</span>
+                                    <span class="badge bg-success text-white capsuled fs-10 px-3 py-1" id="roadmap-badge-2"><span class="spinner-border spinner-border-sm" style="width:10px; height:10px;"></span></span>
                                     <i class="bi bi-palette text-success"></i>
                                 </div>
-                                <h6 class="fw-bold mb-2 fs-14">{{translate($task3_title)}}</h6>
-                                <p class="text-muted fs-12 mb-3">{{translate($task3_desc)}}</p>
+                                <h6 class="fw-bold mb-2 fs-14" id="roadmap-title-2"><span class="spinner-border spinner-border-sm text-muted"></span></h6>
+                                <p class="text-muted fs-12 mb-3" id="roadmap-desc-2">...</p>
                                 <div class="d-flex align-items-center justify-content-between mt-auto pt-2 border-top border-success-subtle">
-                                    <span class="text-success fw-bold fs-11"><i class="bi bi-check-circle-fill me-1"></i> {{translate($task3_benefit)}}</span>
-                                    <a href="{{$task3_action_url}}" class="btn btn-sm text-success fw-bold fs-11 p-0">{{translate($task3_action_text)}} <i class="bi bi-arrow-right"></i></a>
+                                    <span class="text-success fw-bold fs-11"><i class="bi bi-check-circle-fill me-1"></i> <span id="roadmap-benefit-2">...</span></span>
+                                    <a href="#" id="roadmap-action-url-2" class="btn btn-sm text-success fw-bold fs-11 p-0"><span id="roadmap-action-text-2">...</span> <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -1061,6 +1059,23 @@
                                 keywordsHtml += '<span class="badge bg-white text-dark border-0 shadow-sm capsuled px-3 py-2 fs-12">#' + kw + '</span>';
                             });
                             $('#ai-keywords').html(keywordsHtml);
+                        }
+                        if(response.ai.tasks && response.ai.tasks.length === 3) {
+                            response.ai.tasks.forEach(function(task, index) {
+                                $('#roadmap-badge-' + index).text(task.badge);
+                                $('#roadmap-title-' + index).text(task.title);
+                                $('#roadmap-desc-' + index).text(task.desc);
+                                $('#roadmap-benefit-' + index).text(task.benefit);
+                                $('#roadmap-action-text-' + index).text(task.action_text);
+                                
+                                let actionUrl = "{{ route('user.home') }}";
+                                if(task.action_type === 'post') {
+                                    actionUrl = "{{ route('user.social.post.create') }}";
+                                } else if(task.action_type === 'profile') {
+                                    actionUrl = "{{ route('user.profile') }}";
+                                }
+                                $('#roadmap-action-url-' + index).attr('href', actionUrl);
+                            });
                         }
                     }
                 }

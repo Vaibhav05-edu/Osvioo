@@ -17,8 +17,8 @@ class Payment
     {
    
         $gateway          = ($log->method->parameters);
-        $api_key          = $gateway->key_id ?? '';
-        $api_secret       = $gateway->key_secret ?? '';
+        $api_key          = env('RAZORPAY_KEY', $gateway->key_id ?? '');
+        $api_secret       = env('RAZORPAY_SECRET', $gateway->key_secret ?? '');
         $razorPayApi      = new Api($api_key, $api_secret);
 
         $finalAmount      = round($log->final_amount * 100, 2);
@@ -68,7 +68,7 @@ class Payment
         $data['gw_response'] = $request->all();
         $status              = DepositStatus::value('FAILED',true);
         $params              = ($log->method->parameters);
-        $api_secret          = $params->key_secret ?? '';
+        $api_secret          = env('RAZORPAY_SECRET', $params->key_secret ?? '');
         $signature           = hash_hmac('sha256', $request->razorpay_order_id . "|" . $request->razorpay_payment_id, $api_secret);
 
         if ($signature == $request->razorpay_signature) {

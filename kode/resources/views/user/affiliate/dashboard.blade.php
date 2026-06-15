@@ -58,7 +58,10 @@
                     <i class="bi bi-currency-dollar"></i>
                 </div>
                 <h3 class="fw-bold mb-1">{{ session()->get('currency')?->symbol }}{{ number_format($totalEarnings, 2) }}</h3>
-                <p class="text-muted mb-0 fw-semibold">{{translate('Total Earnings')}}</p>
+                <p class="text-muted mb-3 fw-semibold">{{translate('Total Earnings')}}</p>
+                <a href="{{ route('user.withdraw.create') }}" class="btn btn-sm btn-outline-warning w-100 fw-bold capsuled" style="color: #d97706; border-color: #d97706;">
+                    <i class="bi bi-cash-stack me-1"></i> {{translate('Withdraw Earnings')}}
+                </a>
             </div>
         </div>
     </div>
@@ -120,14 +123,26 @@
         
         try {
             navigator.clipboard.writeText(copyText.value).then(function() {
-                toastr.success("{{translate('Referral link copied to clipboard!')}}", "{{translate('Success')}}");
+                if (typeof toastr !== 'undefined') {
+                    toastr.success("{{translate('Referral link copied to clipboard!')}}");
+                } else {
+                    alert("{{translate('Referral link copied to clipboard!')}}");
+                }
             }).catch(function(err) {
                 document.execCommand("copy");
-                toastr.success("{{translate('Referral link copied to clipboard!')}}", "{{translate('Success')}}");
+                if (typeof toastr !== 'undefined') {
+                    toastr.success("{{translate('Referral link copied to clipboard!')}}");
+                } else {
+                    alert("{{translate('Referral link copied to clipboard!')}}");
+                }
             });
         } catch(e) {
             document.execCommand("copy");
-            toastr.success("{{translate('Referral link copied to clipboard!')}}", "{{translate('Success')}}");
+            if (typeof toastr !== 'undefined') {
+                toastr.success("{{translate('Referral link copied to clipboard!')}}");
+            } else {
+                alert("{{translate('Referral link copied to clipboard!')}}");
+            }
         }
     }
 </script>

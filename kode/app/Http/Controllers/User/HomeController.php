@@ -514,7 +514,8 @@ class HomeController extends Controller
                     . "1. profileHealth (integer between 50 and 100)\n"
                     . "2. profileHealthStatus (string, e.g., 'Strong Growth', 'Steady Growth')\n"
                     . "3. nextStrategy (string, e.g., 'Post a behind-the-scenes reel today')\n"
-                    . "4. topKeywords (array of 3 strings, e.g., ['vlog', 'lifestyle', 'travel'])";
+                    . "4. topKeywords (array of 3 strings, e.g., ['vlog', 'lifestyle', 'travel'])\n"
+                    . "5. tasks (array of exactly 3 objects. Each object must have: 'badge' (e.g. 'High Priority', 'Growth Hack'), 'title', 'desc' (short sentence), 'action_text' (e.g. 'Do It Now', 'Settings'), 'benefit' (e.g. '+15% Reach', '+10% Engagement'), and 'action_type' (exactly either 'post' or 'profile')).";
 
                 $aiParams = [
                     'model' => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
@@ -539,7 +540,12 @@ class HomeController extends Controller
                 'profileHealth' => 85,
                 'profileHealthStatus' => 'Strong Growth',
                 'nextStrategy' => 'Share a quick tip post using the AI Article Generator template',
-                'topKeywords' => ['vlog', 'lifestyle', 'osvioo']
+                'topKeywords' => ['vlog', 'lifestyle', 'osvioo'],
+                'tasks' => [
+                    ['badge' => 'High Priority', 'title' => 'Connect Social Account', 'desc' => 'Connect Instagram to start scheduling posts.', 'action_text' => 'Connect Now', 'benefit' => 'Get Started', 'action_type' => 'profile'],
+                    ['badge' => 'Medium Priority', 'title' => 'Optimize Bio Description', 'desc' => 'Add keywords to your bio to attract more organic views.', 'action_text' => 'Profile Settings', 'benefit' => '+10% Reach', 'action_type' => 'profile'],
+                    ['badge' => 'Growth Hack', 'title' => 'Consistent Branding', 'desc' => 'Use a consistent font style for thumbnail branding.', 'action_text' => 'Create Post', 'benefit' => '+15% Engagement', 'action_type' => 'post'],
+                ]
             ];
         });
 

@@ -34,7 +34,7 @@
                             <td>{{get_date_time($report->created_at)}}</td>
                             <td><span class="badge bg-danger-soft text-danger capsuled">{{translate('Failed')}}</span></td>
                             <td>
-                                <a href="javascript:void(0)" class="btn btn-sm btn-outline-primary capsuled" onclick="alert('{{translate('Please try a different payment method or contact support.')}}')">{{translate('Retry')}}</a>
+                                <a href="{{ route('user.plan') }}" class="btn btn-sm btn-outline-primary capsuled">{{translate('Retry')}}</a>
                             </td>
                         </tr>
                         @empty
