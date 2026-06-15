@@ -549,7 +549,7 @@ class UserService
      * @param Package $package
      * @return array
      */
-    public function createSubscription(User $user , Package $package ,string | null $remarks =  null) :array {
+    public function createSubscription(User $user , Package $package ,string | null $remarks =  null, bool $isTrial = false) :array {
 
         try {
 
@@ -578,16 +578,18 @@ class UserService
                 "user_id"         =>  $user->id,
                 "package_id"      =>  $package->id,
                 "old_package_id"  =>  $oldSubscription?->package_id,
-                "payment_amount"  =>  $price,
+                "payment_amount"  =>  $isTrial ? 0 : $price,
                 "payment_status"  =>  DepositStatus::value('PAID',true) ,
                 "status"          =>  SubscriptionStatus::value('RUNNING',true),
+                "is_trial"        =>  $isTrial,
             ];
 
 
             $expireDate = null;
-            if($package->duration != PlanDuration::value('UNLIMITED',true)){
+            if($isTrial) {
+                $expireDate = date('Y-m-d', strtotime('+7 days'));
+            } else if($package->duration != PlanDuration::value('UNLIMITED',true)){
                 $expireDate = date('Y-m-d', strtotime(date('Y-m-d') . ($package->duration == PlanDuration::value('YEARLY', true) ? ' + 1 years' : ' + 1 months')));
-
             }
 
 
@@ -602,13 +604,13 @@ class UserService
             $profileLimit                         = (int) @$package->social_access->profile;
 
             $params['total_profile']              = $profileLimit + (int) $user->extra_social_accounts;
+            $params['carried_profile']            = 0;
             $params['word_balance']               = $wordLimit;
             $params['remaining_word_balance']     = $wordLimit;
             $params['image_balance']              = $imageLimit;
             $params['remaining_image_balance']    = $imageLimit;
             $params['video_balance']              = $videoLimit;
             $params['remaining_video_balance']    = $videoLimit;
-            $params['total_profile']              = $profileLimit ;
             $params['post_balance']               = $postLimit;
             $params['remaining_post_balance']     = $postLimit;
 
@@ -855,7 +857,7 @@ class UserService
                 "trx_code"       => $log->trx_code
             ];
 
-            $transaction         =  PaymentService::makeTransaction($user,$transactionParams);
+            $transaction         =  PaymentService::makeTransaction($user->referral,$transactionParams);
         });
 
     }
@@ -1126,6 +1128,12 @@ class UserService
                     $package = \App\Models\Package::find($customData['plan_id']);
                     if ($package) {
                         (new self())->createSubscription($log->user, $package);
+                    }
+                }
+                if (isset($customData['addon_id'])) {
+                    $addon = \App\Models\Addon::find($customData['addon_id']);
+                    if ($addon) {
+                        app(\App\Http\Controllers\User\AddonController::class)->applyAddon($log->user, $addon);
                     }
                 }
             }

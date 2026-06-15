@@ -322,7 +322,7 @@
                     </div>
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" style="border-radius: 12px; min-width: 200px;">
                         <li><a class="dropdown-item py-2" href="{{ route('osvioo.profile') }}"><i class="fa-solid fa-user-circle me-2 text-muted"></i> My Profile</a></li>
-                        <li><a class="dropdown-item py-2" href="#"><i class="fa-solid fa-key me-2 text-muted"></i> API Keys</a></li>
+                        <li><a class="dropdown-item py-2" href="{{ route('osvioo.profile') }}"><i class="fa-solid fa-key me-2 text-muted"></i> API Keys</a></li>
                         <li><hr class="dropdown-divider opacity-50"></li>
                         <li>
                             <form method="POST" action="{{ route('osvioo.logout') }}">

@@ -127,44 +127,45 @@
         <div class="tab-content">
             @php 
                 $types = [
-                    'monthly' => [
-                        ['n' => 'Enterprise +', 'p' => 249, 'billed' => 'Billed Monthly', 'cr' => 10000, 'bo' => 4000, 'brands' => 'Unlimited', 'ch' => 60, 'rec' => 0],
-                        ['n' => 'Rise', 'p' => 79, 'billed' => 'Billed Monthly', 'cr' => 3200, 'bo' => 1280, 'brands' => 'Upto 4', 'ch' => 20, 'rec' => 1],
-                        ['n' => 'Core', 'p' => 32, 'billed' => 'Billed Monthly', 'cr' => 1000, 'bo' => 300, 'brands' => '1', 'ch' => 10, 'rec' => 0]
-                    ],
-                    'yearly' => [
-                        ['n' => 'Enterprise +', 'p' => 212, 'billed' => '$2540 Billed Yearly', 'cr' => 10000, 'bo' => 4000, 'brands' => 'Unlimited', 'ch' => 60, 'rec' => 0, 'off' => '15% off'],
-                        ['n' => 'Rise', 'p' => 40, 'billed' => '$474 Billed Yearly', 'cr' => 3200, 'bo' => 1280, 'brands' => 'Upto 4', 'ch' => 20, 'rec' => 1, 'off' => '50% off'],
-                        ['n' => 'Core', 'p' => 19, 'billed' => '$230 Billed Yearly', 'cr' => 1000, 'bo' => 300, 'brands' => '1', 'ch' => 10, 'rec' => 0, 'off' => '40% off']
-                    ]
+                    'monthly' => $plans->where('duration', 1),
+                    'yearly' => $plans->where('duration', 2)
                 ];
             @endphp
             @foreach ($types as $key => $cards)
                 <div class="tab-pane fade {{ $key == 'monthly' ? 'show active' : '' }}" id="pane-{{$key}}">
                     <div class="row g-4 justify-content-center">
-                        @foreach ($cards as $c)
+                        @foreach ($cards as $plan)
+                            @php
+                                $aiConfig = (array) $plan->ai_configuration;
+                                $socialAccess = (array) $plan->social_access;
+                                $credits = $aiConfig['word_limit'] ?? 0;
+                                $bonus = $credits > 0 ? (int)($credits * 0.4) : 0;
+                                $profiles = $socialAccess['profile'] ?? 1;
+                            @endphp
                             <div class="col-lg-4 col-md-6">
-                                <div class="predis-pricing-card {{ $c['rec'] ? 'featured' : '' }}" data-base-price="{{$c['p']}}" data-base-credits="{{$c['cr']}}" data-bonus-credits="{{$c['bo']}}" data-base-channels="{{$c['ch']}}">
-                                    @if($c['rec']) <div class="popular-badge">Most Popular</div> @endif
-                                    <div class="plan-name">{{$c['n']}}</div>
+                                <div class="predis-pricing-card {{ $plan->is_recommended ? 'featured' : '' }}" data-base-price="{{$plan->price}}" data-base-credits="{{$credits}}" data-bonus-credits="{{$bonus}}" data-base-channels="{{$profiles}}">
+                                    @if($plan->is_recommended) <div class="popular-badge">Most Popular</div> @endif
+                                    <div class="plan-name">{{$plan->title}}</div>
                                     <div class="price-container">
-                                        <div class="current-price"><span class="price-currency">$</span><span class="price-amount dynamic-price">{{ $c['p'] }}</span><span class="price-period">/ month</span></div>
-                                        <div class="billed-text dynamic-billed-text">{{$c['billed']}}</div>
+                                        <div class="current-price"><span class="price-currency">$</span><span class="price-amount dynamic-price">{{ num_format(number: $plan->price, calC:true) }}</span><span class="price-period">/ {{ $key == 'monthly' ? 'month' : 'year' }}</span></div>
+                                        <div class="billed-text dynamic-billed-text">Billed {{ ucfirst($key) }}</div>
                                     </div>
                                     <a href="{{ route('register') }}" class="predis-btn-split text-decoration-none">
-                                        <div class="predis-btn-main {{ $c['n'] == 'Rise' ? 'btn-main-dark' : 'btn-main-light' }}">Start for free</div>
-                                        @if(isset($c['off'])) <div class="predis-btn-discount">{{$c['off']}}</div> @endif
+                                        <div class="predis-btn-main {{ $plan->title == 'Rise' ? 'btn-main-dark' : 'btn-main-light' }}">Start for free</div>
+                                        @if($plan->discount_price > 0 && $plan->price > 0)
+                                            <div class="predis-btn-discount">{{ round((($plan->price - $plan->discount_price) / $plan->price) * 100) }}% off</div>
+                                        @endif
                                     </a>
                                     <div class="trial-caption">$0 for 7 Days</div>
-                                    <div class="credits-total"><span class="dynamic-total-credits">{{ number_format($c['cr'] + $c['bo']) }}</span> Total Credits</div>
-                                    <div class="credits-breakdown">(<span class="dynamic-base-credits">{{ number_format($c['cr']) }}</span> + <span class="dynamic-bonus-credits">{{ number_format($c['bo']) }}</span> Bonus)</div>
+                                    <div class="credits-total"><span class="dynamic-total-credits">{{ number_format($credits + $bonus) }}</span> Total Credits</div>
+                                    <div class="credits-breakdown">(<span class="dynamic-base-credits">{{ number_format($credits) }}</span> + <span class="dynamic-bonus-credits">{{ number_format($bonus) }}</span> Bonus)</div>
                                     <div class="predis-bar-wrapper"><div class="predis-bar-fill" style="width: 75%;"></div></div>
                                     <div class="extra-output-link">40% extra output</div>
                                     <div class="feature-list-box flex-grow-1">
-                                        <div class="feature-row" style="margin-bottom: 5px;"><i class="bi bi-check-circle-fill tick-icon"></i><div class="feature-main-text"><span class="dynamic-feat-credits">{{ number_format($c['cr']) }}</span> Credits/mo</div></div>
-                                        <div class="feature-sub-text mb-4">Enough for <span class="dynamic-feat-images">{{ number_format($c['cr'] / 20) }}</span> AI Images</div>
-                                        <div class="feature-row"><i class="bi bi-check-circle-fill tick-icon"></i><div class="feature-main-text"><strong>{{$c['brands']}}</strong> Brand</div></div>
-                                        <div class="feature-row"><i class="bi bi-check-circle-fill tick-icon"></i><div class="feature-main-text">Publish to <span class="dynamic-feat-channels"><strong>{{$c['ch']}}</strong></span> Channels</div></div>
+                                        <div class="feature-row" style="margin-bottom: 5px;"><i class="bi bi-check-circle-fill tick-icon"></i><div class="feature-main-text"><span class="dynamic-feat-credits">{{ number_format($credits) }}</span> Credits/mo</div></div>
+                                        <div class="feature-sub-text mb-4">Enough for <span class="dynamic-feat-images">{{ number_format(max(1, $credits / 20)) }}</span> AI Images</div>
+                                        <div class="feature-row"><i class="bi bi-check-circle-fill tick-icon"></i><div class="feature-main-text"><strong>{{$profiles}}</strong> Brand</div></div>
+                                        <div class="feature-row"><i class="bi bi-check-circle-fill tick-icon"></i><div class="feature-main-text">Publish to <span class="dynamic-feat-channels"><strong>{{$profiles}}</strong></span> Channels</div></div>
                                     </div>
                                     <div class="addons-block">
                                         <div class="addon-item-row" data-type="channel">

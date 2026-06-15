@@ -53,8 +53,14 @@ class RegisterController extends Controller
         $response = response_status(translate("Something went wrong!! please try again"),'error');
         try {
 
-            if($request->get('referral_code',null)){
-                $refferedBy = User::active()->where('referral_code',$request->input('referral_code',null))->first();
+            $referralCode = $request->input('referral_code');
+            $sessionReference = session('reference'); // This is the username of the affiliate
+
+            $refferedBy = null;
+            if ($referralCode) {
+                $refferedBy = User::active()->where('referral_code', $referralCode)->first();
+            } elseif ($sessionReference) {
+                $refferedBy = User::active()->where('username', $sessionReference)->first();
             }
 
             $user                       =  new User();
@@ -73,6 +79,8 @@ class RegisterController extends Controller
                                 ->first();
 
             if($package)    $this->userService->createSubscription( $user ,  $package , "Sign up bonus");
+
+            session()->forget('reference');
 
             Auth::guard('web')->loginUsingId($user->id);
             return redirect()->route('user.home');

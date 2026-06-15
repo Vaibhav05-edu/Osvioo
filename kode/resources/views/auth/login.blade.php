@@ -264,7 +264,7 @@
                     <label style="font-size: 13px; color: var(--rr-muted); cursor: pointer; display: flex; align-items: center; gap: 8px;">
                         <input type="checkbox" name="remember" style="accent-color: #000;"> Stay signed in
                     </label>
-                    <a href="#" style="font-size: 13px; color: var(--rr-secondary); font-weight: 600; text-decoration: none;">Reset?</a>
+                    <a href="{{ route('password.request') }}" style="font-size: 13px; color: var(--rr-secondary); font-weight: 600; text-decoration: none;">Reset?</a>
                 </div>
 
                 <button type="submit" class="btn-login">

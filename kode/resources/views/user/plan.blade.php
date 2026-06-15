@@ -82,6 +82,11 @@
                                                     @$currentPlan->id == $plan->id ?  translate("Running") : translate("Subscribe")
                                                 }}
                                             </a>
+                                            @if(!$hasUsedTrial && @$currentPlan->id != $plan->id && $plan->price > 0)
+                                                <a href="{{ route('plan.trial', $plan->slug) }}" class="i-btn btn--outline-primary btn--lg capsuled text-uppercase mx-auto w-100 mt-2">
+                                                    {{ translate('Start 7-Day Free Trial') }}
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
                                 @empty

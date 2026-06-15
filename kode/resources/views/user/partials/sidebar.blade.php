@@ -177,6 +177,12 @@
                             <span>{{translate("Affiliate Program")}}</span>
                         </a>
                     </li>
+                    <li class="sidemenu-item">
+                        <a href="{{route('user.withdraw.create')}}" class="sidemenu-link {{request()->routeIs('user.withdraw.*') ? 'active' :''}}">
+                            <div class="sidemenu-icon"><i class="bi bi-cash-coin"></i></div>
+                            <span>{{translate("Withdraw Earnings")}}</span>
+                        </a>
+                    </li>
                     @endif
 
                     {{-- ACCOUNT SETTINGS --}}

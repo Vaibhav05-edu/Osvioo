@@ -91,6 +91,16 @@ class AutoDmController extends Controller
             return back()->with('error', translate('Auto DM automation is not supported in your current plan'));
         }
 
+        // Limit Check
+        $baseLimit = isset($package->social_access->auto_dm_limit) ? (int) $package->social_access->auto_dm_limit : 1;
+        if($baseLimit == -1) $baseLimit = 999999; // Unlimited
+        
+        $currentCount = \App\Models\AutoDmTrigger::where('user_id', $user->id)->count();
+
+        if ($currentCount >= $baseLimit) {
+            return back()->with('error', translate('You have reached your Auto DM limit. Please upgrade your plan.'));
+        }
+
         $request->validate([
             'keyword' => 'required|string|max:255',
             'reply_text' => 'required|string',

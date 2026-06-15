@@ -50,11 +50,15 @@ class UserController extends Controller
      * @return View
      */
     public function plan () :View{
+        $hasUsedTrial = \App\Models\Subscription::where('user_id', $this->user->id)
+                            ->where('is_trial', 1)
+                            ->exists();
 
         return view('user.plan',[
 
             'meta_data' => $this->metaData(["title"    =>  trans('default.plan')]),
-            "plans"     => Package::active()->get()
+            "plans"     => Package::active()->get(),
+            "hasUsedTrial" => $hasUsedTrial
 
         ]);
     }
@@ -100,6 +104,34 @@ class UserController extends Controller
         return back()->with(response_status(\Illuminate\Support\Arr::get($response,"message",trans("default.something_went_wrong")),$status));
     }
 
+
+
+    /**
+     * Start a 7-day free trial for a Plan
+     *
+     * @param string $slug
+     * @return RedirectResponse
+     */
+    public function trialPurchase(string $slug) :RedirectResponse{
+        $package   = \App\Models\Package::where("slug",$slug)->firstOrfail();
+        
+        // Check if the user has already used a trial
+        $hasUsedTrial = \App\Models\Subscription::where('user_id', $this->user->id)
+                            ->where('is_trial', 1)
+                            ->exists();
+
+        if ($hasUsedTrial) {
+            return back()->with('error', translate('You have already used your free trial. Please purchase a plan to continue.'));
+        }
+
+        // Start trial subscription
+        $response  = $this->userService->createSubscription($this->user, $package, $package->title . ' (7-Day Trial)', true);
+        $status    = isset($response['status']) && $response['status'] === true
+                         ? 'success'
+                         : 'error';
+
+        return back()->with(response_status(\Illuminate\Support\Arr::get($response,"message",trans("default.trial_started_successfully")),$status));
+    }
 
 
     /**

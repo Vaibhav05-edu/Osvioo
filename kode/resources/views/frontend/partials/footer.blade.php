@@ -28,9 +28,9 @@
                 <div class="footer-section">
                     <h5 class="master-col-title">Company</h5>
                     <ul class="master-links">
-                        <li><a href="#">For Creators</a></li>
-                        <li><a href="#">For Brands</a></li>
-                        <li><a href="#">About Us</a></li>
+                        <li><a href="{{ route('home') }}">For Creators</a></li>
+                        <li><a href="{{ route('home') }}">For Brands</a></li>
+                        <li><a href="{{ route('about') }}">About Us</a></li>
                     </ul>
 
                     <div class="query-box mt-5">
@@ -43,10 +43,10 @@
                 <div class="footer-section">
                     <h5 class="master-col-title">Resources</h5>
                     <ul class="master-links">
-                        <li><a href="#" class="pink-link">Blogs</a></li>
-                        <li><a href="#">Tech Blogs</a></li>
-                        <li><a href="#">Case Studies</a></li>
-                        <li><a href="#">Career</a></li>
+                        <li><a href="{{ route('blog') }}" class="pink-link">Blogs</a></li>
+                        <li><a href="{{ route('blog') }}">Tech Blogs</a></li>
+                        <li><a href="{{ route('blog') }}">Case Studies</a></li>
+                        <li><a href="{{ route('about') }}">Career</a></li>
                     </ul>
 
                     <div class="query-box mt-5">

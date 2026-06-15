@@ -22,7 +22,6 @@
                             <th>{{translate('Amount')}}</th>
                             <th>{{translate('Date')}}</th>
                             <th>{{translate('Status')}}</th>
-                            <th>{{translate('Action')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,13 +32,10 @@
                             <td><span class="fw-bold text-danger">{{short_amount($report->amount)}}</span> {{session()->get('currency')?->code}}</td>
                             <td>{{get_date_time($report->created_at)}}</td>
                             <td><span class="badge bg-danger-soft text-danger capsuled">{{translate('Failed')}}</span></td>
-                            <td>
-                                <a href="{{ route('user.plan') }}" class="btn btn-sm btn-outline-primary capsuled">{{translate('Retry')}}</a>
-                            </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="text-center py-5">
+                            <td colspan="5" class="text-center py-5">
                                 <div class="d-flex flex-column align-items-center">
                                     <i class="bi bi-inbox fs-1 text-muted mb-2"></i>
                                     <p class="mb-0 text-muted">{{translate('No failed transactions found.')}}</p>

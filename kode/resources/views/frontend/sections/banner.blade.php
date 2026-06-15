@@ -22,8 +22,8 @@
                 <a href="{{ route('auth.login') }}" class="btn-glowing-dark">
                     Get Started <i class="bi bi-chevron-right" style="font-size: 0.9rem;"></i>
                 </a>
-                <a href="#" class="btn-glowing-outline">
-                    Preview your growth
+                <a href="{{ route('plan') }}" class="btn-glowing-outline">
+                    View Pricing
                 </a>
             </div>
 

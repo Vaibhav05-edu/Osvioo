@@ -147,10 +147,10 @@
     <footer class="rr-footer">
         <div class="footer-content">
             <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Support</a>
-                <a href="#">Documentation</a>
+                <a href="{{ route('page', 'privacy-policy') }}">Privacy Policy</a>
+                <a href="{{ route('page', 'terms-and-conditions') }}">Terms of Service</a>
+                <a href="{{ route('home') }}">Support</a>
+                <a href="{{ route('home') }}">Documentation</a>
             </div>
             <div class="copyright">
                 © {{ date('Y') }} Osvioo HQ. All rights reserved.

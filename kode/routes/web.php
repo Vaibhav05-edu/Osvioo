@@ -31,53 +31,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
-Route::get('/fix-prod', function () {
-    try {
-        Artisan::call('migrate', ['--force' => true]);
-        Artisan::call('optimize:clear');
-        
-        // Seed default addons if empty
-        if (\Illuminate\Support\Facades\Schema::hasTable('addons') && \App\Models\Addon::count() == 0) {
-            $defaultAddons = [
-                [
-                    'uid' => \Illuminate\Support\Str::uuid(),
-                    'title' => 'Extra Instagram Account',
-                    'type' => 'extra_account',
-                    'price' => 49.00,
-                    'value' => 1,
-                    'status' => 1,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'uid' => \Illuminate\Support\Str::uuid(),
-                    'title' => 'Extra Media Kit',
-                    'type' => 'extra_media_kit',
-                    'price' => 99.00,
-                    'value' => 1,
-                    'status' => 1,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-                [
-                    'uid' => \Illuminate\Support\Str::uuid(),
-                    'title' => '1000 AI Credits',
-                    'type' => 'credits',
-                    'price' => 19.00,
-                    'value' => 1000,
-                    'status' => 1,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-            ];
-            \App\Models\Addon::insert($defaultAddons);
-        }
-
-        return "✅ Success! Migrations run, cache cleared, and Default Add-ons added. You can now use the Add-on Marketplace.";
-    } catch (\Exception $e) {
-        return "❌ Error: " . $e->getMessage();
-    }
-});
+// SECURITY: /fix-prod debug route disabled for production safety.
 
 /*
 |--------------------------------------------------------------------------
@@ -123,23 +77,7 @@ Route::get('/fix-prod', function () {
 
 
 
-    Route::get('/migrate', function () {
-        $migrations = [
-            '2025_04_13_055105_add_ai_module_type_to_your_table_name',
-        ];
-
-        try {
-            foreach ($migrations as $migration) {
-                Artisan::call('migrate', [
-                    '--path' => "database/migrations/{$migration}.php",
-                    '--force' => true,
-                ]);
-            }
-            return response()->json(['message' => 'Migrations completed successfully']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    });
+    // SECURITY: /migrate debug route disabled for production safety.
 
     Route::middleware($globalMiddleware)->group(function (){
 
@@ -230,6 +168,7 @@ Route::get('/fix-prod', function () {
             Route::controller(UserController::class)->group(function(){
 
                 Route::get('purchase/{slug}','planPurchase')->name('plan.purchase');
+               Route::get('trial/{slug}','trialPurchase')->name('plan.trial');
 
                 # withdraw route
                 Route::prefix("/withdraw")->name('withdraw.')->group(function(){
@@ -584,8 +523,4 @@ Route::get('/fix-prod', function () {
         ->middleware(['web', 'sanitizer', 'https', 'dos.security', 'maintenance.mode'])
         ->name('affiliate.custom');
 
-Route::get('/test-mediakit', function() {
-    $user = \App\Models\User::first();
-    \Illuminate\Support\Facades\Auth::login($user);
-    return app(\App\Http\Controllers\User\MediaKitController::class)->create();
-});
+// SECURITY: /test-mediakit debug route disabled for production safety.

@@ -45,6 +45,22 @@ class MediaKitController extends Controller
 
         $user = auth_user('web');
 
+        // Limit Check
+        $user->load(['runningSubscription', 'runningSubscription.package']);
+        $package = $user->runningSubscription?->package;
+        
+        $baseLimit = $package && isset($package->social_access->media_kit_limit) ? (int) $package->social_access->media_kit_limit : 1;
+        if($baseLimit == -1) $baseLimit = 999999; // Unlimited
+        
+        $addonLimit = (int) $user->extra_media_kits;
+        $totalLimit = $baseLimit + $addonLimit;
+
+        $currentCount = \App\Models\MediaKit::where('user_id', $user->id)->count();
+
+        if ($currentCount >= $totalLimit) {
+            return back()->with('error', translate('You have reached your Media Kit limit. Please upgrade your plan or purchase an add-on.'));
+        }
+
         $mediaKit = new MediaKit();
         $mediaKit->user_id       = $user->id;
         $mediaKit->uid           = (string) Str::uuid();

@@ -34,10 +34,40 @@ class AddonController extends Controller
             $user  = auth_user('web');
 
             // Check if user has sufficient balance
-            if ($user->balance < $addon->price) {
-                return back()->with('error', translate('Insufficient wallet balance. Please deposit funds first.'));
+            if ($user->balance < $addon->price && $addon->price > 0) {
+                $method = PaymentMethod::where('code', 'razorpay')->first();
+                if ($method) {
+                    $depositReq = new \Illuminate\Http\Request();
+                    $depositReq->replace([
+                        'amount'  => $addon->price,
+                        'remarks' => 'Addon Purchase via Razorpay'
+                    ]);
+
+                    $depositResponse = app(\App\Http\Services\UserService::class)->createDepositLog($depositReq, $user, $method, \App\Enums\DepositStatus::value('INITIATE', true));
+                    $depositLog      = \Illuminate\Support\Arr::get($depositResponse, "log");
+
+                    if ($depositLog) {
+                        $depositLog->custom_data = json_encode(['addon_id' => $addon->id]);
+                        $depositLog->save();
+                        
+                        return app(\App\Http\Controllers\User\DepositController::class)->depositConfirm($depositLog);
+                    }
+                } else {
+                    return back()->with('error', translate('Insufficient wallet balance. Please deposit funds first.'));
+                }
             }
 
+            return $this->applyAddon($user, $addon);
+
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Addon purchase error: ' . $e->getMessage());
+            return back()->with('error', translate('Purchase failed. Please try again.'));
+        }
+    }
+
+    public function applyAddon($user, $addon)
+    {
+        try {
             // Deduct balance
             $user->balance -= $addon->price;
 
@@ -61,6 +91,9 @@ class AddonController extends Controller
                     $user->runningSubscription->remaining_word_balance += $addon->value;
                     $user->runningSubscription->save();
                 } else {
+                    // Restore balance if it fails
+                    $user->balance += $addon->price;
+                    $user->save();
                     return back()->with('error', translate('You need an active subscription to purchase AI credits.'));
                 }
             }
@@ -89,8 +122,8 @@ class AddonController extends Controller
             return back()->with('success', translate('Addon purchased and activated successfully!'));
 
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Addon purchase error: ' . $e->getMessage());
-            return back()->with('error', translate('Purchase failed. Please try again.'));
+            \Illuminate\Support\Facades\Log::error('Addon application error: ' . $e->getMessage());
+            return back()->with('error', translate('Failed to activate addon. Please contact support.'));
         }
     }
 }

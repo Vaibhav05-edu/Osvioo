@@ -5,9 +5,9 @@
                 <span class="footer-version">v1.0.0</span>
             </div>
             <div class="footer-right">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms</a>
-                <a href="#">Help</a>
+                <a href="{{ route('page', 'privacy-policy') }}">Privacy Policy</a>
+                <a href="{{ route('page', 'terms-and-conditions') }}">Terms</a>
+                <a href="{{ route('home') }}">Help</a>
             </div>
         </footer>
 
