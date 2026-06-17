@@ -150,7 +150,7 @@
                                         <div class="current-price"><span class="price-currency">$</span><span class="price-amount dynamic-price">{{ num_format(number: $plan->price, calC:true) }}</span><span class="price-period">/ {{ $key == 'monthly' ? 'month' : 'year' }}</span></div>
                                         <div class="billed-text dynamic-billed-text">Billed {{ ucfirst($key) }}</div>
                                     </div>
-                                    <a href="{{ route('register') }}" class="predis-btn-split text-decoration-none">
+                                    <a href="{{ route('auth.register') }}" class="predis-btn-split text-decoration-none">
                                         <div class="predis-btn-main {{ $plan->title == 'Rise' ? 'btn-main-dark' : 'btn-main-light' }}">Start for free</div>
                                         @if($plan->discount_price > 0 && $plan->price > 0)
                                             <div class="predis-btn-discount">{{ round((($plan->price - $plan->discount_price) / $plan->price) * 100) }}% off</div>

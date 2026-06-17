@@ -334,9 +334,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-12 mb-20 add-key-btn @if(site_settings('ai_key_usage') == App\Enums\StatusEnum::true->status()) d-none @endif">
-                                                    <a href="javascript:void(0)" class="i-btn btn--md success" id="addNew"><i class="las la-plus me-1"></i> {{translate('Add New Key')}}</a>
-                                                </div>
+
                                                 <div class="col-lg-12">
                                                     <div class="@if(site_settings('ai_key_usage') == App\Enums\StatusEnum::false->status()) addedField @endif form-inner api-key-section">
                                                         <div class="main-api-key @if(site_settings('ai_key_usage') == App\Enums\StatusEnum::false->status()) d-none @endif">

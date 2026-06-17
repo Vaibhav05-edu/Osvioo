@@ -498,28 +498,26 @@ class HomeController extends Controller
         $followersVal = 0;
         if($instaAccount && isset($instaAccount->account_information->followers_count)) {
             $followersVal = $instaAccount->account_information->followers_count;
-        } else {
-             $followersVal = 10 + ($user->id % 5);
         }
         
-        $rateMinUSD = round($followersVal * 20);
-        $rateMaxUSD = round($followersVal * 35);
+        $rateMinUSD = round($followersVal * 0.015);
+        $rateMaxUSD = round($followersVal * 0.025);
 
         // Fetch AI data using Cache to avoid slow loads every time
         $cacheKey = 'user_ai_insights_' . $user->id;
         $aiData = cache()->remember($cacheKey, 86400, function() use ($user, $followersVal) {
             try {
                 $aiService = new \App\Http\Services\AiService();
-                $prompt = "Act as an AI social media manager. Based on an Instagram creator with {$followersVal} followers, provide the following metrics in pure JSON format without markdown wrapping, and no other text:\n"
-                    . "1. profileHealth (integer between 50 and 100)\n"
-                    . "2. profileHealthStatus (string, e.g., 'Strong Growth', 'Steady Growth')\n"
-                    . "3. nextStrategy (string, e.g., 'Post a behind-the-scenes reel today')\n"
-                    . "4. topKeywords (array of 3 strings, e.g., ['vlog', 'lifestyle', 'travel'])\n"
-                    . "5. tasks (array of exactly 3 objects. Each object must have: 'badge' (e.g. 'High Priority', 'Growth Hack'), 'title', 'desc' (short sentence), 'action_text' (e.g. 'Do It Now', 'Settings'), 'benefit' (e.g. '+15% Reach', '+10% Engagement'), and 'action_type' (exactly either 'post' or 'profile')).";
+                $prompt = "Act as an expert AI social media manager. I have an Instagram account with {$followersVal} followers. Provide a highly personalized, unique strategic analysis in pure JSON format without markdown wrapping, and no other text:\n"
+                    . "1. profileHealth (integer between 0 and 100 based on the followers count)\n"
+                    . "2. profileHealthStatus (string, evaluate the health score with a 2-word status)\n"
+                    . "3. nextStrategy (string, provide a very specific, creative, and actionable content strategy unique to this profile size)\n"
+                    . "4. topKeywords (array of 3 highly relevant and trending hashtags that are unique)\n"
+                    . "5. tasks (array of exactly 3 objects. Each object must have: 'badge' (e.g. 'High Priority', 'Growth Hack'), 'title', 'desc' (short actionable sentence), 'action_text' (e.g. 'Do It Now', 'Settings'), 'benefit' (e.g. '+15% Reach', '+10% Engagement'), and 'action_type' (exactly either 'post' or 'profile')).";
 
                 $aiParams = [
                     'model' => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
-                    'temperature' => 0.7,
+                    'temperature' => 0.8,
                     'messages' => [
                         ['role' => 'system', 'content' => 'You are an AI assistant.'],
                         ['role' => 'user', 'content' => $prompt]
@@ -537,10 +535,10 @@ class HomeController extends Controller
             } catch (\Exception $e) {}
 
             return [
-                'profileHealth' => 85,
-                'profileHealthStatus' => 'Strong Growth',
-                'nextStrategy' => 'Share a quick tip post using the AI Article Generator template',
-                'topKeywords' => ['vlog', 'lifestyle', 'osvioo'],
+                'profileHealth' => $followersVal > 0 ? 85 : 0,
+                'profileHealthStatus' => $followersVal > 0 ? 'Strong Growth' : 'Needs Setup',
+                'nextStrategy' => $followersVal > 0 ? 'Create a short-form video leveraging a trending audio' : 'Connect your Instagram account to get real insights',
+                'topKeywords' => ['growth', 'content', 'strategy'],
                 'tasks' => [
                     ['badge' => 'High Priority', 'title' => 'Connect Social Account', 'desc' => 'Connect Instagram to start scheduling posts.', 'action_text' => 'Connect Now', 'benefit' => 'Get Started', 'action_type' => 'profile'],
                     ['badge' => 'Medium Priority', 'title' => 'Optimize Bio Description', 'desc' => 'Add keywords to your bio to attract more organic views.', 'action_text' => 'Profile Settings', 'benefit' => '+10% Reach', 'action_type' => 'profile'],
@@ -548,12 +546,17 @@ class HomeController extends Controller
                 ]
             ];
         });
+        
+        $followersStr = '0';
+        if ($followersVal > 0) {
+            $followersStr = $followersVal >= 1000 ? number_format($followersVal / 1000, 1) . 'K' : $followersVal;
+        }
 
         return response()->json([
-            'followersStr' => number_format($followersVal, 1) . 'K',
-            'engagementStr' => number_format(3.2 + ($user->id % 3) * 0.5, 2) . '%',
-            'folGrowthStr' => number_format(5.4 + ($user->id % 4) * 1.2, 1) . '%',
-            'engGrowthStr' => number_format(2.1 + ($user->id % 2) * 0.8, 1) . '%',
+            'followersStr' => $followersStr,
+            'engagementStr' => $followersVal > 0 ? number_format(3.2 + ($user->id % 3) * 0.5, 2) . '%' : '0%',
+            'folGrowthStr' => $followersVal > 0 ? number_format(5.4 + ($user->id % 4) * 1.2, 1) . '%' : '0%',
+            'engGrowthStr' => $followersVal > 0 ? number_format(2.1 + ($user->id % 2) * 0.8, 1) . '%' : '0%',
             'rateMinUSD' => number_format($rateMinUSD),
             'rateMaxUSD' => number_format($rateMaxUSD),
             'rateMinINR' => number_format(round($rateMinUSD * 82.5)),
