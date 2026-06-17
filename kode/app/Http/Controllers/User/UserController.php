@@ -168,7 +168,7 @@ class UserController extends Controller
 
         if($error !== null)            return back()->with("error",$error);
 
-        $balance = ((int)$this->user->balance);
+        $balance = ((int)$this->user->affiliate_balance);
 
         $rules = [
             "amount" => ['numeric','gt:0',"max:".$balance],
@@ -207,7 +207,7 @@ class UserController extends Controller
      */
     public function withdrawProcess(Request $request) :View | RedirectResponse{
 
-        $balance = (int)$this->user->balance;
+        $balance = (int)$this->user->affiliate_balance;
 
         $request->validate([
             "id"     => ['required','exists:withdraws,id'],

@@ -35,14 +35,16 @@
                         </ul>
 
 
-                        <form action="{{$data->url}}" method="{{$data->method}}" class="form">
+                        <form action="{{$data->url}}" method="{{$data->method}}" id="razorpay-form" class="form mt-4">
                             @csrf
-                            <script nonce="{{ csp_nonce() }}" nonce="{{ csp_nonce() }}" src="{{$data->checkout_js}}"
-                                    @foreach($data->val as $key => $value )
-                                        data-{{$key}}="{{$value}}"
-                                @endforeach >
-                            </script>
                             <input type="hidden" custom="{{$data->custom}}" name="hidden">
+                            <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+                            <input type="hidden" name="razorpay_order_id" id="razorpay_order_id" value="{{ $data->val['order_id'] }}">
+                            <input type="hidden" name="razorpay_signature" id="razorpay_signature">
+                            
+                            <button type="button" id="rzp-button1" class="i-btn btn--lg btn--primary w-100">
+                                {{translate('Pay Now')}}
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -52,15 +54,39 @@
 </div>
 @endsection
 
-
 @push('script-push')
-
+<script nonce="{{ csp_nonce() }}" src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script nonce="{{ csp_nonce() }}">
     "use strict";
     $(document).ready(function () {
-
-        $('input[type="submit"]').addClass("i-btn btn--lg btn--primary mt-4");
-    })
+        var options = {
+            "key": "{{ $data->val['key'] }}",
+            "amount": "{{ $data->val['amount'] }}",
+            "currency": "{{ $data->val['currency'] }}",
+            "name": "{{ $data->val['name'] }}",
+            "description": "{{ $data->val['description'] }}",
+            "image": "{{ $data->val['image'] }}",
+            "order_id": "{{ $data->val['order_id'] }}",
+            "handler": function (response){
+                $('#razorpay_payment_id').val(response.razorpay_payment_id);
+                $('#razorpay_signature').val(response.razorpay_signature);
+                $('#razorpay-form').submit();
+            },
+            "prefill": {
+                "name": "{{ $data->val['prefill.name'] }}",
+                "email": "{{ $data->val['prefill.email'] }}",
+                "contact": "{{ $data->val['prefill.contact'] }}"
+            },
+            "theme": {
+                "color": "{{ $data->val['theme.color'] }}"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        $('#rzp-button1').on('click', function(e){
+            rzp1.open();
+            e.preventDefault();
+        });
+    });
 </script>
 
 @endpush

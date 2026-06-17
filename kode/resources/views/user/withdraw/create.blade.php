@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
     @php
-        $balance         = auth_user("web")->balance;
+        $balance         = auth_user("web")->affiliate_balance;
         $currency        = session('currency')?? base_currency();
         $currencySymbol  = $currency->symbol;
     @endphp
@@ -52,7 +52,7 @@
                             <span class="balance-icon">
                                 <i class="bi bi-wallet2"></i>
                             </span>
-                            <p>{{translate('Your Balance')}}</p>
+                            <p>{{translate('Affiliate Balance')}}</p>
                             <h4>{{num_format(number:$balance,calC:true)}}</h4>
                             <span class="balance-shape">
                                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" viewBox="0 0 64 64" xml:space="preserve"><g><g fill="none" stroke="#0a1c28" stroke-linejoin="round" data-name="cradit card"><g stroke-width="2"><path d="M38 34a2 2 0 1 0-2-2 2 2 0 1 1-2-2M30 32h2M40 32h2M35 57h5"  opacity="1"></path><path d="M49 48V10a3 3 0 0 1-3-3H26a3 3 0 0 1-3 3v27"  opacity="1"></path><path d="M19 37V3h34v45M40 61H19M53 48 40 61V50a2 2 0 0 1 2-2z"  opacity="1"></path><path d="M46 55h8a3 3 0 0 1 3-3V12a3 3 0 0 1-3-3h-1"  opacity="1"></path><path d="M53 5h8v54H42M28.52 37A9 9 0 1 1 36 41h-1"  opacity="1"></path><rect width="32" height="24" x="3" y="37" rx="2"  opacity="1"></rect></g><path stroke-width="4" d="M3 44h32"  opacity="1"></path><circle cx="29" cy="55" r="2" stroke-width="2"  opacity="1"></circle><path stroke-width="2" d="M6 57h2M10 57h2"  opacity="1"></path></g></g></svg>

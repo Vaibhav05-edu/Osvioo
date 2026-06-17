@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Razorpay\Api\Api;
 
-require_once('razorpay-php/Razorpay.php');
+require_once(__DIR__ . '/razorpay-php/Razorpay.php');
 
 class Payment
 {

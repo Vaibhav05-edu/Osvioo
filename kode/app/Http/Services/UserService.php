@@ -442,7 +442,7 @@ class UserService
         $baseAmount                = convert_to_base($total);
         $response                  = response_status("Insufficient funds in user account. Withdrawal request cannot be processed due to insufficient balance. ",'error');
 
-        if($baseAmount  < $user->balance){
+        if($baseAmount  <= $user->affiliate_balance){
 
             $status              =  $status ?  $status : WithdrawStatus::value("APPROVED",true);
 
@@ -477,7 +477,7 @@ class UserService
 
                         $transaction           =  PaymentService::makeTransaction($user,$params);
 
-                        $user->balance -= $baseAmount;
+                        $user->affiliate_balance -= $baseAmount;
                         $user->save();
 
                     }
@@ -844,7 +844,7 @@ class UserService
 
             $log = AffiliateLog::create($params);
 
-            $user->referral->balance += $log->commission_amount;
+            $user->referral->affiliate_balance += $log->commission_amount;
             $user->referral->save();
 
             $transactionParams = [
