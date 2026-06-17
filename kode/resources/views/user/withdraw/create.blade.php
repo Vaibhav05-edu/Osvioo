@@ -64,8 +64,10 @@
                             </div>
 
                             <div class="payment-details-wrapper">
-                                <div class="p-3 mb-4 bg-danger-soft rounded-2 d-none payment-note-section"></div>
-                                <ul class="withdraw-details payment-details   list-group mb-4 d-none"></ul>
+                                <div class="alert alert-info d-flex align-items-center d-none payment-note-section mb-4" role="alert"></div>
+                                <div class="card border-0 shadow-sm mb-4 d-none withdraw-details-card">
+                                    <ul class="withdraw-details payment-details list-group list-group-flush"></ul>
+                                </div>
                             </div>
                             <div class="p-0">
                                 <div class="form-inner">
@@ -157,12 +159,14 @@
             var paymentNote = method.note?? "{{translate('Payment with')}} "+method.name ;
             $('.payment-note-section').removeClass('d-none');
             $('.payment-header').removeClass('d-none');
-            $('.payment-note-section').html(`<p class="text--dark"><span class="bg-danger text-white py-0 px-2 d-inline-block me-2 rounded-1">Note  :</span> ${paymentNote}</p>`)
-            $('.payment-header').html(` <h5 class="payment-method-title">${method.name}
-                                </h5>
-                                <span class="payment-img">
-                                    <img src="${img}" alt="payment method preview image">
-                                </span>`)
+            $('.withdraw-details-card').removeClass('d-none');
+            $('.payment-note-section').html(`<i class="bi bi-info-circle-fill me-2 fs-5"></i> <div><strong>Note:</strong> ${paymentNote}</div>`)
+            $('.payment-header').html(` <div class="d-flex align-items-center gap-3 mb-3">
+                                            <div class="avatar-sm">
+                                                <img src="${img}" alt="method image" class="rounded-circle border">
+                                            </div>
+                                            <h5 class="payment-method-title mb-0">${method.name}</h5>
+                                        </div>`)
             var fixedCharge   =  parseFloat(method.fixed_charge);
             var percentCharge =  parseFloat(method.percent_charge);
 
@@ -172,32 +176,23 @@
             var minLimit      = parseFloat(method.minimum_amount * rate)
             var maxLimit     = parseFloat(method.maximum_amount * rate)
 
-            var list  =  `<li class="list-group-item active" aria-current="true">
-                             <h5>{{translate("Withdraw Details")}}</h5>
+            var list  =  `<li class="list-group-item bg-light text-dark fw-bold" aria-current="true">
+                             <i class="bi bi-receipt me-2"></i> {{translate("Withdraw Details")}}
                           </li>`;
 
-                list += `<li class="list-group-item">
-                            <p>
-                                {{translate("Limit")}}
-                            </p>
-                            <h6>
-                                {{$currencySymbol}}${minLimit} - {{$currencySymbol}}${maxLimit}
-
-                            </h6>
+                list += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="text-muted">{{translate("Limit")}}</span>
+                            <span class="fw-semibold">{{$currencySymbol}}${minLimit} - {{$currencySymbol}}${maxLimit}</span>
                         </li>
-                        <li class="list-group-item">
-                            <p> {{translate("Charge")}}</p>
-                            <h6>{{$currencySymbol}}${netCharge}  ( {{$currencySymbol}}${fixedCharge} + ${percentCharge}% )</h6>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="text-muted">{{translate("Charge")}}</span>
+                            <span class="fw-semibold text-danger">{{$currencySymbol}}${netCharge} <small class="text-muted">({{$currencySymbol}}${fixedCharge} + ${percentCharge}%)</small></span>
                         </li>
 
-                        <li class="list-group-item">
-                            <p> {{translate("Final amount")}}</p>
-                            <h6>
-                                {{$currencySymbol}}${netAmount}
-                            </h6>
-                        </li>
-
-                        `;
+                        <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
+                            <span class="fw-bold">{{translate("Final Deducted Amount")}}</span>
+                            <span class="fw-bold text-primary">{{$currencySymbol}}${netAmount}</span>
+                        </li>`;
 
             $('.withdraw-details').removeClass('d-none');
             var cleanContent = DOMPurify.sanitize(list);
