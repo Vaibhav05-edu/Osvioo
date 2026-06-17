@@ -75,8 +75,10 @@ class UserController extends Controller
         
         $price = round($package->discount_price) > 0 ? $package->discount_price : $package->price;
         if ($this->user->balance < $price && $price > 0) {
-            $method = \App\Models\Admin\PaymentMethod::where('code', 'razorpay')->first();
-            if ($method) {
+            $method = \App\Models\Admin\PaymentMethod::with(['currency'])
+                        ->where('code', 'razorpay')
+                        ->first();
+            if ($method && $method->currency) {
                 // Mock a request with the exact amount
                 $depositReq = new \Illuminate\Http\Request();
                 $depositReq->replace([
@@ -84,17 +86,24 @@ class UserController extends Controller
                     'remarks' => 'Plan Purchase via Razorpay'
                 ]);
 
-                $depositResponse = $this->userService->createDepositLog($depositReq, $this->user, $method, \App\Enums\DepositStatus::value('INITIATE', true));
-                $depositLog      = \Illuminate\Support\Arr::get($depositResponse, "log");
+                try {
+                    $depositResponse = $this->userService->createDepositLog($depositReq, $this->user, $method, \App\Enums\DepositStatus::value('INITIATE', true));
+                    $depositLog      = \Illuminate\Support\Arr::get($depositResponse, "log");
 
-                if ($depositLog) {
-                    $depositLog->custom_data = json_encode(['plan_id' => $package->id]);
-                    $depositLog->save();
-                    
-                    return app(\App\Http\Controllers\User\DepositController::class)->depositConfirm($depositLog);
+                    if ($depositLog) {
+                        $depositLog->custom_data = json_encode(['plan_id' => $package->id]);
+                        $depositLog->save();
+                        
+                        return app(\App\Http\Controllers\User\DepositController::class)->depositConfirm($depositLog);
+                    }
+                } catch (\Exception $e) {
+                    return back()->with(response_status('Payment gateway error: ' . $e->getMessage(), 'error'));
                 }
+            } else {
+                return back()->with(response_status(translate('Razorpay payment gateway is not configured. Please contact support.'), 'error'));
             }
         }
+
 
         $response  = $this->userService->createSubscription($this->user,$package);
         $status    = isset($response['status']) && $response['status'] === true
