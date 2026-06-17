@@ -124,6 +124,10 @@ class DepositController extends Controller
             $gatewayService  = 'App\\Http\\Services\\Gateway\\'.$depositLog->method->code.'\\Payment';
             $data            = $gatewayService::paymentData($depositLog);
             $data            = json_decode($data);
+            // Cast val to array so blade templates can use $data->val['key'] syntax
+            if (isset($data->val) && is_object($data->val)) {
+                $data->val = (array) $data->val;
+            }
 
         } catch (\Exception $exception) {
             return back()->with(response_status($exception->getMessage(),'error'));
