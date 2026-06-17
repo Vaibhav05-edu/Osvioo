@@ -402,9 +402,10 @@ if (!function_exists('convert_to_base')) {
     {
 
 
+        $sessionCurrency = session()->get("currency") ?? base_currency();
         $fromRate = $currency
             ? $currency->exchange_rate
-            : session()->get("currency")->exchange_rate;
+            : $sessionCurrency->exchange_rate;
 
 
         $amountInUSD = $amount / $fromRate;
@@ -489,7 +490,7 @@ if (!function_exists('currency_conversion')) {
     function currency_conversion(int|float $number, ?Currency $currency = null): int
     {
 
-        $currency = $currency ?? session()->get("currency");
+        $currency = $currency ?? session()->get("currency") ?? base_currency();
         $number = floatval($number) * floatval($currency->exchange_rate);
 
 
@@ -525,7 +526,7 @@ if (!function_exists('num_format')) {
 
 
 
-        $currency = $currency ?? session()->get("currency");
+        $currency = $currency ?? session()->get("currency") ?? base_currency();
 
         if ($calC) {
             $number = floatval($number) * floatval($currency->exchange_rate);
