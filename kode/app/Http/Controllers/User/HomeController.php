@@ -496,8 +496,29 @@ class HomeController extends Controller
             })->first();
 
         $followersVal = 0;
-        if($instaAccount && isset($instaAccount->account_information->followers_count)) {
-            $followersVal = $instaAccount->account_information->followers_count;
+        if($instaAccount) {
+            $info = $instaAccount->account_information;
+            if(isset($info->followers_count) && $info->followers_count > 0) {
+                $followersVal = $info->followers_count;
+            } else {
+                try {
+                    $platform = $instaAccount->platform;
+                    $configuration = $platform->configuration;
+                    $token = $instaAccount->token ?? ($info->token ?? null);
+                    $igId = $instaAccount->account_id;
+                    if ($token && $igId) {
+                        $apiUrl = \App\Http\Services\Account\instagram\Account::getApiUrl($igId, ['fields' => 'followers_count'], $configuration);
+                        $response = \Illuminate\Support\Facades\Http::withToken($token)->get($apiUrl);
+                        $followersVal = $response->json('followers_count') ?? 0;
+                        if ($followersVal > 0) {
+                            $infoArray = (array)$info;
+                            $infoArray['followers_count'] = $followersVal;
+                            $instaAccount->account_information = $infoArray;
+                            $instaAccount->save();
+                        }
+                    }
+                } catch (\Exception $e) { }
+            }
         }
         
         $rateMinUSD = round($followersVal * 0.015);
