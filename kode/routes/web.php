@@ -161,6 +161,7 @@ use Illuminate\Support\Facades\Http;
             Route::controller(DepositController::class)->prefix('/deposit')->name('deposit.')->group(function(){
                 Route::get('/request','depositCreate')->name('create');
                 Route::post('/process','process')->name('process');
+                Route::any('/confirm/{trx_code}','depositConfirm')->name('confirm');
                 Route::any('/manual/confirm','manualPay')->name('manual');
             });
 
