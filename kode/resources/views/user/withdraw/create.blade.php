@@ -30,9 +30,15 @@
                         @foreach ($methods as  $method)
                             <div class="col">
                                 <label class="payment-card-item">
-                                    <input  {{ $loop->index == 0 ? 'checked' : '' }} name="id" data-method="{{$method}}" data-img="{{imageURL(@$method->file,'withdraw_method',true)}}" value="{{$method->id}}" class="radio withdraw-method" type="radio" >
+                                    <input  {{ $loop->index == 0 ? 'checked' : '' }} name="id" data-method="{{$method}}" data-has-img="{{@$method->file ? 'true' : 'false'}}" data-img="{{imageURL(@$method->file,'withdraw_method',true)}}" value="{{$method->id}}" class="radio withdraw-method" type="radio" >
                                     <span class="image">
-                                        <img src='{{imageURL(@$method->file,"withdraw_method",true)}}' alt="{{$method->name . 'Preview image'}}" >
+                                        @if(@$method->file)
+                                            <img src='{{imageURL(@$method->file,"withdraw_method",true)}}' alt="{{$method->name . ' Preview image'}}" >
+                                        @else
+                                            <div class="d-flex justify-content-center align-items-center bg-light text-primary rounded w-100 h-100" style="font-size: 3rem; min-height: 100px;">
+                                                <i class="bi bi-bank"></i>
+                                            </div>
+                                        @endif
                                     </span>
                                     <span class="title">{{$method->name}}</span>
                                 </label>
@@ -159,11 +165,16 @@
             var paymentNote = method.note?? "{{translate('Payment with')}} "+method.name ;
             $('.payment-note-section').removeClass('d-none');
             $('.payment-header').removeClass('d-none');
+            var hasImg = $('input[name="id"]:checked').attr('data-has-img') === 'true';
+            var imgHtml = hasImg 
+                ? `<img src="${img}" alt="method image" class="rounded-circle border" style="width:40px; height:40px; object-fit:cover;">`
+                : `<div class="d-flex justify-content-center align-items-center bg-light text-primary rounded-circle border" style="width:40px; height:40px; font-size: 1.2rem;"><i class="bi bi-bank"></i></div>`;
+
             $('.withdraw-details-card').removeClass('d-none');
             $('.payment-note-section').html(`<i class="bi bi-info-circle-fill me-2 fs-5"></i> <div><strong>Note:</strong> ${paymentNote}</div>`)
             $('.payment-header').html(` <div class="d-flex align-items-center gap-3 mb-3">
                                             <div class="avatar-sm">
-                                                <img src="${img}" alt="method image" class="rounded-circle border">
+                                                ${imgHtml}
                                             </div>
                                             <h5 class="payment-method-title mb-0">${method.name}</h5>
                                         </div>`)
