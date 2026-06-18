@@ -37,6 +37,8 @@ class CustomCspPolicy extends Basic
             'https://www.gstatic.com/',
             'https://www.gstatic.com/charts/49/css/util/util.css',
             'https://cdnjs.cloudflare.com/',
+            'https://checkout.razorpay.com',
+
             'https://cdn.jsdelivr.net/',
             'https://www.youtube.com',
             'https://fonts.cdnfonts.com',
@@ -53,6 +55,8 @@ class CustomCspPolicy extends Basic
             'https://s.ytimg.com',
             'https://cdn.jsdelivr.net/',
             'https://cdnjs.cloudflare.com/',
+            'https://checkout.razorpay.com',
+
         ]);
 
 
@@ -69,6 +73,8 @@ class CustomCspPolicy extends Basic
             'https://fonts.gstatic.com',
             'https://fonts.googleapis.com',
             'https://cdnjs.cloudflare.com/',
+            'https://checkout.razorpay.com',
+
             'https://fonts.cdnfonts.com',
         ]);
 
@@ -82,6 +88,9 @@ class CustomCspPolicy extends Basic
             'https://*.paypal.com',
             'https://www.youtube.com',
             'https://*.youtube-nocookie.com',
+            'https://api.razorpay.com',
+            'https://checkout.razorpay.com',
+            'https://rzp.io',
         ]);
 
         $this->addDirective(Directive::CONNECT, [
@@ -90,6 +99,9 @@ class CustomCspPolicy extends Basic
             'https://*.paypal.com',
             'https://cdn.jsdelivr.net/',
             'https://cdnjs.cloudflare.com/',
+            'https://api.razorpay.com',
+            'https://checkout.razorpay.com',
+            'https://lumberjack.razorpay.com',
         ]);
 
         $this->addDirective(Directive::OBJECT, "'none'");
