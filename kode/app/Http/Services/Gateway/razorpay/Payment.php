@@ -42,7 +42,7 @@ class Payment
         $val['buttontext']      = "Deposit via Razorpay";
         $val['name']            = optional($log->user)->username;
         $val['description']     = "Deposit By Razorpay";
-        $val['image']           = imageURL(@site_logo('site_logo')->file,"site_logo",true);
+        $val['image']           = imageURL(@site_logo('site_logo')->file,"site_logo",false);
         $val['prefill.name']    = optional($log->user)->username;
         $val['prefill.email']   = optional($log->user)->email;
         $val['prefill.contact'] = optional($log->user)->phone;

@@ -6,7 +6,7 @@
         <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
             <div class="card-header bg-primary text-white p-4 text-center border-0">
                 <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-3 shadow" style="width: 80px; height: 80px;">
-                    <img src='{{imageURL(@$log->method->file,"payment_method",true)}}' alt="Razorpay" style="width: 50px; height: 50px; object-fit: contain;">
+                    <img src='{{imageURL(@$log->method->file,"payment_method",false)}}' alt="Razorpay" style="width: 50px; height: 50px; object-fit: contain;">
                 </div>
                 <h3 class="mb-0 text-white fw-bold">Pay via Razorpay</h3>
                 <p class="text-white-50 mb-0 mt-1">Complete your secure payment below</p>
