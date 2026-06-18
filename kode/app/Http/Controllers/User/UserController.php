@@ -96,8 +96,8 @@ class UserController extends Controller
                         
                         return app(\App\Http\Controllers\User\DepositController::class)->depositConfirm($depositLog);
                     }
-                } catch (\Exception $e) {
-                    return back()->with(response_status('Payment gateway error: ' . $e->getMessage(), 'error'));
+                } catch (\Throwable $e) {
+                    \Log::error($e); return back()->with(response_status('Payment gateway error: ' . $e->getMessage(), 'error'));
                 }
             } else {
                 return back()->with(response_status(translate('Razorpay payment gateway is not configured. Please contact support.'), 'error'));

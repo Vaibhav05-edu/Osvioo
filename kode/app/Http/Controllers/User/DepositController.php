@@ -129,7 +129,7 @@ class DepositController extends Controller
                 $data->val = (array) $data->val;
             }
 
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             return back()->with(response_status($exception->getMessage(),'error'));
         }
 
