@@ -13,6 +13,7 @@ use App\Models\PlateformStat;
 use App\Models\Creator;
 use App\Models\Video;
 use App\Models\LandingPageSetting;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class FrontendController extends Controller
