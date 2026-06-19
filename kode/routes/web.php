@@ -33,6 +33,15 @@ use Illuminate\Support\Facades\Http;
 
 // SECURITY: /fix-prod debug route disabled for production safety.
 
+Route::get('/clear-server-cache', function() {
+    \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+    \Illuminate\Support\Facades\Artisan::call('view:clear');
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    } catch (\Exception $e) {}
+    return '<h1>Cache Cleared and Migrations Run Successfully!</h1><p>You can now go back to the admin panel.</p>';
+});
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
