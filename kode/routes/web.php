@@ -184,6 +184,8 @@ use Illuminate\Support\Facades\Http;
                     Route::get('/list', [\App\Http\Controllers\User\InvoiceController::class, 'list'])->name('list');
                     Route::get('/create', [\App\Http\Controllers\User\InvoiceController::class, 'create'])->name('create');
                     Route::post('/store', [\App\Http\Controllers\User\InvoiceController::class, 'store'])->name('store');
+                    Route::get('/edit/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'edit'])->name('edit');
+                    Route::post('/update/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'update'])->name('update');
                     Route::get('/download/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'download'])->name('download')->withoutMiddleware(['sanitizer', \Spatie\Csp\AddCspHeaders::class]);
                     Route::get('/share/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'share'])->name('share');
                     Route::post('/payment-update/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'updatePayment'])->name('payment.update');

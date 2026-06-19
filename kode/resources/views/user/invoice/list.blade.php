@@ -182,6 +182,13 @@
                                 <button type="button" class="action-btn" style="background:#fef3c7; color:#b45309;" data-bs-toggle="modal" data-bs-target="#emailModal{{ $invoice->uid }}" title="{{ translate('Send Email') }}">
                                     <i class="bi bi-envelope"></i>
                                 </button>
+                                @if(!$isAdminInv)
+                                <a href="{{ route('user.invoice.edit', $invoice->uid) }}"
+                                    class="action-btn" style="background:#e0f2fe; color:#0369a1;"
+                                    title="{{ translate('Edit Invoice') }}">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                @endif
                                 <a href="{{ route('user.invoice.share', $invoice->uid) }}"
                                     class="action-btn action-btn-view" target="_blank"
                                     title="{{ translate('Preview Invoice') }}">

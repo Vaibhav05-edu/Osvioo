@@ -181,6 +181,18 @@
                                                 </div>
 
                                                 <div class="col-xl-6">
+                                                    <div class="form-inner mb-0">
+                                                        <label for="invoice_limit" class="form-label">
+                                                            {{ translate('Invoice Limit') }}
+                                                            <small class="text-danger" >*</small>
+                                                            <i data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{translate('Set -1 to make it unlimited')}}" class="ms-1  pointer las la-question-circle  text--danger"></i>
+                                                        </label>
+                                                        <input type="number" min="-1"
+                                                        value="{{ old('social_access.invoice_limit', isset($package->social_access->invoice_limit) ? $package->social_access->invoice_limit : -1) }}" name="social_access[invoice_limit]" id="invoice_limit" placeholder="{{translate('Invoice Limit')}}" required   >
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-6">
                                                     <div>
                                                         <label class="form-label lh-1">
                                                             {{ translate('Webhook & Schedule') }}

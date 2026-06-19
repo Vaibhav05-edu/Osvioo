@@ -51,7 +51,7 @@
                             @forelse($invoices as $invoice)
                             @php
                                 $details = is_array($invoice->details) ? $invoice->details : [];
-                                $invNum  = $details['invoice_number'] ?? ('INV-' . substr($invoice->uid, 0, 8));
+                                $invNum  = $details['invoice_number'] ?? ('INV-' . substr((string)$invoice->uid, 0, 8));
                             @endphp
                             <tr>
                                 <td><b>{{ $invNum }}</b></td>
@@ -67,10 +67,10 @@
                                     <small class="text-muted">{{ $invoice->user->email ?? '' }}</small>
                                 </td>
                                 <td>{{ $invoice->brand_name ?? '—' }}</td>
-                                <td><b>${{ number_format($invoice->amount, 2) }}</b></td>
+                                <td><b>${{ number_format((float)$invoice->amount, 2) }}</b></td>
                                 <td>
                                     <span class="badge-{{ $invoice->status }}">
-                                        {{ ucwords(str_replace('_', ' ', $invoice->status)) }}
+                                        {{ ucwords(str_replace('_', ' ', (string)$invoice->status)) }}
                                     </span>
                                 </td>
                                 <td>
@@ -84,7 +84,7 @@
                                         <span class="wm-badge-na">N/A</span>
                                     @endif
                                 </td>
-                                <td>{{ $invoice->created_at->format('M d, Y') }}</td>
+                                <td>{{ $invoice->created_at ? $invoice->created_at->format('M d, Y') : 'N/A' }}</td>
                                 <td>
                                     <div class="d-flex gap-1 flex-wrap">
                                         {{-- View --}}

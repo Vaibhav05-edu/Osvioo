@@ -48,6 +48,7 @@ class AiSuggestionController extends Controller
         try {
             $response = \Illuminate\Support\Facades\Http::withToken($apiKey)
                 ->timeout(30)
+                ->retry(3, 1000)
                 ->post('https://api.openai.com/v1/chat/completions', $payload);
 
             if ($response->successful()) {

@@ -23,11 +23,14 @@
                 <div class="col-md-6 mb-3 mb-md-0">
                     <label class="form-label fw-bold">{{translate('Select Account')}}</label>
                     <select class="form-select capsuled" id="account-select">
-                        @if($accounts->count() > 0)
-                            @foreach($accounts as $acc)
-                                @if($acc->platform->slug == 'instagram')
-                                    <option value="{{$acc->id}}">{{$acc->name}} ({{$acc->username}})</option>
-                                @endif
+                        @php
+                            $instaAccounts = $accounts->filter(function($acc) {
+                                return $acc->platform->slug == 'instagram';
+                            });
+                        @endphp
+                        @if($instaAccounts->count() > 0)
+                            @foreach($instaAccounts as $acc)
+                                <option value="{{$acc->id}}">{{$acc->name}} ({{$acc->username}})</option>
                             @endforeach
                         @else
                             <option value="">{{translate('No Instagram accounts connected')}}</option>

@@ -58,7 +58,7 @@ class Payment
             ],
             'mode' => 'payment',
             'cancel_url'   => route('ipn',["trx_code" => $log->trx_code,"type"=>'failed']),
-            'success_url'  => route('ipn',["trx_code" => $log->trx_code,"type"=>'success']),
+            'success_url'  => route('ipn',["trx_code" => $log->trx_code,"type"=>'success']) . '?payment_id={CHECKOUT_SESSION_ID}',
 
         ]);
 

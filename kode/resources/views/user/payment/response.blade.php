@@ -202,6 +202,11 @@
      </div>
  </div>
 
+ <script>
+     setTimeout(function() {
+         window.location.href = "{{ auth_user('web') ? route('user.home') : route('home') }}";
+     }, 3000);
+ </script>
 @endsection
 
 

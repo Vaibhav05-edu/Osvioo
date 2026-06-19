@@ -24,8 +24,8 @@
                             @forelse($addons as $addon)
                             <tr>
                                 <td>{{$addon->title}}</td>
-                                <td>{{ucwords(str_replace('_', ' ', $addon->type))}}</td>
-                                <td>{{num_format($addon->price)}}</td>
+                                <td>{{ucwords(str_replace('_', ' ', (string)$addon->type))}}</td>
+                                <td>{{num_format((float)$addon->price)}}</td>
                                 <td>{{$addon->value}}</td>
                                 <td>
                                     <div class="form-check form-switch">
