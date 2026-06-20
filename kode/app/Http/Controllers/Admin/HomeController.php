@@ -90,10 +90,10 @@ class HomeController extends Controller
 
         $data['account_repot']            = [
 
-                "total_account"         => SocialAccount::whereNull('user_id')->count(),
-                "active_account"        => SocialAccount::whereNull('user_id')->active()->count(),
-                "inactive_account"      => SocialAccount::whereNull('user_id')->inactive()->count(),
-                "accounts_by_platform"  => MediaPlatform::with('file')->withCount(['accounts'=> fn(Builder $q) :Builder => $q->whereNull("user_id")])
+                "total_account"         => SocialAccount::count(),
+                "active_account"        => SocialAccount::active()->count(),
+                "inactive_account"      => SocialAccount::inactive()->count(),
+                "accounts_by_platform"  => MediaPlatform::with('file')->withCount(['accounts'])
                                                         ->integrated()
                                                         ->pluck('accounts_count','name')
                                                         ->toArray()
