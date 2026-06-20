@@ -66,4 +66,9 @@ EXPOSE 80
 CMD echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
     sed -i "s/Listen 80/Listen 0.0.0.0:${PORT:-80}/g" /etc/apache2/ports.conf && \
     sed -i "s/<VirtualHost \*:80>/<VirtualHost *:${PORT:-80}>/g" /etc/apache2/sites-available/*.conf && \
+    cd /var/www/html/kode && php artisan migrate --force && \
+    php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache && \
+    cd /var/www/html && \
     apache2-foreground
