@@ -2,7 +2,7 @@
 
     @php
         $breadcrumbContent      = get_content("content_breadcrumb")->first();
-        $breadcrumbIMG          = @$breadcrumbContent->file?->where("type",'banner_image')->first();
+        $breadcrumbIMG          = $breadcrumbContent?->file?->where("type",'banner_image')->first();
         $breadcrumbSize         = get_appearance_img_size('breadcrumb','content','banner_image');
     @endphp
 
