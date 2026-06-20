@@ -361,7 +361,15 @@
                                 <span></span>
                                 <p>
                                     {{ translate('Affiliate Applications') }}
-                                    @php $pendingAffiliates = \App\Models\User::where('affiliate_status',1)->count(); @endphp
+                                    @php
+                                        try {
+                                            $pendingAffiliates = \Illuminate\Support\Facades\Schema::hasColumn('users','affiliate_status')
+                                                ? \App\Models\User::where('affiliate_status',1)->count()
+                                                : 0;
+                                        } catch(\Exception $e) {
+                                            $pendingAffiliates = 0;
+                                        }
+                                    @endphp
                                     @if($pendingAffiliates > 0)
                                     <span class="i-badge danger">{{ $pendingAffiliates }}</span>
                                     @endif
