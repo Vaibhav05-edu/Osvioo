@@ -18,9 +18,10 @@ class InvoiceController extends Controller
      */
     public function list()
     {
+        $title     = translate('Invoices Management');
         $invoices  = Invoice::with('user')->latest()->paginate(20);
-        $meta_data = $this->metaData(['title' => translate('Invoices Management')]);
-        return view('admin.invoice.list', compact('invoices', 'meta_data'));
+        $meta_data = $this->metaData(['title' => $title]);
+        return view('admin.invoice.list', compact('invoices', 'meta_data', 'title'));
     }
 
     /**
@@ -28,11 +29,12 @@ class InvoiceController extends Controller
      */
     public function create()
     {
+        $title     = translate('Create Admin Invoice');
         $users     = User::orderBy('name')->get(['id', 'name', 'email']);
         $packages  = Package::orderBy('title')->get(['id', 'title', 'price']);
         $addons    = Addon::where('status', 1)->orderBy('title')->get(['id', 'title', 'price', 'type']);
-        $meta_data = $this->metaData(['title' => translate('Create Admin Invoice')]);
-        return view('admin.invoice.create', compact('users', 'packages', 'addons', 'meta_data'));
+        $meta_data = $this->metaData(['title' => $title]);
+        return view('admin.invoice.create', compact('users', 'packages', 'addons', 'meta_data', 'title'));
     }
 
     /**

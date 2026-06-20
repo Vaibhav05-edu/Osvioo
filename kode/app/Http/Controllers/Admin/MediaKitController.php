@@ -11,8 +11,9 @@ class MediaKitController extends Controller
     public function index()
     {
         $title = translate("Media Kits");
+        $meta_data = $this->metaData(['title' => $title]);
         $mediaKits = MediaKit::with('user')->latest()->paginate(paginateNumber());
-        return view('admin.mediakit.list', compact('title', 'mediaKits'));
+        return view('admin.mediakit.list', compact('title', 'mediaKits', 'meta_data'));
     }
 
     public function approveWatermark($uid)

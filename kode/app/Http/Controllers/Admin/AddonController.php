@@ -11,9 +11,10 @@ class AddonController extends Controller
 {
     public function list()
     {
-        $addons = Addon::latest()->paginate(15);
-        $meta_data = $this->metaData(['title'=> translate("Manage Add-ons")]);
-        return view('admin.addon.list', compact('addons', 'meta_data'));
+        $title     = translate('Manage Add-ons');
+        $addons    = Addon::latest()->paginate(15);
+        $meta_data = $this->metaData(['title' => $title]);
+        return view('admin.addon.list', compact('addons', 'meta_data', 'title'));
     }
 
     public function store(Request $request)
