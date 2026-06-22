@@ -1,5 +1,5 @@
 
-@if ($errors->any())
+@if (isset($errors) && $errors->any())
     @foreach($errors->all() as $message)
         <script nonce="{{ csp_nonce() }}">
             "use strict";      
