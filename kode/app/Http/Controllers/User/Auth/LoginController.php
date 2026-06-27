@@ -21,6 +21,10 @@ class LoginController extends Controller
     private $maxLoginAttempts,$lockoutTime, $authService;
     public function __construct()
     {
+        // Reconnect DB if connection was dropped by idle timeout (Aiven/cloud DB fix)
+        try {
+            \Illuminate\Support\Facades\DB::reconnect();
+        } catch (\Throwable $e) {}
 
         $this->authService = new AuthService();
         $this->maxLoginAttempts = site_settings("max_login_attemtps");
@@ -34,13 +38,29 @@ class LoginController extends Controller
      */
     public function login():View{
 
-        return view('user.auth.login',[
-            'meta_data'=> $this->metaData(
-               [
-                  "title" => trans("default.login"),
-               ]
-            )
-        ]);
+        try {
+            return view('user.auth.login',[
+                'meta_data'=> $this->metaData(
+                   [
+                      "title" => trans("default.login"),
+                   ]
+                )
+            ]);
+        } catch (\Throwable $e) {
+            // If DB connection dropped, reconnect and retry once
+            try {
+                \Illuminate\Support\Facades\DB::reconnect();
+                return view('user.auth.login',[
+                    'meta_data'=> $this->metaData(
+                       [
+                          "title" => trans("default.login"),
+                       ]
+                    )
+                ]);
+            } catch (\Throwable $retryException) {
+                return view('errors.db_unavailable');
+            }
+        }
     }
 
 

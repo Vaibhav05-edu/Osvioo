@@ -58,11 +58,20 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => env('DB_SSL') ? [
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA', null),
-                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
-            ] : [],
+            'options' => array_merge(
+                env('DB_SSL') ? [
+                    PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA', null),
+                    PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+                ] : [],
+                [
+                    // Auto-reconnect when idle connection is dropped by Aiven/cloud DB
+                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET SESSION wait_timeout=28800, interactive_timeout=28800",
+                    PDO::ATTR_TIMEOUT => 30,
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                ]
+            ),
         ],
+
 
         'pgsql' => [
             'driver' => 'pgsql',
