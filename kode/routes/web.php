@@ -42,6 +42,13 @@ Route::get('/clear-server-cache', function() {
     return '<h1>Cache Cleared and Migrations Run Successfully!</h1><p>You can now go back to the admin panel.</p>';
 });
 
+Route::get('/lock-server-code', function() {
+    \Illuminate\Support\Facades\Artisan::call('optimize');
+    \Illuminate\Support\Facades\Artisan::call('view:cache');
+    \Illuminate\Support\Facades\Artisan::call('event:cache');
+    return '<h1>Code Locked (Cached) Successfully for Production!</h1><p>Your views, routes, and configs are now cached. It will not crash dynamically.</p>';
+});
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
