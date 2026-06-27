@@ -260,24 +260,20 @@ class CoreController extends Controller
     public function handleSchedulePost(): void
     {
 
-        $posts = SocialPost::with(['file'])
+        SocialPost::with(['file'])
             ->postable()
-            ->cursor();
-
-        foreach ($posts->chunk(20) as $chunkPosts) {
-            foreach ($chunkPosts as $post) {
-                sleep(1);
-
-                if (
-                    $post->schedule_time <= Carbon::now() ||
-                    $post->status == strval(
-                        PostStatus::value('PENDING', true)
-                    )
-                ) {
-                    $this->publishPost($post);
+            ->chunkById(20, function ($chunkPosts) {
+                foreach ($chunkPosts as $post) {
+                    if (
+                        $post->schedule_time <= Carbon::now() ||
+                        $post->status == strval(
+                            PostStatus::value('PENDING', true)
+                        )
+                    ) {
+                        $this->publishPost($post);
+                    }
                 }
-            }
-        }
+            });
 
 
 
