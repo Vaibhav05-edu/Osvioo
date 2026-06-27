@@ -12,8 +12,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // Run every minute to process scheduled posts and refresh tokens
-        $schedule->command('cron:run')->everyMinute()->withoutOverlapping();
+        // Run every 5 minutes to process scheduled posts and refresh tokens
+        // (reduced from every minute to prevent memory exhaustion on Render free tier)
+        $schedule->command('cron:run')
+            ->everyFiveMinutes()
+            ->withoutOverlapping(10) // max 10 min lock to prevent stuck processes
+            ->runInBackground();
     }
 
     /**

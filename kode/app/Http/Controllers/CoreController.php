@@ -214,7 +214,7 @@ class CoreController extends Controller
 
         $accounts = SocialAccount::with(['platform'])
             ->where('access_token_expire_at', '<=', $dateTime)
-            ->lazyById(1000, 'id')
+            ->lazyById(50, 'id') // reduced from 1000 to 50 to prevent memory exhaustion
             ->each(function (SocialAccount $account) use ($dateTime) {
 
                 $platform = $account?->platform;
