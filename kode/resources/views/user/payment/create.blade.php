@@ -11,6 +11,25 @@
                     $currencySymbol  = $currency->symbol;
                     $currencyCode    = $currency->code;
                     $exchangeRate    = $currency->exchange_rate;
+                    
+                    $logoMap = [
+                        'bkash' => 'https://freelogopng.com/images/all_img/1656234745bkash-app-logo.png',
+                        'nagad' => 'https://download.logo.wine/logo/Nagad/Nagad-Logo.wine.png',
+                        'paypal' => 'https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg',
+                        'stripe' => 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg',
+                        'payeer' => 'https://upload.wikimedia.org/wikipedia/commons/3/36/Payeer_logo.svg',
+                        'paystack' => 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Paystack_Logo.png',
+                        'flutterwave' => 'https://pbs.twimg.com/profile_images/1512411915907481600/bC6qSihN_400x400.jpg',
+                        'razorpay' => 'https://upload.wikimedia.org/wikipedia/commons/8/89/Razorpay_logo.svg',
+                        'instamojo' => 'https://www.instamojo.com/blog/wp-content/uploads/2021/04/instamojo-logo-1.png',
+                        'mollie' => 'https://upload.wikimedia.org/wikipedia/commons/0/09/Mollie_logo.png',
+                        'payumoney' => 'https://upload.wikimedia.org/wikipedia/commons/c/c9/PayUmoney_Logo.jpg',
+                        'mercadopogo' => 'https://upload.wikimedia.org/wikipedia/commons/d/d4/Mercado_Pago_logo.svg',
+                        'cashmaal' => 'https://www.cashmaal.com/images/cashmaal-logo.png',
+                        'paytm' => 'https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg',
+                        'authorizedotnet' => 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Authorize.Net_logo.svg',
+                        'nmi' => 'https://www.nmi.com/wp-content/themes/nmi/assets/images/nmi-logo.svg',
+                    ];
 
             @endphp
 
@@ -43,13 +62,16 @@
                             <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-2 g-md-3 g-2">
 
                                 @foreach ($methods as  $method)
-
+                                    @php
+                                        $methodNameLower = strtolower(str_replace(' ', '', $method->name));
+                                        $methodImg = @$method->file ? imageURL(@$method->file,"payment_method",true) : ($logoMap[$methodNameLower] ?? 'https://ui-avatars.com/api/?name='.urlencode($method->name).'&color=7F9CF5&background=EBF4FF');
+                                    @endphp
                                     <div class="col">
 
                                         <label class="payment-card-item">
-                                            <input {{ $loop->index == 0 ? 'checked' : '' }}   name="method_id" data-method="{{$method}}" , data-img="{{imageURL(@$method->file,'payment_method',true)}}" value="{{$method->id}}" class="radio deposit-method" type="radio" >
+                                            <input {{ $loop->index == 0 ? 'checked' : '' }}   name="method_id" data-method="{{$method}}" , data-img="{{$methodImg}}" value="{{$method->id}}" class="radio deposit-method" type="radio" >
                                             <span class="image">
-                                                <img src='{{imageURL(@$method->file,"payment_method",true)}}' alt="{{@$method->file->name ?? $method->name.'.jpg'}}" >
+                                                <img src='{{$methodImg}}' alt="{{@$method->file->name ?? $method->name.'.jpg'}}" style="object-fit: contain; padding: 10px;" >
                                             </span>
                                             <span class="title">
                                                 {{$method->name}}

@@ -39,7 +39,7 @@ class HomeController extends Controller
             $this->user = auth_user('web');
             $this->subscription           = $this->user->runningSubscription;
             $this->accessPlatforms        = (array) ($this->subscription ? @$this->subscription->package->social_access->platform_access : []);
-            $this->webhookAccess          = @optional($this->subscription->package->social_access)
+            $this->webhookAccess          = @optional($this->subscription?->package?->social_access)
                                                  ->webhook_access;
 
             return $next($request);

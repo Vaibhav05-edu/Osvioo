@@ -5,7 +5,7 @@
     $user = auth_user('web')->load(['runningSubscription','runningSubscription.package','affilateUser','affiliates']);
     $subscription = $user->runningSubscription;
     $package = @$user->runningSubscription?->package;
-    $webhookAccess = @optional($user->runningSubscription->package->social_access)->webhook_access;
+    $webhookAccess = @optional($user->runningSubscription?->package?->social_access)->webhook_access;
     $affiliateLogs = $user->affiliates;
 @endphp
 
