@@ -32,28 +32,28 @@
                     </div>
                 </div>
                 <div class="col-lg-7 mt-4 mt-lg-0">
-                    <div class="bg-white border p-4 h-100" style="border-radius: 16px;">
+                    <div class="bg-light-soft border p-4 h-100" style="border-radius: 16px;">
                         <h6 class="fw-bold mb-3"><i class="bi bi-graph-up text-primary me-2"></i>{{translate('AI Predicted Best Times')}}</h6>
                         <div id="timingOutput">
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <div class="border rounded-3 p-3 text-center bg-light-soft">
                                         <span class="badge bg-success-soft text-success mb-2 capsuled">{{translate('Top Choice')}}</span>
-                                        <h4 class="fw-bold text-dark mb-1">06:00 PM</h4>
+                                        <h4 class="fw-bold mb-1">06:00 PM</h4>
                                         <p class="fs-12 text-muted mb-0">{{translate('Wednesday')}}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="border rounded-3 p-3 text-center bg-light-soft">
                                         <span class="badge bg-info-soft text-info mb-2 capsuled">{{translate('High Engagement')}}</span>
-                                        <h4 class="fw-bold text-dark mb-1">11:30 AM</h4>
+                                        <h4 class="fw-bold mb-1">11:30 AM</h4>
                                         <p class="fs-12 text-muted mb-0">{{translate('Friday')}}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="border rounded-3 p-3 text-center bg-light-soft">
                                         <span class="badge bg-warning-soft text-warning mb-2 capsuled">{{translate('Good Choice')}}</span>
-                                        <h4 class="fw-bold text-dark mb-1">08:00 AM</h4>
+                                        <h4 class="fw-bold mb-1">08:00 AM</h4>
                                         <p class="fs-12 text-muted mb-0">{{translate('Monday')}}</p>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@ document.getElementById('analyzeTimingBtn').addEventListener('click', function()
                 <div class="col-md-4">
                     <div class="border rounded-3 p-3 text-center bg-light-soft">
                         <span class="badge ${badgeClasses[i] || 'bg-secondary text-secondary'} mb-2 capsuled">${item.label || ''}</span>
-                        <h4 class="fw-bold text-dark mb-1">${item.time || ''}</h4>
+                        <h4 class="fw-bold mb-1">${item.time || ''}</h4>
                         <p class="fs-12 text-muted mb-1">${item.day || ''}</p>
                         <p class="fs-11 text-muted mb-0">${item.reason || ''}</p>
                     </div>

@@ -33,7 +33,7 @@
 
 <section class="section-video-proof py-5">
     <div class="container py-5">
-        <h2 class="text-center fw-bold display-5 mb-5" style="font-family: 'Outfit', sans-serif !important; max-width: 800px; margin: 0 auto 60px auto;">
+        <h2 class="text-center fw-bold display-5 mb-5 text-dark" style="font-family: 'Outfit', sans-serif !important; max-width: 800px; margin: 0 auto 60px auto;">
             Loved ❤️ by more than a Million Entrepreneurs, Marketers and Content Creators.
         </h2>
 
@@ -41,14 +41,7 @@
             @foreach($reels as $reel)
                 <div class="col-lg-3 col-md-6">
                     <div class="insta-post-card">
-                        <div class="insta-post-header">
-                            <img src="{{ $reel['avatar'] }}" alt="{{ $reel['handle'] }}" class="insta-avatar">
-                            <div class="insta-meta">
-                                <div class="insta-username">{{ $reel['handle'] }} • <span class="text-primary" style="font-size: 0.8rem; cursor: pointer;">Follow</span></div>
-                                <div class="insta-subtitle text-muted" style="font-size: 0.7rem;">Original audio</div>
-                            </div>
-                            <i class="bi bi-three-dots ms-auto"></i>
-                        </div>
+
 
                         <div class="insta-video-container">
                             <iframe class="insta-video-iframe" 

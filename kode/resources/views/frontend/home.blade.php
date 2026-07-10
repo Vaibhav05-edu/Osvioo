@@ -45,6 +45,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Osvioo - Instagram & Facebook DM Automation</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('assets/logo.jpeg') }}" />
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Caveat:wght@400..700&family=Dancing+Script:wght@700&family=Playball&family=Syne:wght@700;800&family=Montserrat:wght@700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -182,16 +183,6 @@
     <!-- Combined Support & FAQ Section (Wishlink Style) -->
     <section class="py-5 section-support-faq" id="support">
         <div class="container py-5">
-            <!-- Launchpad Header -->
-            <div class="text-center mb-5 pb-4">
-                <h2 class="display-4 fw-bold mb-3" style="font-family: 'Outfit', sans-serif !important;">Your launchpad to success!!</h2>
-                <p class="fs-6 text-muted mx-auto lh-base" style="max-width: 800px; font-family: 'Outfit', sans-serif !important;">
-                    Help your followers shop smarter with great product recommendations and 
-                    <span class="text-dark fw-bold px-2" style="background-color: var(--royal-yellow) !important; display: inline-block !important; border-radius: 4px;">earn when they shop from your content.</span> 
-                    With Osvioo, you can expand your reach, engage a wider audience, and effortlessly manage everything from a single app.
-                </p>
-            </div>
-
             <!-- FAQ Header -->
             <div class="mt-5 pt-5">
                 <h3 class="display-5 fw-bold mb-2" style="font-family: 'Outfit', sans-serif !important;">FAQs</h3>
@@ -200,11 +191,11 @@
                 <div class="accordion accordion-flush d-grid gap-3" id="faqAccordion">
                     @php
                         $faqs_list = [
-                            ['q' => 'How does the <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Osvioo</span> Creator payout process work?', 'a' => 'Payouts are processed automatically every month. Once you hit the minimum threshold, your earnings are transferred directly to your linked bank account or PayPal.'],
-                            ['q' => 'How does <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Osvioo</span> help Creators grow?', 'a' => 'Osvioo automates your engagement, allowing you to respond to 100% of comments and DMs instantly. This boosts your ranking in the algorithm and keeps your audience active.'],
+                            ['q' => 'How does the <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 8px; display: inline-block;">Osvioo</span> Creator payout process work?', 'a' => 'Payouts are processed automatically every month. Once you hit the minimum threshold, your earnings are transferred directly to your linked bank account or PayPal.'],
+                            ['q' => 'How does <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 8px; display: inline-block;">Osvioo</span> help Creators grow?', 'a' => 'Osvioo automates your engagement, allowing you to respond to 100% of comments and DMs instantly. This boosts your ranking in the algorithm and keeps your audience active.'],
                             ['q' => 'Will Brands control my content?', 'a' => 'Absolutely not. You maintain 100% creative control over your content. Osvioo just provides the tools to manage your audience and monetization.'],
-                            ['q' => 'Is my account safe with <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Osvioo</span>?', 'a' => 'Yes, Osvioo is an official Meta Business Partner. We use only official APIs and never ask for your password. Your account remains 100% secure.'],
-                            ['q' => 'Can I use <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 4px;">Osvioo</span> for multiple accounts?', 'a' => 'Yes! Depending on your plan, you can manage multiple Instagram and Facebook pages from a single unified dashboard.'],
+                            ['q' => 'Is my account safe with <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 8px; display: inline-block;">Osvioo</span>?', 'a' => 'Yes, Osvioo is an official Meta Business Partner. We use only official APIs and never ask for your password. Your account remains 100% secure.'],
+                            ['q' => 'Can I use <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 8px; display: inline-block;">Osvioo</span> for multiple accounts?', 'a' => 'Yes! Depending on your plan, you can manage multiple Instagram and Facebook pages from a single unified dashboard.'],
                         ];
                     @endphp
 
@@ -322,7 +313,7 @@
             <span id="sp-action" class="text-muted" style="font-size: 0.8rem;">Just signed up to <span class="osvioo-logo-script" style="font-size: 1rem !important;">Osvioo</span></span>
             <span id="sp-time" class="text-muted" style="font-size: 0.7rem; opacity: 0.7;">• Just now</span>
         </div>
-        <button onclick="document.getElementById('dynamic-social-proof').classList.add('d-none')" class="btn-close ms-2" style="font-size: 0.5rem; opacity: 0.4; flex-shrink: 0;" aria-label="Close"></button>
+        <button onclick="dismissSocialProof()" class="btn-close ms-2" style="font-size: 0.5rem; opacity: 0.4; flex-shrink: 0;" aria-label="Close"></button>
     </div>
 
     @include('frontend.partials.footer')
@@ -336,7 +327,25 @@
             { name: 'Elena 🇪🇸', action: 'Hit 10k DMs sent!', time: '3 hours ago', img: 'https://i.pravatar.cc/150?u=6' }
         ];
 
+        let socialProofDismissed = false;
+        let socialProofInterval = null;
+
+        function dismissSocialProof() {
+            socialProofDismissed = true;
+            const popup = document.getElementById('dynamic-social-proof');
+            if (popup) {
+                popup.classList.remove('animate__fadeInUp');
+                popup.classList.add('animate__fadeOutDown');
+                setTimeout(() => popup.classList.add('d-none'), 400);
+            }
+            if (socialProofInterval) {
+                clearInterval(socialProofInterval);
+                socialProofInterval = null;
+            }
+        }
+
         function showNotification() {
+            if (socialProofDismissed) return;
             const popup = document.getElementById('dynamic-social-proof');
             if (!popup) return;
             const data = notifications[Math.floor(Math.random() * notifications.length)];
@@ -347,8 +356,10 @@
             popup.classList.remove('d-none', 'animate__fadeOutDown');
             popup.classList.add('animate__animated', 'animate__fadeInUp');
             setTimeout(() => {
-                popup.classList.remove('animate__fadeInUp');
-                popup.classList.add('animate__fadeOutDown');
+                if (!socialProofDismissed) {
+                    popup.classList.remove('animate__fadeInUp');
+                    popup.classList.add('animate__fadeOutDown');
+                }
             }, 4000);
         }
 
@@ -422,23 +433,9 @@
 
             setTimeout(() => {
                 showNotification();
-                setInterval(showNotification, 6000);
+                socialProofInterval = setInterval(showNotification, 6000);
             }, 2000);
 
-            // Synchronize Nav states with reference screenshot
-            const navLinks = document.querySelectorAll('.nav-link-wishlink');
-            navLinks.forEach(link => {
-                const text = link.innerText.trim();
-                if (text === 'Creators') {
-                    link.classList.add('active-pill');
-                } else if (text === 'Pricing') {
-                    link.classList.remove('active-pill');
-                    link.classList.add('blue-text');
-                } else {
-                    link.classList.remove('active-pill');
-                    link.classList.remove('blue-text');
-                }
-            });
         });
     </script>
   </body>

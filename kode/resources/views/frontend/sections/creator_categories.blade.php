@@ -115,6 +115,8 @@
         box-shadow: 0 4px 20px rgba(0,0,0,0.03);
         transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         position: relative;
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
     }
 
     .plixi-card:hover {
@@ -127,6 +129,7 @@
         border: 2px solid transparent !important;
         position: relative;
         background: #fff;
+        -webkit-tap-highlight-color: transparent;
     }
 
     .featured-plixi::before {
@@ -230,6 +233,7 @@
         overflow: hidden;
         box-shadow: 0 10px 25px rgba(15, 23, 42, 0.4);
         border: 2px solid transparent;
+        -webkit-tap-highlight-color: transparent;
     }
 
     .btn-plixi-glow::before {

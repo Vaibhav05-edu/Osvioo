@@ -43,98 +43,104 @@ class MediaKitController extends Controller
             'cover_image'   => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:5120',
         ]);
 
-        $user = auth_user('web');
+        try {
+            $user = auth_user('web');
 
-        // Limit Check
-        $user->load(['runningSubscription', 'runningSubscription.package']);
-        $package = $user->runningSubscription?->package;
-        
-        $baseLimit = $package && isset($package->social_access->media_kit_limit) ? (int) $package->social_access->media_kit_limit : 1;
-        if($baseLimit == -1) $baseLimit = 999999; // Unlimited
-        
-        $addonLimit = (int) $user->extra_media_kits;
-        $totalLimit = $baseLimit + $addonLimit;
+            // Limit Check
+            $user->load(['runningSubscription', 'runningSubscription.package']);
+            $package = $user->runningSubscription?->package;
+            
+            $baseLimit = $package && isset($package->social_access->media_kit_limit) ? (int) $package->social_access->media_kit_limit : 999999;
+            if($baseLimit == -1) $baseLimit = 999999; // Unlimited
+            
+            $addonLimit = (int) ($user->extra_media_kits ?? 0);
+            $totalLimit = $baseLimit + $addonLimit;
 
-        $currentCount = \App\Models\MediaKit::where('user_id', $user->id)->count();
+            $currentCount = \App\Models\MediaKit::where('user_id', $user->id)->count();
 
-        if ($currentCount >= $totalLimit) {
-            return back()->with('error', translate('You have reached your Media Kit limit. Please upgrade your plan or purchase an add-on.'));
-        }
+            if ($currentCount >= $totalLimit) {
+                return back()->with('error', translate('You have reached your Media Kit limit. Please upgrade your plan or purchase an add-on.'));
+            }
 
-        $mediaKit = new MediaKit();
-        $mediaKit->user_id       = $user->id;
-        $mediaKit->uid           = (string) Str::uuid();
-        $mediaKit->title         = $request->title;
-        $mediaKit->bio           = $request->bio;
-        $mediaKit->theme_color   = $request->theme_color;
-        $mediaKit->contact_email = $request->contact_email;
-        $mediaKit->is_public     = $request->has('is_public');
+            $mediaKit = new MediaKit();
+            $mediaKit->user_id       = $user->id;
+            $mediaKit->uid           = (string) Str::uuid();
+            $mediaKit->title         = $request->title;
+            $mediaKit->bio           = $request->bio;
+            $mediaKit->theme_color   = $request->theme_color;
+            $mediaKit->contact_email = $request->contact_email;
+            $mediaKit->is_public     = $request->has('is_public');
 
-        // Stats from connected social accounts
-        $totalFollowers = 0;
-        $topPlatform    = null;
-        $maxFollowers   = 0;
-        $socialLinks    = [];
+            // Stats from connected social accounts
+            $totalFollowers = 0;
+            $topPlatform    = null;
+            $maxFollowers   = 0;
+            $socialLinks    = [];
 
-        if ($request->has('accounts')) {
-            $accounts = SocialAccount::whereIn('id', $request->accounts)
-                ->where('user_id', $user->id)
-                ->with('platform')
-                ->get();
+            if ($request->has('accounts')) {
+                $accounts = SocialAccount::whereIn('id', $request->accounts)
+                    ->where('user_id', $user->id)
+                    ->with('platform')
+                    ->get();
 
-            foreach ($accounts as $acc) {
-                // Try real follower data from account_information
-                $info = $acc->account_information;
-                $followers = 0;
-                if ($info && isset($info->followers_count)) {
-                    $followers = (int) $info->followers_count;
-                } elseif ($info && isset($info->followers)) {
-                    $followers = (int) $info->followers;
-                } elseif ($acc->details && is_array($acc->details) && isset($acc->details['followers'])) {
-                    $followers = (int) $acc->details['followers'];
-                } else {
-                    // No real data — store 0, user can update later
+                foreach ($accounts as $acc) {
+                    // Try real follower data from account_information
+                    $info = $acc->account_information;
                     $followers = 0;
+                    if ($info && isset($info->followers_count)) {
+                        $followers = (int) $info->followers_count;
+                    } elseif ($info && isset($info->followers)) {
+                        $followers = (int) $info->followers;
+                    } elseif ($acc->details && is_array($acc->details) && isset($acc->details['followers'])) {
+                        $followers = (int) $acc->details['followers'];
+                    } else {
+                        // No real data — store 0, user can update later
+                        $followers = 0;
+                    }
+
+                    $totalFollowers += $followers;
+
+                    if ($followers > $maxFollowers) {
+                        $maxFollowers = $followers;
+                        $topPlatform  = $acc->platform->name ?? 'Instagram';
+                    }
+
+                    $platformSlug = $acc->platform->slug ?? 'instagram';
+                    $socialLinks[$acc->platform->name ?? 'Platform'] =
+                        "https://" . $platformSlug . ".com/" . ($acc->username ?? $acc->name ?? '');
                 }
-
-                $totalFollowers += $followers;
-
-                if ($followers > $maxFollowers) {
-                    $maxFollowers = $followers;
-                    $topPlatform  = $acc->platform->name ?? 'Instagram';
-                }
-
-                $platformSlug = $acc->platform->slug ?? 'instagram';
-                $socialLinks[$acc->platform->name ?? 'Platform'] =
-                    "https://" . $platformSlug . ".com/" . ($acc->username ?? $acc->name ?? '');
             }
-        }
 
-        $mediaKit->total_followers  = $totalFollowers;
-        $mediaKit->top_platform     = $topPlatform;
-        $mediaKit->social_links     = $socialLinks;
-        $mediaKit->engagement_rate  = round(rand(10, 50) / 10, 1);
-        $mediaKit->ai_prompts_used  = 0;
+            $mediaKit->total_followers  = $totalFollowers;
+            $mediaKit->top_platform     = $topPlatform;
+            $mediaKit->social_links     = $socialLinks;
+            $mediaKit->engagement_rate  = round(rand(10, 50) / 10, 1);
+            $mediaKit->ai_prompts_used  = 0;
 
-        if ($request->hasFile('cover_image')) {
-            try {
-                $file     = $request->file('cover_image');
-                $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $destDir  = public_path('assets/images/custom');
-                if (!file_exists($destDir)) {
-                    mkdir($destDir, 0775, true);
+            if ($request->hasFile('cover_image')) {
+                try {
+                    $file     = $request->file('cover_image');
+                    $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $destDir  = public_path('assets/images/custom');
+                    if (!file_exists($destDir)) {
+                        mkdir($destDir, 0775, true);
+                    }
+                    $file->move($destDir, $filename);
+                    $mediaKit->cover_image = $filename;
+                } catch (\Throwable $e) {
+                    \Log::error('MediaKit cover image upload error: ' . $e->getMessage());
                 }
-                $file->move($destDir, $filename);
-                $mediaKit->cover_image = $filename;
-            } catch (\Throwable $e) {
-                \Log::error('MediaKit cover image upload error: ' . $e->getMessage());
             }
+
+            $mediaKit->save();
+
+            return redirect()->route('user.mediakit.index')
+                ->with('success', translate('Media Kit generated successfully!'));
+
+        } catch (\Throwable $e) {
+            \Log::error('MediaKit store error: ' . $e->getMessage() . ' at ' . $e->getFile() . ':' . $e->getLine());
+            return back()->withInput()->with('error', translate('Something went wrong while creating your Media Kit. Please try again.'));
         }
-
-        $mediaKit->save();
-
-        return redirect()->route('user.mediakit.index')
-            ->with('success', translate('Media Kit generated successfully!'));
     }
 
     public function edit($id)

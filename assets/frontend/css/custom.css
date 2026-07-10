@@ -823,4 +823,23 @@
     font-weight: 800;
 }
 
-
+
+/* Fix for backend classes used in frontend */
+.bg--primary { background-color: var(--color-primary) !important; }
+.text--primary { color: var(--color-primary) !important; }
+.bg--primary-soft { background-color: var(--color-primary-light) !important; }
+
+.text--success { color: var(--color-success) !important; }
+.bg--success-soft { background-color: var(--color-success-light) !important; }
+
+.text--danger { color: var(--color-danger) !important; }
+.bg--danger-soft { background-color: var(--color-danger-light) !important; }
+
+.text--info { color: var(--color-info) !important; }
+.bg--info-soft { background-color: var(--color-info-light) !important; }
+
+.text--warning { color: var(--color-warning) !important; }
+.bg--warning-soft { background-color: var(--color-warning-light) !important; }
+
+.text--dark { color: var(--color-dark) !important; }
+.bg--light { background-color: var(--bg-light-one) !important; }

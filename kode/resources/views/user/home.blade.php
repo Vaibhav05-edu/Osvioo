@@ -163,7 +163,7 @@
                     <div class="row g-3">
                        @forelse(Arr::get($data['account_report'] ,'accounts_by_platform',[]) as $platform)
                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="glass-card no-border p-0 border position-relative bg--light">
+                                <div class="glass-card no-border p-0 border position-relative bg-light">
                                     <div class="shape-one">
                                         <svg width="65" height="65" viewBox="0 0 65 65" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -222,11 +222,11 @@
 
             <div class="col-xl-6">
                 <div class="glass-card h-100 p-0 overflow-hidden" style="border-radius: 16px; border: 1px solid #eef0f2;">
-                    <div class="p-4 bg--primary-soft" style="border-bottom: 1px solid #eef0f2;">
+                    <div class="p-4 bg-primary-soft" style="border-bottom: 1px solid #eef0f2;">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <div class="d-flex align-items-center gap-2">
                                 <div class="icon-box" style="width: 40px; height: 40px; background: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                                    <i class="bi bi-gem text--primary fs-20"></i>
+                                    <i class="bi bi-gem text-primary fs-20"></i>
                                 </div>
                                 <div>
                                     <h5 class="mb-0" style="font-weight: 700;">{{$subscription ? $subscription->package->title : 'No Active Plan'}}</h5>
@@ -278,7 +278,7 @@
                                         <div style="width: 32px; height: 32px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
                                             <i class="bi bi-receipt text-muted"></i>
                                         </div>
-                                        <span class="text-dark fw-bold fs-14">{{translate('Billing History & Invoices')}}</span>
+                                        <span class="fw-bold fs-14" style="color: var(--text-primary);">{{translate('Billing History & Invoices')}}</span>
                                     </div>
                                     <i class="bi bi-chevron-right text-muted fs-12"></i>
                                 </a>
@@ -304,15 +304,15 @@
                                 <div class="p-4">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
                                         <div class="icon-box" style="width: 48px; height: 48px; background: #5D5AF115; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                            <i class="bi bi-people-fill fs-24 text--primary"></i>
+                                            <i class="bi bi-people-fill fs-24 text-primary"></i>
                                         </div>
-                                        <span class="badge bg--success-soft text--success capsuled">+4 this week</span>
+                                        <span class="badge bg-success-soft text-success capsuled">+4 this week</span>
                                     </div>
                                     <h2 class="mb-1" style="font-weight: 800; font-family: 'Outfit', sans-serif;">{{Arr::get($data['account_report'],'total_account',0)}}</h2>
                                     <p class="text-muted mb-0" style="font-size: 14px; font-weight: 500;">{{translate('Total Accounts Connected')}}</p>
                                 </div>
-                                <div class="footer px-4 py-2 border-top bg--light d-flex justify-content-between">
-                                     <a class="text--primary fw-bold fs-13" href="{{route('user.social.account.list')}}">{{translate('View All')}}</a>
+                                <div class="footer px-4 py-2 border-top bg-light d-flex justify-content-between">
+                                     <a class="text-primary fw-bold fs-13" href="{{route('user.social.account.list')}}">{{translate('View All')}}</a>
                                      <i class="bi bi-chevron-right fs-12"></i>
                                 </div>
                             </div>
@@ -326,13 +326,13 @@
                                         <div class="icon-box" style="width: 48px; height: 48px; background: #FF950015; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
                                             <i class="bi bi-send-check-fill fs-24" style="color: #FF9500;"></i>
                                         </div>
-                                        <span class="badge bg--info-soft text--info capsuled">{{Arr::get($data,'schedule_post',0)}} Scheduled</span>
+                                        <span class="badge bg-info-soft text-info capsuled">{{Arr::get($data,'schedule_post',0)}} Scheduled</span>
                                     </div>
                                     <h2 class="mb-1" style="font-weight: 800; font-family: 'Outfit', sans-serif;">{{Arr::get($data,'total_post',0)}}</h2>
                                     <p class="text-muted mb-0" style="font-size: 14px; font-weight: 500;">{{translate('Total Posts Published')}}</p>
                                 </div>
-                                <div class="footer px-4 py-2 border-top bg--light d-flex justify-content-between">
-                                     <a class="text--primary fw-bold fs-13" href="{{route('user.social.post.list')}}">{{translate('Post History')}}</a>
+                                <div class="footer px-4 py-2 border-top bg-light d-flex justify-content-between">
+                                     <a class="text-primary fw-bold fs-13" href="{{route('user.social.post.list')}}">{{translate('Post History')}}</a>
                                      <i class="bi bi-chevron-right fs-12"></i>
                                 </div>
                             </div>
@@ -346,13 +346,13 @@
                                         <div class="icon-box" style="width: 48px; height: 48px; background: #22c55e15; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
                                             <i class="bi bi-person-badge-fill fs-24 text--success"></i>
                                         </div>
-                                        <span class="badge bg--success-soft text--success capsuled">AI Optimized</span>
+                                        <span class="badge bg-success-soft text-success capsuled">AI Optimized</span>
                                     </div>
                                     <h2 class="mb-1" style="font-weight: 800; font-family: 'Outfit', sans-serif;">{{ $mediaKitsCount }}</h2>
                                     <p class="text-muted mb-0" style="font-size: 14px; font-weight: 500;">{{translate('Total Media Kits')}}</p>
                                 </div>
-                                <div class="footer px-4 py-2 border-top bg--light d-flex justify-content-between">
-                                     <a class="text--primary fw-bold fs-13" href="{{route('user.social.account.list')}}">{{translate('Manage Kits')}}</a>
+                                <div class="footer px-4 py-2 border-top bg-light d-flex justify-content-between">
+                                     <a class="text-primary fw-bold fs-13" href="{{route('user.social.account.list')}}">{{translate('Manage Kits')}}</a>
                                      <i class="bi bi-chevron-right fs-12"></i>
                                 </div>
                             </div>
@@ -376,8 +376,8 @@
                                         <i class="bi bi-instagram fs-20"></i>
                                     </div>
                                     <div>
-                                        <h5 class="mb-0 fw-bold fs-18 text-dark">{{translate('Instagram Insights')}}</h5>
-                                        <p class="text-muted fs-11 mb-0">{{translate('Real-time performance')}}</p>
+                                        <h5 class="mb-0 fw-bold fs-18" style="color: var(--text-primary);">{{translate('Instagram Insights')}}</h5>
+                                        <p class="fs-11 mb-0" style="color: var(--text-secondary);">{{translate('Real-time performance')}}</p>
                                     </div>
                                 </div>
                                 <span class="badge bg-danger text-white fs-10 capsuled px-3 py-1" style="letter-spacing: 1px;">● LIVE</span>
@@ -385,20 +385,20 @@
 
                             <div class="row g-3 mb-4">
                                 <div class="col-6">
-                                    <div class="p-4 border-0 rounded-4 text-center" style="background: #f8f9fa;">
-                                        <p class="text-muted fs-12 mb-2 text-uppercase fw-bold" style="letter-spacing: 0.5px;">{{translate('Followers')}}</p>
-                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;" id="ai-followers"><span class="spinner-border spinner-border-sm text-muted"></span></h2>
+                                    <div class="p-4 border-0 rounded-4 text-center" style="background: var(--bg-light-one);">
+                                        <p class="fs-12 mb-2 text-uppercase fw-bold" style="color: var(--text-secondary); letter-spacing: 0.5px;">{{translate('Followers')}}</p>
+                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: var(--text-primary);" id="ai-followers"><span class="spinner-border spinner-border-sm text-muted"></span></h2>
                                         <div class="mt-2">
-                                            <span class="badge bg--success-soft text--success fs-12 fw-bold" id="ai-fol-growth">...</span>
+                                            <span class="badge bg-success-soft text-success fs-12 fw-bold" id="ai-fol-growth">...</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="p-4 border-0 rounded-4 text-center" style="background: #f8f9fa;">
-                                        <p class="text-muted fs-12 mb-2 text-uppercase fw-bold" style="letter-spacing: 0.5px;">{{translate('Engagement')}}</p>
-                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: #1a1a1a;" id="ai-engagement"><span class="spinner-border spinner-border-sm text-muted"></span></h2>
+                                    <div class="p-4 border-0 rounded-4 text-center" style="background: var(--bg-light-one);">
+                                        <p class="fs-12 mb-2 text-uppercase fw-bold" style="color: var(--text-secondary); letter-spacing: 0.5px;">{{translate('Engagement')}}</p>
+                                        <h2 class="mb-0 fw-bold" style="font-size: 32px; color: var(--text-primary);" id="ai-engagement"><span class="spinner-border spinner-border-sm text-muted"></span></h2>
                                         <div class="mt-2">
-                                            <span class="badge bg--success-soft text--success fs-12 fw-bold" id="ai-eng-growth">...</span>
+                                            <span class="badge bg-success-soft text-success fs-12 fw-bold" id="ai-eng-growth">...</span>
                                         </div>
                                     </div>
                                 </div>
@@ -419,20 +419,20 @@
                         <div class="glass-card h-100 p-4 shadow-sm overflow-hidden position-relative" style="border-radius: 24px; border: 1px solid rgba(93, 90, 241, 0.2); background: linear-gradient(145deg, #ffffff 0%, #f8faff 100%); transition: all 0.3s ease;">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="d-flex align-items-center gap-3">
-                                    <div class="icon-box bg--primary text-white" style="width: 45px; height: 45px; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(93, 90, 241, 0.3);">
+                                    <div class="icon-box bg-primary text-white" style="width: 45px; height: 45px; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(93, 90, 241, 0.3);">
                                         <i class="bi bi-robot fs-20"></i>
                                     </div>
                                     <div>
-                                        <h5 class="mb-0 fw-bold fs-18 text-dark">{{translate('AI Creator Analysis')}}</h5>
-                                        <p class="text-muted fs-11 mb-0">{{translate('Deep learning insights')}}</p>
+                                        <h5 class="mb-0 fw-bold fs-18" style="color: var(--text-primary);">{{translate('AI Creator Analysis')}}</h5>
+                                        <p class="fs-11 mb-0" style="color: var(--text-secondary);">{{translate('Deep learning insights')}}</p>
                                     </div>
                                 </div>
-                                <span class="badge bg--primary text-white capsuled fs-10 px-3 py-1 shadow-sm">{{translate('PREMIUM AI')}}</span>
+                                <span class="badge bg-primary text-white capsuled fs-10 px-3 py-1 shadow-sm">{{translate('PREMIUM AI')}}</span>
                             </div>
 
                             <div class="row g-3 mb-4">
                                 <div class="col-md-5">
-                                    <div class="p-3 border-0 rounded-4 bg-white shadow-sm h-100 d-flex flex-column align-items-center justify-content-center">
+                                    <div class="p-3 border-0 rounded-4 shadow-sm h-100 d-flex flex-column align-items-center justify-content-center" style="background: var(--card-bg-dash);">
                                         <p class="text-muted fs-11 mb-2 text-uppercase fw-bold text-center">{{translate('Profile Health')}}</p>
                                         <div class="position-relative d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
                                             <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(-90deg);">
@@ -457,13 +457,13 @@
                             </div>
 
                             <div class="p-3 rounded-4" style="background: rgba(93, 90, 241, 0.05); border: 1px dashed rgba(93, 90, 241, 0.3);">
-                                <h6 class="fs-12 fw-bold mb-2 text-dark d-flex align-items-center gap-2">
+                                <h6 class="fs-12 fw-bold mb-2 d-flex align-items-center gap-2" style="color: var(--text-primary);">
                                     <i class="bi bi-stars text-warning"></i>
                                     {{translate('Next Strategy')}}
                                 </h6>
                                 <div class="d-flex align-items-center gap-3">
-                                    <div class="icon-sm bg-white shadow-sm rounded-circle text--primary d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0;"><i class="bi bi-camera-reels fs-14"></i></div>
-                                    <p class="mb-0 fs-12 text-dark fw-bold" id="ai-next-strategy"><span class="spinner-border spinner-border-sm text-muted"></span></p>
+                                    <div class="icon-sm shadow-sm rounded-circle text-primary d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0; background: var(--card-bg-dash);"><i class="bi bi-camera-reels fs-14"></i></div>
+                                    <p class="mb-0 fs-12 fw-bold" style="color: var(--text-primary);" id="ai-next-strategy"><span class="spinner-border spinner-border-sm text-muted"></span></p>
                                 </div>
                             </div>
                         </div>
@@ -473,18 +473,18 @@
 
             {{-- AI OPTIMIZATION ROADMAP --}}
             <div class="col-12 mt-4 mb-2">
-                <div class="glass-card p-4 shadow-sm border-0 position-relative overflow-hidden" style="border-radius: 24px; background: #fff;">
+                <div class="glass-card p-4 shadow-sm border-0 position-relative overflow-hidden" style="border-radius: 24px; background: var(--card-bg-dash);">    
                     <div class="position-absolute top-0 end-0 p-4 opacity-10">
                         <i class="bi bi-rocket-takeoff" style="font-size: 80px; color: #5D5AF1;"></i>
                     </div>
                     
                     <div class="d-flex align-items-center gap-3 mb-4">
-                        <div class="icon-box bg--success-soft text--success" style="width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <div class="icon-box bg-success-soft text-success" style="width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                             <i class="bi bi-check2-circle fs-20"></i>
                         </div>
                         <div>
-                            <h5 class="mb-0 fw-bold fs-18 text-dark">{{translate('AI Profile Optimization Roadmap')}}</h5>
-                            <p class="text-muted fs-12 mb-0">{{translate('Actionable tasks to skyrocket your reach')}}</p>
+                            <h5 class="mb-0 fw-bold fs-18" style="color: var(--text-primary);">{{translate('AI Profile Optimization Roadmap')}}</h5>
+                            <p class="fs-12 mb-0" style="color: var(--text-secondary);">{{translate('Actionable tasks to skyrocket your reach')}}</p>
                         </div>
                     </div>
 
@@ -507,14 +507,14 @@
                         <div class="col-xl-4">
                             <div class="p-3 rounded-4 h-100 d-flex flex-column" style="background: rgba(93, 90, 241, 0.03); border: 1px solid rgba(93, 90, 241, 0.1);">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <span class="badge bg--primary text-white capsuled fs-10 px-3 py-1" id="roadmap-badge-1"><span class="spinner-border spinner-border-sm" style="width:10px; height:10px;"></span></span>
-                                    <i class="bi bi-chat-dots text--primary"></i>
+                                    <span class="badge bg-primary text-white capsuled fs-10 px-3 py-1" id="roadmap-badge-1"><span class="spinner-border spinner-border-sm" style="width:10px; height:10px;"></span></span>
+                                    <i class="bi bi-chat-dots text-primary"></i>
                                 </div>
                                 <h6 class="fw-bold mb-2 fs-14" id="roadmap-title-1"><span class="spinner-border spinner-border-sm text-muted"></span></h6>
                                 <p class="text-muted fs-12 mb-3" id="roadmap-desc-1">...</p>
                                 <div class="d-flex align-items-center justify-content-between mt-auto pt-2 border-top border-primary-subtle">
-                                    <span class="text--primary fw-bold fs-11"><i class="bi bi-graph-up-arrow me-1"></i> <span id="roadmap-benefit-1">...</span></span>
-                                    <a href="#" id="roadmap-action-url-1" class="btn btn-sm text--primary fw-bold fs-11 p-0"><span id="roadmap-action-text-1">...</span> <i class="bi bi-arrow-right"></i></a>
+                                    <span class="text-primary fw-bold fs-11"><i class="bi bi-graph-up-arrow me-1"></i> <span id="roadmap-benefit-1">...</span></span>
+                                    <a href="#" id="roadmap-action-url-1" class="btn btn-sm text-primary fw-bold fs-11 p-0"><span id="roadmap-action-text-1">...</span> <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>

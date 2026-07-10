@@ -182,7 +182,7 @@
 <!-- Who Can Apply -->
 <section class="py-5 bg-light-gray">
     <div class="container py-5">
-        <h2 class="display-6 fw-bold text-center mb-5 font-outfit letter-spacing-sm">
+        <h2 class="display-6 fw-bold text-center mb-5 font-outfit letter-spacing-sm text-dark">
             Who Can Apply?
         </h2>
         <div class="row g-4 justify-content-center">

@@ -3,7 +3,7 @@
 @section('content')
 <div class="row g-4">
     <div class="col-12">
-        <div class="glass-card p-4 d-flex align-items-center justify-content-between" style="background: linear-gradient(135deg, #5D5AF1 0%, #3f3cbd 100%); color: white; border-radius: 20px;">
+        <div class="glass-card p-4 d-flex align-items-center justify-content-between" style="background: linear-gradient(135deg, #5D5AF1 0%, #3f3cbd 100%) !important; color: white; border-radius: 20px;">
             <div>
                 <h3 class="mb-1 fw-bold text-white">{{translate('Instagram Auto DM')}}</h3>
                 <p class="mb-0 opacity-75">{{translate('Automate replies to direct messages or public comments on Reels and Posts instantly')}}</p>

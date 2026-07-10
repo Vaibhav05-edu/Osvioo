@@ -105,7 +105,7 @@
                 </div>
                 <div class="crm-card-meta">
                     <span><i class="bi bi-calendar3 me-1"></i>{{ $deal->updated_at->format('M d') }}</span>
-                    <span class="crm-card-amount">{{ base_currency() }}{{ number_format($deal->agreed_amount, 2) }}</span>
+                    <span class="crm-card-amount">{{ base_currency()->symbol }}{{ number_format($deal->agreed_amount, 2) }}</span>
                 </div>
             </div>
 
@@ -133,7 +133,7 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label fw-semibold">{{ translate('Agreed Amount') }} ({{ base_currency() }})</label>
+                                    <label class="form-label fw-semibold">{{ translate('Agreed Amount') }} ({{ base_currency()->symbol }})</label>
                                     <input type="number" step="0.01" name="agreed_amount" class="form-control" value="{{ $deal->agreed_amount }}">
                                 </div>
                                 <div class="mb-3">
@@ -185,7 +185,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">{{ translate('Agreed Amount') }} ({{ base_currency() }})</label>
+                        <label class="form-label fw-semibold">{{ translate('Agreed Amount') }} ({{ base_currency()->symbol }})</label>
                         <input type="number" step="0.01" name="agreed_amount" class="form-control" placeholder="0.00">
                     </div>
                     <div class="mb-3">
@@ -205,4 +205,13 @@
     </div>
 </div>
 
+@push('script-push')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.modal').forEach(function(modal) {
+            document.body.appendChild(modal);
+        });
+    });
+</script>
+@endpush
 @endsection

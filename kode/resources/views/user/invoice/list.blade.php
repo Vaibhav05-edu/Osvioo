@@ -203,74 +203,7 @@
                         </td>
                     </tr>
 
-                    @if($invoice->status != 'paid')
-                    <!-- Payment Modal -->
-                    <div class="modal fade" id="paymentModal{{ $invoice->uid }}" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content" style="border-radius:12px; border:none;">
-                                <div class="modal-header border-0 pb-0">
-                                    <h5 class="modal-title fw-bold">{{ translate('Record Payment') }}</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <form action="{{ route('user.invoice.payment.update', $invoice->uid) }}" method="POST">
-                                    @csrf
-                                    <div class="modal-body">
-                                        <p class="text-muted small mb-3">
-                                            {{ translate('Current Total:') }} <b>{{ $currSymbol }}{{ number_format($invoice->amount, 2) }}</b><br>
-                                            {{ translate('Amount Paid so far:') }} <b>{{ $currSymbol }}{{ number_format($details['amount_paid'] ?? 0, 2) }}</b><br>
-                                            @php $due = $invoice->amount - ($details['amount_paid'] ?? 0); @endphp
-                                            {{ translate('Due Amount:') }} <b class="text-danger">{{ $currSymbol }}{{ number_format($due, 2) }}</b>
-                                        </p>
-                                        <div class="form-group mb-0">
-                                            <label class="form-label fw-semibold">{{ translate('Enter Amount Received') }}</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text">{{ $currCode }}</span>
-                                                <input type="number" step="0.01" name="amount_paid" class="form-control" placeholder="e.g. 500" required>
-                                            </div>
-                                            <small class="text-muted d-block mt-1">{{ translate('This amount will be added to the total amount paid.') }}</small>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer border-0 pt-0">
-                                        <button type="submit" class="btn btn-primary w-100" style="border-radius:8px; padding:10px; font-weight:600;">
-                                            {{ translate('Update Payment') }}
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                    <!-- Email Modal -->
-                    <div class="modal fade" id="emailModal{{ $invoice->uid }}" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content" style="border-radius:12px; border:none;">
-                                <div class="modal-header border-0 pb-0">
-                                    <h5 class="modal-title fw-bold">{{ translate('Send Invoice to Email') }}</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <form action="{{ route('user.invoice.send.email', $invoice->uid) }}" method="POST">
-                                    @csrf
-                                    <div class="modal-body">
-                                        <p class="text-muted small mb-3">
-                                            {{ translate('Send this invoice as a PDF attachment to your client.') }}
-                                        </p>
-                                        <div class="form-group mb-0">
-                                            <label class="form-label fw-semibold">{{ translate('Client Email Address') }}</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                                <input type="email" name="client_email" class="form-control" placeholder="client@example.com" value="{{ $details['billed_to']['email'] ?? '' }}" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer border-0 pt-0">
-                                        <button type="submit" class="btn btn-primary w-100" style="border-radius:8px; padding:10px; font-weight:600;">
-                                            <i class="bi bi-send me-1"></i> {{ translate('Send Email') }}
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+
                     @empty
                     <tr>
                         <td colspan="8" class="p-0">
@@ -295,4 +228,81 @@
     </div>
     @endif
 </div>
+
+@foreach($invoices as $invoice)
+    @php
+        $details     = is_array($invoice->details) ? $invoice->details : [];
+        $currSymbol  = $details['currency_symbol'] ?? '$';
+        $currCode    = $details['currency_code']   ?? 'USD';
+    @endphp
+    @if($invoice->status != 'paid')
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal{{ $invoice->uid }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius:12px; border:none;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">{{ translate('Record Payment') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('user.invoice.payment.update', $invoice->uid) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <p class="text-muted small mb-3">
+                            {{ translate('Current Total:') }} <b>{{ $currSymbol }}{{ number_format($invoice->amount, 2) }}</b><br>
+                            {{ translate('Amount Paid so far:') }} <b>{{ $currSymbol }}{{ number_format($details['amount_paid'] ?? 0, 2) }}</b><br>
+                            @php $due = $invoice->amount - ($details['amount_paid'] ?? 0); @endphp
+                            {{ translate('Due Amount:') }} <b class="text-danger">{{ $currSymbol }}{{ number_format($due, 2) }}</b>
+                        </p>
+                        <div class="form-group mb-0">
+                            <label class="form-label fw-semibold">{{ translate('Enter Amount Received') }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text">{{ $currCode }}</span>
+                                <input type="number" step="0.01" name="amount_paid" class="form-control" placeholder="e.g. 500" required>
+                            </div>
+                            <small class="text-muted d-block mt-1">{{ translate('This amount will be added to the total amount paid.') }}</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="submit" class="btn btn-primary w-100" style="border-radius:8px; padding:10px; font-weight:600;">
+                            {{ translate('Update Payment') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endif
+    <!-- Email Modal -->
+    <div class="modal fade" id="emailModal{{ $invoice->uid }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius:12px; border:none;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">{{ translate('Send Invoice to Email') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('user.invoice.send.email', $invoice->uid) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <p class="text-muted small mb-3">
+                            {{ translate('Send this invoice as a PDF attachment to your client.') }}
+                        </p>
+                        <div class="form-group mb-0">
+                            <label class="form-label fw-semibold">{{ translate('Client Email Address') }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="email" name="client_email" class="form-control" placeholder="client@example.com" value="{{ $details['billed_to']['email'] ?? '' }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="submit" class="btn btn-primary w-100" style="border-radius:8px; padding:10px; font-weight:600;">
+                            <i class="bi bi-send me-1"></i> {{ translate('Send Email') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endforeach
+
 @endsection

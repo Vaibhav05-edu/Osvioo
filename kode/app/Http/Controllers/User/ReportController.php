@@ -254,9 +254,9 @@ class ReportController extends Controller
     public function failedTransactionReport() :View{
         return view('user.report.failed_transaction',[
             'meta_data'       => $this->metaData(['title'=> translate("Failed Transactions")]),
-            "reports"         => App\Models\PaymentLog::with(['user', 'method'])
+            "reports"         => \App\Models\PaymentLog::with(['user', 'method'])
                                     ->where('user_id',$this->user->id)
-                                    ->where('status', App\Enums\PaymentStatus::FAILED->value)
+                                    ->where('status', \App\Enums\PaymentStatus::FAILED->value)
                                     ->search(['trx_code'])
                                     ->date()
                                     ->latest()

@@ -112,7 +112,7 @@
                             <label class="plixi-form-label">Country</label>
                             <div class="position-relative">
                                 <i class="bi bi-globe position-absolute top-50 translate-middle-y text-muted" style="left: 18px; z-index: 10;"></i>
-                                <select class="plixi-form-input ps-5 select-two" name="country_id" id="country_id">
+                                <select class="form-select plixi-form-input ps-5" name="country_id" id="country_id">
                                     <option value="">Select country</option>
                                     @foreach ($countries as $country)
                                         <option {{ strtolower($geoCountry) == strtolower($country->name) || old("country_id") == $country->id ? 'selected' :""}} value="{{$country->id}}">
@@ -139,9 +139,9 @@
                     </div>
 
                     <div class="auth-checkbox mt-4 mb-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="terms_condition" value="1" name="terms_condition" required>
-                            <label class="form-check-label fs-0-85rem fw-600 text-muted" for="terms_condition">
+                        <div class="d-flex align-items-start gap-2">
+                            <input class="form-check-input flex-shrink-0 m-0 mt-1" type="checkbox" id="terms_condition" value="1" name="terms_condition" required style="cursor: pointer;">
+                            <label class="form-check-label fs-0-85rem fw-600 text-muted m-0" for="terms_condition" style="cursor: pointer;">
                                 By completing the registration process, you agree and accept our
                                 @if($termsPage)
                                     <a href="{{route('page',$termsPage->slug)}}" class="text-primary"> {{$termsPage->title}}</a>
