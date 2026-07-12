@@ -154,7 +154,7 @@
     .meta-label-master { font-weight: 800; font-size: 1.6rem; color: #0668E1; letter-spacing: -0.5px; line-height: 1; }
     .meta-partner-label { font-size: 0.7rem; font-weight: 700; color: #333; margin-top: -3px; margin-left: 2px; }
 
-    .social-icons-row { display: flex; gap: 15px; justify-content: flex-end; }
+    .social-icons-row { display: flex; gap: 15px; justify-content: flex-end; flex-wrap: wrap; }
     .master-social-btn { width: 40px; height: 40px; background: #000; color: #fff !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; text-decoration: none; transition: transform 0.3s; }
     .master-social-btn:hover { transform: translateY(-5px); }
 
@@ -172,10 +172,11 @@
 
     @media (max-width: 991px) {
         .footer-grid-master { grid-template-columns: 1fr; text-align: center; }
-        .social-icons-row { justify-content: center; }
+        .footer-section.text-end { text-align: center !important; }
+        .social-icons-row { justify-content: center !important; }
         .meta-badge-container-master { text-align: center; }
         .meta-row-master { justify-content: center; }
-        .footer-bottom-master { flex-direction: column; gap: 20px; }
+        .footer-bottom-master { flex-direction: column; align-items: center !important; gap: 20px; text-align: center; }
         .wishlink-footer-card { border-radius: 40px; padding: 60px 20px; }
     }
 </style>

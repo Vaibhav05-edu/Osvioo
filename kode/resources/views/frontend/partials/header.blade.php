@@ -169,5 +169,14 @@
             margin-top: 15px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
+        .navbar-toggler {
+            display: block !important;
+            color: #1A1A1A !important;
+            padding: 4px 8px !important;
+        }
+        .navbar-toggler .bi-list {
+            color: #1A1A1A !important;
+            display: inline-block !important;
+        }
     }
 </style>

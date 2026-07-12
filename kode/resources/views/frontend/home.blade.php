@@ -305,65 +305,8 @@
         }
     </style>
 
-    <!-- Dynamic Social Proof Popup -->
-    <div id="dynamic-social-proof" class="premium-social-proof d-none animate__animated">
-        <img id="sp-img" src="https://i.pravatar.cc/150?u=1" alt="User" class="sp-img-box">
-        <div class="d-flex align-items-center gap-2">
-            <span id="sp-name" class="fw-bold text-dark" style="font-size: 0.8rem;">Manas 🇺🇸</span>
-            <span id="sp-action" class="text-muted" style="font-size: 0.8rem;">Just signed up to <span class="osvioo-logo-script" style="font-size: 1rem !important;">Osvioo</span></span>
-            <span id="sp-time" class="text-muted" style="font-size: 0.7rem; opacity: 0.7;">• Just now</span>
-        </div>
-        <button onclick="dismissSocialProof()" class="btn-close ms-2" style="font-size: 0.5rem; opacity: 0.4; flex-shrink: 0;" aria-label="Close"></button>
-    </div>
-
     @include('frontend.partials.footer')
     <script nonce="{{ csp_nonce() }}">
-        const notifications = [
-            { name: 'Manas 🇺🇸', action: 'Just signed up to <span class="osvioo-logo-script" style="font-size: 1rem !important;">Osvioo</span>', time: 'Just now', img: 'https://i.pravatar.cc/150?u=1' },
-            { name: 'Sarah 🇬🇧', action: 'Upgraded to Pro', time: '2 mins ago', img: 'https://i.pravatar.cc/150?u=2' },
-            { name: 'Alex 🇨🇦', action: 'Started automating comments', time: '5 mins ago', img: 'https://i.pravatar.cc/150?u=3' },
-            { name: 'Priya 🇮🇳', action: 'Just signed up to <span class="osvioo-logo-script" style="font-size: 1rem !important;">Osvioo</span>', time: '12 mins ago', img: 'https://i.pravatar.cc/150?u=4' },
-            { name: 'Mike 🇦🇺', action: 'Upgraded to Agency', time: '1 hour ago', img: 'https://i.pravatar.cc/150?u=5' },
-            { name: 'Elena 🇪🇸', action: 'Hit 10k DMs sent!', time: '3 hours ago', img: 'https://i.pravatar.cc/150?u=6' }
-        ];
-
-        let socialProofDismissed = false;
-        let socialProofInterval = null;
-
-        function dismissSocialProof() {
-            socialProofDismissed = true;
-            const popup = document.getElementById('dynamic-social-proof');
-            if (popup) {
-                popup.classList.remove('animate__fadeInUp');
-                popup.classList.add('animate__fadeOutDown');
-                setTimeout(() => popup.classList.add('d-none'), 400);
-            }
-            if (socialProofInterval) {
-                clearInterval(socialProofInterval);
-                socialProofInterval = null;
-            }
-        }
-
-        function showNotification() {
-            if (socialProofDismissed) return;
-            const popup = document.getElementById('dynamic-social-proof');
-            if (!popup) return;
-            const data = notifications[Math.floor(Math.random() * notifications.length)];
-            document.getElementById('sp-img').src = data.img;
-            document.getElementById('sp-name').textContent = data.name;
-            document.getElementById('sp-action').innerHTML = data.action;
-            document.getElementById('sp-time').textContent = data.time;
-            popup.classList.remove('d-none', 'animate__fadeOutDown');
-            popup.classList.add('animate__animated', 'animate__fadeInUp');
-            setTimeout(() => {
-                if (!socialProofDismissed) {
-                    popup.classList.remove('animate__fadeInUp');
-                    popup.classList.add('animate__fadeOutDown');
-                }
-            }, 4000);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
             console.log('Initializing Swiper sliders...');
             
             // Feature Slider
@@ -387,10 +330,9 @@
 
             // Why Osvioo (Orange Section)
             const whySwiper = new Swiper('.why-socialyt-swiper-container', {
-                direction: 'vertical',
                 loop: true,
                 autoplay: {
-                    delay: 2000,
+                    delay: 3000,
                     disableOnInteraction: false,
                 },
                 speed: 800,
@@ -398,7 +340,16 @@
                     el: '.why-socialyt-pagination',
                     clickable: true,
                 },
-                height: 600
+                breakpoints: {
+                    992: {
+                        direction: 'vertical',
+                        height: 600
+                    },
+                    0: {
+                        direction: 'horizontal',
+                        height: 800
+                    }
+                }
             });
 
             // Creator Love (Stacked Cards)
@@ -431,10 +382,7 @@
                 console.log('Why Osvioo autoplay started');
             }
 
-            setTimeout(() => {
-                showNotification();
-                socialProofInterval = setInterval(showNotification, 6000);
-            }, 2000);
+
 
         });
     </script>

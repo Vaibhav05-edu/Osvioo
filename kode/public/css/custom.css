@@ -1525,3 +1525,67 @@ footer,
     height: 30px;
     border-radius: 10px;
 }
+
+@media (max-width: 991px) {
+    .section-why-socialyt {
+        padding: 60px 0 !important;
+    }
+    .why-socialyt-wrapper {
+        height: 750px !important;
+    }
+    .why-socialyt-slide {
+        flex-direction: column !important;
+        gap: 30px !important;
+        height: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+    .why-socialyt-text {
+        padding-left: 0 !important;
+        text-align: center !important;
+        flex: none !important;
+    }
+    .why-socialyt-text h2 {
+        font-size: 2rem !important;
+        margin-bottom: 20px !important;
+    }
+    .step-header {
+        justify-content: center !important;
+    }
+    .step-box p {
+        margin: 0 auto !important;
+    }
+    .why-socialyt-image {
+        padding-right: 0 !important;
+        width: 100% !important;
+        flex: none !important;
+    }
+    .linkdm-clone-wrapper {
+        transform: scale(0.85);
+        margin: 0 auto !important;
+        width: 100% !important;
+    }
+    .why-socialyt-slide .profile-card { 
+        right: -30px !important; 
+    }
+    .why-socialyt-slide .inbox-card { 
+        right: -30px !important; 
+    }
+    .why-socialyt-slide .ad-card { 
+        left: -30px !important; 
+    }
+    .why-socialyt-pagination {
+        left: 50% !important;
+        top: auto !important;
+        bottom: 10px !important;
+        transform: translateX(-50%) !important;
+        flex-direction: row !important;
+    }
+    .why-socialyt-pagination .swiper-pagination-bullet {
+        margin: 0 5px !important;
+    }
+    .why-socialyt-pagination .swiper-pagination-bullet-active {
+        width: 30px !important;
+        height: 10px !important;
+    }
+}
