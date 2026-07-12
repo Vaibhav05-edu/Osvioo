@@ -207,11 +207,12 @@
 
 @push('script-push')
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll('.modal').forEach(function(modal) {
-            document.body.appendChild(modal);
+    (function($) {
+        "use strict";
+        $(document).ready(function() {
+            $('.modal').appendTo("body");
         });
-    });
+    })(jQuery);
 </script>
 @endpush
 @endsection
