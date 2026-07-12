@@ -3,8 +3,8 @@
 @section('content')
 
     @php
-        $parameters     = ($method->parameters);
-        $extraPrameters = ($method->extra_parameters);
+        $parameters     = (array) ($method->parameters ?? []);
+        $extraPrameters = (array) ($method->extra_parameters ?? []);
     @endphp
 
     <div class="i-card-md">
