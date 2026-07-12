@@ -75,12 +75,12 @@
 
             <!-- Card 4: AI-Match -->
             <div class="col-lg-3 col-md-6">
-                <div class="plixi-card featured-plixi">
+                <div class="plixi-card">
                     <span class="plixi-new-badge">NEW!</span>
                     <div class="card-icon-box pink-icon">
                         <i class="bi bi-heart-pulse"></i>
                     </div>
-                    <h3 class="plixi-card-title plixi-gradient-text">AI-Match™</h3>
+                    <h3 class="plixi-card-title">AI-Match™</h3>
                     <p class="plixi-card-desc">
                         Train your Osvioo AI model to better identify your ideal target followers by swiping accounts just like on Tinder.
                     </p>
@@ -90,7 +90,7 @@
                         <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg> Smart Followers Magnet</li>
                     </ul>
                     <div class="plixi-footer mt-auto">
-                        <a href="{{ route('auth.register') }}" class="btn-plixi-glow featured-btn">Try AI-Match <i class="bi bi-chevron-right ms-1"></i></a>
+                        <a href="{{ route('auth.register') }}" class="btn-plixi-glow">Try AI-Match <i class="bi bi-chevron-right ms-1"></i></a>
                     </div>
                 </div>
             </div>
