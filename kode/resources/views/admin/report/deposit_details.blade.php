@@ -31,8 +31,8 @@
                                                             "value"  =>  $report->trx_code
                                             ],
                                             [
-                                                            "title"  =>  translate('Payment Method'),
-                                                            "value"  =>  $report->method->name
+                                                            "title"  => translate('Payment Method'),
+                                                            "value"  => $report->method?->name ?? '-'
                                             ],
                                             [
                                                             "title"  =>  translate('Amount'),
@@ -43,12 +43,12 @@
                                                             "value"  =>  num_format($report->charge,@$report->currency)
                                             ],
                                             [
-                                                            "title"   =>  translate('Rate'),
-                                                            "value"   => num_format(1,$report->currency) ." = ". num_format($report->rate,@$report->method->currency)
+                                                            "title"   => translate('Rate'),
+                                                            "value"   => num_format(1,$report->currency) ." = ". num_format($report->rate, $report->method?->currency ?? null)
                                             ],
                                             [
-                                                            "title"   =>  translate('Final Amount'),
-                                                            "value"   =>  num_format($report->final_amount,@$report->method->currency)
+                                                            "title"   => translate('Final Amount'),
+                                                            "value"   => num_format($report->final_amount, $report->method?->currency ?? null)
                                             ],
                                             [
                                                             "title"   =>  translate('Date'),
@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 
-                @if(! (is_array($report->custom_data) && count($report->custom_data) < 1))
+                @if(!is_null($report->custom_data) && count((array)$report->custom_data) > 0)
                     <div class="col-xl-7 col-lg-6 col-md-6">
                         <div class="i-card-md">
                             <div class="card--header">
@@ -82,7 +82,7 @@
                             </div>
                             <div class="card-body">
 
-                                @include('admin.partials.custom_list',['db_list'  => true , 'lists' => $report->custom_data,'file_path'=> "payment"])
+                                @include('admin.partials.custom_list',['db_list'  => true , 'lists' => (array)$report->custom_data,'file_path'=> "payment"])
                             
                                 @if(App\Enums\DepositStatus::value("PENDING",true) == $report->status)
                                     <div class="d-flex justify-content-center p-4 gap-2">
