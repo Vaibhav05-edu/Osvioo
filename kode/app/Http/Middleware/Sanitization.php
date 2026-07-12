@@ -68,10 +68,8 @@ class Sanitization
 
     protected function sanitizeString(string $value)
     {
-        $cleanValue = htmlspecialchars_decode($value);
-        $cleanValue = preg_replace("/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i", '', $cleanValue);
+        $cleanValue = preg_replace("/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i", '', $value);
         $cleanValue = preg_replace("/<script\b[^>]*>(.*?)<\/script>/is", '', $cleanValue);
         return $cleanValue;
-
     }
 }
