@@ -31,6 +31,9 @@
                         <li><a href="{{ route('home') }}">For Creators</a></li>
                         <li><a href="{{ route('home') }}">For Brands</a></li>
                         <li><a href="{{ route('about') }}">About Us</a></li>
+                        @foreach($pages as $page)
+                            <li><a href="{{ route('page', $page->slug) }}">{{ $page->title }}</a></li>
+                        @endforeach
                     </ul>
 
                     <div class="query-box mt-5">

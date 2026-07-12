@@ -46,6 +46,11 @@
                         <li class="nav-item">
                             <a class="nav-link-wishlink {{ request()->is('affiliate') || request()->routeIs('affiliate') ? 'active-pill' : '' }}" href="{{route('affiliate')}}">Affiliate</a>
                         </li>
+                        @foreach($pages as $page)
+                            <li class="nav-item">
+                                <a class="nav-link-wishlink {{ request()->is('pages/'.$page->slug) ? 'active-pill' : '' }}" href="{{route('page', $page->slug)}}">{{ $page->title }}</a>
+                            </li>
+                        @endforeach
                         <li class="nav-item">
                             <a class="nav-link-wishlink d-lg-none" href="{{route('auth.login')}}">Login</a>
                         </li>
