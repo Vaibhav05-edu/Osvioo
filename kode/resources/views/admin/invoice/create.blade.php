@@ -161,8 +161,8 @@
 
 @endsection
 
-@push('script-include')
-<script>
+@push('script-push')
+<script nonce="{{ csp_nonce() }}">
 (function($){
     "use strict";
 
