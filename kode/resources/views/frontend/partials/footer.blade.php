@@ -28,9 +28,9 @@
                 <div class="footer-section">
                     <h5 class="master-col-title">Company</h5>
                     <ul class="master-links">
-                        <li><a href="{{ route('home') }}">For Creators</a></li>
-                        <li><a href="{{ route('home') }}">For Brands</a></li>
-                        <li><a href="{{ route('about') }}">About Us</a></li>
+                        @foreach($menus as $menu)
+                            <li><a href="{{ $menu->url }}">{{ $menu->name }}</a></li>
+                        @endforeach
                         @foreach($pages as $page)
                             <li><a href="{{ route('page', $page->slug) }}">{{ $page->title }}</a></li>
                         @endforeach
