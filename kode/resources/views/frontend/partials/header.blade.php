@@ -38,13 +38,13 @@
                 <div class="collapse navbar-collapse" id="wishlinkNav">
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4 align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link-wishlink {{ request()->routeIs('home') ? 'active-pill' : '' }}" href="{{route('home')}}">Creators</a>
+                            <a class="nav-link-wishlink {{ request()->is('/') || request()->routeIs('home') ? 'active-pill' : '' }}" href="{{route('home')}}">Creators</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link-wishlink {{ request()->routeIs('plan') || request()->routeIs('user.plan') ? 'active-pill' : '' }}" href="{{ auth_user('web') ? route('user.plan') : route('plan') }}">Pricing</a>
+                            <a class="nav-link-wishlink {{ request()->is('plans') || request()->is('user/plans') || request()->routeIs('plan') || request()->routeIs('user.plan') ? 'active-pill' : '' }}" href="{{ auth_user('web') ? route('user.plan') : route('plan') }}">Pricing</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link-wishlink {{ request()->routeIs('affiliate') ? 'active-pill' : '' }}" href="{{route('affiliate')}}">Affiliate</a>
+                            <a class="nav-link-wishlink {{ request()->is('affiliate') || request()->routeIs('affiliate') ? 'active-pill' : '' }}" href="{{route('affiliate')}}">Affiliate</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link-wishlink d-lg-none" href="{{route('auth.login')}}">Login</a>
