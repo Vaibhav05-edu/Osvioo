@@ -250,6 +250,7 @@ Route::get('/lock-server-code', function() {
                 Route::prefix("/affiliate")->name('affiliate.')->group(function(){
                     Route::get('/', [\App\Http\Controllers\User\AffiliateController::class, 'index'])->name('index');
                     Route::post('/apply', [\App\Http\Controllers\User\AffiliateController::class, 'apply'])->name('apply');
+                    Route::post('/update', [\App\Http\Controllers\User\AffiliateController::class, 'update'])->name('update');
                 });
 
                 Route::get('/plans', 'plan')->name('plan');

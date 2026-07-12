@@ -256,7 +256,7 @@ class ReportController extends Controller
             'meta_data'       => $this->metaData(['title'=> translate("Failed Transactions")]),
             "reports"         => \App\Models\PaymentLog::with(['user', 'method'])
                                     ->where('user_id',$this->user->id)
-                                    ->where('status', \App\Enums\PaymentStatus::FAILED->value)
+                                    ->where('status', \App\Enums\DepositStatus::FAILED->value)
                                     ->search(['trx_code'])
                                     ->date()
                                     ->latest()

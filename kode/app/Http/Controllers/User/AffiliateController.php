@@ -46,6 +46,19 @@ class AffiliateController extends Controller
         return redirect()->route('user.affiliate.index')->with('success', translate('Your affiliate application has been submitted and is pending approval.'));
     }
 
+    public function update(Request $request)
+    {
+        $request->validate([
+            'referral_code' => 'required|string|max:255|unique:users,referral_code,' . auth_user('web')->id,
+        ]);
+
+        $user = auth_user('web');
+        $user->referral_code = $request->referral_code;
+        $user->save();
+
+        return back()->with('success', translate('Referral code updated successfully.'));
+    }
+
     private function dashboard(User $user)
     {
         $totalClicks   = AffiliateClickLog::where('referral_id', $user->id)->count();
