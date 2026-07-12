@@ -108,111 +108,105 @@
                     <span class="crm-card-amount">{{ base_currency()->symbol }}{{ number_format($deal->agreed_amount, 2) }}</span>
                 </div>
             </div>
-
-            <!-- Edit Deal Modal -->
-            <div class="modal fade" id="editDealModal{{ $deal->uid }}" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title fw-bold">{{ translate('Edit Deal:') }} {{ $deal->brand_name }}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <form action="{{ route('user.brand_deals.update', $deal->uid) }}" method="POST">
-                            @csrf
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label class="form-label fw-semibold">{{ translate('Brand Name') }}</label>
-                                    <input type="text" name="brand_name" class="form-control" value="{{ $deal->brand_name }}" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label fw-semibold">{{ translate('Status') }}</label>
-                                    <select name="status" class="form-select">
-                                        @foreach($statuses as $s)
-                                        <option value="{{ $s }}" {{ $deal->status == $s ? 'selected' : '' }}>{{ translate($s) }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label fw-semibold">{{ translate('Agreed Amount') }} ({{ base_currency()->symbol }})</label>
-                                    <input type="number" step="0.01" name="agreed_amount" class="form-control" value="{{ $deal->agreed_amount }}">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label fw-semibold">{{ translate('Deliverables') }}</label>
-                                    <textarea name="deliverables" class="form-control" rows="2">{{ $deal->deliverables }}</textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label fw-semibold">{{ translate('Private Notes') }}</label>
-                                    <textarea name="notes" class="form-control" rows="2">{{ $deal->notes }}</textarea>
-                                </div>
-                            </div>
-                            <div class="modal-footer d-flex justify-content-between">
-                                <a href="{{ route('user.brand_deals.destroy', $deal->uid) }}" class="btn btn-danger btn-sm" onclick="return confirm('Delete this deal?')">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                                <button type="submit" class="btn btn-primary capsuled">{{ translate('Save Changes') }}</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
             @endforeach
         @endif
     </div>
     @endforeach
 </div>
 
-<!-- Add Deal Modal -->
-<div class="modal fade" id="addDealModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">{{ translate('New Brand Deal') }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+@endsection
+
+@section('modal')
+    @foreach($deals as $deal)
+    <!-- Edit Deal Modal -->
+    <div class="modal fade" id="editDealModal{{ $deal->uid }}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">{{ translate('Edit Deal:') }} {{ $deal->brand_name }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('user.brand_deals.update', $deal->uid) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ translate('Brand Name') }}</label>
+                            <input type="text" name="brand_name" class="form-control" value="{{ $deal->brand_name }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ translate('Status') }}</label>
+                            <select name="status" class="form-select">
+                                @foreach($statuses as $s)
+                                <option value="{{ $s }}" {{ $deal->status == $s ? 'selected' : '' }}>{{ translate($s) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ translate('Agreed Amount') }} ({{ base_currency()->symbol }})</label>
+                            <input type="number" step="0.01" name="agreed_amount" class="form-control" value="{{ $deal->agreed_amount }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ translate('Deliverables') }}</label>
+                            <textarea name="deliverables" class="form-control" rows="2">{{ $deal->deliverables }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ translate('Private Notes') }}</label>
+                            <textarea name="notes" class="form-control" rows="2">{{ $deal->notes }}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <a href="{{ route('user.brand_deals.destroy', $deal->uid) }}" class="btn btn-danger btn-sm" onclick="return confirm('Delete this deal?')">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                        <button type="submit" class="btn btn-primary capsuled">{{ translate('Save Changes') }}</button>
+                    </div>
+                </form>
             </div>
-            <form action="{{ route('user.brand_deals.store') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">{{ translate('Brand Name') }} <span class="text-danger">*</span></label>
-                        <input type="text" name="brand_name" class="form-control" placeholder="e.g. Nike" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">{{ translate('Initial Status') }}</label>
-                        <select name="status" class="form-select">
-                            @foreach($statuses as $s)
-                            <option value="{{ $s }}">{{ translate($s) }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">{{ translate('Agreed Amount') }} ({{ base_currency()->symbol }})</label>
-                        <input type="number" step="0.01" name="agreed_amount" class="form-control" placeholder="0.00">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">{{ translate('Deliverables') }}</label>
-                        <textarea name="deliverables" class="form-control" rows="2" placeholder="e.g. 1 Reel, 2 Story mentions..."></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">{{ translate('Private Notes') }}</label>
-                        <textarea name="notes" class="form-control" rows="2" placeholder="Contact info, terms, etc."></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary capsuled w-100">{{ translate('Create Deal') }}</button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
+    @endforeach
 
-@push('script-push')
-<script>
-    (function($) {
-        "use strict";
-        $(document).ready(function() {
-            $('.modal').appendTo("body");
-        });
-    })(jQuery);
-</script>
-@endpush
+    <!-- Add Deal Modal -->
+    <div class="modal fade" id="addDealModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">{{ translate('New Brand Deal') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('user.brand_deals.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ translate('Brand Name') }} <span class="text-danger">*</span></label>
+                            <input type="text" name="brand_name" class="form-control" placeholder="e.g. Nike" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ translate('Initial Status') }}</label>
+                            <select name="status" class="form-select">
+                                @foreach($statuses as $s)
+                                <option value="{{ $s }}">{{ translate($s) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ translate('Agreed Amount') }} ({{ base_currency()->symbol }})</label>
+                            <input type="number" step="0.01" name="agreed_amount" class="form-control" placeholder="0.00">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ translate('Deliverables') }}</label>
+                            <textarea name="deliverables" class="form-control" rows="2" placeholder="e.g. 1 Reel, 2 Story mentions..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ translate('Private Notes') }}</label>
+                            <textarea name="notes" class="form-control" rows="2" placeholder="Contact info, terms, etc."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary capsuled w-100">{{ translate('Create Deal') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
