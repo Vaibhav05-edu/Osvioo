@@ -8,14 +8,15 @@
 
 <style nonce="{{ csp_nonce() }}">
 .invoice-creator {
-    background-color: #f8f9fa;
+    background-color: var(--site-bg);
     min-height: 100vh;
     padding-bottom: 3rem;
 }
 .invoice-card {
-    background: #fff;
+    background: var(--card-bg-dash);
+    color: var(--text-primary);
     border-radius: 8px;
-    border: none;
+    border: 1px solid var(--border-one);
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     padding: 2rem 3rem;
     max-width: 1000px;
@@ -24,38 +25,42 @@
 .form-section-title {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #333;
+    color: var(--text-primary);
     margin-bottom: 1rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-one);
     padding-bottom: 0.5rem;
 }
 .form-label {
     font-weight: 600;
     font-size: 0.85rem;
-    color: #555;
+    color: var(--text-secondary);
     margin-bottom: 0.4rem;
 }
 .form-control, .form-select {
     border-radius: 4px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-one);
     padding: 0.6rem 0.8rem;
     font-size: 0.9rem;
     box-shadow: none;
+    background-color: var(--site-bg);
+    color: var(--text-primary);
 }
 .form-control:focus, .form-select:focus {
-    border-color: #7b4cf6;
-    box-shadow: 0 0 0 3px rgba(123, 76, 246, 0.1);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+    background-color: var(--site-bg);
+    color: var(--text-primary);
 }
 .box-section {
-    background: #fafafa;
-    border: 1px solid #eaeaea;
+    background: var(--site-bg);
+    border: 1px solid var(--border-one);
     border-radius: 8px;
     padding: 1.5rem;
     height: 100%;
 }
 .items-table th {
-    background: #7b4cf6;
-    color: #fff;
+    background: var(--color-primary);
+    color: var(--color-primary-text);
     font-weight: 600;
     font-size: 0.85rem;
     padding: 0.8rem;
@@ -64,38 +69,43 @@
 .items-table td {
     vertical-align: middle;
     padding: 0.8rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-one);
+    background-color: var(--card-bg-dash);
+    color: var(--text-primary);
 }
 .items-table input.form-control {
     border: none;
     background: transparent;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--border-one);
     border-radius: 0;
     padding-left: 0;
     padding-right: 0;
+    color: var(--text-primary);
 }
 .items-table input.form-control:focus {
-    border-color: #7b4cf6;
+    border-color: var(--color-primary);
     box-shadow: none;
 }
 .btn-primary-custom {
-    background: #7b4cf6;
+    background: var(--color-primary);
     border: none;
-    color: #fff;
+    color: var(--color-primary-text);
     padding: 0.8rem 2rem;
     border-radius: 6px;
     font-weight: 600;
     transition: all 0.2s;
 }
 .btn-primary-custom:hover {
-    background: #6a3be3;
-    color: #fff;
+    background: var(--color-primary);
+    opacity: 0.85;
+    color: var(--color-primary-text);
 }
 .total-section {
-    background: #fdfdfd;
-    border: 1px solid #eaeaea;
+    background: var(--site-bg);
+    border: 1px solid var(--border-one);
     border-radius: 8px;
     padding: 1.5rem;
+    color: var(--text-primary);
 }
 .total-line {
     display: flex;
@@ -106,14 +116,14 @@
 .total-line.final {
     font-size: 1.2rem;
     font-weight: 700;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--border-one);
     padding-top: 0.8rem;
     margin-bottom: 0;
 }
 .btn-add-line {
-    color: #7b4cf6;
+    color: var(--color-primary);
     background: transparent;
-    border: 1px dashed #7b4cf6;
+    border: 1px dashed var(--color-primary);
     padding: 0.5rem 1rem;
     border-radius: 4px;
     font-size: 0.85rem;
@@ -121,7 +131,7 @@
     transition: all 0.2s;
 }
 .btn-add-line:hover {
-    background: #f4f0ff;
+    background: var(--color-primary-light);
 }
 .del-row-btn {
     color: #dc3545;
@@ -129,6 +139,11 @@
     border: none;
     font-size: 1.2rem;
     padding: 0;
+}
+/* Dark mode select fix */
+.invoice-creator select option {
+    background-color: var(--site-bg);
+    color: var(--text-primary);
 }
 </style>
 
