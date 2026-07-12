@@ -29,7 +29,7 @@
                                 <td>{{$addon->value}}</td>
                                 <td>
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input status-update" type="checkbox" data-id="{{$addon->id}}" @if($addon->status == 1) checked @endif>
+                                        <input class="form-check-input addon-status-update" type="checkbox" data-id="{{$addon->id}}" @if($addon->status == 1) checked @endif>
                                     </div>
                                 </td>
                                 <td>
@@ -146,36 +146,38 @@
 
 @push('script-include')
 <script>
-    $(document).ready(function() {
-        $('.editBtn').on('click', function() {
-            var addon = $(this).data('addon');
-            $('#edit_id').val(addon.id);
-            $('#edit_title').val(addon.title);
-            $('#edit_type').val(addon.type);
-            $('#edit_value').val(addon.value);
-            $('#edit_price').val(addon.price);
-            $('#editModal').modal('show');
-        });
+(function($){
+    "use strict";
 
-        $('.status-update').on('change', function() {
-            var id = $(this).data('id');
-            var url = "{{route('admin.addon.update.status')}}";
-            var token = "{{csrf_token()}}";
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: {
-                    '_token': token,
-                    'id': id
-                },
-                success: function(response) {
-                    toastr.success(response.message);
-                },
-                error: function(response) {
-                    toastr.error(response.responseJSON.message);
-                }
-            });
+    $(document).on('click', '.editBtn', function() {
+        var addon = $(this).data('addon');
+        $('#edit_id').val(addon.id);
+        $('#edit_title').val(addon.title);
+        $('#edit_type').val(addon.type);
+        $('#edit_value').val(addon.value);
+        $('#edit_price').val(addon.price);
+        $('#editModal').modal('show');
+    });
+
+    $(document).on('change', '.addon-status-update', function() {
+        var id = $(this).data('id');
+        var url = "{{route('admin.addon.update.status')}}";
+        var token = "{{csrf_token()}}";
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                '_token': token,
+                'id': id
+            },
+            success: function(response) {
+                toastr.success(response.message);
+            },
+            error: function(response) {
+                toastr.error(response.responseJSON.message);
+            }
         });
     });
+})(jQuery);
 </script>
 @endpush

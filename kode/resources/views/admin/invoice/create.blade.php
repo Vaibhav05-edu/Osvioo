@@ -163,68 +163,72 @@
 
 @push('script-include')
 <script>
-let rowIndex = 1;
+(function($){
+    "use strict";
 
-function calcRow(row) {
-    const qty = parseFloat($(row).find('.qty-input').val()) || 0;
-    const rate = parseFloat($(row).find('.rate-input').val()) || 0;
-    const amount = qty * rate;
-    $(row).find('.amount-cell').text('$' + amount.toFixed(2));
-    return amount;
-}
+    let rowIndex = 1;
 
-function recalcAll() {
-    let subtotal = 0;
-    $('.item-row').each(function() { subtotal += calcRow(this); });
-    const discount = parseFloat($('#discountInput').val()) || 0;
-    const total = Math.max(0, subtotal - discount);
-    $('#summarySubtotal').text('$' + subtotal.toFixed(2));
-    $('#summaryDiscount').text('-$' + discount.toFixed(2));
-    $('#summaryTotal').text('$' + total.toFixed(2));
-}
-
-$(document).on('input', '.qty-input, .rate-input', function() { recalcAll(); });
-$('#discountInput').on('input', recalcAll);
-
-$('#addRow').on('click', function() {
-    const row = `
-    <tr class="item-row">
-        <td><input type="text" name="items[${rowIndex}][description]" class="form-control form-control-sm" placeholder="Service description" required></td>
-        <td><input type="number" name="items[${rowIndex}][quantity]" class="form-control form-control-sm qty-input" value="1" min="0" step="0.01" required></td>
-        <td><input type="number" name="items[${rowIndex}][rate]" class="form-control form-control-sm rate-input" value="0" min="0" step="0.01" required></td>
-        <td class="text-end fw-semibold amount-cell">$0.00</td>
-        <td class="text-center"><button type="button" class="remove-row" title="Remove"><i class="bi bi-x-circle-fill"></i></button></td>
-    </tr>`;
-    $('#itemsBody').append(row);
-    rowIndex++;
-    recalcAll();
-});
-
-$(document).on('click', '.remove-row', function() {
-    if ($('.item-row').length > 1) {
-        $(this).closest('tr').remove();
-        recalcAll();
+    function calcRow(row) {
+        const qty = parseFloat($(row).find('.qty-input').val()) || 0;
+        const rate = parseFloat($(row).find('.rate-input').val()) || 0;
+        const amount = qty * rate;
+        $(row).find('.amount-cell').text('$' + amount.toFixed(2));
+        return amount;
     }
-});
 
-// Quick Add from packages/addons
-$('.quick-add-btn').on('click', function() {
-    const desc = $(this).data('desc');
-    const rate = $(this).data('rate');
-    const qty  = $(this).data('qty');
-    const row = `
-    <tr class="item-row">
-        <td><input type="text" name="items[${rowIndex}][description]" class="form-control form-control-sm" value="${desc}" required></td>
-        <td><input type="number" name="items[${rowIndex}][quantity]" class="form-control form-control-sm qty-input" value="${qty}" min="0" step="0.01" required></td>
-        <td><input type="number" name="items[${rowIndex}][rate]" class="form-control form-control-sm rate-input" value="${rate}" min="0" step="0.01" required></td>
-        <td class="text-end fw-semibold amount-cell">$0.00</td>
-        <td class="text-center"><button type="button" class="remove-row" title="Remove"><i class="bi bi-x-circle-fill"></i></button></td>
-    </tr>`;
-    $('#itemsBody').append(row);
-    rowIndex++;
+    function recalcAll() {
+        let subtotal = 0;
+        $('.item-row').each(function() { subtotal += calcRow(this); });
+        const discount = parseFloat($('#discountInput').val()) || 0;
+        const total = Math.max(0, subtotal - discount);
+        $('#summarySubtotal').text('$' + subtotal.toFixed(2));
+        $('#summaryDiscount').text('-$' + discount.toFixed(2));
+        $('#summaryTotal').text('$' + total.toFixed(2));
+    }
+
+    $(document).on('input', '.qty-input, .rate-input', function() { recalcAll(); });
+    $(document).on('input', '#discountInput', recalcAll);
+
+    $(document).on('click', '#addRow', function() {
+        const row = `
+        <tr class="item-row">
+            <td><input type="text" name="items[${rowIndex}][description]" class="form-control form-control-sm" placeholder="Service description" required></td>
+            <td><input type="number" name="items[${rowIndex}][quantity]" class="form-control form-control-sm qty-input" value="1" min="0" step="0.01" required></td>
+            <td><input type="number" name="items[${rowIndex}][rate]" class="form-control form-control-sm rate-input" value="0" min="0" step="0.01" required></td>
+            <td class="text-end fw-semibold amount-cell">$0.00</td>
+            <td class="text-center"><button type="button" class="remove-row" title="Remove"><i class="bi bi-x-circle-fill"></i></button></td>
+        </tr>`;
+        $('#itemsBody').append(row);
+        rowIndex++;
+        recalcAll();
+    });
+
+    $(document).on('click', '.remove-row', function() {
+        if ($('.item-row').length > 1) {
+            $(this).closest('tr').remove();
+            recalcAll();
+        }
+    });
+
+    // Quick Add from packages/addons
+    $(document).on('click', '.quick-add-btn', function() {
+        const desc = $(this).data('desc');
+        const rate = $(this).data('rate');
+        const qty  = $(this).data('qty');
+        const row = `
+        <tr class="item-row">
+            <td><input type="text" name="items[${rowIndex}][description]" class="form-control form-control-sm" value="${desc}" required></td>
+            <td><input type="number" name="items[${rowIndex}][quantity]" class="form-control form-control-sm qty-input" value="${qty}" min="0" step="0.01" required></td>
+            <td><input type="number" name="items[${rowIndex}][rate]" class="form-control form-control-sm rate-input" value="${rate}" min="0" step="0.01" required></td>
+            <td class="text-end fw-semibold amount-cell">$0.00</td>
+            <td class="text-center"><button type="button" class="remove-row" title="Remove"><i class="bi bi-x-circle-fill"></i></button></td>
+        </tr>`;
+        $('#itemsBody').append(row);
+        rowIndex++;
+        recalcAll();
+    });
+
     recalcAll();
-});
-
-recalcAll();
+})(jQuery);
 </script>
 @endpush
