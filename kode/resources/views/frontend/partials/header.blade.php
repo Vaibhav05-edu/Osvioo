@@ -78,7 +78,7 @@
     /* GLOBAL MASTER HEADER & LOGO RESTORE */
     .osvioo-logo-script {
         font-family: 'Caveat', cursive !important;
-        color: #0052FF !important;
+        color: var(--color-primary) !important;
         font-size: 1.8rem !important;
         vertical-align: middle !important;
         text-decoration: none !important;
@@ -139,8 +139,8 @@
         padding: 6px 12px !important;
         transition: all 0.3s ease;
     }
-    .nav-link-wishlink:hover { color: #0052FF !important; }
-    .nav-link-wishlink.blue-text { color: #0052FF !important; }
+    .nav-link-wishlink:hover { color: var(--color-primary) !important; }
+    .nav-link-wishlink.blue-text { color: var(--color-primary) !important; }
 
     .active-pill {
         background: #FFD200 !important;
@@ -153,7 +153,7 @@
     }
 
     .get-started-btn-wishlink {
-        background: #0052FF !important;
+        background: var(--color-primary) !important;
         color: #FFFFFF !important;
         padding: 8px 22px !important;
         border-radius: 50px !important;

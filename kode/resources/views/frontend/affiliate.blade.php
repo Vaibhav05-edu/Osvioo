@@ -58,7 +58,7 @@
     .btn-pinkpurple-strip:hover { transform: translateY(-3px); }
 
     .btn-royal-blue {
-        background: #0052FF !important; 
+        background: var(--color-primary) !important; 
         color: white !important;
         box-shadow: 0 10px 30px rgba(0, 82, 255, 0.3) !important;
         transition: all 0.3s ease;

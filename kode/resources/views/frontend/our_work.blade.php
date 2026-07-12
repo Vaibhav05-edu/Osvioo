@@ -90,7 +90,7 @@
 
 <style>
     :root {
-        --royal-blue: #0052FF;
+        --royal-blue: var(--color-primary);
     }
     
     .work-hero {

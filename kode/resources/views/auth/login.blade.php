@@ -15,7 +15,7 @@
 
     .osvioo-logo-script {
         font-family: 'Caveat', cursive !important;
-        color: #0052FF !important;
+        color: var(--color-primary) !important;
         font-size: 2.5rem !important;
         vertical-align: middle !important;
         text-decoration: none !important;

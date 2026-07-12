@@ -10,7 +10,7 @@
 <style nonce="{{ csp_nonce() }}">
     /* PREDIS.AI MASTER CLONE DESIGN SYSTEM */
     :root {
-        --predis-blue: #0052FF !important;
+        --predis-blue: var(--color-primary) !important;
         --predis-dark: #031B33 !important;
         --predis-green: #10B981 !important;
         --predis-pink: #EC4899 !important;
@@ -46,16 +46,16 @@
     .predis-btn-split { display: flex !important; width: 100% !important; margin: 30px 0 12px !important; border-radius: 12px !important; overflow: hidden !important; text-decoration: none !important; cursor: pointer; border: none; padding: 0; background: transparent; }
     .predis-btn-main { flex-grow: 1 !important; padding: 18px !important; font-weight: 900 !important; font-size: 1rem !important; text-align: center !important; transition: opacity 0.2s; }
     .predis-btn-split:hover .predis-btn-main { opacity: 0.9; }
-    .btn-main-light { background: #EFF6FF !important; color: #0052FF !important; }
+    .btn-main-light { background: #EFF6FF !important; color: var(--color-primary) !important; }
     .btn-main-dark { background: #031B33 !important; color: #FFFFFF !important; }
-    .predis-btn-discount { background: #0052FF !important; color: white !important; padding: 18px 20px !important; font-weight: 900 !important; font-size: 0.9rem !important; }
+    .predis-btn-discount { background: var(--color-primary) !important; color: white !important; padding: 18px 20px !important; font-weight: 900 !important; font-size: 0.9rem !important; }
     .trial-caption { font-size: 0.9rem !important; color: var(--predis-text-muted) !important; font-weight: 800 !important; margin-bottom: 40px !important; text-align: center; }
 
     .credits-total { font-size: 1.7rem !important; font-weight: 900 !important; color: var(--predis-dark) !important; text-align: center !important; }
     .credits-breakdown { font-size: 0.9rem !important; color: var(--predis-text-muted) !important; text-align: center !important; font-weight: 700 !important; margin-bottom: 12px !important; }
     .predis-bar-wrapper { height: 8px !important; background: #F1F5F9 !important; border-radius: 100px !important; overflow: hidden !important; }
     .predis-bar-fill { height: 100% !important; background: var(--credit-gradient) !important; }
-    .extra-output-link { text-align: right !important; color: #0052FF !important; font-size: 0.85rem !important; font-weight: 900 !important; margin-top: 8px; margin-bottom: 30px; }
+    .extra-output-link { text-align: right !important; color: var(--color-primary) !important; font-size: 0.85rem !important; font-weight: 900 !important; margin-top: 8px; margin-bottom: 30px; }
 
     .feature-row { display: flex !important; gap: 12px !important; margin-bottom: 20px !important; }
     .tick-icon { color: var(--predis-green) !important; font-size: 1.2rem !important; margin-top: 2px !important; }

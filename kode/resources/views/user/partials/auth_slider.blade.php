@@ -38,7 +38,7 @@
 
 <style>
     .auth-left-new {
-        background: linear-gradient(135deg, #0052FF 0%, #003EB3 100%);
+        background: linear-gradient(135deg, var(--color-primary) 0%, #003EB3 100%);
         height: 100%;
         min-height: 100vh;
         display: flex;

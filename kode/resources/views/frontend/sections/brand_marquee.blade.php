@@ -1,6 +1,6 @@
 @php
     $cardsRow1 = [
-        ['type' => 'creator', 'img' => 'https://images.pexels.com/photos/1587009/pexels-photo-1587009.jpeg?auto=compress&cs=tinysrgb&w=500', 'bg' => '#0052FF'],
+        ['type' => 'creator', 'img' => 'https://images.pexels.com/photos/1587009/pexels-photo-1587009.jpeg?auto=compress&cs=tinysrgb&w=500', 'bg' => 'var(--color-primary)'],
         ['type' => 'logo', 'img' => asset('assets/frontend/images/logos/hm.png'), 'bg' => '#FFFFFF'],
         ['type' => 'creator', 'img' => 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=500', 'bg' => '#FFD200'],
         ['type' => 'logo', 'img' => asset('assets/frontend/images/logos/flipkart.png'), 'bg' => '#FFFFFF'],
