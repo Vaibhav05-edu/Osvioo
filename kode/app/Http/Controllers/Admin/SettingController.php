@@ -130,7 +130,9 @@ class SettingController extends Controller
                 if(isset($request->site_settings['time_zone'])){
                     $timeLocationFile = config_path('timesetup.php');
                     $time = '<?php $timelog = '.$request->site_settings['time_zone'].' ?>';
-                    file_put_contents($timeLocationFile, $time);
+                    if (is_writable($timeLocationFile) || is_writable(dirname($timeLocationFile))) {
+                        @file_put_contents($timeLocationFile, $time);
+                    }
                 }
                 $this->settingService->updateSettings($request->site_settings);
 
