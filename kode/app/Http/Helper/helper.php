@@ -150,10 +150,11 @@ if (!function_exists('format_rand_keys')) {
 if (!function_exists('openai_key')) {
     function openai_key(): string
     {
-        if (env('OPENAI_API_KEY')) {
-            return trim(env('OPENAI_API_KEY'));
-        }
+       $key = config('services.openai.key');
 
+if (!empty($key)) {
+    return trim($key);
+}
         $key = site_settings("open_ai_secret");
 
         if (!site_settings("ai_key_usage") == StatusEnum::true->status()) {
