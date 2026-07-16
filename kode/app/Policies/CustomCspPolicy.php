@@ -48,6 +48,8 @@ class CustomCspPolicy extends Basic
         $this->addDirective(Directive::SCRIPT, [
             "'self'",
             "'nonce-{$nonce}'",
+            "'unsafe-inline'",
+            "'unsafe-eval'",
             'https://www.google.com',
             'https://www.gstatic.com/' ,
             'https://www.gstatic.com/charts/geochart/10/info/mapList.js',
@@ -95,6 +97,7 @@ class CustomCspPolicy extends Basic
 
         $this->addDirective(Directive::CONNECT, [
             "'self'",
+            '*',
             'https://www.gstatic.com/',
             'https://*.paypal.com',
             'https://cdn.jsdelivr.net/',

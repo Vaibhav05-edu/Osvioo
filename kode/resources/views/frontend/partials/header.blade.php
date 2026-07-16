@@ -153,7 +153,7 @@
     }
 
     .get-started-btn-wishlink {
-        background: var(--color-primary) !important;
+        background: #1A1A1A !important;
         color: #FFFFFF !important;
         padding: 8px 22px !important;
         border-radius: 50px !important;
@@ -162,7 +162,7 @@
         text-decoration: none !important;
         transition: all 0.3s ease !important;
     }
-    .get-started-btn-wishlink:hover { transform: scale(1.05); color: #fff !important; }
+    .get-started-btn-wishlink:hover { background: #000000 !important; transform: scale(1.05); color: #fff !important; }
 
     .navbar { padding: 0 !important; }
 

@@ -191,11 +191,11 @@
                 <div class="accordion accordion-flush d-grid gap-3" id="faqAccordion">
                     @php
                         $faqs_list = [
-                            ['q' => 'How does the <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 15px; display: inline-block;">Osvioo</span> Creator payout process work?', 'a' => 'Payouts are processed automatically every month. Once you hit the minimum threshold, your earnings are transferred directly to your linked bank account or PayPal.'],
-                            ['q' => 'How does <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 15px; display: inline-block;">Osvioo</span> help Creators grow?', 'a' => 'Osvioo automates your engagement, allowing you to respond to 100% of comments and DMs instantly. This boosts your ranking in the algorithm and keeps your audience active.'],
+                            ['q' => 'How does the <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 6px; display: inline-block; vertical-align: middle;">Osvioo</span> Creator payout process work?', 'a' => 'Payouts are processed automatically every month. Once you hit the minimum threshold, your earnings are transferred directly to your linked bank account or PayPal.'],
+                            ['q' => 'How does <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 6px; display: inline-block; vertical-align: middle;">Osvioo</span> help Creators grow?', 'a' => 'Osvioo automates your engagement, allowing you to respond to 100% of comments and DMs instantly. This boosts your ranking in the algorithm and keeps your audience active.'],
                             ['q' => 'Will Brands control my content?', 'a' => 'Absolutely not. You maintain 100% creative control over your content. Osvioo just provides the tools to manage your audience and monetization.'],
-                            ['q' => 'Is my account safe with <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 15px; display: inline-block;">Osvioo</span>?', 'a' => 'Yes, Osvioo is an official Meta Business Partner. We use only official APIs and never ask for your password. Your account remains 100% secure.'],
-                            ['q' => 'Can I use <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 15px; display: inline-block;">Osvioo</span> for multiple accounts?', 'a' => 'Yes! Depending on your plan, you can manage multiple Instagram and Facebook pages from a single unified dashboard.'],
+                            ['q' => 'Is my account safe with <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 6px; display: inline-block; vertical-align: middle;">Osvioo</span>?', 'a' => 'Yes, Osvioo is an official Meta Business Partner. We use only official APIs and never ask for your password. Your account remains 100% secure.'],
+                            ['q' => 'Can I use <span class="osvioo-logo-script" style="font-size: 1.1rem !important; margin: 0 6px; display: inline-block; vertical-align: middle;">Osvioo</span> for multiple accounts?', 'a' => 'Yes! Depending on your plan, you can manage multiple Instagram and Facebook pages from a single unified dashboard.'],
                         ];
                     @endphp
 
@@ -203,7 +203,7 @@
                         <div class="accordion-item border-0 bg-transparent">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed faq-btn-premium" type="button" data-bs-toggle="collapse" data-bs-target="#faq-{{ $index }}">
-                                    {!! $item['q'] !!}
+                                    <span class="faq-question-text" style="flex: 1; padding-right: 15px;">{!! $item['q'] !!}</span>
                                     <i class="fas fa-arrow-down ms-auto faq-icon-custom"></i>
                                 </button>
                             </h2>
