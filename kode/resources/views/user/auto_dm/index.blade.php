@@ -3,12 +3,12 @@
 @section('content')
 <div class="row g-4">
     <div class="col-12">
-        <div class="glass-card p-4 d-flex align-items-center justify-content-between" style="background: linear-gradient(135deg, #5D5AF1 0%, #3f3cbd 100%) !important; color: white; border-radius: 20px;">
+        <div class="glass-card p-4 d-flex align-items-center justify-content-between border-0 shadow-sm" style="border-radius: 20px;">
             <div>
-                <h3 class="mb-1 fw-bold text-white">{{translate('Instagram Auto DM')}}</h3>
-                <p class="mb-0 opacity-75">{{translate('Automate replies to direct messages or public comments on Reels and Posts instantly')}}</p>
+                <h3 class="mb-1 fw-bold">{{translate('Instagram Auto DM')}}</h3>
+                <p class="mb-0 text-muted">{{translate('Automate replies to direct messages or public comments on Reels and Posts instantly')}}</p>
             </div>
-            <button class="btn btn-light capsuled px-4 fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#addTriggerModal">
+            <button class="btn btn-primary capsuled px-4 fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#addTriggerModal">
                 <i class="bi bi-plus-lg me-2"></i> {{translate('Add New Trigger')}}
             </button>
         </div>

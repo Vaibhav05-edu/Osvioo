@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="col-lg-8 mt-4 mt-lg-0">
-                    <div class="bg-white border p-4 h-100" style="border-radius: 16px;">
+                    <div class="bg-transparent border p-4 h-100" style="border-radius: 16px;">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <h6 class="fw-bold mb-0"><i class="bi bi-stars text-warning me-2"></i>{{translate('AI Trend Analysis')}}</h6>
                             <span class="badge bg-danger-soft text-danger capsuled" id="trendBadge">{{translate('AI Powered')}}</span>

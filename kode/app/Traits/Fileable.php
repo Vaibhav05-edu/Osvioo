@@ -38,8 +38,9 @@ trait Fileable
             $this->unlink($location, $removeFile);
         switch ($disk) {
             case StorageKey::LOCAL->value:
-                if (!file_exists($location))
-                    mkdir($location, 0755, true);
+                if (!file_exists($location)) {
+                    \Illuminate\Support\Facades\File::makeDirectory($location, 0775, true, true);
+                }
                 switch (substr($file->getMimeType(), 0, 5)) {
                     case 'image':
                         $image = Image::make(file_get_contents($file));

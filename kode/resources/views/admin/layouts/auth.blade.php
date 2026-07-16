@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>{{@site_settings("site_name")}} {{site_settings('title_separator')}} {{@translate($title)}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link nonce="{{ csp_nonce() }}" rel="shortcut icon" href='{{imageURL(@site_logo("favicon")->file,"favicon",true)}}' alt="{{@site_logo('site_favicon')->file?->name}}">
+    <link nonce="{{ csp_nonce() }}" rel="shortcut icon" href="{{ asset('assets/logo.jpeg') }}">
     <link nonce="{{ csp_nonce() }}" href="{{asset('assets/global/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link nonce="{{ csp_nonce() }}" href="{{asset('assets/global/css/bootstrap-icons.min.css')}}" rel="stylesheet" type="text/css" />
     <link nonce="{{ csp_nonce() }}" href="{{asset('assets/backend/css/main.css')}}" rel="stylesheet" type="text/css" />

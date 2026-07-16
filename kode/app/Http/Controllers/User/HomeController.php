@@ -429,8 +429,14 @@ class HomeController extends Controller
      * Subscription History
      */
     public function planHistory() :View{
+        $subscriptions = \App\Models\Subscription::with(['package'])
+            ->where('user_id', $this->user->id)
+            ->latest()
+            ->paginate(10);
+
         return view('user.plan.history', [
-            'meta_data' => $this->metaData(['title' => translate("Subscription History")]),
+            'meta_data'     => $this->metaData(['title' => translate("Subscription History")]),
+            'subscriptions' => $subscriptions,
         ]);
     }
 

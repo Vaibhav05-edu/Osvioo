@@ -67,10 +67,10 @@
                 <div class="swiper-pagination"></div>
                 <div class="feature-slider-nav">
                     <div class="slider-nav-btn feature-prev">
-                        <i class="bi bi-arrow-left"></i>
+                        <i class="fas fa-arrow-left"></i>
                     </div>
                     <div class="slider-nav-btn feature-next">
-                        <i class="bi bi-arrow-right"></i>
+                        <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
             </div>

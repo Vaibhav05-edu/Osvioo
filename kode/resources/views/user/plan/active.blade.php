@@ -70,7 +70,7 @@
                 </div>
             </div>
 
-            <div class="p-4 bg-white">
+            <div class="p-4">
                 <div class="row g-4">
                     {{-- PLAN FEATURES --}}
                     <div class="col-md-6">
@@ -95,7 +95,7 @@
                     <div class="col-md-6 border-start ps-md-4">
                         <h5 class="card--title-sm mb-3 fw-bold">{{translate('Active Add-ons')}}</h5>
                         <div class="d-flex flex-column gap-2">
-                            <div class="p-3 border rounded-4 d-flex align-items-center justify-content-between" style="background: #f8f9fa;">
+                            <div class="p-3 border rounded-4 d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-center gap-2">
                                     <i class="bi bi-shield-check text--primary fs-20"></i>
                                     <div>
@@ -103,7 +103,7 @@
                                         <p class="mb-0 text-muted fs-11">24/7 Influencer Help</p>
                                     </div>
                                 </div>
-                                <span class="badge bg-white text-dark border fs-10">INCLUDED</span>
+                                <span class="badge bg-light-soft text-dark border fs-10">INCLUDED</span>
                             </div>
                             <div class="text-center py-4 border border-dashed rounded-4">
                                 <p class="text-muted fs-13 mb-0">{{translate('No extra add-ons purchased yet.')}}</p>

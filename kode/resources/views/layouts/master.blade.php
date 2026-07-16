@@ -126,7 +126,7 @@
 </script>
 
 
-    <link nonce="{{ csp_nonce() }}" rel="shortcut icon" href="{{imageURL(@site_logo('favicon')->file,'favicon',true)}}" >
+    <link nonce="{{ csp_nonce() }}" rel="shortcut icon" href="{{ asset('assets/logo.jpeg') }}" >
 
     <link nonce="{{ csp_nonce() }}" href="{{asset('assets/global/css/bootstrap-icons.min.css')}}" rel="stylesheet" type="text/css" />
 
