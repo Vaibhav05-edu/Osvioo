@@ -5013,24 +5013,7 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    z-index: 1;
     background: linear-gradient(135deg, #f3ec78, #af4261);
-
-    &::before{
-        content: '';
-        height: 100%;
-        width: 420px;
-        display: block;
-        background: linear-gradient(135deg, #f3ec78, #af4261);
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        top: 0;
-        bottom: 0;
-        z-index: -1;
-    }
-
 }
  
 .form-section svg{
