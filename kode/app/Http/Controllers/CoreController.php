@@ -903,7 +903,8 @@ class CoreController extends Controller
                         
                         Log::info('Instagram Fetching Profile with Token', ['token' => $token]);
                         // Fetch direct Instagram profile details using Instagram User Access Token
-                        $igUser = Http::get('https://graph.instagram.com/me', [
+                        $version = $platform->configuration->app_version ?? 'v20.0';
+                        $igUser = Http::get("https://graph.instagram.com/{$version}/me", [
                             'fields' => 'id,username',
                             'access_token' => $token,
                         ])->throw()->json();
