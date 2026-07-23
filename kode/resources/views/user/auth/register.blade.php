@@ -104,7 +104,7 @@
                         <div class="col-md-6">
                             <label class="plixi-form-label">Phone Number</label>
                             <div class="position-relative">
-                                <input type="text" name="phone" value="{{old('phone')}}" class="plixi-form-input ps-5" placeholder="Enter phone" required>
+                                <input type="text" name="phone" value="{{old('phone')}}" class="plixi-form-input ps-5" placeholder="Enter phone" maxlength="10" pattern="[0-9]{10}" required>
                                 <i class="bi bi-telephone position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
                             </div>
                         </div>

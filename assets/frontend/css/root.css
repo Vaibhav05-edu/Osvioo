@@ -142,6 +142,8 @@
   --card-bg:#28292c;
   --card-bg-light:#28292c;
   --card-bg-dash: #28292c;
+  --bg-light-one: rgba(40, 40, 44, 1);
+  --bg-light-two: rgba(50, 50, 54, 1);
 }
 
 .g-5, .gy-5 {

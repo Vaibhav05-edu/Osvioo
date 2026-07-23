@@ -296,7 +296,6 @@ class HomeController extends Controller
                                         ->letters()
                                         ->numbers()
                                         ->symbols()
-                                        ->uncompromised()
                                     ];
         }
 

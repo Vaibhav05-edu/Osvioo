@@ -1,0 +1,468 @@
+/* ============================================================
+   MOBILE.CSS - Comprehensive Mobile Responsive Overrides
+   Covers: Frontend, Auth, User Dashboard, Admin Dashboard
+   Breakpoints: 576px, 768px, 991px
+   ============================================================ */
+
+/* ─── GLOBAL FIXES ─────────────────────────────────────── */
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* ─── SOCIAL PROOF POPUP (Fixed bottom pill) ────────────── */
+@media (max-width: 767px) {
+    .premium-social-proof,
+    .social-proof {
+        left: 10px !important;
+        right: 10px !important;
+        bottom: 10px !important;
+        max-width: calc(100% - 20px) !important;
+        width: auto !important;
+        font-size: 0.72rem !important;
+        padding: 6px 10px !important;
+    }
+
+    .premium-social-proof span {
+        white-space: normal !important;
+    }
+}
+
+/* ─── FRONTEND LANDING PAGE ─────────────────────────────── */
+@media (max-width: 767px) {
+    /* General section spacing */
+    section,
+    .section-hero,
+    .section-feature,
+    .py-5 {
+        padding-top: 2.5rem !important;
+        padding-bottom: 2.5rem !important;
+        overflow: hidden;
+    }
+
+    .container {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+
+    /* Typography */
+    h1, .hero-title { font-size: 1.9rem !important; line-height: 1.15 !important; }
+    h2               { font-size: 1.5rem !important; }
+    h3               { font-size: 1.25rem !important; }
+    .display-3       { font-size: 2rem !important; }
+    .display-4       { font-size: 1.7rem !important; }
+    .display-5       { font-size: 1.4rem !important; }
+    .display-6       { font-size: 1.2rem !important; }
+
+    /* Hero section */
+    .section-wishlink-hero .container,
+    .hero-content-wishlink {
+        text-align: center !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+
+    .hero-btn-group {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+
+    .btn-glowing-dark,
+    .btn-glowing-outline,
+    .btn-premium,
+    .btn-outline-premium {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 13px 16px !important;
+        font-size: 0.95rem !important;
+    }
+
+    .social-proof-hero {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    /* Why Osvioo — vertical swiper section */
+    .why-socialyt-swiper-container {
+        height: auto !important;
+        min-height: 400px !important;
+    }
+
+    .why-section-inner,
+    .why-section-row {
+        flex-direction: column !important;
+    }
+
+    /* The phone mockup image that overflows */
+    .why-phone-mockup,
+    .phone-mockup-img,
+    [class*="phone-img"],
+    [class*="mockup"] {
+        display: none !important;
+    }
+
+    /* Feature slider */
+    .feature-swiper .swiper-slide {
+        flex-direction: column !important;
+    }
+
+    /* Pricing cards */
+    .pricing-card,
+    .pricing-item {
+        margin-bottom: 20px;
+        width: 100% !important;
+    }
+
+    /* Creator cards / stacked swiper */
+    .creator-card {
+        padding: 10px 15px !important;
+        border-radius: 16px !important;
+    }
+
+    /* Success stories */
+    .success-stories-grid,
+    .row-cols-md-2,
+    .row-cols-md-3 {
+        --bs-columns: 1 !important;
+    }
+
+    /* FAQ section */
+    .faq-btn-premium {
+        font-size: 0.9rem !important;
+        padding: 16px !important;
+    }
+
+    /* Navbar */
+    .navbar-custom .container {
+        flex-wrap: nowrap !important;
+    }
+}
+
+/* ─── AUTH PAGES (Login / Register) ─────────────────────── */
+@media (max-width: 991px) {
+    /* Stack the two-column auth layout */
+    .auth {
+        flex-direction: column !important;
+        min-height: 100vh;
+    }
+
+    .auth .auth-left,
+    .auth .auth-right {
+        width: 100% !important;
+        min-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+
+    /* Hide the decorative promo panel on small screens */
+    .auth .auth-right {
+        display: none !important;
+    }
+
+    .auth .auth-left {
+        padding: 24px 16px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .auth-form-wrapper,
+    .auth-form-card {
+        width: 100% !important;
+        max-width: 480px !important;
+        margin: 0 auto !important;
+        padding: 24px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .auth-form-wrapper,
+    .auth-form-card {
+        padding: 16px !important;
+        border-radius: 12px !important;
+    }
+}
+
+/* ─── USER DASHBOARD ─────────────────────────────────────── */
+@media (max-width: 1199px) {
+    /* Main content takes full width when sidebar collapses */
+    .main-wrapper {
+        margin-inline-start: 0 !important;
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    /* Header full width */
+    .header {
+        width: 100% !important;
+        margin-inline-start: 0 !important;
+        border-radius: 0 !important;
+    }
+}
+
+@media (max-width: 991px) {
+    /* Dashboard content padding */
+    .main-wrapper,
+    section.main-wrapper {
+        padding: 70px 10px 20px !important;
+    }
+
+    /* px-25 pt-25 classes used on profile/plan pages */
+    .px-25 { padding-left: 10px !important; padding-right: 10px !important; }
+    .pt-25 { padding-top: 10px !important; }
+
+    /* Glass cards */
+    .glass-card {
+        padding: 12px !important;
+        border-radius: 12px !important;
+    }
+
+    /* Plan detail tabs — make them scrollable horizontally */
+    .profile--tab,
+    .nav-tabs {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+    }
+    .profile--tab::-webkit-scrollbar { display: none; }
+
+    .profile--tab .nav-link,
+    .nav-tabs .nav-link {
+        white-space: nowrap !important;
+        font-size: 0.82rem !important;
+        padding: 8px 12px !important;
+    }
+
+    /* Connected social accounts grid */
+    .connected-accounts-grid,
+    .social-accounts-row {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    /* Dashboard stat cards — 2 per row */
+    .stat-cards-row > .col,
+    .stat-cards-row > [class*="col-"] {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+}
+
+@media (max-width: 767px) {
+    /* Dashboard content */
+    .main-wrapper,
+    section.main-wrapper {
+        padding: 65px 8px 20px !important;
+    }
+
+    /* Stat cards — 1 per row on very small screens */
+    .stat-cards-row > .col,
+    .stat-cards-row > [class*="col-"] {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Tables — make them scrollable */
+    .table-responsive {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table {
+        min-width: 550px;
+    }
+
+    /* Card headers with action buttons */
+    .card-header,
+    .i-card-md > .card--header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+
+    .card-header .i-btn,
+    .card--header .i-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* Profile page — avatar + info stacking */
+    .profile-picture {
+        width: 70px !important;
+        height: 70px !important;
+    }
+
+    /* Invoice / media kit PDF viewer */
+    .invoice-preview,
+    .media-kit-preview {
+        transform: scale(0.65) !important;
+        transform-origin: top left !important;
+    }
+
+    /* Modal full screen on mobile */
+    .modal-dialog {
+        margin: 8px !important;
+        max-width: calc(100% - 16px) !important;
+    }
+
+    .modal-content {
+        border-radius: 12px !important;
+    }
+
+    /* Input groups */
+    .input-group {
+        flex-wrap: nowrap !important;
+    }
+
+    /* Buttons inside forms */
+    .form-actions,
+    .btn-group-action {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    /* Transaction / subscription log tables */
+    .i-card-md {
+        overflow: hidden;
+    }
+    .i-card-md .table-responsive {
+        border-radius: 8px;
+    }
+
+    /* Pagination */
+    .pagination {
+        flex-wrap: wrap !important;
+        gap: 4px !important;
+    }
+
+    /* Plan cards */
+    .pricing-card,
+    .plan-card {
+        margin-bottom: 16px;
+    }
+
+    /* Subscription tab — plan info columns */
+    .current-plan-card .row > [class*="col-"] {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Affiliate / webhook tab inputs */
+    .input-with-btn {
+        flex-direction: row !important;
+    }
+    .input-with-btn input {
+        flex: 1 !important;
+        min-width: 0 !important;
+    }
+}
+
+@media (max-width: 575px) {
+    /* Header icons — reduce gap */
+    .header .header-container {
+        gap: 6px !important;
+    }
+
+    .header-right-item .btn-icon {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 14px !important;
+    }
+
+    /* Logo */
+    .header-logo img {
+        height: 28px !important;
+    }
+
+    /* Topbar balance/username text */
+    .profile-dropdown .profile-btn .name {
+        display: none !important;
+    }
+
+    /* Dashboard welcome text */
+    .welcome-text h4,
+    .dashboard-greeting h4 {
+        font-size: 1.1rem !important;
+    }
+
+    /* Performance metric cards */
+    .performance-card h2,
+    .metric-value {
+        font-size: 1.4rem !important;
+    }
+}
+
+/* ─── ADMIN PANEL ─────────────────────────────────────────── */
+@media (max-width: 991px) {
+    .admin-wrapper,
+    .admin-main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 70px 10px 20px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    /* Admin tables */
+    .admin-table-wrapper,
+    .card .table-responsive {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Admin card header */
+    .card-header {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    /* Admin forms */
+    .admin-form-row .col-md-6,
+    .admin-form-row .col-md-4 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Stat boxes */
+    .admin-stat-card {
+        margin-bottom: 12px;
+    }
+}
+
+/* ─── UTILITY OVERRIDES ───────────────────────────────────── */
+@media (max-width: 767px) {
+    /* Hide horizontal scroll artifacts */
+    .overflow-hidden-mobile {
+        overflow: hidden !important;
+    }
+
+    /* Ensure flex items wrap */
+    .flex-nowrap-mobile {
+        flex-wrap: wrap !important;
+    }
+
+    /* Full width buttons on mobile */
+    .btn-mobile-full {
+        width: 100% !important;
+    }
+
+    /* Better touch targets */
+    .nav-link,
+    .dropdown-item,
+    .sidemenu-link {
+        min-height: 40px;
+        display: flex !important;
+        align-items: center;
+    }
+}

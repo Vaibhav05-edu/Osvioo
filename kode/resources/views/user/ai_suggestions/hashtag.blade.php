@@ -87,7 +87,7 @@ document.getElementById('generateHashtagBtn').addEventListener('click', function
         if (data.status) {
             const tags = data.result.split(/\s+/).filter(t => t.startsWith('#'));
             const html = tags.map(t =>
-                `<span class="badge me-1 mb-2 px-3 py-2" style="background:#e8f0ff;color:#1a1c23 !important; border: 1px solid #1a1c23;font-size:13px;border-radius:20px;font-weight:600;">${t}</span>`
+                `<span class="badge me-1 mb-2 px-3 py-2" style="background:var(--bs-body-bg);color:var(--bs-body-color) !important; border: 1px solid var(--bs-border-color);font-size:13px;border-radius:20px;font-weight:600;">${t}</span>`
             ).join('');
             output.innerHTML = `<div class="mb-2">${html}</div>`;
             document.getElementById('copyHashtagsBtn').classList.remove('d-none');

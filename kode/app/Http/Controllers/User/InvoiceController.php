@@ -312,7 +312,12 @@ class InvoiceController extends Controller
 
         $invoice->save();
 
-        return back()->with('success', translate('Payment status updated successfully.'));
+        $msg = translate('Payment status updated successfully.');
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json(['status' => true, 'message' => $msg]);
+        }
+
+        return back()->with('success', $msg);
     }
 
     public function share($uid)
@@ -329,30 +334,27 @@ class InvoiceController extends Controller
         ]);
 
         $invoice = Invoice::where('uid', $uid)->where('user_id', auth_user('web')->id)->firstOrFail();
-        $details = is_array($invoice->details) ? $invoice->details : [];
-        $invNum  = $details['invoice_number'] ?? $invoice->uid;
 
         try {
-            $pdf = Pdf::loadView('user.invoice.pdf', compact('invoice'))->setPaper('a4', 'portrait');
-            $pdfContent = $pdf->output();
+            // Dispatch job to send email in background (non-blocking)
+            \App\Jobs\SendInvoiceEmail::dispatch(
+                $invoice->uid,
+                $request->client_email,
+                auth_user('web')->name
+            );
 
-            Mail::send([], [], function ($message) use ($request, $invoice, $invNum, $pdfContent) {
-                $message->to($request->client_email)
-                    ->subject('Invoice ' . $invNum . ' from ' . auth_user('web')->name)
-                    ->setBody(
-                        '<p>Dear Client,</p>' .
-                        '<p>Please find attached your invoice <strong>' . $invNum . '</strong>.</p>' .
-                        '<p>Amount Due: <strong>' . ($invoice->details['currency_symbol'] ?? '$') . number_format($invoice->amount, 2) . '</strong></p>' .
-                        '<p>Thank you for your business!</p>' .
-                        '<p>Regards,<br>' . auth_user('web')->name . '</p>',
-                        'text/html'
-                    )
-                    ->attachData($pdfContent, 'Invoice-' . $invNum . '.pdf', ['mime' => 'application/pdf']);
-            });
+            $msg = translate('Invoice will be sent to ') . $request->client_email . translate(' within a few moments.');
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json(['status' => true, 'message' => $msg]);
+            }
 
-            return back()->with('success', translate('Invoice sent successfully to ') . $request->client_email);
+            return back()->with('success', $msg);
         } catch (\Throwable $e) {
-            return back()->with('error', translate('Failed to send invoice email. Error: ') . $e->getMessage());
+            $errMsg = translate('Failed to queue invoice email. Error: ') . $e->getMessage();
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json(['status' => false, 'message' => $errMsg], 500);
+            }
+            return back()->with('error', $errMsg);
         }
     }
 

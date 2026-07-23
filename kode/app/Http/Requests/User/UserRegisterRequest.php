@@ -32,7 +32,7 @@ class UserRegisterRequest extends FormRequest
             'name'               => ["required","max:100",'string'],
             'username'           => ['required',"string","max:155","alpha_dash",'unique:users,username'],
             "country_id"         => ['nullable',"exists:countries,id"],
-            'phone'              => ['unique:users,phone'],
+            'phone'              => ['unique:users,phone','nullable','string','max:10'],
             'email'              => ['email','required','unique:users,email'],
             'password'           => ['required',Password::min(6),"confirmed"],
             'terms_condition'    => ["required"],
@@ -46,7 +46,6 @@ class UserRegisterRequest extends FormRequest
                                                 ->letters()
                                                 ->numbers()
                                                 ->symbols()
-                                                ->uncompromised()
                                     ];
         }
 

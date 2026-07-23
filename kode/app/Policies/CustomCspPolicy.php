@@ -29,10 +29,8 @@ class CustomCspPolicy extends Basic
         $this->addDirective(Directive::DEFAULT, "'self'");
 
 
-        $nonce = csp_nonce();
         $this->addDirective(Directive::STYLE, [
             "'self'",
-            "'nonce-{$nonce}'",
             "'unsafe-inline'",
             'https://www.gstatic.com/',
             'https://www.gstatic.com/charts/49/css/util/util.css',
@@ -45,6 +43,7 @@ class CustomCspPolicy extends Basic
             'https://fonts.googleapis.com',
         ]);
 
+        $nonce = csp_nonce();
         $this->addDirective(Directive::SCRIPT, [
             "'self'",
             "'nonce-{$nonce}'",

@@ -135,7 +135,6 @@ class NewPasswordController extends Controller
                                         ->letters()
                                         ->numbers()
                                         ->symbols()
-                                        ->uncompromised()
                                     ];
         }
 

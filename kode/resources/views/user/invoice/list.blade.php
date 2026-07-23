@@ -50,6 +50,7 @@
     display: inline-flex; align-items: center; justify-content: center;
     width: 34px; height: 34px; border-radius: 9px; border: none;
     font-size: 0.9rem; transition: all 0.18s; text-decoration: none;
+    cursor: pointer;
 }
 .action-btn-view   { background: #eef2ff; color: #6366f1; }
 .action-btn-view:hover   { background: #6366f1; color: #fff; }
@@ -59,17 +60,54 @@
 .action-btn-pay:hover     { background: #ca8a04; color: #fff; }
 .action-btn-wm     { background: #fff7ed; color: #ea580c; border: 1.5px solid #fed7aa; font-size:0.72rem; width:auto; padding: 0 10px; font-weight:600; }
 .action-btn-wm:hover     { background: #ea580c; color: #fff; border-color:#ea580c; }
+.action-btn-email { background: #fef3c7; color: #b45309; }
+.action-btn-edit  { background: #e0f2fe; color: #0369a1; }
 .empty-state { padding: 3.5rem 1rem; text-align: center; }
 .empty-state i { font-size: 3rem; color: #c7d2fe; margin-bottom: 1rem; display: block; }
 .empty-state p { color: #94a3b8; margin-bottom: 1.2rem; }
+.card-wrapper { border-radius: 18px; border: none; box-shadow: 0 8px 40px rgba(99,102,241,0.10); overflow: hidden; }
+.invoice-count-badge { background: rgba(255,255,255,0.25); border-radius: 50px; font-size: 0.8rem; padding: 2px 10px; font-weight: 600; }
+.admin-invoice-label { font-size: 0.72rem; background: #ede9fe; color: #7c3aed; border-radius: 50px; padding: 1px 8px; display: inline-block; margin-top: 2px; }
+.invoice-amount-label { font-size: 0.75rem; }
+.due-date-overdue { font-size: 0.73rem; }
+
+/* Modal Z-Index and Interactive Styling Fixes */
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+.modal {
+    z-index: 1050 !important;
+}
+.modal-dialog {
+    z-index: 1060 !important;
+    position: relative !important;
+}
+.modal-content {
+    pointer-events: auto !important;
+}
+.modal-content-rounded { border-radius: 12px; border: none; }
+.modal-header-noBorder { border: 0; padding-bottom: 0; }
+.modal-footer-noBorder { border: 0; padding-top: 0; }
+.btn-submit-modal { border-radius: 8px; padding: 10px; font-weight: 600; }
+.pagination-wrapper { border-top: 1px solid #f1f5f9; }
+
+/* Notification Toast Styles */
+.invoice-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    min-width: 300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
 </style>
 
-<div class="card" style="border-radius:18px; border:none; box-shadow:0 8px 40px rgba(99,102,241,0.10); overflow:hidden;">
+<div class="card card-wrapper">
     <div class="invoice-list-header d-flex justify-content-between align-items-center">
         <h4 class="mb-0 d-flex align-items-center gap-2">
             <i class="bi bi-receipt-cutoff"></i>
             {{ translate('My Invoices') }}
-            <span style="background:rgba(255,255,255,0.25); border-radius:50px; font-size:0.8rem; padding:2px 10px; font-weight:600;">
+            <span class="invoice-count-badge">
                 {{ $invoices->total() }}
             </span>
         </h4>
@@ -125,14 +163,14 @@
                         <td>
                             @if($isAdminInv)
                                 <span class="fw-semibold">{{ $invoice->brand_name ?? 'Osvioo' }}</span>
-                                <small class="d-block" style="font-size:0.72rem; background:#ede9fe; color:#7c3aed; border-radius:50px; padding:1px 8px; display:inline-block!important; margin-top:2px;">From Osvioo</small>
+                                <small class="d-block admin-invoice-label">From Osvioo</small>
                             @else
                                 <span class="fw-semibold">{{ $invoice->brand_name ?? 'Platform' }}</span>
                             @endif
                         </td>
                         <td>
                             <span class="fw-bold text-dark">{{ $currSymbol }}{{ number_format($invoice->amount, 2) }}</span>
-                            <small class="text-muted d-block" style="font-size:0.75rem;">{{ $currCode }}</small>
+                            <small class="text-muted d-block invoice-amount-label">{{ $currCode }}</small>
                         </td>
                         <td>
                             @if($dueDate)
@@ -141,7 +179,7 @@
                                     {{ $due->format('d M Y') }}
                                 </span>
                                 @if($due->isPast() && $invoice->status != 'paid')
-                                    <small class="text-danger d-block" style="font-size:0.73rem;">Overdue</small>
+                                    <small class="text-danger d-block due-date-overdue">Overdue</small>
                                 @endif
                             @else
                                 <span class="text-muted">—</span>
@@ -179,12 +217,12 @@
                                     <i class="bi bi-currency-dollar"></i>
                                 </button>
                                 @endif
-                                <button type="button" class="action-btn" style="background:#fef3c7; color:#b45309;" data-bs-toggle="modal" data-bs-target="#emailModal{{ $invoice->uid }}" title="{{ translate('Send Email') }}">
+                                <button type="button" class="action-btn action-btn-email" data-bs-toggle="modal" data-bs-target="#emailModal{{ $invoice->uid }}" title="{{ translate('Send Email') }}">
                                     <i class="bi bi-envelope"></i>
                                 </button>
                                 @if(!$isAdminInv)
                                 <a href="{{ route('user.invoice.edit', $invoice->uid) }}"
-                                    class="action-btn" style="background:#e0f2fe; color:#0369a1;"
+                                    class="action-btn action-btn-edit"
                                     title="{{ translate('Edit Invoice') }}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
@@ -202,8 +240,6 @@
                             </div>
                         </td>
                     </tr>
-
-
                     @empty
                     <tr>
                         <td colspan="8" class="p-0">
@@ -223,12 +259,14 @@
         </div>
     </div>
     @if($invoices->hasPages())
-    <div class="px-4 py-3" style="border-top:1px solid #f1f5f9;">
+    <div class="px-4 py-3 pagination-wrapper">
         {{ $invoices->links() }}
     </div>
     @endif
 </div>
+@endsection
 
+@section('modal')
 @foreach($invoices as $invoice)
     @php
         $details     = is_array($invoice->details) ? $invoice->details : [];
@@ -239,12 +277,12 @@
     <!-- Payment Modal -->
     <div class="modal fade" id="paymentModal{{ $invoice->uid }}" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius:12px; border:none;">
-                <div class="modal-header border-0 pb-0">
+            <div class="modal-content modal-content-rounded">
+                <div class="modal-header modal-header-noBorder">
                     <h5 class="modal-title fw-bold">{{ translate('Record Payment') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('user.invoice.payment.update', $invoice->uid) }}" method="POST">
+                <form action="{{ route('user.invoice.payment.update', $invoice->uid) }}" method="POST" class="invoice-payment-form">
                     @csrf
                     <div class="modal-body">
                         <p class="text-muted small mb-3">
@@ -262,8 +300,8 @@
                             <small class="text-muted d-block mt-1">{{ translate('This amount will be added to the total amount paid.') }}</small>
                         </div>
                     </div>
-                    <div class="modal-footer border-0 pt-0">
-                        <button type="submit" class="btn btn-primary w-100" style="border-radius:8px; padding:10px; font-weight:600;">
+                    <div class="modal-footer modal-footer-noBorder">
+                        <button type="submit" class="btn btn-primary w-100 btn-submit-modal">
                             {{ translate('Update Payment') }}
                         </button>
                     </div>
@@ -275,12 +313,12 @@
     <!-- Email Modal -->
     <div class="modal fade" id="emailModal{{ $invoice->uid }}" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius:12px; border:none;">
-                <div class="modal-header border-0 pb-0">
+            <div class="modal-content modal-content-rounded">
+                <div class="modal-header modal-header-noBorder">
                     <h5 class="modal-title fw-bold">{{ translate('Send Invoice to Email') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('user.invoice.send.email', $invoice->uid) }}" method="POST">
+                <form action="{{ route('user.invoice.send.email', $invoice->uid) }}" method="POST" class="invoice-email-form">
                     @csrf
                     <div class="modal-body">
                         <p class="text-muted small mb-3">
@@ -294,8 +332,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer border-0 pt-0">
-                        <button type="submit" class="btn btn-primary w-100" style="border-radius:8px; padding:10px; font-weight:600;">
+                    <div class="modal-footer modal-footer-noBorder">
+                        <button type="submit" class="btn btn-primary w-100 btn-submit-modal">
                             <i class="bi bi-send me-1"></i> {{ translate('Send Email') }}
                         </button>
                     </div>
@@ -304,5 +342,133 @@
         </div>
     </div>
 @endforeach
-
 @endsection
+
+@push('script-push')
+<script nonce="{{ csp_nonce() }}">
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.modal').forEach(modalEl => {
+        modalEl.addEventListener('shown.bs.modal', function () {
+            const input = this.querySelector('input:not([type="hidden"])');
+            if (input) input.focus();
+        });
+
+        modalEl.addEventListener('hidden.bs.modal', function () {
+            document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+            document.body.classList.remove('modal-open');
+            document.body.style.removeProperty('overflow');
+            document.body.style.removeProperty('padding-right');
+        });
+    });
+
+    // Payment forms
+    document.querySelectorAll('.invoice-payment-form').forEach(form => {
+        handleInvoiceForm(form, 'payment');
+    });
+    
+    // Email forms
+    document.querySelectorAll('.invoice-email-form').forEach(form => {
+        handleInvoiceForm(form, 'email');
+    });
+    
+    function handleInvoiceForm(form, type) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            const originalBtnClass = submitBtn.className;
+            const modalElement = this.closest('.modal');
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.className = 'btn btn-primary w-100 btn-submit-modal';
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>' + '{{ translate("Processing...") }}';
+            
+            // Collect form data
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('HTTP error, status = ' + response.status);
+                }
+                return response.json().catch(() => ({ status: true }));
+            })
+            .then(data => {
+                // Show success toast
+                const message = (data && data.message) ? data.message : (type === 'email' 
+                    ? '{{ translate("Invoice email queued successfully!") }}'
+                    : '{{ translate("Payment updated successfully!") }}');
+                showNotification(message, 'success');
+                
+                // Close modal reliably using getOrCreateInstance
+                if (modalElement && typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                    const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
+                    if (modalInstance) {
+                        modalInstance.hide();
+                    }
+                }
+                
+                // Extra cleanup fallback
+                document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+                document.body.classList.remove('modal-open');
+                document.body.style.removeProperty('overflow');
+                
+                // Reset form
+                form.reset();
+                
+                // Reload page after 1.5 seconds to show updated data
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            })
+            .catch(error => {
+                console.error('AJAX Error:', error);
+                showNotification('{{ translate("An error occurred. Please try again.") }}', 'error');
+                
+                // Restore button
+                submitBtn.disabled = false;
+                submitBtn.className = originalBtnClass;
+                submitBtn.innerHTML = originalBtnText;
+            });
+        });
+    }
+});
+
+function showNotification(message, type = 'info') {
+    const alertClass = type === 'success' ? 'alert-success' : type === 'error' ? 'alert-danger' : 'alert-info';
+    const icon = type === 'success' ? '<i class="bi bi-check-circle me-2"></i>' : type === 'error' ? '<i class="bi bi-exclamation-circle me-2"></i>' : '<i class="bi bi-info-circle me-2"></i>';
+    
+    const alertHtml = `
+        <div class="alert ${alertClass} alert-dismissible fade show invoice-notification" role="alert">
+            ${icon}${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', alertHtml);
+    
+    setTimeout(() => {
+        const alerts = document.querySelectorAll('.invoice-notification');
+        if (alerts.length > 0) {
+            const lastAlert = alerts[alerts.length - 1];
+            if (typeof bootstrap !== 'undefined' && bootstrap.Alert) {
+                const bsAlert = new bootstrap.Alert(lastAlert);
+                bsAlert.close();
+            } else {
+                lastAlert.remove();
+            }
+        }
+    }, 5000);
+}
+</script>
+@endpush

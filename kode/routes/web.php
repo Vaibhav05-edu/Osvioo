@@ -204,9 +204,9 @@ Route::get('/lock-server-code', function() {
                     Route::post('/update/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'update'])->name('update');
                     Route::get('/download/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'download'])->name('download')->withoutMiddleware(['sanitizer', \Spatie\Csp\AddCspHeaders::class]);
                     Route::get('/share/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'share'])->name('share');
-                    Route::post('/payment-update/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'updatePayment'])->name('payment.update');
+                    Route::post('/payment-update/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'updatePayment'])->name('payment.update')->withoutMiddleware(['sanitizer', \Spatie\Csp\AddCspHeaders::class]);
                     Route::post('/request-watermark-removal/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'requestWatermarkRemoval'])->name('watermark.request');
-                    Route::post('/send-email/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'sendEmail'])->name('send.email');
+                    Route::post('/send-email/{uid}', [\App\Http\Controllers\User\InvoiceController::class, 'sendEmail'])->name('send.email')->withoutMiddleware(['sanitizer', \Spatie\Csp\AddCspHeaders::class]);
                 });
 
                 // AI Suggestions

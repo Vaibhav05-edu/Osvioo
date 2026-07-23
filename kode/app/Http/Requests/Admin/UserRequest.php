@@ -49,7 +49,6 @@ class UserRequest extends FormRequest
                                                                         ->letters()
                                                                         ->numbers()
                                                                         ->symbols()
-                                                                        ->uncompromised()
                                     ];
         }
 
