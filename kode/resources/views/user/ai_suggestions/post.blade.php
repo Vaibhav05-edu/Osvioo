@@ -51,7 +51,7 @@
                     </button>
                 </div>
                 <div class="col-lg-6 mt-4 mt-lg-0">
-                    <div class="border p-4 h-100" style="border-radius: 16px; background: #f8fff8;">
+                    <div class="border p-4 h-100" style="border-radius: 16px; background: var(--bs-body-bg); color: var(--bs-body-color);">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h6 class="fw-bold mb-0"><i class="bi bi-robot me-2 text-success"></i>{{translate('Generated Output')}}</h6>
                             <button class="btn btn-sm btn-outline-secondary capsuled d-none" id="copyPostBtn" onclick="copyPost()">
@@ -100,7 +100,7 @@ document.getElementById('generatePostBtn').addEventListener('click', function() 
     .then(data => {
         if (data.status) {
             const escaped = data.result.replace(/\n/g, '<br>');
-            output.innerHTML = `<div class="post-content" style="white-space:pre-wrap;line-height:1.8;font-size:15px;color:#222;">${escaped}</div>`;
+            output.innerHTML = `<div class="post-content" style="white-space:pre-wrap;line-height:1.8;font-size:15px;color:var(--bs-body-color);">${escaped}</div>`;
             document.getElementById('copyPostBtn').classList.remove('d-none');
             document.getElementById('copyPostBtn').dataset.text = data.result;
         } else {

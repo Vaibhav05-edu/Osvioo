@@ -38,7 +38,7 @@
                     </button>
                 </div>
                 <div class="col-lg-6 mt-4 mt-lg-0">
-                    <div class="border p-4 h-100" style="border-radius: 16px; background: #f8f9ff;">
+                    <div class="border p-4 h-100" style="border-radius: 16px; background: var(--bs-body-bg); color: var(--bs-body-color);">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h6 class="fw-bold mb-0"><i class="bi bi-card-text me-2 text-primary"></i>{{translate('Generated Hashtags')}}</h6>
                             <button class="btn btn-sm btn-outline-secondary capsuled d-none" id="copyHashtagsBtn" onclick="copyHashtags()">
@@ -87,7 +87,7 @@ document.getElementById('generateHashtagBtn').addEventListener('click', function
         if (data.status) {
             const tags = data.result.split(/\s+/).filter(t => t.startsWith('#'));
             const html = tags.map(t =>
-                `<span class="badge me-1 mb-2 px-3 py-2" style="background:var(--bs-body-bg);color:var(--bs-body-color) !important; border: 1px solid var(--bs-border-color);font-size:13px;border-radius:20px;font-weight:600;">${t}</span>`
+                `<span class="badge me-1 mb-2 px-3 py-2" style="background:var(--bs-primary-bg-subtle, #e8e0ff);color:var(--bs-primary-text-emphasis, #4a00e0) !important; border: 1px solid var(--bs-primary-border-subtle, #c4b0ff);font-size:13px;border-radius:20px;font-weight:600;">${t}</span>`
             ).join('');
             output.innerHTML = `<div class="mb-2">${html}</div>`;
             document.getElementById('copyHashtagsBtn').classList.remove('d-none');

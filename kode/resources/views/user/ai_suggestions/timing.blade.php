@@ -16,7 +16,7 @@
 
             <div class="row">
                 <div class="col-lg-5">
-                    <div class="p-4 bg-light-soft rounded-3 border">
+                    <div class="p-4 rounded-3 border" style="background: var(--bs-body-bg); color: var(--bs-body-color);">
                         <h6 class="fw-bold mb-3">{{translate('Analyze Timing')}}</h6>
                         <div class="mb-3">
                             <label class="form-label fw-bold">{{translate('Timeframe')}}</label>
@@ -32,33 +32,33 @@
                     </div>
                 </div>
                 <div class="col-lg-7 mt-4 mt-lg-0">
-                    <div class="bg-light-soft border p-4 h-100" style="border-radius: 16px;">
+                    <div class="border p-4 h-100" style="border-radius: 16px; background: var(--bs-body-bg); color: var(--bs-body-color);">
                         <h6 class="fw-bold mb-3"><i class="bi bi-graph-up text-primary me-2"></i>{{translate('AI Predicted Best Times')}}</h6>
                         <div id="timingOutput">
                             <div class="row g-3">
                                 <div class="col-md-4">
-                                    <div class="border rounded-3 p-3 text-center bg-light-soft">
+                                    <div class="border rounded-3 p-3 text-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02));">
                                         <span class="badge bg-success-soft text-success mb-2 capsuled">{{translate('Top Choice')}}</span>
                                         <h4 class="fw-bold mb-1">06:00 PM</h4>
                                         <p class="fs-12 text-muted mb-0">{{translate('Wednesday')}}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="border rounded-3 p-3 text-center bg-light-soft">
+                                    <div class="border rounded-3 p-3 text-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02));">
                                         <span class="badge bg-info-soft text-info mb-2 capsuled">{{translate('High Engagement')}}</span>
                                         <h4 class="fw-bold mb-1">11:30 AM</h4>
                                         <p class="fs-12 text-muted mb-0">{{translate('Friday')}}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="border rounded-3 p-3 text-center bg-light-soft">
+                                    <div class="border rounded-3 p-3 text-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02));">
                                         <span class="badge bg-warning-soft text-warning mb-2 capsuled">{{translate('Good Choice')}}</span>
                                         <h4 class="fw-bold mb-1">08:00 AM</h4>
                                         <p class="fs-12 text-muted mb-0">{{translate('Monday')}}</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="mt-3 p-3 bg-light-soft rounded-3 border">
+                            <div class="mt-3 p-3 rounded-3 border" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02));">
                                 <p class="fs-13 text-muted mb-0 text-center">
                                     <i class="bi bi-info-circle me-1"></i> {{translate('Click "Analyze Best Times" to get AI-powered personalized timing predictions.')}}
                                 </p>
@@ -96,7 +96,7 @@ document.getElementById('analyzeTimingBtn').addEventListener('click', function()
             const badgeClasses = ['bg-success-soft text-success', 'bg-info-soft text-info', 'bg-warning-soft text-warning'];
             const cols = data.result.map((item, i) => `
                 <div class="col-md-4">
-                    <div class="border rounded-3 p-3 text-center bg-light-soft">
+                    <div class="border rounded-3 p-3 text-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02));">
                         <span class="badge ${badgeClasses[i] || 'bg-secondary text-secondary'} mb-2 capsuled">${item.label || ''}</span>
                         <h4 class="fw-bold mb-1">${item.time || ''}</h4>
                         <p class="fs-12 text-muted mb-1">${item.day || ''}</p>

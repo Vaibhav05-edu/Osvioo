@@ -292,6 +292,13 @@ trait ModelAction
     private function saveFile(Model $model,? array $response  = null , ? string $type =  null): void{
 
         if(is_array($response) && Arr::has($response,'status')){
+            if ($type) {
+                $existingFiles = $model->file()->where('type', $type)->get();
+                foreach ($existingFiles as $existingFile) {
+                    $existingFile->delete();
+                }
+            }
+
             $image = new File([
                 'name'      => Arr::get($response, 'name', 'default'),
                 'disk'      => Arr::get($response, 'disk', 'local'),

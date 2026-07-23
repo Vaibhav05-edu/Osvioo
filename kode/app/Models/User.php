@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\Enums\StatusEnum;
+use App\Enums\FileKey;
 use App\Models\Admin;
 use App\Models\Admin\Template;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -146,7 +147,7 @@ class User extends Authenticatable
      * @return MorphOne
      */
     public function file():MorphOne {
-        return $this->morphOne(File::class, 'fileable');
+        return $this->morphOne(File::class, 'fileable')->where('type', FileKey::AVATAR->value)->latestOfMany();
     }
 
 

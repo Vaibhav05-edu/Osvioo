@@ -16,7 +16,7 @@
 
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="bg-light-soft p-4 border rounded-3">
+                    <div class="p-4 border rounded-3" style="background: var(--bs-body-bg); color: var(--bs-body-color);">
                         <h6 class="fw-bold mb-3">{{translate('Scan Your Niche')}}</h6>
                         <div class="mb-3">
                             <label class="form-label fw-bold">{{translate('Select Niche')}}</label>
@@ -46,28 +46,28 @@
                     </div>
                 </div>
                 <div class="col-lg-8 mt-4 mt-lg-0">
-                    <div class="bg-transparent border p-4 h-100" style="border-radius: 16px;">
+                    <div class="border p-4 h-100" style="border-radius: 16px; background: var(--bs-body-bg); color: var(--bs-body-color);">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <h6 class="fw-bold mb-0"><i class="bi bi-stars text-warning me-2"></i>{{translate('AI Trend Analysis')}}</h6>
                             <span class="badge bg-danger-soft text-danger capsuled" id="trendBadge">{{translate('AI Powered')}}</span>
                         </div>
                         <div id="trendOutput">
                             <div class="list-group list-group-flush border rounded-3 overflow-hidden">
-                                <div class="list-group-item p-3 d-flex justify-content-between align-items-center bg-light-soft">
+                                <div class="list-group-item p-3 d-flex justify-content-between align-items-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02)); color: var(--bs-body-color);">
                                     <div>
                                         <h6 class="mb-1 fw-bold">"Pedro Pedro Pedro" <span class="badge bg-secondary ms-2" style="font-size: 10px;">Audio</span></h6>
                                         <p class="fs-12 text-muted mb-0">{{translate('Currently viral across Reels. Great for transitions.')}}</p>
                                     </div>
                                     <span class="fs-12 fw-bold text-success"><i class="bi bi-arrow-up-right me-1"></i>450%</span>
                                 </div>
-                                <div class="list-group-item p-3 d-flex justify-content-between align-items-center">
+                                <div class="list-group-item p-3 d-flex justify-content-between align-items-center" style="background: var(--bs-body-bg); color: var(--bs-body-color);">
                                     <div>
                                         <h6 class="mb-1 fw-bold">POV: Office Life <span class="badge bg-secondary ms-2" style="font-size: 10px;">Format</span></h6>
                                         <p class="fs-12 text-muted mb-0">{{translate('Text-on-screen relatable POV videos are seeing high engagement.')}}</p>
                                     </div>
                                     <span class="fs-12 fw-bold text-success"><i class="bi bi-arrow-up-right me-1"></i>210%</span>
                                 </div>
-                                <div class="list-group-item p-3 d-flex justify-content-between align-items-center bg-light-soft">
+                                <div class="list-group-item p-3 d-flex justify-content-between align-items-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02)); color: var(--bs-body-color);">
                                     <div>
                                         <h6 class="mb-1 fw-bold">#GRWM (Get Ready With Me) <span class="badge bg-secondary ms-2" style="font-size: 10px;">Topic</span></h6>
                                         <p class="fs-12 text-muted mb-0">{{translate('Still dominating the fashion and beauty space.')}}</p>
@@ -75,7 +75,7 @@
                                     <span class="fs-12 fw-bold text-success"><i class="bi bi-arrow-up-right me-1"></i>120%</span>
                                 </div>
                             </div>
-                            <div class="mt-3 p-3 bg-light-soft rounded-3 border text-center">
+                            <div class="mt-3 p-3 rounded-3 border text-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02));">
                                 <p class="fs-13 text-muted mb-0">
                                     <i class="bi bi-info-circle me-1"></i> {{translate('Click "Scan Trends" to get real-time AI trend analysis for your niche.')}}
                                 </p>
@@ -116,7 +116,7 @@ document.getElementById('scanTrendsBtn').addEventListener('click', function() {
                 'Hashtag': 'bg-warning text-dark', 'Video': 'bg-danger'
             };
             const rows = data.result.map((item, i) => `
-                <div class="list-group-item p-3 d-flex justify-content-between align-items-center ${i % 2 === 0 ? 'bg-light-soft' : ''}">
+                <div class="list-group-item p-3 d-flex justify-content-between align-items-center" style="background: ${i % 2 === 0 ? 'var(--bs-tertiary-bg, rgba(0,0,0,0.02))' : 'var(--bs-body-bg)'}; color: var(--bs-body-color);">
                     <div>
                         <h6 class="mb-1 fw-bold">${item.title || ''}
                             <span class="badge ${typeBadgeColor[item.type] || 'bg-secondary'} ms-2" style="font-size:10px;">${item.type || ''}</span>

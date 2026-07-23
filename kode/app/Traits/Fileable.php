@@ -118,25 +118,36 @@ trait Fileable
      */
     public function unlink(string $location, ?CoreFile $file = null): bool
     {
-
+        if (!$file) {
+            return false;
+        }
 
         try {
-            switch (@$file->disk) {
-                case StorageKey::LOCAL->value:
-                    if (file_exists($location . '/' . @$file->name) && is_file($location . '/' . @$file->name))
-                        @unlink($location . '/' . @$file->name);
-                    break;
+            if ($file->disk) {
+                $method = Arr::get(StorageKey::toArray(), strtoupper((string)$file->disk));
+                if ($method && method_exists($this, $method)) {
+                    $this->{$method}();
+                }
 
-                default:
-                    $this->{Arr::get(StorageKey::toArray(), strtoupper($file->disk))}();
-                    if (Storage::disk($file->disk)->exists($location . '/' . @$file->name))
-                        Storage::disk($file->disk)->delete($location . '/' . @$file->name);
-                    break;
+                switch ($file->disk) {
+                    case StorageKey::LOCAL->value:
+                        if (file_exists($location . '/' . $file->name) && is_file($location . '/' . $file->name))
+                            @unlink($location . '/' . $file->name);
+                        break;
+
+                    default:
+                        if (Storage::disk($file->disk)->exists($location . '/' . $file->name))
+                            Storage::disk($file->disk)->delete($location . '/' . $file->name);
+                        break;
+                }
             }
 
-            @$file->delete();
+        } catch (\Exception $ex) {
 
+        }
 
+        try {
+            $file->delete();
         } catch (\Exception $ex) {
             return false;
         }
@@ -164,6 +175,7 @@ trait Fileable
                 'filesystems.disks.s3.use_path_style_endpoint' => false,
             ]
         );
+        Storage::forgetDisk('s3');
     }
 
 
@@ -187,7 +199,7 @@ trait Fileable
                 'filesystems.disks.ftp.root' => Arr::get($ftpConfig, 'root')
             ]
         );
-
+        Storage::forgetDisk('ftp');
     }
 
     /**
@@ -232,18 +244,25 @@ trait Fileable
         }
         try {
 
-            if (Arr::exists($basepath, 'path')) {
-                $image = $basepath['path'] . "/" . @$file->name;
-                switch ($file->disk) {
-                    case StorageKey::LOCAL->value:
-                        if (file_exists($image) && is_file($image))
-                            $imageURL = asset($image);
-                        break;
-                    default:
-                        $this->{Arr::get(StorageKey::toArray(), strtoupper($file->disk))}();
-                        if (Storage::disk(@$file->disk)->exists($image))
-                            $imageURL = \Storage::disk(@$file->disk)->url($image);
-                        break;
+            if ($file && Arr::exists($basepath, 'path')) {
+                $image = $basepath['path'] . "/" . $file->name;
+                $disk = $file->disk;
+                if ($disk) {
+                    $method = Arr::get(StorageKey::toArray(), strtoupper((string)$disk));
+                    if ($method && method_exists($this, $method)) {
+                        $this->{$method}();
+                    }
+
+                    switch ($disk) {
+                        case StorageKey::LOCAL->value:
+                            if (file_exists($image) && is_file($image))
+                                $imageURL = asset($image);
+                            break;
+                        default:
+                            if (Storage::disk($disk)->exists($image))
+                                $imageURL = \Storage::disk($disk)->url($image);
+                            break;
+                    }
                 }
             }
 

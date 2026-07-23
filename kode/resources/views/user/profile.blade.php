@@ -24,16 +24,16 @@
                     <p class="fs-14"> {{translate('Joined On')}}
                         {{get_date_time($user->created_at,"F j, Y")}},{{get_date_time($user->created_at," g a")}}</p>
                     <div class="mt-4">
-                        <div class="fs-18"><span class="text--dark fw-bold">{{translate('Email')}} :</span>
+                        <div class="fs-18"><span class="fw-bold">{{translate('Email')}} :</span>
                             {{$user->email}} </div>
-                        <div class="fs-18"><span class="text--dark fw-bold"> {{translate('Phone')}} :</span>
+                        <div class="fs-18"><span class="fw-bold"> {{translate('Phone')}} :</span>
                             {{$user->phone}}</div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-xxl-3 col-xl-4 col-lg-4">
-            <div class="p-lg-4 p-3 bg--light radius-16 border">
+            <div class="p-lg-4 p-3 radius-16 border" style="background: var(--bs-tertiary-bg, rgba(255, 255, 255, 0.04)); color: var(--bs-body-color);">
                 <h5 class="mb-2 fw-normal">
                     {{translate('Balance')}}
                 </h5>

@@ -843,3 +843,4 @@
 
 .text--dark { color: var(--color-dark) !important; }
 .bg--light { background-color: var(--bg-light-one) !important; }
+[data-bs-theme="dark"] .bg--light { background-color: rgba(30, 30, 30, 0.6) !important; }
