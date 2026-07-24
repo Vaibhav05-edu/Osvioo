@@ -178,16 +178,24 @@ if (!empty($key)) {
 if (!function_exists('openai_Image_key')) {
     function openai_Image_key(): string
     {
+        $key = config('services.openai.key');
+
+        if (!empty($key)) {
+            return trim($key);
+        }
+
         if (env('OPENAI_API_KEY')) {
             return trim(env('OPENAI_API_KEY'));
         }
 
         $key = site_settings("open_ai_image_secret");
 
+        if (empty($key) || $key === '@@') {
+            return openai_key();
+        }
+
         return trim($key);
-
     }
-
 }
 
 if (!function_exists('kling_ai_video_key')) {

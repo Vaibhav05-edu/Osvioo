@@ -159,6 +159,7 @@
 
     .social-icons-row { display: flex; gap: 15px; justify-content: flex-end; flex-wrap: wrap; }
     .master-social-btn { width: 40px; height: 40px; background: #000; color: #fff !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; text-decoration: none; transition: transform 0.3s; }
+    .master-social-btn i { font-family: "bootstrap-icons" !important; font-style: normal; }
     .master-social-btn:hover { transform: translateY(-5px); }
 
     .footer-bottom-master {
