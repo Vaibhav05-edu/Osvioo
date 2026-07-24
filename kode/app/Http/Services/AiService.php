@@ -754,11 +754,6 @@ class AiService
         }
 
 
-        $open_ai = new OpenAi(OPENAI_API_KEY: openai_Image_key());
-        $image_results = json_decode($open_ai->image($aiParams), true);
-
-
-
         try {
 
             if ($provider === 'openai') {
@@ -770,10 +765,13 @@ class AiService
             $params = [
                 'prompt' => $aiParams['prompt'],
                 'model' => $aiParams['model'],
-                'n' => $aiParams['n'] ?? 1,
+                'n' => (int) ($aiParams['n'] ?? 1),
                 'size' => $size,
-                'response_format' => $aiParams['response_format'] ?? 'url',
             ];
+
+            if (isset($aiParams['response_format'])) {
+                $params['response_format'] = $aiParams['response_format'];
+            }
 
             $image_results = json_decode($open_ai->image($params), true);
 
