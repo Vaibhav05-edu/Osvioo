@@ -769,10 +769,6 @@ class AiService
                 'size' => $size,
             ];
 
-            if (isset($aiParams['response_format'])) {
-                $params['response_format'] = $aiParams['response_format'];
-            }
-
             $image_results = json_decode($open_ai->image($params), true);
 
             if (isset($image_results['error'])) {
