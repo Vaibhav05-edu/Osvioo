@@ -103,7 +103,7 @@
                                         <p class="mb-0 text-muted fs-11">24/7 Influencer Help</p>
                                     </div>
                                 </div>
-                                <span class="badge bg-light-soft text-dark border fs-10">INCLUDED</span>
+                                <span class="badge bg--primary-soft text--primary border border-primary-subtle fs-10">INCLUDED</span>
                             </div>
                             <div class="text-center py-4 border border-dashed rounded-4">
                                 <p class="text-muted fs-13 mb-0">{{translate('No extra add-ons purchased yet.')}}</p>
@@ -127,7 +127,7 @@
                 @endphp
 
                 @forelse($availableAddons as $addon)
-                <div class="p-3 border rounded-4 position-relative overflow-hidden" style="background: #fafafa;">
+                <div class="p-3 border rounded-4 position-relative overflow-hidden bg-light-soft">
                     <div class="d-flex align-items-center justify-content-between mb-2">
                         <div class="d-flex align-items-center gap-2">
                             <div class="icon-box-sm bg--primary-soft text--primary">
@@ -151,7 +151,7 @@
                 <hr class="my-4">
 
                 {{-- CUSTOM BOOST CONFIGURATOR --}}
-                <div class="p-4 border rounded-4" style="background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%); border-style: dashed !important; border-color: #5D5AF1 !important;">
+                <div class="p-4 border rounded-4 custom-boost-card" style="border-style: dashed !important; border-color: #5D5AF1 !important;">
                     <h6 class="fw-bold mb-3 d-flex align-items-center gap-2">
                         <i class="bi bi-sliders text--primary"></i>
                         {{translate('Custom Plan Boost')}}

@@ -444,6 +444,7 @@
                         </div>
                     @endif
                 </div>
+                </div>
 
                 @if($package)
                     <div class="tab-pane fade" id="tab-subscription-pane" role="tabpanel" aria-labelledby="tab-subscription"

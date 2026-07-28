@@ -21,7 +21,7 @@
             </div>
             <div class="card-body text-center p-4">
                 <h2 class="fw-bold mb-1" style="color: #6366f1;">
-                    {{ num_format($addon->price, base_currency()) }}
+                    {{ num_format($addon->price, calC: true) }}
                 </h2>
                 <p class="text-muted mb-3" style="font-size: 0.9rem;">{{translate('One-time payment')}}</p>
                 <ul class="list-unstyled text-start mt-3 mb-4">
@@ -66,11 +66,11 @@
                 <form action="{{route('user.addon.purchase', $addon->uid)}}" method="POST">
                     @csrf
                     <div class="modal-body px-4 py-3">
-                        <p class="mb-3">{{translate('You are about to purchase')}} <strong>{{$addon->title}}</strong> {{translate('for')}} <strong>{{ num_format($addon->price, base_currency()) }}</strong>.</p>
+                        <p class="mb-3">{{translate('You are about to purchase')}} <strong>{{$addon->title}}</strong> {{translate('for')}} <strong>{{ num_format($addon->price, calC: true) }}</strong>.</p>
                         <div class="p-3 rounded-3" style="background: #f8f9ff; border: 1px solid #e0e7ff;">
                             <p class="mb-1 text-muted" style="font-size: 0.88rem;">
                                 <i class="bi bi-wallet2 me-1 text-primary"></i>{{translate('Current Wallet Balance')}}:
-                                <strong>{{ num_format(auth_user('web')->balance, base_currency()) }}</strong>
+                                <strong>{{ num_format(auth_user('web')->balance, calC: true) }}</strong>
                             </p>
                             @if(auth_user('web')->balance < $addon->price)
                             <p class="mb-0 text-danger" style="font-size: 0.88rem;">
@@ -81,10 +81,15 @@
                     </div>
                     <div class="modal-footer border-0 px-4">
                         <button type="button" class="i-btn btn--light btn--md" data-bs-dismiss="modal">{{translate('Cancel')}}</button>
-                        <button type="submit" class="i-btn btn--primary btn--md" {{ auth_user('web')->balance < $addon->price ? 'disabled' : '' }}>
-                            <i class="bi bi-bag-check me-1"></i>
-                            {{ auth_user('web')->balance < $addon->price ? translate('Insufficient Balance') : translate('Pay with Wallet') }}
-                        </button>
+                        @if(auth_user('web')->balance < $addon->price)
+                            <a href="{{ route('user.deposit.create') }}" class="i-btn btn--primary btn--md">
+                                <i class="bi bi-wallet2 me-1"></i>{{ translate('Add Funds') }}
+                            </a>
+                        @else
+                            <button type="submit" class="i-btn btn--primary btn--md">
+                                <i class="bi bi-bag-check me-1"></i>{{ translate('Pay with Wallet') }}
+                            </button>
+                        @endif
                     </div>
                 </form>
             </div>

@@ -53,7 +53,7 @@ class AddonController extends Controller
                         return app(\App\Http\Controllers\User\DepositController::class)->depositConfirm($depositLog);
                     }
                 } else {
-                    return back()->with('error', translate('Insufficient wallet balance. Please deposit funds first.'));
+                    return redirect()->route('user.deposit.create')->with('error', translate('Insufficient wallet balance. Please deposit funds first.'));
                 }
             }
 
