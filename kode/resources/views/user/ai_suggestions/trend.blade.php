@@ -53,30 +53,30 @@
                         </div>
                         <div id="trendOutput">
                             <div class="list-group list-group-flush border rounded-3 overflow-hidden">
-                                <div class="list-group-item p-3 d-flex justify-content-between align-items-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02)); color: var(--bs-body-color);">
+                                <div class="list-group-item p-3 d-flex justify-content-between align-items-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02)); color: var(--text-primary, #1b1c1e);">
                                     <div>
-                                        <h6 class="mb-1 fw-bold">"Pedro Pedro Pedro" <span class="badge bg-secondary ms-2" style="font-size: 10px;">Audio</span></h6>
-                                        <p class="fs-12 text-muted mb-0">{{translate('Currently viral across Reels. Great for transitions.')}}</p>
+                                        <h6 class="mb-1 fw-bold" style="color: var(--text-primary, #1b1c1e);">"Pedro Pedro Pedro" <span class="badge bg-secondary ms-2" style="font-size: 10px;">Audio</span></h6>
+                                        <p class="fs-12 mb-0" style="color: var(--text-secondary, #4c4b4b);">{{translate('Currently viral across Reels. Great for transitions.')}}</p>
                                     </div>
                                     <span class="fs-12 fw-bold text-success"><i class="bi bi-arrow-up-right me-1"></i>450%</span>
                                 </div>
-                                <div class="list-group-item p-3 d-flex justify-content-between align-items-center" style="background: var(--bs-body-bg); color: var(--bs-body-color);">
+                                <div class="list-group-item p-3 d-flex justify-content-between align-items-center" style="background: var(--bs-body-bg); color: var(--text-primary, #1b1c1e);">
                                     <div>
-                                        <h6 class="mb-1 fw-bold">POV: Office Life <span class="badge bg-secondary ms-2" style="font-size: 10px;">Format</span></h6>
-                                        <p class="fs-12 text-muted mb-0">{{translate('Text-on-screen relatable POV videos are seeing high engagement.')}}</p>
+                                        <h6 class="mb-1 fw-bold" style="color: var(--text-primary, #1b1c1e);">POV: Office Life <span class="badge bg-secondary ms-2" style="font-size: 10px;">Format</span></h6>
+                                        <p class="fs-12 mb-0" style="color: var(--text-secondary, #4c4b4b);">{{translate('Text-on-screen relatable POV videos are seeing high engagement.')}}</p>
                                     </div>
                                     <span class="fs-12 fw-bold text-success"><i class="bi bi-arrow-up-right me-1"></i>210%</span>
                                 </div>
-                                <div class="list-group-item p-3 d-flex justify-content-between align-items-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02)); color: var(--bs-body-color);">
+                                <div class="list-group-item p-3 d-flex justify-content-between align-items-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02)); color: var(--text-primary, #1b1c1e);">
                                     <div>
-                                        <h6 class="mb-1 fw-bold">#GRWM (Get Ready With Me) <span class="badge bg-secondary ms-2" style="font-size: 10px;">Topic</span></h6>
-                                        <p class="fs-12 text-muted mb-0">{{translate('Still dominating the fashion and beauty space.')}}</p>
+                                        <h6 class="mb-1 fw-bold" style="color: var(--text-primary, #1b1c1e);">#GRWM (Get Ready With Me) <span class="badge bg-secondary ms-2" style="font-size: 10px;">Topic</span></h6>
+                                        <p class="fs-12 mb-0" style="color: var(--text-secondary, #4c4b4b);">{{translate('Still dominating the fashion and beauty space.')}}</p>
                                     </div>
                                     <span class="fs-12 fw-bold text-success"><i class="bi bi-arrow-up-right me-1"></i>120%</span>
                                 </div>
                             </div>
                             <div class="mt-3 p-3 rounded-3 border text-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02));">
-                                <p class="fs-13 text-muted mb-0">
+                                <p class="fs-13 mb-0" style="color: var(--text-secondary, #4c4b4b);">
                                     <i class="bi bi-info-circle me-1"></i> {{translate('Click "Scan Trends" to get real-time AI trend analysis for your niche.')}}
                                 </p>
                             </div>
@@ -116,12 +116,12 @@ document.getElementById('scanTrendsBtn').addEventListener('click', function() {
                 'Hashtag': 'bg-warning text-dark', 'Video': 'bg-danger'
             };
             const rows = data.result.map((item, i) => `
-                <div class="list-group-item p-3 d-flex justify-content-between align-items-center" style="background: ${i % 2 === 0 ? 'var(--bs-tertiary-bg, rgba(0,0,0,0.02))' : 'var(--bs-body-bg)'}; color: var(--bs-body-color);">
+                <div class="list-group-item p-3 d-flex justify-content-between align-items-center" style="background: ${i % 2 === 0 ? 'var(--bs-tertiary-bg, rgba(0,0,0,0.02))' : 'var(--bs-body-bg)'}; color: var(--text-primary, #1b1c1e);">
                     <div>
-                        <h6 class="mb-1 fw-bold">${item.title || ''}
+                        <h6 class="mb-1 fw-bold" style="color: var(--text-primary, #1b1c1e);">${item.title || ''}
                             <span class="badge ${typeBadgeColor[item.type] || 'bg-secondary'} ms-2" style="font-size:10px;">${item.type || ''}</span>
                         </h6>
-                        <p class="fs-12 text-muted mb-0">${item.description || ''}</p>
+                        <p class="fs-12 mb-0" style="color: var(--text-secondary, #4c4b4b);">${item.description || ''}</p>
                     </div>
                     <span class="fs-12 fw-bold text-success ms-3 text-nowrap"><i class="bi bi-arrow-up-right me-1"></i>${item.growth || ''}</span>
                 </div>

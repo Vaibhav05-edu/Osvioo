@@ -80,13 +80,15 @@ document.getElementById('generatePostBtn').addEventListener('click', function() 
     const output    = document.getElementById('postOutput');
 
     if (!prompt) {
+        output.className = 'py-2';
         output.innerHTML = '<div class="alert alert-warning">{{ translate("Please describe your post first.") }}</div>';
         return;
     }
 
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> {{ translate("Generating...") }}';
-    output.innerHTML = '<div class="text-center py-4"><span class="spinner-border text-success"></span><p class="mt-2 text-muted">{{ translate("AI is writing your post...") }}</p></div>';
+    output.className = 'text-center py-4';
+    output.innerHTML = '<span class="spinner-border text-success"></span><p class="mt-2 text-muted">{{ translate("AI is writing your post...") }}</p>';
 
     fetch('{{ route("user.ai_suggestions.generate.post") }}', {
         method: 'POST',
@@ -99,15 +101,18 @@ document.getElementById('generatePostBtn').addEventListener('click', function() 
     .then(r => r.json())
     .then(data => {
         if (data.status) {
+            output.className = 'py-2';
             const escaped = data.result.replace(/\n/g, '<br>');
-            output.innerHTML = `<div class="post-content" style="white-space:pre-wrap;line-height:1.8;font-size:15px;color:var(--bs-body-color);">${escaped}</div>`;
+            output.innerHTML = `<div class="post-content" style="white-space:pre-wrap;line-height:1.8;font-size:15px;color:var(--text-primary, #1b1c1e);font-weight:500;">${escaped}</div>`;
             document.getElementById('copyPostBtn').classList.remove('d-none');
             document.getElementById('copyPostBtn').dataset.text = data.result;
         } else {
+            output.className = 'py-2';
             output.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
         }
     })
     .catch(() => {
+        output.className = 'py-2';
         output.innerHTML = '<div class="alert alert-danger">{{ translate("Something went wrong. Please try again.") }}</div>';
     })
     .finally(() => {

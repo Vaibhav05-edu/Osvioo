@@ -111,7 +111,7 @@
                         <div class="col-12">
                             <label class="plixi-form-label">Country</label>
                             <div class="position-relative">
-                                <i class="bi bi-globe position-absolute top-50 translate-middle-y text-muted" style="left: 18px; z-index: 10;"></i>
+                                <i class="bi bi-globe position-absolute top-50 start-0 translate-middle-y ms-3 text-muted" style="z-index: 10;"></i>
                                 <select class="form-select plixi-form-input ps-5" name="country_id" id="country_id">
                                     <option value="">Select country</option>
                                     @foreach ($countries as $country)
@@ -139,8 +139,8 @@
                     </div>
 
                     <div class="auth-checkbox mt-4 mb-4">
-                        <div class="d-flex align-items-start gap-2">
-                            <input class="form-check-input flex-shrink-0 m-0 mt-1" type="checkbox" id="terms_condition" value="1" name="terms_condition" required style="cursor: pointer;">
+                        <div class="d-flex align-items-center gap-2">
+                            <input class="form-check-input flex-shrink-0 m-0" type="checkbox" id="terms_condition" value="1" name="terms_condition" required style="cursor: pointer;">
                             <label class="form-check-label fs-0-85rem fw-600 text-muted m-0" for="terms_condition" style="cursor: pointer;">
                                 By completing the registration process, you agree and accept our
                                 @if($termsPage)
@@ -261,17 +261,29 @@
 
     .plixi-form-input {
         width: 100%;
+        height: 48px;
         padding: 12px 15px;
         border: 1px solid #e2e8f0;
         border-radius: 8px;
         font-size: 0.95rem;
         color: #111;
+        background-color: #fff;
         transition: all 0.2s;
     }
     .plixi-form-input.ps-5 {
-        padding-left: 65px !important;
+        padding-left: 45px !important;
     }
     .plixi-form-input:focus { border-color: #7c3aed; outline: none; box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1); }
+
+    /* Select element styling */
+    select.plixi-form-input,
+    select.form-select.plixi-form-input {
+        height: 48px !important;
+        padding-left: 45px !important;
+        font-size: 0.95rem !important;
+        color: #111 !important;
+        background-position: right 15px center !important;
+    }
 
     /* Fix for Select2 with Icon */
     .select2-container--default .select2-selection--single,
@@ -285,7 +297,7 @@
     }
     .select2-container .select2-selection--single .select2-selection__rendered,
     .select2-container--default .select2-selection--single .select2-selection__rendered {
-        padding-left: 65px !important;
+        padding-left: 45px !important;
         color: #111 !important;
         font-size: 0.95rem !important;
         line-height: 48px !important;
@@ -297,16 +309,13 @@
     .select2-container {
         width: 100% !important;
     }
-    select.ps-5 {
-        padding-left: 65px !important;
-        text-indent: 45px !important;
-    }
 
     .form-check-input {
-        width: 1.25rem !important;
-        height: 1.25rem !important;
+        width: 1.15rem !important;
+        height: 1.15rem !important;
         cursor: pointer;
-        border: 1px solid #cbd5e1 !important;
+        border: 1.5px solid #cbd5e1 !important;
+        border-radius: 4px !important;
     }
     .form-check-input:checked {
         background-color: #7c3aed !important;

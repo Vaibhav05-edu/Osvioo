@@ -47,6 +47,8 @@
     <title>Osvioo - Instagram & Facebook DM Automation</title>
     <link rel="icon" type="image/jpeg" href="{{ asset('assets/logo.jpeg') }}" />
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link nonce="{{ csp_nonce() }}" href="{{ asset('assets/global/css/bootstrap-icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Caveat:wght@400..700&family=Dancing+Script:wght@700&family=Playball&family=Syne:wght@700;800&family=Montserrat:wght@700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />

@@ -344,7 +344,9 @@
 
             <div class="cover-image-container">
                 @if($mediaKit->cover_image)
-                    <img src="/assets/images/custom/{{ $mediaKit->cover_image }}" alt="{{ $mediaKit->title }}">
+                    <!-- <img src="/assets/images/custom/{{ $mediaKit->cover_image }}" alt="{{ $mediaKit->title }}"> -->
+                     <img src="{{ asset('assets/images/custom/' . $mediaKit->cover_image) }}" alt="{{ $mediaKit->title }}">
+
                 @else
                     <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;color:#999;background:#eee;">
                         &#10022;

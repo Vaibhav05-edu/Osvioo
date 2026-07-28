@@ -66,13 +66,15 @@ document.getElementById('generateHashtagBtn').addEventListener('click', function
     const output   = document.getElementById('hashtagOutput');
 
     if (!prompt) {
+        output.className = 'py-2';
         output.innerHTML = '<div class="alert alert-warning">{{ translate("Please describe your post first.") }}</div>';
         return;
     }
 
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> {{ translate("Generating...") }}';
-    output.innerHTML = '<div class="text-center py-4"><span class="spinner-border text-primary"></span><p class="mt-2 text-muted">{{ translate("AI is generating hashtags...") }}</p></div>';
+    output.className = 'text-center py-4';
+    output.innerHTML = '<span class="spinner-border text-primary"></span><p class="mt-2 text-muted">{{ translate("AI is generating hashtags...") }}</p>';
 
     fetch('{{ route("user.ai_suggestions.generate.hashtag") }}', {
         method: 'POST',
@@ -85,18 +87,22 @@ document.getElementById('generateHashtagBtn').addEventListener('click', function
     .then(r => r.json())
     .then(data => {
         if (data.status) {
-            const tags = data.result.split(/\s+/).filter(t => t.startsWith('#'));
+            const rawTags = data.result.split(/\s+/).filter(t => t.length > 0);
+            const tags = rawTags.map(t => t.startsWith('#') ? t : '#' + t);
             const html = tags.map(t =>
-                `<span class="badge me-1 mb-2 px-3 py-2" style="background:var(--bs-primary-bg-subtle, #e8e0ff);color:var(--bs-primary-text-emphasis, #4a00e0) !important; border: 1px solid var(--bs-primary-border-subtle, #c4b0ff);font-size:13px;border-radius:20px;font-weight:600;">${t}</span>`
+                `<span class="badge me-1 mb-2 px-3 py-2 hashtag-pill" style="background: var(--color-primary-light, rgba(127, 86, 217, 0.12)); color: var(--color-primary, #7f56d9) !important; border: 1px solid rgba(127, 86, 217, 0.25); font-size:13px; border-radius:20px; font-weight:600; display:inline-block;">${t}</span>`
             ).join('');
-            output.innerHTML = `<div class="mb-2">${html}</div>`;
+            output.className = 'py-2';
+            output.innerHTML = `<div class="mb-2 d-flex flex-wrap gap-1">${html}</div>`;
             document.getElementById('copyHashtagsBtn').classList.remove('d-none');
             document.getElementById('copyHashtagsBtn').dataset.text = data.result;
         } else {
+            output.className = 'py-2';
             output.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
         }
     })
     .catch(e => {
+        output.className = 'py-2';
         output.innerHTML = `<div class="alert alert-danger">{{ translate("Something went wrong. Please try again.") }}</div>`;
     })
     .finally(() => {

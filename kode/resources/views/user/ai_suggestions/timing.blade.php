@@ -39,27 +39,30 @@
                                 <div class="col-md-4">
                                     <div class="border rounded-3 p-3 text-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02));">
                                         <span class="badge bg-success-soft text-success mb-2 capsuled">{{translate('Top Choice')}}</span>
-                                        <h4 class="fw-bold mb-1">06:00 PM</h4>
-                                        <p class="fs-12 text-muted mb-0">{{translate('Wednesday')}}</p>
+                                        <h4 class="fw-bold mb-1" style="color: var(--text-primary, #1b1c1e);">06:00 PM</h4>
+                                        <p class="fs-13 fw-semibold mb-1" style="color: var(--text-primary, #1b1c1e);">{{translate('Wednesday')}}</p>
+                                        <p class="fs-12 mb-0" style="color: var(--text-secondary, #4c4b4b);">{{translate('Midweek posts in the morning receive high engagement.')}}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="border rounded-3 p-3 text-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02));">
                                         <span class="badge bg-info-soft text-info mb-2 capsuled">{{translate('High Engagement')}}</span>
-                                        <h4 class="fw-bold mb-1">11:30 AM</h4>
-                                        <p class="fs-12 text-muted mb-0">{{translate('Friday')}}</p>
+                                        <h4 class="fw-bold mb-1" style="color: var(--text-primary, #1b1c1e);">11:30 AM</h4>
+                                        <p class="fs-13 fw-semibold mb-1" style="color: var(--text-primary, #1b1c1e);">{{translate('Friday')}}</p>
+                                        <p class="fs-12 mb-0" style="color: var(--text-secondary, #4c4b4b);">{{translate('Posts after work hours get increased visibility.')}}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="border rounded-3 p-3 text-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02));">
                                         <span class="badge bg-warning-soft text-warning mb-2 capsuled">{{translate('Good Choice')}}</span>
-                                        <h4 class="fw-bold mb-1">08:00 AM</h4>
-                                        <p class="fs-12 text-muted mb-0">{{translate('Monday')}}</p>
+                                        <h4 class="fw-bold mb-1" style="color: var(--text-primary, #1b1c1e);">08:00 AM</h4>
+                                        <p class="fs-13 fw-semibold mb-1" style="color: var(--text-primary, #1b1c1e);">{{translate('Monday')}}</p>
+                                        <p class="fs-12 mb-0" style="color: var(--text-secondary, #4c4b4b);">{{translate('Less competition and high user activity on afternoons.')}}</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="mt-3 p-3 rounded-3 border" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02));">
-                                <p class="fs-13 text-muted mb-0 text-center">
+                                <p class="fs-13 mb-0 text-center" style="color: var(--text-secondary, #4c4b4b);">
                                     <i class="bi bi-info-circle me-1"></i> {{translate('Click "Analyze Best Times" to get AI-powered personalized timing predictions.')}}
                                 </p>
                             </div>
@@ -98,9 +101,9 @@ document.getElementById('analyzeTimingBtn').addEventListener('click', function()
                 <div class="col-md-4">
                     <div class="border rounded-3 p-3 text-center" style="background: var(--bs-tertiary-bg, rgba(0,0,0,0.02));">
                         <span class="badge ${badgeClasses[i] || 'bg-secondary text-secondary'} mb-2 capsuled">${item.label || ''}</span>
-                        <h4 class="fw-bold mb-1">${item.time || ''}</h4>
-                        <p class="fs-12 text-muted mb-1">${item.day || ''}</p>
-                        <p class="fs-11 text-muted mb-0">${item.reason || ''}</p>
+                        <h4 class="fw-bold mb-1" style="color: var(--text-primary, #1b1c1e);">${item.time || ''}</h4>
+                        <p class="fs-13 fw-semibold mb-1" style="color: var(--text-primary, #1b1c1e);">${item.day || ''}</p>
+                        <p class="fs-12 mb-0" style="color: var(--text-secondary, #4c4b4b);">${item.reason || ''}</p>
                     </div>
                 </div>
             `).join('');

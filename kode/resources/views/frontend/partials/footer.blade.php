@@ -75,9 +75,11 @@
                         <h5 class="master-col-title mb-3">Follow us</h5>
                         <div class="social-icons-row">
                             @foreach ($icons as $icon)
-                                <a target="_blank" href="{{$icon->value->button_url}}" class="master-social-btn">
-                                    <i class="{{ $icon->value->icon }}"></i>
-                                </a>
+                                @if(!empty($icon->value->icon) && $icon->value->button_url != '@@')
+                                    <a target="_blank" href="{{$icon->value->button_url}}" class="master-social-btn">
+                                        <i class="{{ $icon->value->icon }}"></i>
+                                    </a>
+                                @endif
                             @endforeach
                         </div>
                     </div>
@@ -122,8 +124,8 @@
 
     .footer-grid-master {
         display: grid;
-        grid-template-columns: 1.5fr 1fr 1fr 1fr;
-        gap: 40px;
+        grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+        gap: 30px;
         position: relative;
         z-index: 5;
     }
@@ -157,8 +159,8 @@
     .meta-label-master { font-weight: 800; font-size: 1.6rem; color: #0668E1; letter-spacing: -0.5px; line-height: 1; }
     .meta-partner-label { font-size: 0.7rem; font-weight: 700; color: #333; margin-top: -3px; margin-left: 2px; }
 
-    .social-icons-row { display: flex; gap: 15px; justify-content: flex-end; flex-wrap: wrap; }
-    .master-social-btn { width: 40px; height: 40px; background: #000; color: #fff !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; text-decoration: none; transition: transform 0.3s; }
+    .social-icons-row { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+    .master-social-btn { width: 38px; height: 38px; background: #000; color: #fff !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; text-decoration: none; transition: transform 0.3s; }
     .master-social-btn i { font-family: "bootstrap-icons" !important; font-style: normal; }
     .master-social-btn:hover { transform: translateY(-5px); }
 
