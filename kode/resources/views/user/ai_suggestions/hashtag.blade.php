@@ -86,19 +86,26 @@ document.getElementById('generateHashtagBtn').addEventListener('click', function
     })
     .then(r => r.json())
     .then(data => {
-        if (data.status) {
+        if (data.status && data.result) {
             const rawTags = data.result.split(/\s+/).filter(t => t.length > 0);
-            const tags = rawTags.map(t => t.startsWith('#') ? t : '#' + t);
+            const tags = rawTags.map(t => {
+                let clean = t.replace(/^[^\w#]+|[^\w]+$/g, '');
+                return clean.startsWith('#') ? clean : '#' + clean;
+            }).filter(t => t.length > 1);
+
             const html = tags.map(t =>
                 `<span class="badge me-1 mb-2 px-3 py-2 hashtag-pill" style="background: var(--color-primary-light, rgba(127, 86, 217, 0.12)); color: var(--color-primary, #7f56d9) !important; border: 1px solid rgba(127, 86, 217, 0.25); font-size:13px; border-radius:20px; font-weight:600; display:inline-block;">${t}</span>`
             ).join('');
+
+            const formattedText = tags.join(' ');
             output.className = 'py-2';
             output.innerHTML = `<div class="mb-2 d-flex flex-wrap gap-1">${html}</div>`;
-            document.getElementById('copyHashtagsBtn').classList.remove('d-none');
-            document.getElementById('copyHashtagsBtn').dataset.text = data.result;
+            const copyBtn = document.getElementById('copyHashtagsBtn');
+            copyBtn.classList.remove('d-none');
+            copyBtn.dataset.text = formattedText;
         } else {
             output.className = 'py-2';
-            output.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+            output.innerHTML = `<div class="alert alert-danger">${data.message || '{{ translate("Failed to generate hashtags.") }}'}</div>`;
         }
     })
     .catch(e => {
@@ -111,13 +118,51 @@ document.getElementById('generateHashtagBtn').addEventListener('click', function
     });
 });
 
-function copyHashtags() {
-    const text = document.getElementById('copyHashtagsBtn').dataset.text;
-    navigator.clipboard.writeText(text).then(() => {
-        const btn = document.getElementById('copyHashtagsBtn');
+function copyToClipboard(text, btn, defaultHtml) {
+    function onSuccess() {
         btn.innerHTML = '<i class="bi bi-check me-1"></i> {{ translate("Copied!") }}';
-        setTimeout(() => { btn.innerHTML = '<i class="bi bi-clipboard me-1"></i> {{ translate("Copy All") }}'; }, 2000);
-    });
+        if (typeof toastr !== 'undefined') {
+            toastr.success('{{ translate("Copied to clipboard!") }}');
+        }
+        setTimeout(() => { btn.innerHTML = defaultHtml; }, 2000);
+    }
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
+            fallbackExecCopy(text, onSuccess);
+        });
+    } else {
+        fallbackExecCopy(text, onSuccess);
+    }
+}
+
+function fallbackExecCopy(text, onSuccess) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
+    textarea.style.top = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            onSuccess();
+        } else {
+            alert('{{ translate("Copy failed. Please copy manually.") }}');
+        }
+    } catch (err) {
+        alert('{{ translate("Copy failed. Please copy manually.") }}');
+    }
+    document.body.removeChild(textarea);
+}
+
+function copyHashtags() {
+    const btn = document.getElementById('copyHashtagsBtn');
+    const text = btn.dataset.text || '';
+    if (!text) return;
+    copyToClipboard(text, btn, '<i class="bi bi-clipboard me-1"></i> {{ translate("Copy All") }}');
 }
 </script>
 @endpush

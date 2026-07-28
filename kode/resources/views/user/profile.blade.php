@@ -371,7 +371,7 @@
                                                 </label>
 
                                                 <div class="input-with-btn">
-                                                    <input type="readonly"
+                                                    <input type="text" readonly
                                                         value="{{url('/'.$user->username)}}" id="ReferralURL">
                                                     <button data-bs-toggle="tooltip" data-bs-placement="top"
                                                         data-bs-title="{{translate('Copy')}}" type="button"

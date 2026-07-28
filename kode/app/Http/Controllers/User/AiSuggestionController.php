@@ -82,7 +82,7 @@ class AiSuggestionController extends Controller
 
         $aiService = new AiService();
         $payload = [
-            'model'       => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
+            'model'       => $aiService->getAiModel() ?: 'gpt-4o-mini',
             'temperature' => 0.8,
             'messages'    => [
                 ['role' => 'system', 'content' => 'You are an expert social media hashtag strategist.'],
@@ -124,7 +124,7 @@ class AiSuggestionController extends Controller
 
         $aiService = new AiService();
         $payload = [
-            'model'       => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
+            'model'       => $aiService->getAiModel() ?: 'gpt-4o-mini',
             'temperature' => 0.8,
             'messages'    => [
                 ['role' => 'system', 'content' => 'You are an expert social media content writer.'],
@@ -154,7 +154,7 @@ class AiSuggestionController extends Controller
 
         $aiService = new AiService();
         $payload = [
-            'model'       => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
+            'model'       => $aiService->getAiModel() ?: 'gpt-4o-mini',
             'temperature' => 0.6,
             'messages'    => [
                 ['role' => 'system', 'content' => 'You are a social media analytics expert. Respond only in JSON.'],
@@ -192,7 +192,7 @@ class AiSuggestionController extends Controller
 
         $aiService = new AiService();
         $payload = [
-            'model'       => $aiService->getAiModel() ?: 'gpt-3.5-turbo',
+            'model'       => $aiService->getAiModel() ?: 'gpt-4o-mini',
             'temperature' => 0.8,
             'messages'    => [
                 ['role' => 'system', 'content' => 'You are a social media trend analyst. Respond only in JSON.'],

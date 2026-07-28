@@ -47,7 +47,7 @@ class FrontendController extends Controller
 
             // Set session for registration
             session()->put('reference', $referral->username);
-            return redirect()->route('register');
+            return redirect()->route('auth.register');
         }
 
         abort(404);

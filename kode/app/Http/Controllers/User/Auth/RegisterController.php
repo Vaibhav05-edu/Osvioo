@@ -53,14 +53,15 @@ class RegisterController extends Controller
         $response = response_status(translate("Something went wrong!! please try again"),'error');
         try {
 
-            $referralCode = $request->input('referral_code');
-            $sessionReference = session('reference'); // This is the username of the affiliate
+            $referralInput = $request->input('referral_code') ?: session('reference');
 
             $refferedBy = null;
-            if ($referralCode) {
-                $refferedBy = User::active()->where('referral_code', $referralCode)->first();
-            } elseif ($sessionReference) {
-                $refferedBy = User::active()->where('username', $sessionReference)->first();
+            if ($referralInput) {
+                $refferedBy = User::active()
+                    ->where(function ($query) use ($referralInput) {
+                        $query->where('referral_code', $referralInput)
+                              ->orWhere('username', $referralInput);
+                    })->first();
             }
 
             $user                       =  new User();

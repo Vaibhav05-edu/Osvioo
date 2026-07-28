@@ -100,15 +100,16 @@ document.getElementById('generatePostBtn').addEventListener('click', function() 
     })
     .then(r => r.json())
     .then(data => {
-        if (data.status) {
+        if (data.status && data.result) {
             output.className = 'py-2';
             const escaped = data.result.replace(/\n/g, '<br>');
             output.innerHTML = `<div class="post-content" style="white-space:pre-wrap;line-height:1.8;font-size:15px;color:var(--text-primary, #1b1c1e);font-weight:500;">${escaped}</div>`;
-            document.getElementById('copyPostBtn').classList.remove('d-none');
-            document.getElementById('copyPostBtn').dataset.text = data.result;
+            const copyBtn = document.getElementById('copyPostBtn');
+            copyBtn.classList.remove('d-none');
+            copyBtn.dataset.text = data.result;
         } else {
             output.className = 'py-2';
-            output.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+            output.innerHTML = `<div class="alert alert-danger">${data.message || '{{ translate("Failed to generate content.") }}'}</div>`;
         }
     })
     .catch(() => {
@@ -121,13 +122,51 @@ document.getElementById('generatePostBtn').addEventListener('click', function() 
     });
 });
 
-function copyPost() {
-    const text = document.getElementById('copyPostBtn').dataset.text;
-    navigator.clipboard.writeText(text).then(() => {
-        const btn = document.getElementById('copyPostBtn');
+function copyToClipboard(text, btn, defaultHtml) {
+    function onSuccess() {
         btn.innerHTML = '<i class="bi bi-check me-1"></i> {{ translate("Copied!") }}';
-        setTimeout(() => { btn.innerHTML = '<i class="bi bi-clipboard me-1"></i> {{ translate("Copy") }}'; }, 2000);
-    });
+        if (typeof toastr !== 'undefined') {
+            toastr.success('{{ translate("Copied to clipboard!") }}');
+        }
+        setTimeout(() => { btn.innerHTML = defaultHtml; }, 2000);
+    }
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
+            fallbackExecCopy(text, onSuccess);
+        });
+    } else {
+        fallbackExecCopy(text, onSuccess);
+    }
+}
+
+function fallbackExecCopy(text, onSuccess) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
+    textarea.style.top = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            onSuccess();
+        } else {
+            alert('{{ translate("Copy failed. Please copy manually.") }}');
+        }
+    } catch (err) {
+        alert('{{ translate("Copy failed. Please copy manually.") }}');
+    }
+    document.body.removeChild(textarea);
+}
+
+function copyPost() {
+    const btn = document.getElementById('copyPostBtn');
+    const text = btn.dataset.text || '';
+    if (!text) return;
+    copyToClipboard(text, btn, '<i class="bi bi-clipboard me-1"></i> {{ translate("Copy") }}');
 }
 </script>
 @endpush

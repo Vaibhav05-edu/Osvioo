@@ -77,7 +77,6 @@
 
                 <form action="{{route('auth.register.store')}}" method="POST" id="login-form">
                     @csrf
-                    <input hidden type="text" name="referral_code" value="{{request()->route('referral_code')}}">
                     
                     <div class="row g-3">
                         <div class="col-md-6">
@@ -120,6 +119,13 @@
                                         </option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label class="plixi-form-label">Referral Code / Username (Optional)</label>
+                            <div class="position-relative">
+                                <input type="text" name="referral_code" value="{{ old('referral_code', request()->route('referral_code') ?? session('reference')) }}" class="plixi-form-input ps-5" placeholder="Enter referral code or username (optional)">
+                                <i class="bi bi-person-plus position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
                             </div>
                         </div>
                         <div class="col-md-6">
