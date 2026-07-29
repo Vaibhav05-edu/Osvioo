@@ -43,7 +43,7 @@
                             </li>
                         @endforeach
                         <li class="nav-item">
-                            <a class="nav-link-wishlink {{ request()->is('affiliate') || request()->routeIs('affiliate') ? 'active-pill' : '' }}" href="{{route('affiliate')}}">Affiliate</a>
+                            <a class="nav-link-wishlink {{ request()->is('affiliate') || request()->routeIs('affiliate') || request()->routeIs('user.affiliate.*') ? 'active-pill' : '' }}" href="{{ auth_user('web') ? route('user.affiliate.index') : route('affiliate') }}">Affiliate</a>
                         </li>
                         @foreach($pages as $page)
                             <li class="nav-item">

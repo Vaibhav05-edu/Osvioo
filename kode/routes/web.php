@@ -185,7 +185,9 @@ Route::get('/lock-server-code', function() {
             Route::controller(UserController::class)->group(function(){
 
                 Route::get('purchase/{slug}','planPurchase')->name('plan.purchase');
-               Route::get('trial/{slug}','trialPurchase')->name('plan.trial');
+                Route::get('trial/{slug}','trialPurchase')->name('plan.trial');
+                Route::post('plans/pay-early', 'payEarly')->name('plan.pay_early');
+                Route::post('plans/pause-subscription', 'pauseSubscription')->name('plan.pause_subscription');
 
                 # withdraw route
                 Route::prefix("/withdraw")->name('withdraw.')->group(function(){

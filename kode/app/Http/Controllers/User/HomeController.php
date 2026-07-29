@@ -443,8 +443,11 @@ class HomeController extends Controller
      * Upcoming Billing
      */
     public function upcomingBilling() :View{
+        $subscription = $this->subscription ?? Subscription::where('user_id', $this->user->id)->latest()->first();
         return view('user.plan.upcoming', [
-            'meta_data' => $this->metaData(['title' => translate("Upcoming Billing")]),
+            'meta_data'    => $this->metaData(['title' => translate("Upcoming Billing")]),
+            'subscription' => $subscription,
+            'package'      => $subscription?->package,
         ]);
     }
 

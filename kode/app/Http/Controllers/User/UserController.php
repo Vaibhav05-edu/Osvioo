@@ -142,6 +142,87 @@ class UserController extends Controller
         return back()->with(response_status(\Illuminate\Support\Arr::get($response,"message",trans("default.trial_started_successfully")),$status));
     }
 
+    /**
+     * Pay early to start next subscription cycle immediately
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function payEarly(Request $request): mixed
+    {
+        $subscription = \App\Models\Subscription::where('user_id', $this->user->id)->latest()->first();
+
+        if (!$subscription || !$subscription->package) {
+            return back()->with('error', translate('No active subscription found to renew.'));
+        }
+
+        $package = $subscription->package;
+        $price = round($package->discount_price) > 0 ? $package->discount_price : $package->price;
+
+        if ($this->user->balance < $price && $price > 0) {
+            $method = \App\Models\Admin\PaymentMethod::with(['currency'])
+                        ->where('code', 'razorpay')
+                        ->first();
+            if ($method && $method->currency) {
+                $depositReq = new \Illuminate\Http\Request();
+                $depositReq->replace([
+                    'amount'  => $price,
+                    'remarks' => 'Early Renewal for ' . $package->title
+                ]);
+
+                try {
+                    $depositResponse = $this->userService->createDepositLog($depositReq, $this->user, $method, \App\Enums\DepositStatus::value('INITIATE', true));
+                    $depositLog      = \Illuminate\Support\Arr::get($depositResponse, "log");
+
+                    if ($depositLog) {
+                        $depositLog->custom_data = json_encode(['plan_id' => $package->id]);
+                        $depositLog->save();
+                        
+                        return app(\App\Http\Controllers\User\DepositController::class)->depositConfirm($depositLog);
+                    }
+                } catch (\Throwable $e) {
+                    \Log::error($e); 
+                    return back()->with(response_status('Payment gateway error: ' . $e->getMessage(), 'error'));
+                }
+            } else {
+                return back()->with(response_status(translate('Razorpay payment gateway is not configured. Please contact support.'), 'error'));
+            }
+        }
+
+        $response = $this->userService->createSubscription($this->user, $package, translate('Early Plan Renewal'));
+        $status   = isset($response['status']) && $response['status'] === true ? 'success' : 'error';
+
+        return back()->with(response_status(\Illuminate\Support\Arr::get($response, "message", translate("Subscription renewed successfully.")), $status));
+    }
+
+    /**
+     * Pause or Resume user subscription
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function pauseSubscription(Request $request): RedirectResponse
+    {
+        $subscription = \App\Models\Subscription::where('user_id', $this->user->id)->latest()->first();
+
+        if (!$subscription) {
+            return back()->with('error', translate('No subscription found.'));
+        }
+
+        $runningVal  = \App\Enums\SubscriptionStatus::value('RUNNING', true);
+        $inactiveVal = \App\Enums\SubscriptionStatus::value('INACTIVE', true);
+
+        if ($subscription->status == $runningVal) {
+            $subscription->status = $inactiveVal;
+            $subscription->save();
+            return back()->with('success', translate('Your subscription has been paused. Auto-renewal will be stopped until resumed.'));
+        } else {
+            $subscription->status = $runningVal;
+            $subscription->save();
+            return back()->with('success', translate('Your subscription has been resumed successfully.'));
+        }
+    }
+
 
     /**
      * Withdraw request view

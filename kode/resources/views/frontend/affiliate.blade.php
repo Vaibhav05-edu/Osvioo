@@ -117,7 +117,7 @@
                 Earn <strong class="text-dark">30% recurring commissions</strong> for every new customer you refer. 
                 Partner with us and grow your income while helping creators succeed.
             </p>
-            <a href="{{ route('auth.register') }}" class="btn-pinkpurple-strip font-comic fw-bold">
+            <a href="{{ auth_user('web') ? route('user.affiliate.index') : route('auth.register') }}" class="btn-pinkpurple-strip font-comic fw-bold">
                 Apply Now &rarr;
             </a>
         </div>
@@ -224,8 +224,8 @@
         <p class="fs-5 text-muted mb-5 mx-auto max-w-600 font-outfit">
             Join thousands of partners who are already earning recurring income with Osvioo.
         </p>
-        <a href="{{ route('auth.register') }}" class="btn btn-lg rounded-pill px-5 py-3 fw-bold btn-royal-blue font-outfit">
-            Get Started Free →
+        <a href="{{ auth_user('web') ? route('user.affiliate.index') : route('auth.register') }}" class="btn btn-lg rounded-pill px-5 py-3 fw-bold btn-royal-blue font-outfit">
+            {{ auth_user('web') ? 'Go to Affiliate Program →' : 'Get Started Free →' }}
         </a>
     </div>
 </section>

@@ -54,7 +54,7 @@
                     <div class="border p-4 h-100" style="border-radius: 16px; background: var(--bs-body-bg); color: var(--bs-body-color);">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h6 class="fw-bold mb-0"><i class="bi bi-robot me-2 text-success"></i>{{translate('Generated Output')}}</h6>
-                            <button class="btn btn-sm btn-outline-secondary capsuled d-none" id="copyPostBtn" onclick="copyPost()">
+                            <button class="btn btn-sm btn-primary capsuled d-none" id="copyPostBtn" onclick="copyPost()" style="background-color: #6366f1 !important; color: #ffffff !important; border-color: #4f46e5 !important;">
                                 <i class="bi bi-clipboard me-1"></i> {{translate('Copy')}}
                             </button>
                         </div>
@@ -103,7 +103,7 @@ document.getElementById('generatePostBtn').addEventListener('click', function() 
         if (data.status && data.result) {
             output.className = 'py-2';
             const escaped = data.result.replace(/\n/g, '<br>');
-            output.innerHTML = `<div class="post-content" style="white-space:pre-wrap;line-height:1.8;font-size:15px;color:var(--text-primary, #1b1c1e);font-weight:500;">${escaped}</div>`;
+            output.innerHTML = `<div class="post-content" style="white-space:pre-wrap;line-height:1.8;font-size:15px;color:inherit;font-weight:500;">${escaped}</div>`;
             const copyBtn = document.getElementById('copyPostBtn');
             copyBtn.classList.remove('d-none');
             copyBtn.dataset.text = data.result;
@@ -123,12 +123,21 @@ document.getElementById('generatePostBtn').addEventListener('click', function() 
 });
 
 function copyToClipboard(text, btn, defaultHtml) {
+    if (!text) {
+        if (typeof toastr !== 'undefined') {
+            toastr.error('{{ translate("Nothing to copy!") }}');
+        }
+        return;
+    }
+
     function onSuccess() {
-        btn.innerHTML = '<i class="bi bi-check me-1"></i> {{ translate("Copied!") }}';
+        if (btn && defaultHtml) {
+            btn.innerHTML = '<i class="bi bi-check me-1"></i> {{ translate("Copied!") }}';
+            setTimeout(() => { btn.innerHTML = defaultHtml; }, 2000);
+        }
         if (typeof toastr !== 'undefined') {
             toastr.success('{{ translate("Copied to clipboard!") }}');
         }
-        setTimeout(() => { btn.innerHTML = defaultHtml; }, 2000);
     }
 
     if (navigator.clipboard && window.isSecureContext) {
@@ -143,29 +152,44 @@ function copyToClipboard(text, btn, defaultHtml) {
 function fallbackExecCopy(text, onSuccess) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
+    textarea.setAttribute('readonly', '');
     textarea.style.position = 'fixed';
-    textarea.style.left = '-9999px';
-    textarea.style.top = '-9999px';
+    textarea.style.top = '0';
+    textarea.style.left = '0';
+    textarea.style.width = '2em';
+    textarea.style.height = '2em';
+    textarea.style.padding = '0';
+    textarea.style.border = 'none';
+    textarea.style.outline = 'none';
+    textarea.style.boxShadow = 'none';
+    textarea.style.background = 'transparent';
+    textarea.style.opacity = '0';
     document.body.appendChild(textarea);
     textarea.focus();
     textarea.select();
+    textarea.setSelectionRange(0, 99999);
+
     try {
         const successful = document.execCommand('copy');
         if (successful) {
             onSuccess();
         } else {
-            alert('{{ translate("Copy failed. Please copy manually.") }}');
+            promptCopyFallback(text, onSuccess);
         }
     } catch (err) {
-        alert('{{ translate("Copy failed. Please copy manually.") }}');
+        promptCopyFallback(text, onSuccess);
     }
     document.body.removeChild(textarea);
+}
+
+function promptCopyFallback(text, onSuccess) {
+    window.prompt('{{ translate("Copy to clipboard: Press Ctrl+C, Enter") }}', text);
+    onSuccess();
 }
 
 function copyPost() {
     const btn = document.getElementById('copyPostBtn');
     const text = btn.dataset.text || '';
-    if (!text) return;
     copyToClipboard(text, btn, '<i class="bi bi-clipboard me-1"></i> {{ translate("Copy") }}');
 }
 </script>

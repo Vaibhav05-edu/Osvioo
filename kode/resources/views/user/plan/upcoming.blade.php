@@ -9,76 +9,96 @@
                 </div>
                 <h3 class="fw-bold mb-1">{{translate('Upcoming Billing Details')}}</h3>
                 <p class="text-muted">{{translate('Scheduled for next billing cycle')}}</p>
-                <div class="badge bg--info-soft text--info capsuled px-3 py-2 mt-2">
-                    <i class="bi bi-arrow-repeat"></i> {{translate('Recurring Payment')}}
-                </div>
+                
+                @if($subscription && $subscription->status == \App\Enums\SubscriptionStatus::value('RUNNING', true))
+                    <div class="badge bg--info-soft text--info capsuled px-3 py-2 mt-2">
+                        <i class="bi bi-arrow-repeat"></i> {{translate('Recurring Payment Active')}}
+                    </div>
+                @elseif($subscription && $subscription->status == \App\Enums\SubscriptionStatus::value('INACTIVE', true))
+                    <div class="badge bg--warning-soft text--warning capsuled px-3 py-2 mt-2">
+                        <i class="bi bi-pause-circle"></i> {{translate('Subscription Paused')}}
+                    </div>
+                @else
+                    <div class="badge bg--danger-soft text--danger capsuled px-3 py-2 mt-2">
+                        <i class="bi bi-exclamation-triangle"></i> {{translate('No Active Subscription')}}
+                    </div>
+                @endif
             </div>
 
             <div class="p-5">
-                <div class="billing-details mb-5">
-                    <h5 class="card--title-sm mb-4 border-bottom pb-2">{{translate('Breakdown')}}</h5>
-                    <div class="d-flex justify-content-between mb-3">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="icon-sm bg--light circle"><i class="bi bi-box"></i></div>
-                            <div>
-                                <h6 class="mb-0 fw-bold">Pro Influencer Plan</h6>
-                                <p class="mb-0 text-muted fs-12">{{translate('Monthly Subscription')}}</p>
+                @if($subscription && $package)
+                    @php
+                        $price = round($package->discount_price) > 0 ? $package->discount_price : $package->price;
+                        $formattedPrice = num_format($price);
+                        $currency = site_settings('site_currency_symbol', '$');
+                        $nextBillingDate = $subscription->expired_at ? \Carbon\Carbon::parse($subscription->expired_at)->format('d M, Y') : translate('N/A');
+                    @endphp
+
+                    <div class="billing-details mb-5">
+                        <h5 class="card--title-sm mb-4 border-bottom pb-2">{{translate('Breakdown')}}</h5>
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="icon-sm bg--light circle"><i class="bi bi-box"></i></div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">{{ $package->title }}</h6>
+                                    <p class="mb-0 text-muted fs-12">{{ translate('Subscription Plan') }}</p>
+                                </div>
+                            </div>
+                            <span class="fw-bold fs-16">{{ $currency }}{{ $formattedPrice }}</span>
+                        </div>
+
+                        <div class="mt-4 p-4 rounded-4 bg--light">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 fw-bold text-uppercase fs-14">{{translate('Total Due on')}} {{ $nextBillingDate }}</h5>
+                                <h4 class="mb-0 fw-bold text--primary">{{ $currency }}{{ $formattedPrice }}</h4>
                             </div>
                         </div>
-                        <span class="fw-bold fs-16">$49.99</span>
                     </div>
 
-                    <div class="d-flex justify-content-between mb-3">
+                    <div class="payment-method-card p-4 border rounded-4 mb-5">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h6 class="mb-0 fw-bold">{{translate('Payment Method')}}</h6>
+                            <a href="{{route('user.profile')}}" class="text--primary fs-14 fw-bold">{{translate('Update Wallet / Profile')}}</a>
+                        </div>
                         <div class="d-flex align-items-center gap-3">
-                            <div class="icon-sm bg--light circle"><i class="bi bi-plus-lg"></i></div>
+                            <div style="width: 50px; height: 32px; background: #4f46e5; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: bold;">
+                                <i class="bi bi-wallet2"></i>
+                            </div>
                             <div>
-                                <h6 class="mb-0 fw-bold">Extra Social Accounts (+5)</h6>
-                                <p class="mb-0 text-muted fs-12">{{translate('Plan Add-on')}}</p>
+                                <p class="mb-0 fw-bold">{{translate('Account Balance / Gateway Payment')}}</p>
+                                <p class="mb-0 text-muted fs-12">{{translate('Available Balance')}}: {{ $currency }}{{ num_format(auth_user('web')->balance) }}</p>
                             </div>
                         </div>
-                        <span class="fw-bold fs-16">$14.99</span>
                     </div>
 
-                    <div class="d-flex justify-content-between mb-3">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="icon-sm bg--light circle"><i class="bi bi-stars"></i></div>
-                            <div>
-                                <h6 class="mb-0 fw-bold">Advanced AI Writing Assistant</h6>
-                                <p class="mb-0 text-muted fs-12">{{translate('Plan Add-on')}}</p>
-                            </div>
-                        </div>
-                        <span class="fw-bold fs-16">$9.99</span>
-                    </div>
+                    <div class="d-flex gap-3">
+                        <form action="{{ route('user.plan.pay_early') }}" method="POST" class="w-100" onsubmit="return confirm('{{ translate('Are you sure you want to recharge and start your next billing cycle immediately?') }}');">
+                            @csrf
+                            <button type="submit" class="i-btn btn--primary btn--lg w-100 capsuled">{{translate('Pay Early')}}</button>
+                        </form>
 
-                    <div class="mt-4 p-4 rounded-4 bg--light">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0 fw-bold text-uppercase fs-14">{{translate('Total Due on')}} 01 Feb, 2024</h5>
-                            <h4 class="mb-0 fw-bold text--primary">$74.97</h4>
-                        </div>
+                        <form action="{{ route('user.plan.pause_subscription') }}" method="POST" class="w-100">
+                            @csrf
+                            @if($subscription->status == \App\Enums\SubscriptionStatus::value('RUNNING', true))
+                                <button type="submit" class="i-btn btn--light btn--lg w-100 capsuled">{{translate('Pause Subscription')}}</button>
+                            @else
+                                <button type="submit" class="i-btn btn--success btn--lg w-100 capsuled">{{translate('Resume Subscription')}}</button>
+                            @endif
+                        </form>
                     </div>
-                </div>
-
-                <div class="payment-method-card p-4 border rounded-4 mb-5">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                        <h6 class="mb-0 fw-bold">{{translate('Payment Method')}}</h6>
-                        <a href="{{route('user.profile')}}" class="text--primary fs-14 fw-bold">{{translate('Update')}}</a>
+                    <p class="text-center mt-4 text-muted fs-12">
+                        {{translate('By clicking Pay Early, your next subscription cycle will start immediately.')}}
+                    </p>
+                @else
+                    <div class="text-center py-4">
+                        <i class="bi bi-exclamation-circle text-muted fs-40 mb-3 d-block"></i>
+                        <h5>{{ translate('No Active Subscription Found') }}</h5>
+                        <p class="text-muted mb-4">{{ translate('You currently do not have any active subscription plan to manage billing for.') }}</p>
+                        <a href="{{ route('home') }}#pricing" class="i-btn btn--primary btn--md capsuled">
+                            {{ translate('Explore Subscription Plans') }}
+                        </a>
                     </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <div style="width: 50px; height: 32px; background: #000; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;">VISA</div>
-                        <div>
-                            <p class="mb-0 fw-bold">Visa Ending in 4242</p>
-                            <p class="mb-0 text-muted fs-12">Exp: 12/26</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-flex gap-3">
-                    <button class="i-btn btn--primary btn--lg w-100 capsuled">{{translate('Pay Early')}}</button>
-                    <button class="i-btn btn--light btn--lg w-100 capsuled">{{translate('Pause Subscription')}}</button>
-                </div>
-                <p class="text-center mt-4 text-muted fs-12">
-                    {{translate('By clicking Pay Early, your next cycle will start immediately.')}}
-                </p>
+                @endif
             </div>
         </div>
     </div>

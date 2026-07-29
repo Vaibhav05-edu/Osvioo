@@ -41,7 +41,7 @@
                     <div class="border p-4 h-100" style="border-radius: 16px; background: var(--bs-body-bg); color: var(--bs-body-color);">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h6 class="fw-bold mb-0"><i class="bi bi-card-text me-2 text-primary"></i>{{translate('Generated Hashtags')}}</h6>
-                            <button class="btn btn-sm btn-outline-secondary capsuled d-none" id="copyHashtagsBtn" onclick="copyHashtags()">
+                            <button class="btn btn-sm btn-primary capsuled d-none" id="copyHashtagsBtn" onclick="copyHashtags()" style="background-color: #6366f1 !important; color: #ffffff !important; border-color: #4f46e5 !important;">
                                 <i class="bi bi-clipboard me-1"></i> {{translate('Copy All')}}
                             </button>
                         </div>
@@ -88,14 +88,19 @@ document.getElementById('generateHashtagBtn').addEventListener('click', function
     .then(data => {
         if (data.status && data.result) {
             const rawTags = data.result.split(/\s+/).filter(t => t.length > 0);
-            const tags = rawTags.map(t => {
-                let clean = t.replace(/^[^\w#]+|[^\w]+$/g, '');
+            let tags = rawTags.map(t => {
+                let clean = t.replace(/^[^\p{L}\p{N}#]+|[^\p{L}\p{N}]+$/gu, '');
                 return clean.startsWith('#') ? clean : '#' + clean;
             }).filter(t => t.length > 1);
 
-            const html = tags.map(t =>
-                `<span class="badge me-1 mb-2 px-3 py-2 hashtag-pill" style="background: var(--color-primary-light, rgba(127, 86, 217, 0.12)); color: var(--color-primary, #7f56d9) !important; border: 1px solid rgba(127, 86, 217, 0.25); font-size:13px; border-radius:20px; font-weight:600; display:inline-block;">${t}</span>`
-            ).join('');
+            if (tags.length === 0) {
+                tags = rawTags.map(rt => rt.startsWith('#') ? rt : '#' + rt);
+            }
+
+            const html = tags.map(t => {
+                const safeTag = t.replace(/'/g, "\\'");
+                return `<span class="badge me-1 mb-2 px-3 py-2 hashtag-pill" onclick="copySingleHashtag('${safeTag}', this)" title="{{ translate("Click to copy") }}" style="background: #6366f1 !important; color: #ffffff !important; border: 1px solid #4f46e5; font-size:13px; border-radius:20px; font-weight:600; display:inline-block; cursor:pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">${t}</span>`;
+            }).join('');
 
             const formattedText = tags.join(' ');
             output.className = 'py-2';
@@ -118,13 +123,38 @@ document.getElementById('generateHashtagBtn').addEventListener('click', function
     });
 });
 
-function copyToClipboard(text, btn, defaultHtml) {
+function copySingleHashtag(tag, el) {
+    copyToClipboard(tag, null, null, () => {
+        const origHtml = el.innerHTML;
+        el.innerHTML = '<i class="bi bi-check me-1"></i> {{ translate("Copied!") }}';
+        el.style.setProperty('background', '#10b981', 'important');
+        el.style.setProperty('color', '#ffffff', 'important');
+        setTimeout(() => {
+            el.innerHTML = origHtml;
+            el.style.setProperty('background', '#6366f1', 'important');
+            el.style.setProperty('color', '#ffffff', 'important');
+        }, 1500);
+    });
+}
+
+function copyToClipboard(text, btn, defaultHtml, customSuccessCallback) {
+    if (!text) {
+        if (typeof toastr !== 'undefined') {
+            toastr.error('{{ translate("Nothing to copy!") }}');
+        }
+        return;
+    }
+
     function onSuccess() {
-        btn.innerHTML = '<i class="bi bi-check me-1"></i> {{ translate("Copied!") }}';
+        if (typeof customSuccessCallback === 'function') {
+            customSuccessCallback();
+        } else if (btn && defaultHtml) {
+            btn.innerHTML = '<i class="bi bi-check me-1"></i> {{ translate("Copied!") }}';
+            setTimeout(() => { btn.innerHTML = defaultHtml; }, 2000);
+        }
         if (typeof toastr !== 'undefined') {
             toastr.success('{{ translate("Copied to clipboard!") }}');
         }
-        setTimeout(() => { btn.innerHTML = defaultHtml; }, 2000);
     }
 
     if (navigator.clipboard && window.isSecureContext) {
@@ -139,29 +169,44 @@ function copyToClipboard(text, btn, defaultHtml) {
 function fallbackExecCopy(text, onSuccess) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
+    textarea.setAttribute('readonly', '');
     textarea.style.position = 'fixed';
-    textarea.style.left = '-9999px';
-    textarea.style.top = '-9999px';
+    textarea.style.top = '0';
+    textarea.style.left = '0';
+    textarea.style.width = '2em';
+    textarea.style.height = '2em';
+    textarea.style.padding = '0';
+    textarea.style.border = 'none';
+    textarea.style.outline = 'none';
+    textarea.style.boxShadow = 'none';
+    textarea.style.background = 'transparent';
+    textarea.style.opacity = '0';
     document.body.appendChild(textarea);
     textarea.focus();
     textarea.select();
+    textarea.setSelectionRange(0, 99999);
+
     try {
         const successful = document.execCommand('copy');
         if (successful) {
             onSuccess();
         } else {
-            alert('{{ translate("Copy failed. Please copy manually.") }}');
+            promptCopyFallback(text, onSuccess);
         }
     } catch (err) {
-        alert('{{ translate("Copy failed. Please copy manually.") }}');
+        promptCopyFallback(text, onSuccess);
     }
     document.body.removeChild(textarea);
+}
+
+function promptCopyFallback(text, onSuccess) {
+    window.prompt('{{ translate("Copy to clipboard: Press Ctrl+C, Enter") }}', text);
+    onSuccess();
 }
 
 function copyHashtags() {
     const btn = document.getElementById('copyHashtagsBtn');
     const text = btn.dataset.text || '';
-    if (!text) return;
     copyToClipboard(text, btn, '<i class="bi bi-clipboard me-1"></i> {{ translate("Copy All") }}');
 }
 </script>

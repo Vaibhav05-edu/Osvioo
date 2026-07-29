@@ -198,8 +198,12 @@ class FrontendController extends Controller
         ]);
     }
 
-    public function affiliate(): View
+    public function affiliate()
     {
+        if (auth_user('web')) {
+            return redirect()->route('user.affiliate.index');
+        }
+
         $menu = Menu::where('url', 'affiliate')->active()->first() ?? (object)[
             'meta_title' => 'Affiliate Program',
             'meta_description' => 'Join our affiliate program and earn commission.',
