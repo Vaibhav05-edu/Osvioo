@@ -4,8 +4,8 @@
 function toastr(text, className) {
   const isRTL = document.body.getAttribute("dir") === "rtl";
 
-  if (className === "danger") {
-    className = "bg-" + className;
+  if (className === "danger" || className === "error") {
+    className = "bg-danger";
   } else {
     className = "bg-soft-" + className;
   }
@@ -22,6 +22,12 @@ function toastr(text, className) {
     close: true,
   }).showToast();
 }
+
+toastr.success = function(text) { toastr(text, "success"); };
+toastr.error = function(text) { toastr(text, "danger"); };
+toastr.warning = function(text) { toastr(text, "warning"); };
+toastr.info = function(text) { toastr(text, "info"); };
+toastr.danger = function(text) { toastr(text, "danger"); };
 
 
 

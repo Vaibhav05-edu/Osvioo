@@ -103,6 +103,7 @@ document.getElementById('generateHashtagBtn').addEventListener('click', function
             }).join('');
 
             const formattedText = tags.join(' ');
+            window.allGeneratedHashtags = formattedText;
             output.className = 'py-2';
             output.innerHTML = `<div class="mb-2 d-flex flex-wrap gap-1">${html}</div>`;
             const copyBtn = document.getElementById('copyHashtagsBtn');
@@ -140,7 +141,7 @@ function copySingleHashtag(tag, el) {
 function copyToClipboard(text, btn, defaultHtml, customSuccessCallback) {
     if (!text) {
         if (typeof toastr !== 'undefined') {
-            toastr.error('{{ translate("Nothing to copy!") }}');
+            toastr('{{ translate("Nothing to copy!") }}', 'danger');
         }
         return;
     }
@@ -153,7 +154,7 @@ function copyToClipboard(text, btn, defaultHtml, customSuccessCallback) {
             setTimeout(() => { btn.innerHTML = defaultHtml; }, 2000);
         }
         if (typeof toastr !== 'undefined') {
-            toastr.success('{{ translate("Copied to clipboard!") }}');
+            toastr('{{ translate("Copied to clipboard!") }}', 'success');
         }
     }
 
@@ -169,10 +170,9 @@ function copyToClipboard(text, btn, defaultHtml, customSuccessCallback) {
 function fallbackExecCopy(text, onSuccess) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
-    textarea.setAttribute('readonly', '');
     textarea.style.position = 'fixed';
-    textarea.style.top = '0';
-    textarea.style.left = '0';
+    textarea.style.top = '-9999px';
+    textarea.style.left = '-9999px';
     textarea.style.width = '2em';
     textarea.style.height = '2em';
     textarea.style.padding = '0';
@@ -181,22 +181,25 @@ function fallbackExecCopy(text, onSuccess) {
     textarea.style.boxShadow = 'none';
     textarea.style.background = 'transparent';
     textarea.style.opacity = '0';
+
     document.body.appendChild(textarea);
     textarea.focus();
     textarea.select();
-    textarea.setSelectionRange(0, 99999);
+    textarea.setSelectionRange(0, 999999);
 
+    let successful = false;
     try {
-        const successful = document.execCommand('copy');
-        if (successful) {
-            onSuccess();
-        } else {
-            promptCopyFallback(text, onSuccess);
-        }
+        successful = document.execCommand('copy');
     } catch (err) {
-        promptCopyFallback(text, onSuccess);
+        successful = false;
     }
     document.body.removeChild(textarea);
+
+    if (successful) {
+        onSuccess();
+    } else {
+        promptCopyFallback(text, onSuccess);
+    }
 }
 
 function promptCopyFallback(text, onSuccess) {
@@ -206,7 +209,7 @@ function promptCopyFallback(text, onSuccess) {
 
 function copyHashtags() {
     const btn = document.getElementById('copyHashtagsBtn');
-    const text = btn.dataset.text || '';
+    const text = window.allGeneratedHashtags || btn.dataset.text || Array.from(document.querySelectorAll('.hashtag-pill')).map(el => el.innerText.replace('Copied!', '').trim()).filter(Boolean).join(' ') || '';
     copyToClipboard(text, btn, '<i class="bi bi-clipboard me-1"></i> {{ translate("Copy All") }}');
 }
 </script>

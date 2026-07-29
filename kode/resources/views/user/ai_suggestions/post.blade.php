@@ -124,8 +124,11 @@ document.getElementById('generatePostBtn').addEventListener('click', function() 
 
 function copyToClipboard(text, btn, defaultHtml) {
     if (!text) {
+        text = document.querySelector('.post-content')?.innerText || '';
+    }
+    if (!text) {
         if (typeof toastr !== 'undefined') {
-            toastr.error('{{ translate("Nothing to copy!") }}');
+            toastr('{{ translate("Nothing to copy!") }}', 'danger');
         }
         return;
     }
@@ -136,7 +139,7 @@ function copyToClipboard(text, btn, defaultHtml) {
             setTimeout(() => { btn.innerHTML = defaultHtml; }, 2000);
         }
         if (typeof toastr !== 'undefined') {
-            toastr.success('{{ translate("Copied to clipboard!") }}');
+            toastr('{{ translate("Copied to clipboard!") }}', 'success');
         }
     }
 
@@ -152,10 +155,9 @@ function copyToClipboard(text, btn, defaultHtml) {
 function fallbackExecCopy(text, onSuccess) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
-    textarea.setAttribute('readonly', '');
     textarea.style.position = 'fixed';
-    textarea.style.top = '0';
-    textarea.style.left = '0';
+    textarea.style.top = '-9999px';
+    textarea.style.left = '-9999px';
     textarea.style.width = '2em';
     textarea.style.height = '2em';
     textarea.style.padding = '0';
@@ -164,22 +166,25 @@ function fallbackExecCopy(text, onSuccess) {
     textarea.style.boxShadow = 'none';
     textarea.style.background = 'transparent';
     textarea.style.opacity = '0';
+
     document.body.appendChild(textarea);
     textarea.focus();
     textarea.select();
-    textarea.setSelectionRange(0, 99999);
+    textarea.setSelectionRange(0, 999999);
 
+    let successful = false;
     try {
-        const successful = document.execCommand('copy');
-        if (successful) {
-            onSuccess();
-        } else {
-            promptCopyFallback(text, onSuccess);
-        }
+        successful = document.execCommand('copy');
     } catch (err) {
-        promptCopyFallback(text, onSuccess);
+        successful = false;
     }
     document.body.removeChild(textarea);
+
+    if (successful) {
+        onSuccess();
+    } else {
+        promptCopyFallback(text, onSuccess);
+    }
 }
 
 function promptCopyFallback(text, onSuccess) {
@@ -189,7 +194,7 @@ function promptCopyFallback(text, onSuccess) {
 
 function copyPost() {
     const btn = document.getElementById('copyPostBtn');
-    const text = btn.dataset.text || '';
+    const text = btn.dataset.text || document.querySelector('.post-content')?.innerText || '';
     copyToClipboard(text, btn, '<i class="bi bi-clipboard me-1"></i> {{ translate("Copy") }}');
 }
 </script>
