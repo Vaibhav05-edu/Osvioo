@@ -538,14 +538,13 @@ class AiService
      */
     public function getAiModel(): string|null
     {
-
         $model = site_settings("open_ai_model");
 
         if (request()->routeIs("user.*")) {
-            $subscription = auth_user('web')->runningSubscription;
-            $model = optional(optional($subscription)->package->ai_configuration)->open_ai_model ?? $model;
+            $subscription = auth_user('web')?->runningSubscription;
+            $aiConfig = $subscription?->package?->ai_configuration;
+            $model = $aiConfig?->open_ai_model ?? $model;
         }
-
 
         return $model;
     }
@@ -560,8 +559,8 @@ class AiService
 
         if (request()->routeIs('user.*')) {
             $subscription = auth_user('web')?->runningSubscription;
-            $aiConfig = optional($subscription)->package->ai_configuration;
-            $model = $aiConfig->image_ai_model ?? $aiConfig->image_model ?? $model;
+            $aiConfig = $subscription?->package?->ai_configuration;
+            $model = $aiConfig?->image_ai_model ?? $aiConfig?->image_model ?? $model;
         }
 
         return $model;
@@ -577,8 +576,8 @@ class AiService
 
         if (request()->routeIs('user.*')) {
             $subscription = auth_user('web')?->runningSubscription;
-            $aiConfig = optional($subscription)->package->ai_configuration;
-            $model = $aiConfig->video_ai_model ?? $aiConfig->video_model ?? $model;
+            $aiConfig = $subscription?->package?->ai_configuration;
+            $model = $aiConfig?->video_ai_model ?? $aiConfig?->video_model ?? $model;
         }
 
         return $model;

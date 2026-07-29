@@ -103,7 +103,7 @@ document.getElementById('generatePostBtn').addEventListener('click', function() 
         if (data.status && data.result) {
             output.className = 'py-2';
             const escaped = data.result.replace(/\n/g, '<br>');
-            output.innerHTML = `<div class="post-content" style="white-space:pre-wrap;line-height:1.8;font-size:15px;color:inherit;font-weight:500;">${escaped}</div>`;
+            output.innerHTML = `<div class="post-content cursor-pointer p-3 border rounded-3" onclick="copyPost()" title="{{ translate("Click to copy") }}" style="white-space:pre-wrap;line-height:1.8;font-size:15px;color:inherit;font-weight:500;background:var(--bs-card-cap-bg, rgba(0,0,0,0.03));">${escaped}</div>`;
             window.generatedPostContent = data.result;
             const copyBtn = document.getElementById('copyPostBtn');
             copyBtn.classList.remove('d-none');
@@ -161,23 +161,15 @@ function execCopyFallbackPost(text, onSuccess) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
     textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
     textarea.style.top = '0';
-    textarea.style.left = '0';
-    textarea.style.width = '1px';
-    textarea.style.height = '1px';
-    textarea.style.padding = '0';
-    textarea.style.border = 'none';
-    textarea.style.outline = 'none';
-    textarea.style.boxShadow = 'none';
-    textarea.style.background = 'transparent';
-    textarea.style.opacity = '0.01';
-    textarea.style.pointerEvents = 'none';
-    textarea.style.zIndex = '-9999';
-
+    textarea.style.opacity = '0';
     document.body.appendChild(textarea);
     textarea.focus();
     textarea.select();
-    textarea.setSelectionRange(0, 999999);
+    if (textarea.setSelectionRange) {
+        textarea.setSelectionRange(0, 999999);
+    }
 
     let successful = false;
     try {

@@ -189,23 +189,16 @@ function execCopyFallbackHashtag(text, onSuccess) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
     textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
     textarea.style.top = '0';
-    textarea.style.left = '0';
-    textarea.style.width = '1px';
-    textarea.style.height = '1px';
-    textarea.style.padding = '0';
-    textarea.style.border = 'none';
-    textarea.style.outline = 'none';
-    textarea.style.boxShadow = 'none';
-    textarea.style.background = 'transparent';
-    textarea.style.opacity = '0.01';
-    textarea.style.pointerEvents = 'none';
-    textarea.style.zIndex = '-9999';
+    textarea.style.opacity = '0';
 
     document.body.appendChild(textarea);
     textarea.focus();
     textarea.select();
-    textarea.setSelectionRange(0, 999999);
+    if (textarea.setSelectionRange) {
+        textarea.setSelectionRange(0, 999999);
+    }
 
     let successful = false;
     try {
