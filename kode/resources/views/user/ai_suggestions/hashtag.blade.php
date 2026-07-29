@@ -1,6 +1,34 @@
 @extends('layouts.master')
 
 @section('content')
+<style nonce="{{ csp_nonce() }}">
+.hashtag-pill {
+    background-color: #4f46e5 !important;
+    color: #ffffff !important;
+    border: 1px solid #4338ca !important;
+    font-size: 13px !important;
+    border-radius: 20px !important;
+    font-weight: 600 !important;
+    display: inline-block !important;
+    cursor: pointer !important;
+    padding: 6px 14px !important;
+    margin-right: 6px !important;
+    margin-bottom: 8px !important;
+    transition: all 0.2s ease-in-out !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.12) !important;
+}
+.hashtag-pill:hover {
+    background-color: #4338ca !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) !important;
+}
+.hashtag-pill.copied-pill {
+    background-color: #10b981 !important;
+    color: #ffffff !important;
+    border-color: #059669 !important;
+}
+</style>
+
 <div class="row g-4">
     <div class="col-12">
         <div class="glass-card p-4 border-0 shadow-sm" style="border-radius: 20px;">
@@ -41,7 +69,7 @@
                     <div class="border p-4 h-100" style="border-radius: 16px; background: var(--bs-body-bg); color: var(--bs-body-color);">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h6 class="fw-bold mb-0"><i class="bi bi-card-text me-2 text-primary"></i>{{translate('Generated Hashtags')}}</h6>
-                            <button class="btn btn-sm btn-primary capsuled d-none" id="copyHashtagsBtn" onclick="copyHashtags()" style="background-color: #6366f1 !important; color: #ffffff !important; border-color: #4f46e5 !important;">
+                            <button class="btn btn-sm btn-primary capsuled d-none" id="copyHashtagsBtn" onclick="copyHashtags()" style="background-color: #4f46e5 !important; color: #ffffff !important; border-color: #4338ca !important;">
                                 <i class="bi bi-clipboard me-1"></i> {{translate('Copy All')}}
                             </button>
                         </div>
@@ -99,7 +127,7 @@ document.getElementById('generateHashtagBtn').addEventListener('click', function
 
             const html = tags.map(t => {
                 const safeTag = t.replace(/'/g, "\\'");
-                return `<span class="badge me-1 mb-2 px-3 py-2 hashtag-pill" onclick="copySingleHashtag('${safeTag}', this)" title="{{ translate("Click to copy") }}" style="background: #6366f1 !important; color: #ffffff !important; border: 1px solid #4f46e5; font-size:13px; border-radius:20px; font-weight:600; display:inline-block; cursor:pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">${t}</span>`;
+                return `<span class="hashtag-pill" onclick="copySingleHashtag('${safeTag}', this)" title="{{ translate("Click to copy") }}">${t}</span>`;
             }).join('');
 
             const formattedText = tags.join(' ');
@@ -126,14 +154,12 @@ document.getElementById('generateHashtagBtn').addEventListener('click', function
 
 function copySingleHashtag(tag, el) {
     selfContainedCopyToClipboard(tag, null, null, () => {
-        const origHtml = el.innerHTML;
-        el.innerHTML = '<i class="bi bi-check me-1"></i> {{ translate("Copied!") }}';
-        el.style.setProperty('background', '#10b981', 'important');
-        el.style.setProperty('color', '#ffffff', 'important');
+        const origText = el.innerText;
+        el.classList.add('copied-pill');
+        el.innerHTML = '<i class="bi bi-check-lg me-1"></i> ' + origText;
         setTimeout(() => {
-            el.innerHTML = origHtml;
-            el.style.setProperty('background', '#6366f1', 'important');
-            el.style.setProperty('color', '#ffffff', 'important');
+            el.classList.remove('copied-pill');
+            el.innerText = origText;
         }, 1500);
     });
 }
@@ -144,11 +170,7 @@ function copyHashtags() {
     if (!text) {
         const pills = document.querySelectorAll('.hashtag-pill');
         if (pills.length > 0) {
-            text = Array.from(pills).map(el => {
-                let clone = el.cloneNode(true);
-                clone.querySelectorAll('i').forEach(i => i.remove());
-                return clone.textContent.trim();
-            }).filter(Boolean).join(' ');
+            text = Array.from(pills).map(el => el.textContent.trim()).filter(Boolean).join(' ');
         }
     }
     selfContainedCopyToClipboard(text, btn, '<i class="bi bi-clipboard me-1"></i> {{ translate("Copy All") }}');
@@ -159,6 +181,8 @@ function selfContainedCopyToClipboard(text, btn, defaultHtml, customSuccessCallb
         if (typeof toastr !== 'undefined') {
             if (typeof toastr === 'function') toastr('{{ translate("Nothing to copy!") }}', 'danger');
             else if (toastr.error) toastr.error('{{ translate("Nothing to copy!") }}');
+        } else {
+            alert('{{ translate("Nothing to copy!") }}');
         }
         return;
     }
@@ -166,8 +190,9 @@ function selfContainedCopyToClipboard(text, btn, defaultHtml, customSuccessCallb
     function onSuccess() {
         if (typeof customSuccessCallback === 'function') {
             customSuccessCallback();
-        } else if (btn && defaultHtml) {
-            btn.innerHTML = '<i class="bi bi-check me-1"></i> {{ translate("Copied!") }}';
+        }
+        if (btn && defaultHtml) {
+            btn.innerHTML = '<i class="bi bi-check-lg me-1"></i> {{ translate("Copied!") }}';
             setTimeout(() => { btn.innerHTML = defaultHtml; }, 2000);
         }
         if (typeof toastr !== 'undefined') {
@@ -188,9 +213,17 @@ function selfContainedCopyToClipboard(text, btn, defaultHtml, customSuccessCallb
 function execCopyFallbackHashtag(text, onSuccess) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
+    textarea.readOnly = true;
     textarea.style.position = 'fixed';
-    textarea.style.left = '-9999px';
     textarea.style.top = '0';
+    textarea.style.left = '0';
+    textarea.style.width = '2em';
+    textarea.style.height = '2em';
+    textarea.style.padding = '0';
+    textarea.style.border = 'none';
+    textarea.style.outline = 'none';
+    textarea.style.boxShadow = 'none';
+    textarea.style.background = 'transparent';
     textarea.style.opacity = '0';
 
     document.body.appendChild(textarea);
