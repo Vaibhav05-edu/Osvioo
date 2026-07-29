@@ -161,15 +161,14 @@ function execCopyFallbackPost(text, onSuccess) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
     textarea.style.position = 'fixed';
-    textarea.style.left = '-9999px';
     textarea.style.top = '0';
-    textarea.style.opacity = '0';
+    textarea.style.left = '0';
+    textarea.style.width = '100px';
+    textarea.style.height = '100px';
+    textarea.style.opacity = '0.01';
     document.body.appendChild(textarea);
     textarea.focus();
     textarea.select();
-    if (textarea.setSelectionRange) {
-        textarea.setSelectionRange(0, 999999);
-    }
 
     let successful = false;
     try {

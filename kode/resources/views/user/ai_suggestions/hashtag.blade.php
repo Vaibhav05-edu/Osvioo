@@ -213,25 +213,16 @@ function selfContainedCopyToClipboard(text, btn, defaultHtml, customSuccessCallb
 function execCopyFallbackHashtag(text, onSuccess) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
-    textarea.readOnly = true;
     textarea.style.position = 'fixed';
     textarea.style.top = '0';
     textarea.style.left = '0';
-    textarea.style.width = '2em';
-    textarea.style.height = '2em';
-    textarea.style.padding = '0';
-    textarea.style.border = 'none';
-    textarea.style.outline = 'none';
-    textarea.style.boxShadow = 'none';
-    textarea.style.background = 'transparent';
-    textarea.style.opacity = '0';
+    textarea.style.width = '100px';
+    textarea.style.height = '100px';
+    textarea.style.opacity = '0.01';
 
     document.body.appendChild(textarea);
     textarea.focus();
     textarea.select();
-    if (textarea.setSelectionRange) {
-        textarea.setSelectionRange(0, 999999);
-    }
 
     let successful = false;
     try {
