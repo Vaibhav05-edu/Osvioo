@@ -29,6 +29,70 @@ toastr.warning = function(text) { toastr(text, "warning"); };
 toastr.info = function(text) { toastr(text, "info"); };
 toastr.danger = function(text) { toastr(text, "danger"); };
 
+// Universal copy to clipboard helper
+function copyTextToClipboard(text, btn, defaultHtml, customSuccessCallback) {
+  if (!text) {
+    toastr("Nothing to copy!", "danger");
+    return;
+  }
+
+  function onSuccess() {
+    if (typeof customSuccessCallback === "function") {
+      customSuccessCallback();
+    } else if (btn && defaultHtml) {
+      btn.innerHTML = '<i class="bi bi-check me-1"></i> Copied!';
+      setTimeout(() => { btn.innerHTML = defaultHtml; }, 2000);
+    }
+    toastr("Copied to clipboard!", "success");
+  }
+
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
+      fallbackCopyText(text, onSuccess);
+    });
+  } else {
+    fallbackCopyText(text, onSuccess);
+  }
+}
+
+function fallbackCopyText(text, onSuccess) {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.style.position = "fixed";
+  textarea.style.top = "0";
+  textarea.style.left = "0";
+  textarea.style.width = "1px";
+  textarea.style.height = "1px";
+  textarea.style.padding = "0";
+  textarea.style.border = "none";
+  textarea.style.outline = "none";
+  textarea.style.boxShadow = "none";
+  textarea.style.background = "transparent";
+  textarea.style.opacity = "0.01";
+  textarea.style.pointerEvents = "none";
+  textarea.style.zIndex = "-9999";
+
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  textarea.setSelectionRange(0, 999999);
+
+  let successful = false;
+  try {
+    successful = document.execCommand("copy");
+  } catch (err) {
+    successful = false;
+  }
+  document.body.removeChild(textarea);
+
+  if (successful) {
+    onSuccess();
+  } else {
+    window.prompt("Copy to clipboard: Press Ctrl+C, Enter", text);
+    onSuccess();
+  }
+}
+
 
 
 

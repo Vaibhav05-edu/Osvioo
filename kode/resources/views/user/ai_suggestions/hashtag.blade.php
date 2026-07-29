@@ -125,7 +125,7 @@ document.getElementById('generateHashtagBtn').addEventListener('click', function
 });
 
 function copySingleHashtag(tag, el) {
-    copyToClipboard(tag, null, null, () => {
+    selfContainedCopyToClipboard(tag, null, null, () => {
         const origHtml = el.innerHTML;
         el.innerHTML = '<i class="bi bi-check me-1"></i> {{ translate("Copied!") }}';
         el.style.setProperty('background', '#10b981', 'important');
@@ -138,10 +138,27 @@ function copySingleHashtag(tag, el) {
     });
 }
 
-function copyToClipboard(text, btn, defaultHtml, customSuccessCallback) {
+function copyHashtags() {
+    const btn = document.getElementById('copyHashtagsBtn');
+    let text = window.allGeneratedHashtags || (btn ? btn.dataset.text : '') || '';
+    if (!text) {
+        const pills = document.querySelectorAll('.hashtag-pill');
+        if (pills.length > 0) {
+            text = Array.from(pills).map(el => {
+                let clone = el.cloneNode(true);
+                clone.querySelectorAll('i').forEach(i => i.remove());
+                return clone.textContent.trim();
+            }).filter(Boolean).join(' ');
+        }
+    }
+    selfContainedCopyToClipboard(text, btn, '<i class="bi bi-clipboard me-1"></i> {{ translate("Copy All") }}');
+}
+
+function selfContainedCopyToClipboard(text, btn, defaultHtml, customSuccessCallback) {
     if (!text) {
         if (typeof toastr !== 'undefined') {
-            toastr('{{ translate("Nothing to copy!") }}', 'danger');
+            if (typeof toastr === 'function') toastr('{{ translate("Nothing to copy!") }}', 'danger');
+            else if (toastr.error) toastr.error('{{ translate("Nothing to copy!") }}');
         }
         return;
     }
@@ -154,33 +171,36 @@ function copyToClipboard(text, btn, defaultHtml, customSuccessCallback) {
             setTimeout(() => { btn.innerHTML = defaultHtml; }, 2000);
         }
         if (typeof toastr !== 'undefined') {
-            toastr('{{ translate("Copied to clipboard!") }}', 'success');
+            if (typeof toastr === 'function') toastr('{{ translate("Copied to clipboard!") }}', 'success');
+            else if (toastr.success) toastr.success('{{ translate("Copied to clipboard!") }}');
         }
     }
 
     if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
-            fallbackExecCopy(text, onSuccess);
+            execCopyFallbackHashtag(text, onSuccess);
         });
     } else {
-        fallbackExecCopy(text, onSuccess);
+        execCopyFallbackHashtag(text, onSuccess);
     }
 }
 
-function fallbackExecCopy(text, onSuccess) {
+function execCopyFallbackHashtag(text, onSuccess) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
     textarea.style.position = 'fixed';
-    textarea.style.top = '-9999px';
-    textarea.style.left = '-9999px';
-    textarea.style.width = '2em';
-    textarea.style.height = '2em';
+    textarea.style.top = '0';
+    textarea.style.left = '0';
+    textarea.style.width = '1px';
+    textarea.style.height = '1px';
     textarea.style.padding = '0';
     textarea.style.border = 'none';
     textarea.style.outline = 'none';
     textarea.style.boxShadow = 'none';
     textarea.style.background = 'transparent';
-    textarea.style.opacity = '0';
+    textarea.style.opacity = '0.01';
+    textarea.style.pointerEvents = 'none';
+    textarea.style.zIndex = '-9999';
 
     document.body.appendChild(textarea);
     textarea.focus();
@@ -198,19 +218,9 @@ function fallbackExecCopy(text, onSuccess) {
     if (successful) {
         onSuccess();
     } else {
-        promptCopyFallback(text, onSuccess);
+        window.prompt('{{ translate("Copy to clipboard: Press Ctrl+C, Enter") }}', text);
+        onSuccess();
     }
-}
-
-function promptCopyFallback(text, onSuccess) {
-    window.prompt('{{ translate("Copy to clipboard: Press Ctrl+C, Enter") }}', text);
-    onSuccess();
-}
-
-function copyHashtags() {
-    const btn = document.getElementById('copyHashtagsBtn');
-    const text = window.allGeneratedHashtags || btn.dataset.text || Array.from(document.querySelectorAll('.hashtag-pill')).map(el => el.innerText.replace('Copied!', '').trim()).filter(Boolean).join(' ') || '';
-    copyToClipboard(text, btn, '<i class="bi bi-clipboard me-1"></i> {{ translate("Copy All") }}');
 }
 </script>
 @endpush

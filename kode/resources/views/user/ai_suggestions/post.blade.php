@@ -104,6 +104,7 @@ document.getElementById('generatePostBtn').addEventListener('click', function() 
             output.className = 'py-2';
             const escaped = data.result.replace(/\n/g, '<br>');
             output.innerHTML = `<div class="post-content" style="white-space:pre-wrap;line-height:1.8;font-size:15px;color:inherit;font-weight:500;">${escaped}</div>`;
+            window.generatedPostContent = data.result;
             const copyBtn = document.getElementById('copyPostBtn');
             copyBtn.classList.remove('d-none');
             copyBtn.dataset.text = data.result;
@@ -122,50 +123,56 @@ document.getElementById('generatePostBtn').addEventListener('click', function() 
     });
 });
 
-function copyToClipboard(text, btn, defaultHtml) {
-    if (!text) {
-        text = document.querySelector('.post-content')?.innerText || '';
-    }
+function copyPost() {
+    const btn = document.getElementById('copyPostBtn');
+    const text = window.generatedPostContent || btn?.dataset?.text || document.querySelector('.post-content')?.innerText || '';
+    
     if (!text) {
         if (typeof toastr !== 'undefined') {
-            toastr('{{ translate("Nothing to copy!") }}', 'danger');
+            if (typeof toastr === 'function') toastr('{{ translate("Nothing to copy!") }}', 'danger');
+            else if (toastr.error) toastr.error('{{ translate("Nothing to copy!") }}');
         }
         return;
     }
 
     function onSuccess() {
-        if (btn && defaultHtml) {
+        if (btn) {
             btn.innerHTML = '<i class="bi bi-check me-1"></i> {{ translate("Copied!") }}';
-            setTimeout(() => { btn.innerHTML = defaultHtml; }, 2000);
+            setTimeout(() => {
+                btn.innerHTML = '<i class="bi bi-clipboard me-1"></i> {{ translate("Copy") }}';
+            }, 2000);
         }
         if (typeof toastr !== 'undefined') {
-            toastr('{{ translate("Copied to clipboard!") }}', 'success');
+            if (typeof toastr === 'function') toastr('{{ translate("Copied to clipboard!") }}', 'success');
+            else if (toastr.success) toastr.success('{{ translate("Copied to clipboard!") }}');
         }
     }
 
     if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
-            fallbackExecCopy(text, onSuccess);
+            execCopyFallbackPost(text, onSuccess);
         });
     } else {
-        fallbackExecCopy(text, onSuccess);
+        execCopyFallbackPost(text, onSuccess);
     }
 }
 
-function fallbackExecCopy(text, onSuccess) {
+function execCopyFallbackPost(text, onSuccess) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
     textarea.style.position = 'fixed';
-    textarea.style.top = '-9999px';
-    textarea.style.left = '-9999px';
-    textarea.style.width = '2em';
-    textarea.style.height = '2em';
+    textarea.style.top = '0';
+    textarea.style.left = '0';
+    textarea.style.width = '1px';
+    textarea.style.height = '1px';
     textarea.style.padding = '0';
     textarea.style.border = 'none';
     textarea.style.outline = 'none';
     textarea.style.boxShadow = 'none';
     textarea.style.background = 'transparent';
-    textarea.style.opacity = '0';
+    textarea.style.opacity = '0.01';
+    textarea.style.pointerEvents = 'none';
+    textarea.style.zIndex = '-9999';
 
     document.body.appendChild(textarea);
     textarea.focus();
@@ -183,19 +190,9 @@ function fallbackExecCopy(text, onSuccess) {
     if (successful) {
         onSuccess();
     } else {
-        promptCopyFallback(text, onSuccess);
+        window.prompt('{{ translate("Copy to clipboard: Press Ctrl+C, Enter") }}', text);
+        onSuccess();
     }
-}
-
-function promptCopyFallback(text, onSuccess) {
-    window.prompt('{{ translate("Copy to clipboard: Press Ctrl+C, Enter") }}', text);
-    onSuccess();
-}
-
-function copyPost() {
-    const btn = document.getElementById('copyPostBtn');
-    const text = btn.dataset.text || document.querySelector('.post-content')?.innerText || '';
-    copyToClipboard(text, btn, '<i class="bi bi-clipboard me-1"></i> {{ translate("Copy") }}');
 }
 </script>
 @endpush
