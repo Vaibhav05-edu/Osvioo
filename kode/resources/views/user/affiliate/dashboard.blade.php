@@ -15,7 +15,7 @@
                 
                 <div class="input-group" style="background: #f8f9fa; border-radius: 12px; padding: 4px; border: 1px solid #e9ecef;">
                     <input type="text" class="form-control" id="referralLink" value="{{ $referralLink }}" readonly style="background: transparent; border: none; font-size: 1.1rem; color: #495057;">
-                    <button class="btn btn-primary" type="button" onclick="copyReferralLink()" style="border-radius: 10px; font-weight: 600;">
+                    <button class="btn btn-primary" type="button" id="copyReferralBtn" style="border-radius: 10px; font-weight: 600;">
                         <i class="bi bi-clipboard me-2"></i>{{translate('Copy Link')}}
                     </button>
                 </div>
@@ -115,33 +115,36 @@
 @endsection
 
 @push('script-push')
-<script>
+<script nonce="{{ csp_nonce() }}">
+    document.addEventListener('DOMContentLoaded', function() {
+        var btn = document.getElementById("copyReferralBtn");
+        if (btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                copyReferralLink();
+            });
+        }
+    });
+
     function copyReferralLink() {
         var copyText = document.getElementById("referralLink");
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        
-        try {
-            navigator.clipboard.writeText(copyText.value).then(function() {
+        if (!copyText) return;
+        var text = copyText.value;
+        if (typeof copyTextToClipboard === 'function') {
+            copyTextToClipboard(text, document.getElementById("copyReferralBtn"), '<i class="bi bi-clipboard me-2"></i>{{translate("Copy Link")}}');
+        } else if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(function() {
                 if (typeof toastr !== 'undefined') {
-                    toastr.success("{{translate('Referral link copied to clipboard!')}}");
-                } else {
-                    alert("{{translate('Referral link copied to clipboard!')}}");
-                }
-            }).catch(function(err) {
-                document.execCommand("copy");
-                if (typeof toastr !== 'undefined') {
-                    toastr.success("{{translate('Referral link copied to clipboard!')}}");
-                } else {
-                    alert("{{translate('Referral link copied to clipboard!')}}");
+                    if (typeof toastr === 'function') toastr("{{translate('Referral link copied to clipboard!')}}", "success");
+                    else if (toastr.success) toastr.success("{{translate('Referral link copied to clipboard!')}}");
                 }
             });
-        } catch(e) {
+        } else {
+            copyText.select();
             document.execCommand("copy");
             if (typeof toastr !== 'undefined') {
-                toastr.success("{{translate('Referral link copied to clipboard!')}}");
-            } else {
-                alert("{{translate('Referral link copied to clipboard!')}}");
+                if (typeof toastr === 'function') toastr("{{translate('Referral link copied to clipboard!')}}", "success");
+                else if (toastr.success) toastr.success("{{translate('Referral link copied to clipboard!')}}");
             }
         }
     }

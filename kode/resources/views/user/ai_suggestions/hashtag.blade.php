@@ -69,7 +69,7 @@
                     <div class="border p-4 h-100" style="border-radius: 16px; background: var(--bs-body-bg); color: var(--bs-body-color);">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h6 class="fw-bold mb-0"><i class="bi bi-card-text me-2 text-primary"></i>{{translate('Generated Hashtags')}}</h6>
-                            <button class="btn btn-sm btn-primary capsuled d-none" id="copyHashtagsBtn" onclick="copyHashtags()" style="background-color: #4f46e5 !important; color: #ffffff !important; border-color: #4338ca !important;">
+                            <button class="btn btn-sm btn-primary capsuled d-none" id="copyHashtagsBtn" type="button" style="background-color: #4f46e5 !important; color: #ffffff !important; border-color: #4338ca !important;">
                                 <i class="bi bi-clipboard me-1"></i> {{translate('Copy All')}}
                             </button>
                         </div>
@@ -86,6 +86,25 @@
 
 @push('script-push')
 <script nonce="{{ csp_nonce() }}">
+document.addEventListener('DOMContentLoaded', function() {
+    const copyBtn = document.getElementById('copyHashtagsBtn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            copyHashtags();
+        });
+    }
+
+    document.addEventListener('click', function(e) {
+        const pill = e.target.closest('.hashtag-pill');
+        if (pill) {
+            e.preventDefault();
+            const tag = pill.dataset.tag || pill.textContent.replace(/^✓\s*/, '').trim();
+            copySingleHashtag(tag, pill);
+        }
+    });
+});
+
 document.getElementById('generateHashtagBtn').addEventListener('click', function() {
     const prompt   = document.getElementById('hashtagPrompt').value.trim();
     const platform = document.getElementById('hashtagPlatform').value;
@@ -127,7 +146,7 @@ document.getElementById('generateHashtagBtn').addEventListener('click', function
 
             const html = tags.map(t => {
                 const safeTag = t.replace(/'/g, "\\'");
-                return `<span class="hashtag-pill" onclick="copySingleHashtag('${safeTag}', this)" title="{{ translate("Click to copy") }}">${t}</span>`;
+                return `<span class="hashtag-pill" data-tag="${safeTag}" title="{{ translate("Click to copy") }}">${t}</span>`;
             }).join('');
 
             const formattedText = tags.join(' ');

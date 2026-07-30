@@ -54,7 +54,7 @@
                     <div class="border p-4 h-100" style="border-radius: 16px; background: var(--bs-body-bg); color: var(--bs-body-color);">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h6 class="fw-bold mb-0"><i class="bi bi-robot me-2 text-success"></i>{{translate('Generated Output')}}</h6>
-                            <button class="btn btn-sm btn-primary capsuled d-none" id="copyPostBtn" onclick="copyPost()" style="background-color: #6366f1 !important; color: #ffffff !important; border-color: #4f46e5 !important;">
+                            <button class="btn btn-sm btn-primary capsuled d-none" id="copyPostBtn" type="button" style="background-color: #6366f1 !important; color: #ffffff !important; border-color: #4f46e5 !important;">
                                 <i class="bi bi-clipboard me-1"></i> {{translate('Copy')}}
                             </button>
                         </div>
@@ -71,6 +71,22 @@
 
 @push('script-push')
 <script nonce="{{ csp_nonce() }}">
+document.addEventListener('DOMContentLoaded', function() {
+    const copyBtn = document.getElementById('copyPostBtn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            copyPost();
+        });
+    }
+
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.post-content')) {
+            copyPost();
+        }
+    });
+});
+
 document.getElementById('generatePostBtn').addEventListener('click', function() {
     const prompt    = document.getElementById('postPrompt').value.trim();
     const tone      = document.getElementById('postTone').value;
@@ -103,7 +119,7 @@ document.getElementById('generatePostBtn').addEventListener('click', function() 
         if (data.status && data.result) {
             output.className = 'py-2';
             const escaped = data.result.replace(/\n/g, '<br>');
-            output.innerHTML = `<div class="post-content cursor-pointer p-3 border rounded-3" onclick="copyPost()" title="{{ translate("Click to copy") }}" style="white-space:pre-wrap;line-height:1.8;font-size:15px;color:inherit;font-weight:500;background:var(--bs-card-cap-bg, rgba(0,0,0,0.03));">${escaped}</div>`;
+            output.innerHTML = `<div class="post-content cursor-pointer p-3 border rounded-3" title="{{ translate("Click to copy") }}" style="white-space:pre-wrap;line-height:1.8;font-size:15px;color:inherit;font-weight:500;background:var(--bs-card-cap-bg, rgba(0,0,0,0.03));">${escaped}</div>`;
             window.generatedPostContent = data.result;
             const copyBtn = document.getElementById('copyPostBtn');
             copyBtn.classList.remove('d-none');
