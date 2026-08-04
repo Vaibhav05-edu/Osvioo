@@ -40,9 +40,11 @@ RUN composer install --no-dev --optimize-autoloader
 RUN mkdir -p /var/www/html/kode/storage/framework/cache/data \
              /var/www/html/kode/storage/framework/sessions \
              /var/www/html/kode/storage/framework/views \
-             /var/www/html/kode/storage/logs
-RUN chown -R www-data:www-data /var/www/html/kode/storage /var/www/html/kode/bootstrap/cache
-RUN chmod -R 775 /var/www/html/kode/storage /var/www/html/kode/bootstrap/cache
+             /var/www/html/kode/storage/logs \
+             /var/www/html/kode/public/assets/images/custom \
+             /var/www/html/assets/images/custom
+RUN chown -R www-data:www-data /var/www/html/kode/storage /var/www/html/kode/bootstrap/cache /var/www/html/kode/public/assets/images/custom /var/www/html/assets/images/custom
+RUN chmod -R 777 /var/www/html/kode/storage /var/www/html/kode/bootstrap/cache /var/www/html/kode/public/assets/images/custom /var/www/html/assets/images/custom
 
 # Go back to root
 WORKDIR /var/www/html
