@@ -53,10 +53,14 @@ WORKDIR /var/www/html
 # Set Apache Document Root to Laravel public directory
 ENV APACHE_DOCUMENT_ROOT /var/www/html/kode/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Allow .htaccess overrides
-RUN printf "<Directory ${APACHE_DOCUMENT_ROOT}>\n\
+# Allow .htaccess overrides and symlink traversal
+RUN printf "<Directory /var/www/>\n\
+    Options Indexes FollowSymLinks\n\
+    AllowOverride All\n\
+    Require all granted\n\
+</Directory>\n\
+<Directory ${APACHE_DOCUMENT_ROOT}>\n\
     Options Indexes FollowSymLinks\n\
     AllowOverride All\n\
     Require all granted\n\
