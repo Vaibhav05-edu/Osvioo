@@ -44,8 +44,7 @@ RUN mkdir -p /var/www/html/kode/storage/framework/cache/data \
              /var/www/html/kode/public/assets/images/custom \
              /var/www/html/assets/images/custom
 RUN chown -R www-data:www-data /var/www/html
-RUN chmod -R 755 /var/www/html
-RUN chmod -R 777 /var/www/html/kode/storage /var/www/html/kode/bootstrap/cache /var/www/html/kode/public/assets/images/custom /var/www/html/assets/images/custom
+RUN chmod -R 777 /var/www/html
 
 # Go back to root
 WORKDIR /var/www/html
@@ -53,14 +52,15 @@ WORKDIR /var/www/html
 # Set Apache Document Root to Laravel public directory
 ENV APACHE_DOCUMENT_ROOT /var/www/html/kode/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # Allow .htaccess overrides and symlink traversal
-RUN printf "<Directory /var/www/>\n\
+RUN printf "<Directory /var/www/html>\n\
     Options Indexes FollowSymLinks\n\
     AllowOverride All\n\
     Require all granted\n\
 </Directory>\n\
-<Directory ${APACHE_DOCUMENT_ROOT}>\n\
+<Directory /var/www/html/kode/public>\n\
     Options Indexes FollowSymLinks\n\
     AllowOverride All\n\
     Require all granted\n\
