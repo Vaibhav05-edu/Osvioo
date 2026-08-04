@@ -121,11 +121,19 @@ class MediaKitController extends Controller
                 try {
                     $file     = $request->file('cover_image');
                     $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $destDir  = public_path('assets/images/custom');
-                    if (!file_exists($destDir)) {
-                        mkdir($destDir, 0775, true);
+                    
+                    $dirs = [
+                        public_path('assets/images/custom'),
+                        base_path('../assets/images/custom')
+                    ];
+
+                    foreach ($dirs as $dir) {
+                        if (!file_exists($dir)) {
+                            @mkdir($dir, 0775, true);
+                        }
+                        @copy($file->getRealPath(), $dir . '/' . $filename);
                     }
-                    $file->move($destDir, $filename);
+
                     $mediaKit->cover_image = $filename;
                 } catch (\Throwable $e) {
                     \Log::error('MediaKit cover image upload error: ' . $e->getMessage());
@@ -174,20 +182,33 @@ class MediaKitController extends Controller
 
         if ($request->hasFile('cover_image')) {
             try {
-                // Delete old image
+                // Delete old image from all potential directories
                 if ($mediaKit->cover_image) {
-                    $oldPath = public_path('assets/images/custom/' . $mediaKit->cover_image);
-                    if (file_exists($oldPath)) {
-                        @unlink($oldPath);
+                    $oldPaths = [
+                        public_path('assets/images/custom/' . $mediaKit->cover_image),
+                        base_path('../assets/images/custom/' . $mediaKit->cover_image)
+                    ];
+                    foreach ($oldPaths as $oldPath) {
+                        if (file_exists($oldPath)) {
+                            @unlink($oldPath);
+                        }
                     }
                 }
                 $file     = $request->file('cover_image');
                 $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $destDir  = public_path('assets/images/custom');
-                if (!file_exists($destDir)) {
-                    mkdir($destDir, 0775, true);
+
+                $dirs = [
+                    public_path('assets/images/custom'),
+                    base_path('../assets/images/custom')
+                ];
+
+                foreach ($dirs as $dir) {
+                    if (!file_exists($dir)) {
+                        @mkdir($dir, 0775, true);
+                    }
+                    @copy($file->getRealPath(), $dir . '/' . $filename);
                 }
-                $file->move($destDir, $filename);
+
                 $mediaKit->cover_image = $filename;
             } catch (\Throwable $e) {
                 \Log::error('MediaKit update image error: ' . $e->getMessage());
@@ -206,9 +227,14 @@ class MediaKitController extends Controller
         $mediaKit = MediaKit::where('user_id', $user->id)->where('id', $id)->firstOrFail();
 
         if ($mediaKit->cover_image) {
-            $path = public_path('assets/images/custom/' . $mediaKit->cover_image);
-            if (file_exists($path)) {
-                @unlink($path);
+            $paths = [
+                public_path('assets/images/custom/' . $mediaKit->cover_image),
+                base_path('../assets/images/custom/' . $mediaKit->cover_image)
+            ];
+            foreach ($paths as $path) {
+                if (file_exists($path)) {
+                    @unlink($path);
+                }
             }
         }
 
