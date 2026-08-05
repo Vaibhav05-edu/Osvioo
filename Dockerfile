@@ -41,10 +41,17 @@ RUN mkdir -p /var/www/html/kode/storage/framework/cache/data \
              /var/www/html/kode/storage/framework/sessions \
              /var/www/html/kode/storage/framework/views \
              /var/www/html/kode/storage/logs \
+             /var/www/html/kode/bootstrap/cache \
              /var/www/html/kode/public/assets/images/custom \
              /var/www/html/assets/images/custom
 RUN chown -R www-data:www-data /var/www/html
-RUN chmod -R 777 /var/www/html
+RUN chmod -R 755 /var/www/html
+RUN chmod -R 775 /var/www/html/kode/storage
+RUN chmod -R 775 /var/www/html/kode/bootstrap/cache
+
+# Copy startup entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Go back to root
 WORKDIR /var/www/html
@@ -69,13 +76,6 @@ RUN printf "<Directory /var/www/html>\n\
 # Expose port (Render will use $PORT)
 EXPOSE 80
 
-# Start Apache with dynamic port binding and host binding
-CMD echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
-    sed -i "s/Listen 80/Listen 0.0.0.0:${PORT:-80}/g" /etc/apache2/ports.conf && \
-    sed -i "s/<VirtualHost \*:80>/<VirtualHost *:${PORT:-80}>/g" /etc/apache2/sites-available/*.conf && \
-    cd /var/www/html/kode && php artisan migrate --force && \
-    php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan view:cache && \
-    cd /var/www/html && \
-    apache2-foreground
+# Use startup entrypoint script to fix permissions & run migrations/cache on boot
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["apache2-foreground"]
