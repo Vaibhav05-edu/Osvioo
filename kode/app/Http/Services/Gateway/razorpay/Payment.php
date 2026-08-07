@@ -16,15 +16,9 @@ class Payment
     public static function paymentData(PaymentLog $log) :string
     {
    
-        $gateway          = ($log->method->parameters);
-        $api_key          = env('RAZORPAY_KEY', $gateway->key_id ?? '');
-        $api_secret       = env('RAZORPAY_SECRET', $gateway->key_secret ?? '');
-        dd([
-    'api_key' => $api_key,
-    'api_secret' => $api_secret,
-    'gateway_key' => $gateway->key_id ?? null,
-    'gateway_secret' => $gateway->key_secret ?? null,
-]);
+        $gateway          = is_string($log->method->parameters) ? json_decode($log->method->parameters) : ($log->method->parameters);
+        $api_key          = !empty(env('RAZORPAY_KEY')) ? env('RAZORPAY_KEY') : ($gateway->key_id ?? '');
+        $api_secret       = !empty(env('RAZORPAY_SECRET')) ? env('RAZORPAY_SECRET') : ($gateway->key_secret ?? '');
 
         $razorPayApi      = new Api($api_key, $api_secret);
 
