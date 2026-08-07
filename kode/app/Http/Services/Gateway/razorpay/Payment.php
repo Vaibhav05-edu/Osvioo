@@ -19,6 +19,13 @@ class Payment
         $gateway          = ($log->method->parameters);
         $api_key          = env('RAZORPAY_KEY', $gateway->key_id ?? '');
         $api_secret       = env('RAZORPAY_SECRET', $gateway->key_secret ?? '');
+        dd([
+    'api_key' => $api_key,
+    'api_secret' => $api_secret,
+    'gateway_key' => $gateway->key_id ?? null,
+    'gateway_secret' => $gateway->key_secret ?? null,
+]);
+
         $razorPayApi      = new Api($api_key, $api_secret);
 
         $finalAmount      = round($log->final_amount * 100, 2);
